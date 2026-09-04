@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#10243e">
+  <title>本地教材问答</title>
+  <meta name="description" content="在本机教材库中检索、回答并核对原文出处。">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="本地教材问答">
+        <span class="brand-mark" aria-hidden="true">知</span>
+        <div>
+          <h1>本地教材问答</h1>
+          <p>检索、回答、核对原文</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span class="status-pill" id="serviceStatus"><span class="status-dot"></span>等待连接</span>
+        <button class="icon-button" id="settingsButton" type="button" aria-label="打开连接设置" title="连接设置">⚙</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="answer-panel" aria-labelledby="answerHeading">
+        <div class="panel-heading">
+          <div>
+            <span class="eyebrow">当前回答</span>
+            <h2 id="answerHeading">从教材中寻找答案</h2>
+          </div>
+          <button class="quiet-button" id="copyButton" type="button" disabled>复制回答</button>
+        </div>
+
+        <div class="answer-body" id="answerBody" aria-live="polite">
+          <div class="empty-state">
+            <div class="empty-symbol" aria-hidden="true">⌁</div>
+            <p>输入一个具体问题。系统会先检索教材，再逐步生成带出处的回答。</p>
+            <div class="suggestions" aria-label="问题示例">
+              <button type="button" data-question="什么是 Um 接口？">什么是 Um 接口？</button>
+              <button type="button" data-question="为什么移动通信会产生多径衰落？">为什么会产生多径衰落？</button>
+              <button type="button" data-question="概括这本教材的知识结构。">概括教材知识结构</button>
+            </div>
+          </div>
+        </div>
+
+        <form class="composer" id="questionForm">
+          <label for="questionInput">向教材提问</label>
+          <div class="composer-row">
+            <textarea id="questionInput" maxlength="2000" rows="3" placeholder="例如：LTE 为什么采用 OFDMA？" required></textarea>
+            <button class="primary-button" id="askButton" type="submit">
+              <span>开始检索</span><span aria-hidden="true">→</span>
+            </button>
+            <button class="quiet-button cancel-button" id="cancelButton" type="button" hidden>取消</button>
+          </div>
+          <div class="composer-meta">
+            <span>Ctrl + Enter 发送</span>
+            <span id="questionCount">0 / 2000</span>
+          </div>
+        </form>
+      </section>
+
+      <aside class="evidence-panel" aria-labelledby="evidenceHeading">
+        <div class="panel-heading compact">
+          <div>
+            <span class="eyebrow">证据</span>
+            <h2 id="evidenceHeading">教材出处</h2>
+          </div>
+          <span class="count-badge" id="sourceCount">0</span>
+        </div>
+        <div class="evidence-list" id="evidenceList">
+          <div class="evidence-empty">
+            <span aria-hidden="true">◎</span>
+            <p>回答引用的页码和原文片段会显示在这里。</p>
+          </div>
+        </div>
+        <div class="library-summary">
+          <div>
+            <span>当前教材库</span>
+            <strong id="libraryName">移动通信</strong>
+          </div>
+          <div class="library-stats">
+            <span><strong id="documentCount">1</strong> 本文档</span>
+            <span><strong id="chunkCount">—</strong> 个片段</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" class="settings-card" id="settingsForm">
+      <div class="dialog-heading">
+        <div>
+          <span class="eyebrow">连接</span>
+          <h2>连接本地服务</h2>
+        </div>
+        <button class="icon-button" value="cancel" aria-label="关闭设置">×</button>
+      </div>
+      <label for="serverUrl">服务器地址</label>
+      <input id="serverUrl" type="url" value="" placeholder="当前页面地址">
+      <label for="pairingCode">6 位配对码</label>
+      <input id="pairingCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="电脑端显示的配对码">
+      <p class="field-note" id="connectionHint">只在可信局域网内连接。配对码仅保留在当前浏览器会话。</p>
+      <div class="dialog-actions">
+        <button class="danger-button" id="shutdownButton" type="button" hidden>停止本地服务</button>
+        <button class="quiet-button" value="cancel" type="button" id="cancelSettings">取消</button>
+        <button class="primary-button" value="default" type="submit">保存并测试</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

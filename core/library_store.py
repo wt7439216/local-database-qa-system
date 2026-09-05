@@ -18,7 +18,7 @@ from typing import Any, Iterable
 from core.text_rules import extract_terms
 
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 DEFAULT_LIBRARY_NAME = "教材知识库"
 _CJK_RE = re.compile(r"[\u4e00-\u9fff]+")
 _LATIN_RE = re.compile(r"[A-Za-z0-9]+(?:[._+/-][A-Za-z0-9]+)*")
@@ -31,6 +31,51 @@ class DocumentRecord:
     source_name: str
     sha256: str
     page_count: int
+
+
+@dataclass(frozen=True)
+class ChapterRecord:
+    id: str
+    document_id: str
+    document_title: str
+    number: int
+    title: str
+    pdf_page_start: int
+    pdf_page_end: int
+    printed_page_start: int | None
+    printed_page_end: int | None
+    overview: str
+    sort_order: int
+
+    @property
+    def location(self) -> str:
+        parts = [self.document_title, f"PDF 第{self.pdf_page_start}–{self.pdf_page_end}页"]
+        if self.printed_page_start:
+            end = self.printed_page_end or self.printed_page_start
+            parts.append(f"正文第{self.printed_page_start}–{end}页")
+        parts.append(self.title)
+        return " · ".join(parts)
+
+    def citation(self, citation_id: int) -> dict[str, Any]:
+        quote = re.sub(r"\s+", " ", self.overview).strip()
+        if len(quote) > 300:
+            quote = quote[:300].rstrip() + "…"
+        return {
+            "id": citation_id,
+            "chapter_id": self.id,
+            "document_id": self.document_id,
+            "title": self.title,
+            "document_title": self.document_title,
+            "chapter": self.title,
+            "section": "章节概览",
+            "pdf_page_start": self.pdf_page_start,
+            "pdf_page_end": self.pdf_page_end,
+            "printed_page_start": self.printed_page_start,
+            "printed_page_end": self.printed_page_end,
+            "location": self.location,
+            "quote": quote,
+            "quality_score": 1.0,
+        }
 
 
 @dataclass(frozen=True)
@@ -127,6 +172,7 @@ class LibraryStore:
         if version != SCHEMA_VERSION:
             raise RuntimeError(f"教材库版本不兼容：{version}，需要 {SCHEMA_VERSION}")
         self.documents = self._load_documents()
+        self.chapters = self._load_chapters()
         self.chunks, self.dimension, self.embedding_model, self._vectors = self._load_chunks()
         self._chunk_by_id = {chunk.id: chunk for chunk in self.chunks}
 
@@ -143,6 +189,7 @@ class LibraryStore:
             "library_name": self.library_name,
             "schema_version": SCHEMA_VERSION,
             "documents": len(self.documents),
+            "chapters": len(self.chapters),
             "chunks": len(self.chunks),
             "embedding_model": self.embedding_model,
             "embedding_dimension": self.dimension,
@@ -254,17 +301,24 @@ class LibraryStore:
                 longest = max((len(normalize_for_similarity(term)) for term in matched_terms), default=0)
         return strongest, longest
 
-    def summary_contexts(self) -> list[ChunkRecord]:
+    def summary_contexts(self, chapter_number: int | None = None) -> list[ChunkRecord]:
+        where = "WHERE s.scope_type = 'chapter'"
+        parameters: tuple[Any, ...] = ()
+        if chapter_number is not None:
+            where += " AND c.chapter_number = ?"
+            parameters = (int(chapter_number),)
         with closing(self._connect()) as connection:
             rows = connection.execute(
-                """
+                f"""
                 SELECT s.id, s.document_id, d.title AS document_title,
                        s.chapter, s.text, s.page_start, s.page_end
                 FROM summaries s
                 JOIN documents d ON d.id = s.document_id
-                WHERE s.scope_type = 'chapter'
-                ORDER BY s.document_id, s.sort_order
-                """
+                LEFT JOIN chapters c ON c.document_id = s.document_id AND c.title = s.chapter
+                {where}
+                ORDER BY d.rowid, s.sort_order
+                """,
+                parameters,
             ).fetchall()
         return [
             ChunkRecord(
@@ -283,6 +337,9 @@ class LibraryStore:
             )
             for row in rows
         ]
+
+    def chapter_catalog(self) -> list[ChapterRecord]:
+        return list(self.chapters)
 
     def _connect(self) -> sqlite3.Connection:
         connection = sqlite3.connect(
@@ -304,6 +361,22 @@ class LibraryStore:
                 "SELECT id, title, source_name, sha256, page_count FROM documents ORDER BY title"
             ).fetchall()
         return [DocumentRecord(**dict(row)) for row in rows]
+
+    def _load_chapters(self) -> list[ChapterRecord]:
+        with closing(self._connect()) as connection:
+            rows = connection.execute(
+                """
+                SELECT c.id, c.document_id, d.title AS document_title,
+                       c.chapter_number AS number, c.title,
+                       c.pdf_page_start, c.pdf_page_end,
+                       c.printed_page_start, c.printed_page_end,
+                       c.overview, c.sort_order
+                FROM chapters c
+                JOIN documents d ON d.id = c.document_id
+                ORDER BY d.rowid, c.sort_order
+                """
+            ).fetchall()
+        return [ChapterRecord(**dict(row)) for row in rows]
 
     def _load_chunks(self) -> tuple[list[ChunkRecord], int, str, array[float] | None]:
         with closing(self._connect()) as connection:

@@ -33,6 +33,7 @@ from core.ollama_http import OllamaClient
 PAGE_MARKER = re.compile(r"^\[page_(\d{4})\s+method=([^\]]+)\]$")
 DOCUMENT_MARKER = re.compile(r"^# PDF\s+\d+\s*:\s*(.+?)\s*$")
 CHAPTER_LINE = re.compile(r"^第\s*(\d+)\s*章\s*([^\s]{1,28})\s*$")
+CHAPTER_ONLY_LINE = re.compile(r"^第\s*(\d+)\s*章\s*$")
 SECTION_START = re.compile(r"(?m)^(?=\s*\d+\.\d+(?:\.\d+)*\s*[^\d\s])")
 SECTION_LINE = re.compile(r"^\s*(\d+\.\d+(?:\.\d+)*)\s*([^\n]{2,48})")
 
@@ -123,7 +124,7 @@ def enrich_page_metadata(pages: list[Page]) -> None:
         explicit_offsets: list[int] = []
         for page in document_pages:
             lines = [line.strip() for line in page.text.splitlines() if line.strip()]
-            for line in lines[:3]:
+            for line_index, line in enumerate(lines[:3]):
                 match = CHAPTER_LINE.match(line)
                 if match:
                     number = int(match.group(1))
@@ -132,6 +133,19 @@ def enrich_page_metadata(pages: list[Page]) -> None:
                     if len(title) >= 2 and title not in {"目录", "习题与思考题"}:
                         chapter_titles[number][title] += 1
                     break
+                chapter_only = CHAPTER_ONLY_LINE.match(line)
+                if chapter_only and line_index + 1 < len(lines):
+                    next_line = lines[line_index + 1].strip()
+                    # A real split heading has a short title-only second line.
+                    # TOC pages also contain standalone “第N章” lines, but their
+                    # following lines include page numbers and section entries.
+                    if len(next_line) <= 32 and not re.search(r"\d+\.\d+", next_line):
+                        number = int(chapter_only.group(1))
+                        page.chapter_number = number
+                        title = clean_heading(next_line)
+                        if len(title) >= 2 and title not in {"目录", "习题与思考题"}:
+                            chapter_titles[number][title] += 1
+                        break
             printed = detect_printed_page(lines)
             if printed is not None:
                 page.printed_page = printed
@@ -169,6 +183,11 @@ def detect_printed_page(lines: list[str]) -> int | None:
 def detect_chapter_number(text: str) -> int | None:
     match = re.search(r"第\s*(\d+)\s*章", text)
     return int(match.group(1)) if match else None
+
+
+def section_belongs_to_chapter(section: str, chapter_number: int | None) -> bool:
+    match = re.match(r"\s*(\d+)\.", section)
+    return bool(match and chapter_number is not None and int(match.group(1)) == chapter_number)
 
 
 def clean_heading(value: str) -> str:
@@ -331,6 +350,14 @@ def create_schema(connection: sqlite3.Connection) -> None:
             printed_page INTEGER, extraction_method TEXT NOT NULL, chapter TEXT NOT NULL,
             text TEXT NOT NULL, PRIMARY KEY(document_id, pdf_page)
         );
+        CREATE TABLE chapters (
+            id TEXT PRIMARY KEY, document_id TEXT NOT NULL REFERENCES documents(id),
+            chapter_number INTEGER NOT NULL, title TEXT NOT NULL,
+            pdf_page_start INTEGER NOT NULL, pdf_page_end INTEGER NOT NULL,
+            printed_page_start INTEGER, printed_page_end INTEGER,
+            overview TEXT NOT NULL, sort_order INTEGER NOT NULL,
+            UNIQUE(document_id, chapter_number)
+        );
         CREATE TABLE chunks (
             id TEXT PRIMARY KEY, document_id TEXT NOT NULL REFERENCES documents(id),
             chapter TEXT NOT NULL, section TEXT NOT NULL,
@@ -351,11 +378,12 @@ def create_schema(connection: sqlite3.Connection) -> None:
         );
         CREATE INDEX idx_chunks_document_order ON chunks(document_id, sort_order);
         CREATE INDEX idx_chunks_chapter ON chunks(chapter);
+        CREATE INDEX idx_chapters_document_order ON chapters(document_id, sort_order);
         """
     )
 
 
-def chapter_summaries(chunks: list[ChunkDraft]) -> list[tuple[str, str, str, int, int, str, int]]:
+def chapter_summaries(chunks: list[ChunkDraft]) -> list[tuple[str, str, str, str, int, int, str, int]]:
     grouped: dict[tuple[str, str], list[ChunkDraft]] = defaultdict(list)
     for chunk in chunks:
         grouped[(chunk.document_id, chunk.chapter or "全书概览")].append(chunk)
@@ -363,13 +391,32 @@ def chapter_summaries(chunks: list[ChunkDraft]) -> list[tuple[str, str, str, int
     for order, ((document_id, chapter), values) in enumerate(grouped.items()):
         if chapter == "全书概览":
             preferred = next((item for item in values if "全部内容分为7章" in item.text), values[0])
-            text = f"【全书概览】{preferred.text[:1200].strip()}"
+            overview = preferred.text.strip()
+            for marker in ("未经许可", "版权所有", "图书在版编目", "策划编辑"):
+                overview = overview.split(marker, 1)[0].rstrip()
+            text = f"【全书概览】{overview[:1200]}"
         else:
+            chapter_number = detect_chapter_number(chapter)
             sections: list[str] = []
             for item in values:
-                if item.section and item.section not in sections:
+                if (
+                    item.section
+                    and section_belongs_to_chapter(item.section, chapter_number)
+                    and item.section not in sections
+                ):
                     sections.append(item.section)
-            introduction = values[0].text[:650].strip()
+            preferred = next(
+                (
+                    item
+                    for item in values[:12]
+                    if "学习重点和要求" in item.text or "本章主要介绍" in item.text
+                ),
+                values[0],
+            )
+            introduction = preferred.text.strip()
+            if "学习重点和要求" in introduction:
+                introduction = introduction[introduction.index("学习重点和要求") :]
+            introduction = introduction[:650].strip()
             section_line = "、".join(sections[:16])
             text = (
                 f"【{chapter}】PDF 第{values[0].pdf_page_start}—{values[-1].pdf_page_end}页。\n"
@@ -378,6 +425,57 @@ def chapter_summaries(chunks: list[ChunkDraft]) -> list[tuple[str, str, str, int
             )[:1200]
         stable_id = "sum-" + hashlib.sha256(f"{document_id}:{chapter}".encode("utf-8")).hexdigest()[:16]
         rows.append((stable_id, document_id, "chapter", chapter, values[0].pdf_page_start, values[-1].pdf_page_end, text, order))
+    return rows
+
+
+def chapter_rows(
+    pages: list[Page],
+    summaries: list[tuple[str, str, str, str, int, int, str, int]],
+) -> list[tuple[str, str, int, str, int, int, int | None, int | None, str, int]]:
+    summary_by_chapter = {
+        (document_id, chapter): text
+        for _summary_id, document_id, _scope, chapter, _start, _end, text, _order in summaries
+        if chapter != "全书概览"
+    }
+    grouped: dict[tuple[str, str], list[Page]] = defaultdict(list)
+    for page in pages:
+        if page.chapter:
+            grouped[(document_id_for(page.document_name), page.chapter)].append(page)
+
+    rows = []
+    order_by_document: dict[str, int] = defaultdict(int)
+    document_order = {
+        document_id_for(page.document_name): index
+        for index, page in enumerate(pages)
+    }
+    ordered_groups = sorted(
+        grouped.items(),
+        key=lambda item: (
+            document_order.get(item[0][0], 10_000),
+            detect_chapter_number(item[0][1]) or 10_000,
+        ),
+    )
+    for (document_id, title), chapter_pages in ordered_groups:
+        number = detect_chapter_number(title)
+        if number is None:
+            continue
+        printed = [page.printed_page for page in chapter_pages if page.printed_page is not None]
+        chapter_id = "chp-" + hashlib.sha256(f"{document_id}:{number}".encode("utf-8")).hexdigest()[:16]
+        rows.append(
+            (
+                chapter_id,
+                document_id,
+                number,
+                title,
+                chapter_pages[0].pdf_page,
+                chapter_pages[-1].pdf_page,
+                printed[0] if printed else None,
+                printed[-1] if printed else None,
+                summary_by_chapter.get((document_id, title), ""),
+                order_by_document[document_id],
+            )
+        )
+        order_by_document[document_id] += 1
     return rows
 
 
@@ -453,7 +551,12 @@ def build_library(
                      chunk.quality_score, chunk.kind, chunk.sort_order),
                 )
                 connection.execute("INSERT INTO chunk_fts VALUES (?, ?)", (chunk.id, fts_tokenize(chunk.text)))
-            connection.executemany("INSERT INTO summaries VALUES (?, ?, ?, ?, ?, ?, ?, ?)", chapter_summaries(chunks))
+            summary_rows = chapter_summaries(chunks)
+            connection.executemany("INSERT INTO summaries VALUES (?, ?, ?, ?, ?, ?, ?, ?)", summary_rows)
+            connection.executemany(
+                "INSERT INTO chapters VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                chapter_rows(pages, summary_rows),
+            )
 
             dimension = 0
             if include_embeddings:

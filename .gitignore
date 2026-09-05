@@ -28,6 +28,8 @@ data/library/**
 !data/library/.gitkeep
 
 # Generated application builds
+.build/
 build/
 dist/
 release/
+runtime/

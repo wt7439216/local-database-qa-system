@@ -6,9 +6,9 @@
 
 ## 特性
 
-- 文档、PDF 页、正文页、章节、小节、全文索引和向量统一存储；
+- 文档、PDF 页、正文页、结构化章节目录、全文索引和向量统一存储；
 - 支持多 PDF，文档和页码互不串联；
-- 支持普通问答、对比、位置查询和全书概括；
+- 单独识别全书目录、全书介绍、单章概括、位置查询、对比和普通问答；
 - 回答附带原文片段及准确位置；
 - 离题问题会直接拒答；
 - 流式输出、任务排队和取消；
@@ -91,7 +91,7 @@ python -m pip install -r requirements-build.txt
 powershell -ExecutionPolicy Bypass -File .\build_windows.ps1
 ```
 
-打包前必须先生成 `data/library/textbooks.sqlite3`。产物写入 `desktop/dist/`，不会提交到 Git。
+打包前必须先生成 `data/library/textbooks.sqlite3`。产物写入 `runtime/LocalDatabaseQA/`，临时打包目录会在成功后自动删除；两者都不会提交到 Git。
 
 ## 验证
 

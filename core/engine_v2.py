@@ -2,20 +2,22 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 import re
 import threading
 import time
 from typing import Any, Callable
 
 from core import config
-from core.library_store import ChunkRecord, LibraryStore, normalize_for_similarity
+from core.library_store import ChapterRecord, ChunkRecord, LibraryStore, normalize_for_similarity
 from core.ollama_http import OllamaClient, OllamaError
-from core.text_rules import route_by_rules
+from core.text_rules import is_book_overview_query, is_book_toc_query, normalize_query, route_by_rules
 
 
-LOCATION_WORDS = ("哪页", "第几页", "哪里", "位置", "出处", "来源", "在哪", "章节")
+LOCATION_WORDS = ("哪页", "第几页", "哪里", "位置", "出处", "来源", "在哪")
+CHAPTER_LOCATION_WORDS = ("在哪一章", "在哪个章节", "在哪章", "哪一章", "哪个章节", "哪章", "第几章")
 COMPARE_WORDS = ("区别", "比较", "对比", "异同", "相比")
+CHAPTER_OVERVIEW_WORDS = ("讲什么", "讲了什么", "介绍", "概括", "总结", "主要内容", "内容", "概要", "概览")
 
 
 @dataclass(frozen=True)
@@ -42,6 +44,7 @@ class PreparedAnswer:
     retrieval_mode: str
     confidence: str
     out_of_scope: bool
+    chapters: list[ChapterRecord] = field(default_factory=list)
 
 
 class StructuredQAEngine:
@@ -90,12 +93,30 @@ class StructuredQAEngine:
     def prepare(self, question: str) -> PreparedAnswer:
         question = validate_question(question)
         route = classify_route(question)
-        if route == "summary":
-            contexts = self.library.summary_contexts()
-            return PreparedAnswer(question, route, contexts[:10], "chapter-summary", "high", False)
+        if route == "book_toc":
+            chapters = self.library.chapter_catalog()
+            return PreparedAnswer(question, route, [], "chapter-catalog", "high" if chapters else "none", not chapters, chapters)
+        if route == "book_overview":
+            summaries = self.library.summary_contexts()
+            global_summaries = [context for context in summaries if context.chapter == "全书概览"]
+            contexts = global_summaries or summaries[:4]
+            chapters = self.library.chapter_catalog()
+            return PreparedAnswer(
+                question,
+                route,
+                contexts,
+                "book-summary",
+                "high" if contexts else "none",
+                not contexts,
+                chapters,
+            )
+        if route == "chapter_overview":
+            chapter_number = extract_chapter_number(question)
+            contexts = self.library.summary_contexts(chapter_number)
+            return PreparedAnswer(question, route, contexts[:4], "chapter-summary", "high" if contexts else "none", not contexts)
 
-        top_k = 7 if route == "compare" else 5
-        retrieval_query = clean_location_query(question) if route == "locate" else question
+        top_k = 10 if route == "locate_chapter" else 7 if route == "compare" else 5
+        retrieval_query = clean_location_query(question) if route in {"locate", "locate_chapter"} else question
         query_vector = None
         if self.library.has_vectors:
             try:
@@ -105,7 +126,7 @@ class StructuredQAEngine:
                 self._last_embedding_error = str(exc)
         search = self.library.retrieve(retrieval_query, query_vector, top_k=top_k)
         hits = list(search.hits)
-        if route == "locate":
+        if route in {"locate", "locate_chapter"}:
             exact = normalize_for_similarity(retrieval_query)
             hits.sort(
                 key=lambda hit: (
@@ -114,6 +135,31 @@ class StructuredQAEngine:
                     hit.chunk.pdf_page_start,
                 )
             )
+        if route == "locate_chapter" and hits:
+            primary_chapter = hits[0].chunk.chapter
+            if primary_chapter:
+                chapter_hits = [hit for hit in hits if hit.chunk.chapter == primary_chapter]
+                section_hits = [hit for hit in chapter_hits if hit.chunk.section]
+                exact_section_hits = [
+                    hit
+                    for hit in section_hits
+                    if exact in normalize_for_similarity(hit.chunk.section)
+                ]
+                exact_body_hits = [
+                    hit for hit in section_hits
+                    if exact in normalize_for_similarity(hit.chunk.text)
+                ]
+                unique_hits = []
+                seen_locations: set[str] = set()
+                for hit in exact_section_hits or exact_body_hits or section_hits or chapter_hits:
+                    location_key = hit.chunk.section or f"page:{hit.chunk.pdf_page_start}"
+                    if location_key in seen_locations:
+                        continue
+                    seen_locations.add(location_key)
+                    unique_hits.append(hit)
+                    if len(unique_hits) >= 3:
+                        break
+                hits = unique_hits
         return PreparedAnswer(
             question,
             route,
@@ -131,11 +177,40 @@ class StructuredQAEngine:
     ) -> AnswerResultV2:
         started = time.perf_counter()
         prepared = self.prepare(question)
+        if prepared.route == "book_toc":
+            citations = [chapter.citation(index) for index, chapter in enumerate(prepared.chapters, 1)]
+            if not prepared.chapters:
+                answer = "当前教材库还没有可用的章节目录。请重新构建知识库。"
+                return self._result(answer, [], prepared, started, citation_verified=True)
+            document_count = len({chapter.document_id for chapter in prepared.chapters})
+            lines = [f"本教材库共识别到 {len(prepared.chapters)} 章："]
+            for index, chapter in enumerate(prepared.chapters, 1):
+                prefix = f"{chapter.document_title} · " if document_count > 1 else ""
+                lines.append(
+                    f"{chapter.number}. {prefix}{chapter.title}（PDF 第{chapter.pdf_page_start}–{chapter.pdf_page_end}页）[{index}]"
+                )
+            return self._result("\n".join(lines), citations, prepared, started, citation_verified=True)
+
         citations = [chunk.citation(index) for index, chunk in enumerate(prepared.contexts, 1)]
+        if prepared.route == "book_overview":
+            offset = len(citations)
+            citations.extend(
+                chapter.citation(offset + index)
+                for index, chapter in enumerate(prepared.chapters, 1)
+            )
 
         if prepared.out_of_scope or not prepared.contexts:
             answer = "当前教材没有检索到足够依据来回答这个问题。你可以换用教材中的术语，或询问具体章节、概念和系统。"
             return self._result(answer, [], prepared, started, citation_verified=True)
+
+        if prepared.route == "locate_chapter":
+            chapter = prepared.contexts[0].chapter
+            lines = [f"相关内容主要位于{chapter}："]
+            for index, chunk in enumerate(prepared.contexts[:3], 1):
+                label = chunk.section or f"PDF 第{chunk.pdf_page_start}页"
+                lines.append(f"- [{index}] {label}（PDF 第{chunk.pdf_page_start}页）")
+            answer = "\n".join(lines)
+            return self._result(answer, citations, prepared, started, citation_verified=True)
 
         if prepared.route == "locate":
             lines = ["可在以下位置找到相关内容："]
@@ -160,14 +235,15 @@ class StructuredQAEngine:
                 # Compatibility for existing fakes and integrations.
                 answer = self.ollama.generate(messages[-1]["content"], model=self.answer_model)
 
-        answer, citation_verified = normalize_citations(answer, len(citations))
-        if prepared.route == "summary":
+        # Only the contexts sent to the model are valid model citations. Extra
+        # deterministic chapter citations are appended below by the engine.
+        answer, citation_verified = normalize_citations(answer, len(prepared.contexts))
+        if prepared.route == "book_overview":
             index_lines = ["章节索引："]
-            for index, chunk in enumerate(prepared.contexts, 1):
-                if chunk.chapter == "全书概览":
-                    continue
+            offset = len(prepared.contexts)
+            for index, chapter in enumerate(prepared.chapters, 1):
                 index_lines.append(
-                    f"- {chunk.chapter}（PDF 第{chunk.pdf_page_start}–{chunk.pdf_page_end}页）[{index}]"
+                    f"- {chapter.title}（PDF 第{chapter.pdf_page_start}–{chapter.pdf_page_end}页）[{offset + index}]"
                 )
             answer = answer.rstrip() + "\n\n" + "\n".join(index_lines)
         used_ids = {int(value) for value in re.findall(r"\[(\d+)\]", answer)}
@@ -205,19 +281,38 @@ def validate_question(question: str) -> str:
 
 
 def classify_route(question: str) -> str:
-    if any(word in question for word in LOCATION_WORDS):
-        return "locate"
-    if any(word in question for word in COMPARE_WORDS):
+    normalized = normalize_query(question)
+    if is_book_toc_query(normalized):
+        return "book_toc"
+    if extract_chapter_number(normalized) is not None and any(word in normalized for word in CHAPTER_OVERVIEW_WORDS):
+        return "chapter_overview"
+    if is_book_overview_query(normalized):
+        return "book_overview"
+    if any(word in normalized for word in COMPARE_WORDS):
         return "compare"
-    legacy = route_by_rules(question)
-    return "summary" if legacy == "summary" else "qa"
+    if any(word in normalized for word in CHAPTER_LOCATION_WORDS):
+        return "locate_chapter"
+    if any(word in normalized for word in LOCATION_WORDS):
+        return "locate"
+    legacy = route_by_rules(normalized)
+    return "book_overview" if legacy == "summary" else "qa"
+
+
+def extract_chapter_number(question: str) -> int | None:
+    match = re.search(r"第\s*(\d{1,3})\s*章", question)
+    if match:
+        return int(match.group(1))
+    chinese = {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9, "十": 10}
+    match = re.search(r"第\s*([一二三四五六七八九十])\s*章", question)
+    return chinese.get(match.group(1)) if match else None
 
 
 def clean_location_query(question: str) -> str:
     value = question
-    for phrase in sorted(LOCATION_WORDS + ("哪一页", "第几章", "在哪一章"), key=len, reverse=True):
+    for phrase in sorted(LOCATION_WORDS + CHAPTER_LOCATION_WORDS + ("哪一页", "在哪一章"), key=len, reverse=True):
         value = value.replace(phrase, "")
     value = re.sub(r"[？?。！!]", "", value).strip()
+    value = re.sub(r"(?:位于|属于|是在|在)$", "", value).strip()
     return value or question
 
 
@@ -227,7 +322,8 @@ def build_messages(question: str, contexts: list[ChunkRecord], route: str) -> li
         text = re.sub(r"\s+", " ", chunk.text).strip()
         materials.append(f"[材料{index}｜{chunk.location}]\n{text}")
     task_hint = {
-        "summary": "按章节概括整本教材的知识结构，不遗漏后半部分章节。",
+        "book_overview": "用一到两段介绍教材定位、主要主题、内容演进和适用对象；不要逐条重复章节目录，系统会另附章节索引；概览正文只能引用[1]。",
+        "chapter_overview": "概括指定章节的学习目标、核心主题和主要小节，不扩展到其他章节。",
         "compare": "明确比较维度，相同点和不同点都要分别说明。",
         "qa": "直接回答概念、原理、条件或工程作用。",
     }.get(route, "直接回答问题。")
@@ -242,6 +338,19 @@ def build_messages(question: str, contexts: list[ChunkRecord], route: str) -> li
 
 def normalize_citations(answer: str, citation_count: int) -> tuple[str, bool]:
     answer = answer.strip()
+    def expand_group(match: re.Match[str]) -> str:
+        value = re.sub(r"\s+", "", match.group(1))
+        range_match = re.fullmatch(r"(\d+)[-–—](\d+)", value)
+        if range_match:
+            start, end = map(int, range_match.groups())
+            if start <= end and end - start <= 20:
+                return "".join(f"[{number}]" for number in range(start, end + 1))
+        values = re.split(r"[,，、]", value)
+        if len(values) > 1 and all(item.isdigit() for item in values):
+            return "".join(f"[{int(item)}]" for item in values)
+        return match.group(0)
+
+    answer = re.sub(r"\[(\d+(?:\s*[-–—,，、]\s*\d+)+)\]", expand_group, answer)
     cited = [int(value) for value in re.findall(r"\[(\d+)\]", answer)]
     invalid = [value for value in cited if value < 1 or value > citation_count]
     if invalid:
@@ -251,9 +360,6 @@ def normalize_citations(answer: str, citation_count: int) -> tuple[str, bool]:
             answer,
         )
     valid = [value for value in cited if 1 <= value <= citation_count]
-    if citation_count and not valid:
-        answer = answer.rstrip() + " [1]"
-        valid = [1]
     return answer, bool(valid) and not invalid
 
 

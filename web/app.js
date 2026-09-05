@@ -95,7 +95,7 @@ function setBusy(busy) {
   cancelButton.hidden = !busy;
   askButton.innerHTML = busy
     ? "<span>正在处理</span><span aria-hidden=\"true\">…</span>"
-    : "<span>开始检索</span><span aria-hidden=\"true\">→</span>";
+    : "<span>发送问题</span><span aria-hidden=\"true\">→</span>";
 }
 
 function renderSources(sources = []) {
@@ -119,10 +119,35 @@ function renderAnswer(text, loading = false) {
     : `<div class="answer-content">${content}</div>`;
 }
 
+function selectQuestion(question) {
+  input.value = question;
+  input.dispatchEvent(new Event("input"));
+  input.focus();
+}
+
+function appendRecoverySuggestions() {
+  const questions = [
+    ["查看全书目录", "这本书有哪些章节？"],
+    ["介绍这本教材", "介绍下这本书。"],
+    ["概括第三章", "第三章主要讲什么？"],
+  ];
+  const box = document.createElement("div");
+  box.className = "suggestions recovery-suggestions";
+  box.setAttribute("aria-label", "换个问法");
+  for (const [label, question] of questions) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.question = question;
+    button.textContent = label;
+    box.appendChild(button);
+  }
+  answerBody.appendChild(box);
+}
+
 async function ask(question) {
   setBusy(true);
   setStatus("正在排队");
-  renderAnswer("正在检索教材并组织证据…", true);
+  renderAnswer("正在理解问题并查找教材内容…", true);
   renderSources([]);
   let streamedAnswer = "";
   try {
@@ -163,10 +188,11 @@ async function ask(question) {
     }
     if (!finalResult) throw new Error("服务未返回完整结果");
     renderAnswer(finalResult.answer || "没有生成回答。");
+    if (finalResult.out_of_scope) appendRecoverySuggestions();
     renderSources(finalResult.citations || finalResult.sources || []);
     $("#copyButton").disabled = !finalResult.answer;
     $("#copyButton").dataset.answer = finalResult.answer || "";
-    setStatus(finalResult.out_of_scope ? "资料未覆盖" : "回答完成", "ready");
+    setStatus(finalResult.out_of_scope ? "未找到可靠依据" : "回答完成", "ready");
     return finalResult;
   } catch (error) {
     renderAnswer(`暂时无法完成回答：${error.message || error}`);
@@ -200,11 +226,11 @@ input.addEventListener("keydown", (event) => {
   if (event.ctrlKey && event.key === "Enter") form.requestSubmit();
 });
 document.querySelectorAll("[data-question]").forEach((button) => {
-  button.addEventListener("click", () => {
-    input.value = button.dataset.question;
-    input.dispatchEvent(new Event("input"));
-    input.focus();
-  });
+  button.addEventListener("click", () => selectQuestion(button.dataset.question));
+});
+answerBody.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-question]");
+  if (button) selectQuestion(button.dataset.question);
 });
 $("#copyButton").addEventListener("click", async (event) => {
   await navigator.clipboard.writeText(event.currentTarget.dataset.answer || "");

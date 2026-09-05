@@ -38,11 +38,13 @@
         <div class="answer-body" id="answerBody" aria-live="polite">
           <div class="empty-state">
             <div class="empty-symbol" aria-hidden="true">⌁</div>
-            <p>输入一个具体问题。系统会先检索教材，再逐步生成带出处的回答。</p>
+            <p>可以查看目录、概括全书或询问具体知识点；回答会附带教材出处。</p>
             <div class="suggestions" aria-label="问题示例">
+              <button type="button" data-question="这本书有哪些章节？">查看全书目录</button>
+              <button type="button" data-question="介绍下这本书。">介绍这本教材</button>
+              <button type="button" data-question="第三章主要讲什么？">概括第三章</button>
               <button type="button" data-question="什么是 Um 接口？">什么是 Um 接口？</button>
               <button type="button" data-question="为什么移动通信会产生多径衰落？">为什么会产生多径衰落？</button>
-              <button type="button" data-question="概括这本教材的知识结构。">概括教材知识结构</button>
             </div>
           </div>
         </div>
@@ -52,7 +54,7 @@
           <div class="composer-row">
             <textarea id="questionInput" maxlength="2000" rows="3" placeholder="例如：LTE 为什么采用 OFDMA？" required></textarea>
             <button class="primary-button" id="askButton" type="submit">
-              <span>开始检索</span><span aria-hidden="true">→</span>
+              <span>发送问题</span><span aria-hidden="true">→</span>
             </button>
             <button class="quiet-button cancel-button" id="cancelButton" type="button" hidden>取消</button>
           </div>

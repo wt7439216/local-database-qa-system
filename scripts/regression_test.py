@@ -12,6 +12,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from core import config
+from core.engine_v2 import classify_route
 from core.library_store import LibraryStore
 from core.ollama_http import OllamaClient
 
@@ -51,12 +52,31 @@ def main() -> None:
         if not any(chapter.startswith(f"第{number}章") for chapter in summary_chapters):
             failures.append(f"全书摘要缺少第{number}章")
 
+    expected_routes = {
+        "这本书有哪些章节": "book_toc",
+        "介绍下这本书": "book_overview",
+        "这本书主要讲了什么": "book_overview",
+        "第三章主要讲什么": "chapter_overview",
+        "扩频技术在哪个章节": "locate_chapter",
+    }
+    for question, expected_route in expected_routes.items():
+        actual = classify_route(question)
+        if actual != expected_route:
+            failures.append(f"意图路由未通过：{question}，期望 {expected_route}，得到 {actual}")
+
+    catalog = store.chapter_catalog()
+    if len(catalog) != 7 or [chapter.number for chapter in catalog] != list(range(1, 8)):
+        failures.append(f"章节目录不完整：得到 {[chapter.number for chapter in catalog]}")
+
     if failures:
         print("[FAIL] 回归检查未通过：")
         for failure in failures:
             print(f"- {failure}")
         raise SystemExit(1)
-    print(f"[OK] 回归检查通过：{len(store.documents)} 本教材，{len(store.chunks)} 个片段")
+    print(
+        f"[OK] 回归检查通过：{len(store.documents)} 本教材，"
+        f"{len(catalog)} 章，{len(store.chunks)} 个片段"
+    )
 
 
 if __name__ == "__main__":

@@ -6,7 +6,6 @@ import argparse
 import os
 import signal
 import sys
-import threading
 import webbrowser
 
 from core.engine_v2 import StructuredQAEngine

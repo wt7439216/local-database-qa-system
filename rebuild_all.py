@@ -72,6 +72,7 @@ def main() -> int:
     if not run_python_script(
         config.ROOT_DIR / "scripts" / "build_library.py",
         "步骤2：构建并验证结构化教材库",
+        "--llm-summaries",
     ):
         return 1
 

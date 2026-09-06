@@ -26,6 +26,7 @@ data/raw/**
 !data/raw/.gitkeep
 data/library/**
 !data/library/.gitkeep
+data/logs/**
 
 # Generated application builds
 .build/

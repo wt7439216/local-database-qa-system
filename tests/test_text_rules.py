@@ -1,6 +1,6 @@
 import unittest
 
-from core.text_rules import is_book_overview_query, is_book_toc_query, normalize_query, route_by_rules
+from core.text_rules import extract_terms, is_book_overview_query, is_book_toc_query, normalize_query, route_by_rules
 
 
 class RouteByRulesTests(unittest.TestCase):
@@ -28,6 +28,11 @@ class RouteByRulesTests(unittest.TestCase):
     def test_specific_question_uses_retrieval(self):
         self.assertEqual(route_by_rules("为什么存在多径衰落"), "retrieval")
         self.assertEqual(route_by_rules("介绍扩频技术"), "retrieval")
+
+    def test_interrogative_particles_do_not_pollute_search_terms(self):
+        self.assertEqual(extract_terms("什么是切换？"), ["切换"])
+        self.assertEqual(extract_terms("什么叫漫游"), ["漫游"])
+        self.assertEqual(extract_terms("多径衰落在哪一页"), ["多径衰落"])
 
 
 if __name__ == "__main__":

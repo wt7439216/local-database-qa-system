@@ -9,8 +9,8 @@ $ErrorActionPreference = "Stop"
 $ProjectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $SpecPath = Join-Path $ProjectRoot "windows_desktop.spec"
 $DesktopRoot = Join-Path $ProjectRoot "desktop"
-$DistRoot = Join-Path $DesktopRoot "dist"
-$BuildRoot = Join-Path $DesktopRoot "build"
+$DistRoot = Join-Path $ProjectRoot "runtime"
+$BuildRoot = Join-Path $ProjectRoot ".build"
 $ExePath = Join-Path $DistRoot "LocalDatabaseQA\LocalDatabaseQA.exe"
 $RequiredPyInstallerVersion = "6.21.0"
 
@@ -53,8 +53,11 @@ try {
     )
 
     if (-not $SkipIndex) {
-        Invoke-Checked -Description "Building the structured textbook library" -Command {
-            & $Python -X utf8 (Join-Path $ProjectRoot "scripts\build_library.py")
+        # The pre-build library rebuild must use the same embedding model as the
+        # runtime, otherwise it silently overwrites the tuned library with defaults.
+        $EmbedModel = if ($env:QA_EMBEDDING_MODEL) { $env:QA_EMBEDDING_MODEL } else { "bge-m3" }
+        Invoke-Checked -Description "Building the structured textbook library (model: $EmbedModel)" -Command {
+            & $Python -X utf8 (Join-Path $ProjectRoot "scripts\build_library.py") --model $EmbedModel --llm-summaries
         }
     }
 
@@ -90,6 +93,9 @@ try {
     Write-Host "EXE: $($Exe.FullName)"
     Write-Host "Size: $([math]::Round($Exe.Length / 1MB, 2)) MB"
     Write-Host "Distribute the complete LocalDatabaseQA folder, not just the EXE."
+    if (Test-Path -LiteralPath $BuildRoot) {
+        Remove-Item -LiteralPath $BuildRoot -Recurse -Force
+    }
 }
 finally {
     Pop-Location

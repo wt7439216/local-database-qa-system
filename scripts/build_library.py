@@ -27,7 +27,7 @@ if str(ROOT_DIR) not in sys.path:
 
 from core import config
 from core.library_store import SCHEMA_VERSION, fts_tokenize, json_dumps, normalize_vector, sha256_file
-from core.ollama_http import OllamaClient
+from core.ollama_http import OllamaClient, OllamaError
 
 
 PAGE_MARKER = re.compile(r"^\[page_(\d{4})\s+method=([^\]]+)\]$")
@@ -74,6 +74,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--target-chars", type=int, default=760)
     parser.add_argument("--max-chars", type=int, default=1050)
     parser.add_argument("--no-embeddings", action="store_true", help="仅用于测试/诊断")
+    parser.add_argument(
+        "--llm-summaries", action="store_true",
+        help="用回答模型为每章生成摘要（离线构建步骤，需要 Ollama）",
+    )
     return parser.parse_args()
 
 
@@ -207,6 +211,7 @@ def make_chunks(
 ) -> list[ChunkDraft]:
     chunks: list[ChunkDraft] = []
     sequence = 0
+    page_occurrences: dict[tuple[str, int, str], int] = defaultdict(int)
     active_section_by_document: dict[str, str] = defaultdict(str)
     active_chapter_by_document: dict[str, str] = defaultdict(str)
 
@@ -229,7 +234,11 @@ def make_chunks(
                 if len(piece) < 20:
                     continue
                 sequence += 1
-                stable = f"{document_id}:{page.pdf_page}:{sequence}:{piece[:80]}"
+                # 片段 ID 不能依赖全局序号：前面页面插入内容会使后续所有 ID
+                # 位移，重建时整个向量缓存失效。
+                occurrence = page_occurrences[(document_id, page.pdf_page, piece)]
+                page_occurrences[(document_id, page.pdf_page, piece)] = occurrence + 1
+                stable = f"{document_id}:{page.pdf_page}:{occurrence}:{piece}"
                 chunk_id = "chk-" + hashlib.sha256(stable.encode("utf-8")).hexdigest()[:16]
                 chunks.append(
                     ChunkDraft(
@@ -329,6 +338,16 @@ def quality_score(text: str, method: str) -> float:
     return round(max(0.35, min(1.0, score)), 3)
 
 
+def embedding_input(chunk: ChunkDraft) -> str:
+    """Prepend the chapter/section path so vectors carry topical context.
+
+    裸片段文本（如“MS与BTS之间的接口”）单独看语义很弱；把章节与小节标题
+    拼进嵌入输入，让向量同时锚定主题位置（contextual embeddings 的简化版）。
+    """
+    prefix = " ".join(part for part in (chunk.chapter, chunk.section) if part)
+    return f"{prefix}\n{chunk.text}" if prefix else chunk.text
+
+
 def source_path_for(name: str) -> Path | None:
     candidates = [ROOT_DIR / name, config.PDF_DIR / name]
     return next((path for path in candidates if path.is_file()), None)
@@ -366,7 +385,9 @@ def create_schema(connection: sqlite3.Connection) -> None:
             text TEXT NOT NULL, quality_score REAL NOT NULL, kind TEXT NOT NULL,
             sort_order INTEGER NOT NULL
         );
-        CREATE VIRTUAL TABLE chunk_fts USING fts5(chunk_id UNINDEXED, search_text, tokenize='unicode61');
+        CREATE VIRTUAL TABLE chunk_fts USING fts5(
+            chunk_id UNINDEXED, search_text, heading_text, tokenize='unicode61'
+        );
         CREATE TABLE embeddings (
             chunk_id TEXT PRIMARY KEY REFERENCES chunks(id), model TEXT NOT NULL,
             dimension INTEGER NOT NULL, vector BLOB NOT NULL
@@ -390,7 +411,10 @@ def chapter_summaries(chunks: list[ChunkDraft]) -> list[tuple[str, str, str, str
     rows = []
     for order, ((document_id, chapter), values) in enumerate(grouped.items()):
         if chapter == "全书概览":
-            preferred = next((item for item in values if "全部内容分为7章" in item.text), values[0])
+            preferred = next(
+                (item for item in values if re.search(r"全部内容分为\s*\d+\s*章", item.text)),
+                values[0],
+            )
             overview = preferred.text.strip()
             for marker in ("未经许可", "版权所有", "图书在版编目", "策划编辑"):
                 overview = overview.split(marker, 1)[0].rstrip()
@@ -487,6 +511,52 @@ def vector_blob(values: Iterable[float]) -> tuple[int, bytes]:
     return len(normalized), encoded.tobytes()
 
 
+SUMMARY_SYSTEM = (
+    "你是严谨的教材编辑。只根据给定的章节材料写摘要，不得补充外部知识，"
+    "不得编造小节。输出简洁中文正文，不要任何标题、列表符号或 markdown 标记。"
+)
+
+
+def llm_chapter_summary(chapter: str, material: str, client: OllamaClient, model: str) -> str | None:
+    if chapter == "全书概览":
+        instruction = "用200到400字概括这本教材的定位、主要主题、章节演进和适用读者。"
+    else:
+        instruction = f"用150到300字概括{chapter}的学习目标、核心主题和主要小节。"
+    user = f"{instruction}\n\n章节材料（可能含OCR噪声，忽略乱码，不要照抄）：\n{material[:3000]}"
+    try:
+        answer = client.chat(
+            [{"role": "system", "content": SUMMARY_SYSTEM}, {"role": "user", "content": user}],
+            model=model,
+        )
+    except OllamaError:
+        return None
+    answer = answer.strip()
+    if len(answer) < 60:
+        return None
+    return answer[:1200]
+
+
+def rewrite_summaries_with_llm(
+    summary_rows: list[tuple[str, str, str, str, int, int, str, int]],
+    client: OllamaClient,
+    model: str,
+) -> tuple[list[tuple[str, str, str, str, int, int, str, int]], bool]:
+    """Replace mechanical summaries with LLM-written ones; failures keep the original."""
+    rewritten = []
+    all_ok = True
+    for row in summary_rows:
+        summary_id, document_id, scope, chapter, start, end, text, order = row
+        improved = llm_chapter_summary(chapter, text, client, model)
+        if improved:
+            print(f"[INFO] LLM 摘要完成：{chapter}")
+            text = improved
+        else:
+            all_ok = False
+            print(f"[WARN] LLM 摘要失败，保留机械摘要：{chapter}")
+        rewritten.append((summary_id, document_id, scope, chapter, start, end, text, order))
+    return rewritten, all_ok
+
+
 def build_library(
     input_path: Path,
     output_path: Path,
@@ -496,6 +566,7 @@ def build_library(
     max_chars: int = 1050,
     client: OllamaClient | None = None,
     include_embeddings: bool = True,
+    llm_summaries: bool = False,
 ) -> dict[str, object]:
     raw_text = input_path.read_text(encoding="utf-8")
     pages = parse_pages(raw_text, input_path.stem)
@@ -550,8 +621,16 @@ def build_library(
                      chunk.pdf_page_end, chunk.printed_page_start, chunk.printed_page_end, chunk.text,
                      chunk.quality_score, chunk.kind, chunk.sort_order),
                 )
-                connection.execute("INSERT INTO chunk_fts VALUES (?, ?)", (chunk.id, fts_tokenize(chunk.text)))
+                heading_text = " ".join(part for part in (chunk.chapter, chunk.section) if part)
+                connection.execute(
+                    "INSERT INTO chunk_fts VALUES (?, ?, ?)",
+                    (chunk.id, fts_tokenize(chunk.text), fts_tokenize(heading_text)),
+                )
             summary_rows = chapter_summaries(chunks)
+            summaries_llm = False
+            if llm_summaries and include_embeddings:
+                ollama = client or OllamaClient()
+                summary_rows, summaries_llm = rewrite_summaries_with_llm(summary_rows, ollama, config.ANSWER_MODEL)
             connection.executemany("INSERT INTO summaries VALUES (?, ?, ?, ?, ?, ?, ?, ?)", summary_rows)
             connection.executemany(
                 "INSERT INTO chapters VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -578,7 +657,7 @@ def build_library(
                     print(f"[INFO] 复用向量 {len(chunks) - len(missing)}/{len(chunks)}")
                 for start in range(0, len(missing), size):
                     batch = missing[start : start + size]
-                    vectors = ollama.embed([item.text for item in batch], model=model, timeout=600)
+                    vectors = ollama.embed([embedding_input(item) for item in batch], model=model, timeout=600)
                     if len(vectors) != len(batch):
                         raise RuntimeError("向量数量与教材片段数量不一致。")
                     for chunk, vector in zip(batch, vectors):
@@ -598,6 +677,7 @@ def build_library(
                 "embedding_model": model if include_embeddings else "",
                 "embedding_dimension": str(dimension),
                 "build_options": json_dumps({"target_chars": target_chars, "max_chars": max_chars}),
+                "summaries": "llm" if summaries_llm else "mechanical",
             }
             connection.executemany("INSERT INTO metadata VALUES (?, ?)", metadata.items())
             connection.commit()
@@ -635,6 +715,7 @@ def main() -> None:
         target_chars=args.target_chars,
         max_chars=args.max_chars,
         include_embeddings=not args.no_embeddings,
+        llm_summaries=args.llm_summaries,
     )
     print("[OK] 结构化教材库构建完成")
     for key, value in result.items():

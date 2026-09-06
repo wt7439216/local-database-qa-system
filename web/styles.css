@@ -87,7 +87,8 @@ button:disabled { cursor: not-allowed; opacity: 0.5; }
   box-shadow: var(--shadow);
   overflow: hidden;
 }
-.answer-panel { display: grid; grid-template-rows: auto 1fr auto; }
+/* 提问框位于面板顶部：行序为 提问框 / 标题 / 回答区 */
+.answer-panel { display: grid; grid-template-rows: auto auto 1fr; }
 .evidence-panel { display: grid; grid-template-rows: auto 1fr auto; }
 
 .panel-heading {
@@ -120,13 +121,19 @@ button:disabled { cursor: not-allowed; opacity: 0.5; }
 .suggestions button { min-height: 38px; padding: 0 13px; font-size: .86rem; font-weight: 600; }
 .recovery-suggestions { justify-content: flex-start; margin-top: 22px; }
 
-.answer-content { max-width: 820px; font-size: 1rem; line-height: 1.9; white-space: pre-wrap; }
+.answer-content { max-width: 820px; font-size: 1rem; line-height: 1.9; }
+.answer-turn { padding: 20px 0; border-bottom: 1px dashed var(--line); }
+.answer-turn:last-child { border-bottom: 0; padding-bottom: 0; }
+.turn-question {
+  margin-bottom: 12px; padding-left: 12px; border-left: 3px solid var(--cyan);
+  color: var(--navy); font-weight: 700; line-height: 1.6;
+}
 .answer-content .citation-ref { color: #007f79; font-weight: 800; }
 .answer-loading { display: flex; align-items: center; gap: 10px; color: var(--muted); }
 .pulse { width: 9px; height: 9px; border-radius: 50%; background: var(--cyan); animation: pulse 1.2s infinite; }
 @keyframes pulse { 50% { transform: scale(1.5); opacity: .45; } }
 
-.composer { padding: 17px 20px 14px; border-top: 1px solid var(--line); background: #f8fafb; }
+.composer { padding: 17px 20px 14px; border-bottom: 1px solid var(--line); background: #f8fafb; }
 .composer > label { display: block; margin-bottom: 8px; color: var(--navy); font-size: .84rem; font-weight: 800; }
 .composer-row { display: grid; grid-template-columns: 1fr auto; align-items: stretch; gap: 10px; }
 .composer textarea {
@@ -199,6 +206,37 @@ dialog::backdrop { background: rgba(8,24,40,.48); backdrop-filter: blur(3px); }
   align-self: stretch;
 }
 
-.answer-content {
-  white-space: pre-wrap;
+/* markdown 渲染的答案结构（markdown.js 产出，内容已转义） */
+.answer-content h3,
+.answer-content h4,
+.answer-content h5 {
+  margin: 0.9em 0 0.35em;
+  line-height: 1.5;
+}
+.answer-content p {
+  margin: 0.45em 0;
+}
+.answer-content ul,
+.answer-content ol {
+  margin: 0.45em 0;
+  padding-left: 1.6em;
+}
+.answer-content li {
+  margin: 0.25em 0;
+}
+.answer-content code {
+  background: rgba(16, 36, 62, 0.08);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  font-size: 0.92em;
+}
+.answer-content pre {
+  background: rgba(16, 36, 62, 0.08);
+  border-radius: 8px;
+  overflow-x: auto;
+  padding: 0.8em 1em;
+}
+.answer-content pre code {
+  background: none;
+  padding: 0;
 }

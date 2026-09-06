@@ -69,7 +69,7 @@ class RebuildAllTests(unittest.TestCase):
                     "步骤1：提取教材文本",
                 ),
                 call(
-                    [sys.executable, os.fspath(scripts / "build_library.py")],
+                    [sys.executable, os.fspath(scripts / "build_library.py"), "--llm-summaries"],
                     "步骤2：构建并验证结构化教材库",
                 ),
             ],

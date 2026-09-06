@@ -17,11 +17,38 @@ from typing import Any, Iterable
 
 from core.text_rules import extract_terms
 
+try:
+    from math import sumprod as _sumprod  # Python 3.12+ 的 C 实现，避免纯 Python 内积循环
+except ImportError:  # pragma: no cover - Python 3.11 兼容路径
+    def _sumprod(left, right):
+        return sum(a * b for a, b in zip(left, right))
 
-SCHEMA_VERSION = 3
+
+SCHEMA_VERSION = 4
 DEFAULT_LIBRARY_NAME = "教材知识库"
+# bm25 列权重：正文列 1.0，章节/小节标题列 4.0（标题命中是更强的主题信号）。
+FTS_BODY_WEIGHT = 1.0
+FTS_HEADING_WEIGHT = 4.0
+# 标题精确包含查询词时的融合加分，量级与 RRF 单路第 1 名贡献（约 0.02）相当。
+FTS_HEADING_BONUS = 0.006
+# 密度余弦门限：决定纯词法证据的可信度分级。绝对分值随嵌入模型分布变化，
+# 因此按库记录的 embedding_model 查表，未知模型回落默认值。
+DEFAULT_DENSE_GATES = {"strong": 0.48, "accept": 0.55}
+MODEL_DENSE_GATES: dict[str, dict[str, float]] = {
+    "nomic-embed-text": {"strong": 0.48, "accept": 0.55},
+}
+# 低于该余弦的向量候选不携带可用信号，只会稀释融合排序。
+DENSE_CANDIDATE_FLOOR = 0.15
 _CJK_RE = re.compile(r"[\u4e00-\u9fff]+")
 _LATIN_RE = re.compile(r"[A-Za-z0-9]+(?:[._+/-][A-Za-z0-9]+)*")
+
+
+def _gates_for_model(model: str) -> dict[str, float]:
+    base = str(model or "").strip().removesuffix(":latest")
+    for name, gates in MODEL_DENSE_GATES.items():
+        if base == name.removesuffix(":latest"):
+            return dict(gates)
+    return dict(DEFAULT_DENSE_GATES)
 
 
 @dataclass(frozen=True)
@@ -174,6 +201,7 @@ class LibraryStore:
         self.documents = self._load_documents()
         self.chapters = self._load_chapters()
         self.chunks, self.dimension, self.embedding_model, self._vectors = self._load_chunks()
+        self.dense_gates = _gates_for_model(self.embedding_model)
         self._chunk_by_id = {chunk.id: chunk for chunk in self.chunks}
 
     @property
@@ -194,6 +222,7 @@ class LibraryStore:
             "embedding_model": self.embedding_model,
             "embedding_dimension": self.dimension,
             "vector_index": self.has_vectors,
+            "dense_gates": dict(self.dense_gates),
             "source_sha256": self.metadata.get("source_sha256", ""),
             "built_at": self.metadata.get("built_at", ""),
         }
@@ -204,6 +233,7 @@ class LibraryStore:
         query_vector: list[float] | None,
         top_k: int = 6,
         candidate_limit: int = 30,
+        include_front_matter: bool = False,
     ) -> SearchResult:
         query = query.strip()
         if not query:
@@ -214,23 +244,48 @@ class LibraryStore:
         if query_vector is not None and self.has_vectors:
             dense_scores = self._similarities(query_vector)
             dense_rows = sorted(
-                ((score, position) for position, score in enumerate(dense_scores)),
+                (
+                    (score, position)
+                    for position, score in enumerate(dense_scores)
+                    if score >= DENSE_CANDIDATE_FLOOR
+                ),
                 reverse=True,
             )[:candidate_limit]
 
         # Reciprocal Rank Fusion is stable across unrelated score scales.
+        # 中文 2-gram 分词让词法路召回高但噪声大，中文语义向量（bge-m3 级别）
+        # 排序更准，因此语义路权重更高。
         fused: dict[str, dict[str, Any]] = {}
         for rank, chunk_id in enumerate(lexical_ids, 1):
             fused.setdefault(chunk_id, {"score": 0.0, "lexical_rank": None, "dense_rank": None, "dense": None})
-            fused[chunk_id]["score"] += 1.25 / (60 + rank)
+            fused[chunk_id]["score"] += 1.0 / (60 + rank)
             fused[chunk_id]["lexical_rank"] = rank
 
         for rank, (dense_score, position) in enumerate(dense_rows, 1):
             chunk_id = self.chunks[position].id
             fused.setdefault(chunk_id, {"score": 0.0, "lexical_rank": None, "dense_rank": None, "dense": None})
-            fused[chunk_id]["score"] += 1.0 / (60 + rank)
+            fused[chunk_id]["score"] += 1.25 / (60 + rank)
             fused[chunk_id]["dense_rank"] = rank
             fused[chunk_id]["dense"] = dense_score
+
+        # 建库时算好的 OCR 质量分参与排序：扫描噪声/乱码多的片段在融合分上打折，
+        # 但不直接剔除，避免质量评估误伤唯一命中的片段。标题精确包含查询词的
+        # 片段（往往是定义性小节）获得小幅加权，量级与 RRF 单路贡献相当。
+        focus_terms = [
+            normalize_for_similarity(term)
+            for term in query_search_terms(query)[:3]
+            if len(term) >= 2
+        ]
+        for chunk_id, values in fused.items():
+            chunk = self._chunk_by_id.get(chunk_id)
+            if chunk is None:
+                continue
+            quality = max(0.0, min(1.0, chunk.quality_score))
+            values["score"] *= 0.5 + 0.5 * quality
+            if focus_terms:
+                heading = normalize_for_similarity(chunk.section or "")
+                if any(term in heading for term in focus_terms):
+                    values["score"] += FTS_HEADING_BONUS
 
         ranked = sorted(
             fused.items(),
@@ -243,16 +298,14 @@ class LibraryStore:
         selected: list[SearchHit] = []
         normalized_selected: list[str] = []
         section_counts: dict[str, int] = {}
-        for chunk_id, values in ranked:
-            chunk = self._chunk_by_id.get(chunk_id)
-            if chunk is None or chunk.kind == "front_matter":
-                continue
+
+        def try_select(chunk, values) -> None:
             section_key = f"{chunk.document_id}:{chunk.section}"
             if chunk.section and section_counts.get(section_key, 0) >= 2:
-                continue
+                return
             normalized = normalize_for_similarity(chunk.text)
             if any(near_duplicate(normalized, previous) for previous in normalized_selected):
-                continue
+                return
             normalized_selected.append(normalized)
             section_counts[section_key] = section_counts.get(section_key, 0) + 1
             selected.append(
@@ -264,16 +317,46 @@ class LibraryStore:
                     dense_rank=values["dense_rank"],
                 )
             )
+
+        for chunk_id, values in ranked:
+            chunk = self._chunk_by_id.get(chunk_id)
+            if chunk is None or chunk.kind == "front_matter":
+                continue
+            try_select(chunk, values)
             if len(selected) >= max(1, top_k):
                 break
 
+        # 封面/目录/简介 front_matter 只回填剩余名额，绝不挤掉正文证据；
+        # 定位类路由保持排除，避免目录页抢答位置问题。
+        if include_front_matter and len(selected) < max(1, top_k):
+            for chunk_id, values in ranked:
+                chunk = self._chunk_by_id.get(chunk_id)
+                if chunk is None or chunk.kind != "front_matter":
+                    continue
+                try_select(chunk, values)
+                if len(selected) >= max(1, top_k):
+                    break
+
         top_dense = dense_rows[0][0] if dense_rows else None
         lexical_matches = len(lexical_ids)
-        lexical_strength, longest_match = self._lexical_strength(query, lexical_ids[:8])
+        lexical_strength, longest_match, matched_chunks = self._lexical_strength(query, lexical_ids[:8])
         if lexical_strength >= 2:
-            confidence = "high" if top_dense is None or top_dense >= 0.48 else "medium"
+            confidence = "high" if top_dense is None or top_dense >= self.dense_gates["strong"] else "medium"
             out_of_scope = False
-        elif lexical_strength == 1 and top_dense is not None and top_dense >= 0.55 and longest_match >= 3:
+        elif lexical_strength == 1 and top_dense is not None and top_dense >= self.dense_gates["accept"] and longest_match >= 3:
+            confidence = "medium"
+            out_of_scope = False
+        elif (
+            lexical_strength == 1
+            and longest_match == 2
+            and matched_chunks >= 5
+            and top_dense is not None
+            and top_dense >= 0.30
+        ):
+            # “什么是切换”这类两字概念问题：词法残留停用词后只剩一个二字词。
+            # 向量分的绝对值随模型变化（nomic 与 bge-m3 分布不同），不参与放行
+            # 判定，只留一个防退化下限；真正的判据是主题词集中命中至少 5 个片段
+            # ——离题问题的碎片残留词（天气/最近）只能零星命中。
             confidence = "medium"
             out_of_scope = False
         else:
@@ -283,23 +366,32 @@ class LibraryStore:
         mode = "hybrid" if lexical_ids and dense_rows else "vector" if dense_rows else "keyword"
         return SearchResult(selected, out_of_scope, confidence, mode, top_dense, lexical_matches)
 
-    def _lexical_strength(self, query: str, chunk_ids: list[str]) -> tuple[int, int]:
+    def _lexical_strength(self, query: str, chunk_ids: list[str]) -> tuple[int, int, int]:
+        """Return (most terms matched in one chunk, longest matched term, most chunks one term hits).
+
+        计数取“单个词命中的最多片段数”而不是并集：碎片化残留（如“天气样”里的
+        天气）只能零星命中，而真正的主题词会在大量片段中集中出现。
+        """
         terms = query_search_terms(query)
         if not terms or not chunk_ids:
-            return 0, 0
+            return 0, 0, 0
         strongest = 0
         longest = 0
+        term_chunk_counts: dict[str, int] = {}
         for chunk_id in chunk_ids:
             chunk = self._chunk_by_id.get(chunk_id)
             if chunk is None:
                 continue
             compact = normalize_for_similarity(chunk.text)
             matched_terms = [term for term in terms if normalize_for_similarity(term) in compact]
+            for term in matched_terms:
+                term_chunk_counts[term] = term_chunk_counts.get(term, 0) + 1
             matched = len(matched_terms)
             strongest = max(strongest, matched)
             if matched == strongest:
                 longest = max((len(normalize_for_similarity(term)) for term in matched_terms), default=0)
-        return strongest, longest
+        concentrated = max(term_chunk_counts.values(), default=0)
+        return strongest, longest, concentrated
 
     def summary_contexts(self, chapter_number: int | None = None) -> list[ChunkRecord]:
         where = "WHERE s.scope_type = 'chapter'"
@@ -447,7 +539,8 @@ class LibraryStore:
         try:
             with self._lock, closing(self._connect()) as connection:
                 rows = connection.execute(
-                    "SELECT chunk_id FROM chunk_fts WHERE chunk_fts MATCH ? ORDER BY bm25(chunk_fts) LIMIT ?",
+                    "SELECT chunk_id FROM chunk_fts WHERE chunk_fts MATCH ?"
+                    f" ORDER BY bm25(chunk_fts, {FTS_BODY_WEIGHT}, {FTS_HEADING_WEIGHT}) LIMIT ?",
                     (expression, int(limit)),
                 ).fetchall()
         except sqlite3.OperationalError:
@@ -462,14 +555,12 @@ class LibraryStore:
             raise ValueError(
                 f"查询向量维度为 {len(normalized)}，教材库维度为 {self.dimension}。"
             )
-        scores: list[float] = []
-        for row in range(len(self.chunks)):
-            offset = row * self.dimension
-            total = 0.0
-            for column, value in enumerate(normalized):
-                total += value * self._vectors[offset + column]
-            scores.append(total)
-        return scores
+        rows = memoryview(self._vectors)
+        dimension = self.dimension
+        return [
+            _sumprod(normalized, rows[offset : offset + dimension])
+            for offset in range(0, len(self._vectors), dimension)
+        ]
 
 
 def normalize_vector(values: Iterable[float]) -> list[float]:
@@ -500,11 +591,12 @@ def query_search_terms(query: str) -> list[str]:
     for extracted in extract_terms(query, max_terms=40):
         for match in _CJK_RE.finditer(extracted):
             value = match.group(0)
-            if len(value) <= 3:
-                terms.add(value)
-            else:
-                terms.update(value[index : index + 2] for index in range(len(value) - 1))
-                terms.update(value[index : index + 3] for index in range(len(value) - 2))
+            terms.add(value)
+            # 短语也可能被停用词残留污染（如“是切换”），任何长度的词都补出
+            # 2/3 字滑窗，保证核心二字词总能进入 FTS 查询。
+            for size in (2, 3):
+                if len(value) > size:
+                    terms.update(value[index : index + size] for index in range(len(value) - size + 1))
         terms.update(match.group(0).lower() for match in _LATIN_RE.finditer(extracted))
     return sorted(terms, key=lambda value: (-len(value), value))
 

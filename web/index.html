@@ -27,11 +27,27 @@
 
     <main class="workspace">
       <section class="answer-panel" aria-labelledby="answerHeading">
+        <form class="composer" id="questionForm">
+          <label for="questionInput">向教材提问</label>
+          <div class="composer-row">
+            <textarea id="questionInput" maxlength="2000" rows="3" placeholder="例如：LTE 为什么采用 OFDMA？" required></textarea>
+            <button class="primary-button" id="askButton" type="submit">
+              <span>发送问题</span><span aria-hidden="true">→</span>
+            </button>
+            <button class="quiet-button cancel-button" id="cancelButton" type="button" hidden>取消</button>
+          </div>
+          <div class="composer-meta">
+            <span>Ctrl + Enter 发送</span>
+            <span id="questionCount">0 / 2000</span>
+          </div>
+        </form>
+
         <div class="panel-heading">
           <div>
             <span class="eyebrow">当前回答</span>
             <h2 id="answerHeading">从教材中寻找答案</h2>
           </div>
+          <button class="quiet-button" id="clearButton" type="button" hidden>清空会话</button>
           <button class="quiet-button" id="copyButton" type="button" disabled>复制回答</button>
         </div>
 
@@ -48,21 +64,6 @@
             </div>
           </div>
         </div>
-
-        <form class="composer" id="questionForm">
-          <label for="questionInput">向教材提问</label>
-          <div class="composer-row">
-            <textarea id="questionInput" maxlength="2000" rows="3" placeholder="例如：LTE 为什么采用 OFDMA？" required></textarea>
-            <button class="primary-button" id="askButton" type="submit">
-              <span>发送问题</span><span aria-hidden="true">→</span>
-            </button>
-            <button class="quiet-button cancel-button" id="cancelButton" type="button" hidden>取消</button>
-          </div>
-          <div class="composer-meta">
-            <span>Ctrl + Enter 发送</span>
-            <span id="questionCount">0 / 2000</span>
-          </div>
-        </form>
       </section>
 
       <aside class="evidence-panel" aria-labelledby="evidenceHeading">
@@ -116,6 +117,7 @@
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/markdown.js" defer></script>
   <script src="/app.js" defer></script>
 </body>
 </html>

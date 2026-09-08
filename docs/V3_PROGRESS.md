@@ -443,6 +443,33 @@ Phase D 主体 + Security Closure 之后的运行时收口：Library Manager 与
 - 修正 `tests/test_library_qdrant_e2e.py`：按 D.1 新契约，managed 库 Qdrant collection 绑定 `importer.DEFAULT_GENERAL_COLLECTION`（patch 点同步更新）；本机真实 Qdrant 1.19.1 可达时 5/5 PASS。
 - 全套回归（本机，Qdrant 1.19.1 + Ollama 可达，PYTHONUTF8=1/PYTHONIOENCODING=utf-8）：**311/311 PASS**（283 + 28，0 skip）；ruff（repo）/ compileall / node --check（web ×3）全过；telemetry 隔离测试（内嵌子进程全量重跑）PASS。
 
-### Gate decision（本地初评）
+### Gate decision
 
-**Phase D.1 本地验收 = PASS**（4 项 P0 关闭 + 回归锁定 + 311/311）。远端 CI 复核与发布记录见 D10。Phase E = NOT STARTED，等待用户单独授权。
+**Phase D.1 = PASS**（4 项 P0 关闭 + 回归锁定 + 本地 311/311 + 远端 CI success + 发布同步 0/0 clean，证据见下 D10）。Phase E = NOT STARTED，等待用户单独授权。
+
+## D10 远端 CI 复核与发布记录（2026-09-08）
+
+### 中断恢复审计（Recovery Audit）
+
+上一会话在"Node checks = PASS、Full suite 311 tests / 3 errors、Qdrant 8 vs 1024 维度不匹配"状态下中断。恢复后先做只读审计：本地版v3 与上传版工作树逐文件对比，除 `reranker_service/.venv`（.gitignore 排除的本机资产）外**零漂移**；上传版 HEAD == origin/main == `3416de3`、ahead/behind 0/0、worktree clean——上一轮已把修复同步、提交并推送。
+
+### 311 tests / 3 errors 根因（已闭合）
+
+3 个 error 与上一轮线索"8 维查询 vs 1024 维库/索引"完全吻合，根因是**测试隔离 bug（hermeticity，A 类）**，非生产绑定问题：
+
+1. D.1 把 managed 库的 Qdrant collection 绑定到 `importer.DEFAULT_GENERAL_COLLECTION`（`general_documents`），并明确不再读 `config.QDRANT_COLLECTION`（`core/library_store.py::_vector_collection` + `create_vector_store(collection=...)`）；
+2. 但该 e2e 测试仍 patch 旧的 `config.QDRANT_COLLECTION`——生产路径根本不读这个符号，patch 无效；
+3. 于是测试用 fake embedder 的 **8 维**向量直写本机真实 Qdrant 的 `general_documents` 集合（真实语料、**1024 维**、20 点），Qdrant 拒绝维度不匹配 → 3 个 error。
+
+修复（已含在 3416de3）：测试 patch 点改为 `importer.DEFAULT_GENERAL_COLLECTION`，e2e 全程使用隔离集合。恢复后本机复跑：该模块 5/5 PASS，全套 **311/311 PASS（0 FAIL / 0 ERROR / 0 skip）**；修复方式未引入静默 keyword fallback、未 pad 向量、未关闭 Qdrant 校验、未 skip 真实集成测试（本机 Qdrant 1.19.1 + Ollama 在线时真实集成测试照常全量执行并 PASS）。
+
+### 远端 CI（GitHub Actions）
+
+- 代码提交 `3416de3`（fix(v3.3): close runtime library integration gaps）：run `34196063045`，**completed / success**（2m24s）；job `test` 五步全绿：Install ingestion dependencies / Lint Python sources / Run unit tests / Compile Python sources / Check browser JavaScript。
+- 文档收尾提交（本 D10 记录随其推送）同样经 CI 复核，SHA 见仓库 git log 最新提交。
+
+### 发布记录
+
+- 同步方式：`scripts/publication_sync.py`（allowlist 单向 本地版v3 → 上传版）；`.github/` 为 GitHub-only 资产，脚本不复制不删除，`git ls-files .github` 确认 `ci.yml` 持续受跟踪。
+- 上传版复核：ruff / unittest 全量 / compileall / node --check（web ×3）全过；`publication_scan.py` secret/路径扫描全部命中均为认证实现代码、测试期生成 token 与脱敏测试的故意假路径（`C:\Users\secretuser\...`），无真实凭据与本机路径。
+- 最终：HEAD == origin/main、ahead/behind 0/0、worktree clean。

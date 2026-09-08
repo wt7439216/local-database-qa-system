@@ -2,7 +2,7 @@
 
 一个完全本地运行、答案可追溯到原文位置的教材/文档问答系统。
 
-> 当前目录是包含教材、知识库和 Windows 运行包的本地完整版。日常使用请先看 [本地使用说明](本地使用说明.md)。
+> 本仓库（公开版）只包含源码、测试与文档。教材、SQLite 知识库与 Windows 运行包仅存在于本地开发/使用环境，均被 .gitignore 排除、不会进入版本库。日常使用请先看 [本地使用说明](本地使用说明.md)。
 
 系统把 PDF 整理成单个 SQLite 知识库，使用 FTS5 全文检索与向量检索双路召回，经 RRF 融合、质量加权和范围判断后，由本地 Ollama 模型生成带原文引用的回答。v3 起支持 PDF / DOCX / PPTX / TXT / Markdown 五格式通用导入、可插拔 Qdrant 稠密索引、知识库/标签管理与按范围检索（QueryScope）。桌面和手机共用响应式 Web 界面，内容无需上传云端。
 
@@ -14,6 +14,7 @@
 | Phase B | v3.1 | 本地 Cross-Encoder Reranker | ACCEPTED_WITH_EFFICACY_DEFERRED |
 | Phase C | v3.2 | 五格式通用导入 + 增量导入 | FINAL PASS |
 | Phase D | v3.3 | 知识库管理 + 文档生命周期 + QueryScope | FINAL PASS |
+| Phase D.1 | v3.3 | 运行时整合 + Scope 收口 + 错误脱敏 | FINAL PASS |
 
 Phase E（Router / Query Rewrite）尚未开始。
 
@@ -118,6 +119,8 @@ powershell -ExecutionPolicy Bypass -File .\build_windows.ps1 -SkipIndex
 python -B -m unittest discover -v
 python -B -m compileall -q core desktop scripts tests
 node --check web/app.js
+node --check web/library.js
+node --check web/markdown.js
 python -m ruff check core desktop scripts tests
 ```
 

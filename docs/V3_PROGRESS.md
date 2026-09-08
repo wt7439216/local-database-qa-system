@@ -532,4 +532,6 @@ Phase D 主体 + Security Closure 之后的运行时收口：Library Manager 与
 
 ### 发布与 CI
 
-（本记录随首个发布提交推送，CI 复核成功后以收尾提交追加 run id 与最终 0/0 clean 证据。）
+- 首个发布提交 `7de0e4e`（feat(v3.3): close Phase D.1.1 legacy library migration compatibility closure）经 `publication_sync.py` 同步（+2 改 6 删 0，`.github/` 未触碰）；上传版复核 ruff / unittest 333/333 / compileall / node --check（web ×3）全过，`publication_scan.py` 无真实凭据与本机路径；
+- GitHub Actions run `34213629093`：**completed / success**（job test 3m8s，五步全绿：Install ingestion dependencies / Lint Python sources / Run unit tests / Compile Python sources / Check browser JavaScript）；唯一 annotation 为 actions 自身 Node 20 弃用提示（与本仓库代码无关）；
+- 本地数据侧：`LOCAL_DATA_COMPATIBILITY = PASS`，`MIGRATION_COMPATIBILITY_CLOSURE = PASS`（证据见本记录上文）；Phase E = NOT STARTED，等待用户单独授权。

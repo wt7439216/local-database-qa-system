@@ -44,7 +44,7 @@ Selection happens once at startup and never per-request; failures are loud
 
 ## Why this is NOT a Phase E boundary violation
 
-Phase E (not started) is about query-time behavior: intent routing,
+Phase E (not started at the time of writing) is about query-time behavior: intent routing,
 pronoun resolution, retrieval/ranking strategy changes.  This change is a
 **construction-time identity fix**:
 

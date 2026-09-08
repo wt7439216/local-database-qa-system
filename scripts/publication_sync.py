@@ -3,8 +3,11 @@
 - Syncs source trees + top-level files ONLY (no data/, runtime/, caches, venvs).
 - reranker_service syncs server.py / requirements.txt / README.md only.
 - Deletes upload-side files that live INSIDE the synced trees but no longer
-  exist in dev (old source).  GitHub-only assets outside the synced trees
-  (e.g. LICENSE) are never touched.
+  exist in dev (old source).  GitHub-only assets are never touched.
+- OWNERSHIP RULE: ``.github/`` is a Git-publish-workspace-only asset.
+  This script never reads dev-side ``.github/`` and never copies or deletes
+  upload-side ``.github/`` (e.g. ``.github/workflows/ci.yml``).  CI workflow
+  edits are made directly in the upload workspace and are never synced back.
 - Prints an Added / Modified / Deleted manifest with SHA256 comparison.
 """
 
@@ -35,6 +38,8 @@ SKIP_SUFFIXES = {".pyc", ".pyo"}
 
 # Never delete these on the upload side even if absent in dev (GitHub-only).
 # (None currently exist outside the synced trees; the rule documents intent.)
+# .github/ is handled separately: it is a GitHub-only tree that this script
+# neither collects from dev nor lists as a deletion candidate (see docstring).
 UPLOAD_ONLY_KEEP = {"LICENSE", "LICENSE.md", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md"}
 
 
@@ -61,22 +66,19 @@ def collect_dev_files() -> dict[str, Path]:
         path = DEV / name
         if path.is_file():
             files[name] = path
-    # .github from dev too (ci.yml is a source-controlled asset)
-    github = DEV / ".github"
-    if github.is_dir():
-        for path in github.rglob("*"):
-            if path.is_file():
-                rel = path.relative_to(DEV)
-                if set(rel.parts[:-1]) & SKIP_DIRS:
-                    continue
-                files[rel.as_posix()] = path
+    # .github/ is deliberately NOT collected: it is a GitHub-only asset
+    # owned by the upload workspace (see module docstring).
     return files
 
 
 def collect_upload_side(synced_rel: set[str]) -> list[str]:
-    """Existing upload files inside the synced trees (deletion candidates)."""
+    """Existing upload files inside the synced trees (deletion candidates).
+
+    .github/ is excluded: it is a GitHub-only asset and is never deleted
+    here, even if a dev-side copy is absent.
+    """
     existing: list[str] = []
-    for tree in (*SYNC_TREES, "reranker_service", ".github"):
+    for tree in (*SYNC_TREES, "reranker_service"):
         base = UPLOAD / tree
         if not base.is_dir():
             continue

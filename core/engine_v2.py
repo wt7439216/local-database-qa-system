@@ -20,8 +20,31 @@ from core.library_store import (
     normalize_for_similarity,
 )
 from core.ollama_http import OllamaClient, OllamaError
+from core.query_router import (
+    CHAPTER_LOCATION_WORDS,
+    LOCATION_WORDS,
+    QueryRouter,
+    RouteDecision,
+    build_history_entry,
+    chinese_numeral_to_int,
+    classify_route,
+    extract_chapter_number,
+    looks_like_follow_up,
+    normalize_history,
+    split_compare_entities,
+)
 from core.query_scope import QueryScope, ScopeResolution
-from core.text_rules import is_book_overview_query, is_book_toc_query, normalize_query, route_by_rules
+
+# Phase E: historical rule names re-exported from the single routing module
+# so existing importers (tests, scripts) keep working unchanged.
+__all__ = [
+    "classify_route",
+    "looks_like_follow_up",
+    "extract_chapter_number",
+    "chinese_numeral_to_int",
+    "normalize_history",
+    "split_compare_entities",
+]
 
 
 class CitationScopeViolationError(RuntimeError):
@@ -31,19 +54,6 @@ class CitationScopeViolationError(RuntimeError):
     supposed to make it impossible; the assertion is the last line of defense.
     """
 
-
-LOCATION_WORDS = ("哪页", "第几页", "哪里", "位置", "出处", "来源", "在哪")
-CHAPTER_LOCATION_WORDS = ("在哪一章", "在哪个章节", "在哪章", "哪一章", "哪个章节", "哪章", "第几章")
-COMPARE_WORDS = ("区别", "比较", "对比", "异同", "相比")
-CHAPTER_OVERVIEW_WORDS = ("讲什么", "讲了什么", "介绍", "概括", "总结", "主要内容", "内容", "概要", "概览")
-
-HISTORY_MAX_TURNS = 3
-FOLLOW_UP_PREFIXES = (
-    "那", "那么", "还有", "另外", "以及", "其次", "此外", "其中", "其他", "其它",
-    "继续", "接着", "再说", "展开", "详细", "换句话说", "它的", "它们",
-    "该", "此", "上述", "上面", "前面", "刚才",
-    "介绍", "说明", "概括", "总结", "讲讲", "说说", "看看", "分析", "比较",
-)
 
 _log_lock = threading.Lock()
 
@@ -72,6 +82,9 @@ class AnswerResultV2:
     out_of_scope: bool
     citation_verified: bool
     elapsed_ms: int
+    # Phase E: additive per-turn metadata the client may round-trip into
+    # history (structured referent resolution).  Old clients ignore it.
+    history_entry: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -86,6 +99,7 @@ class PreparedAnswer:
     confidence: str
     out_of_scope: bool
     chapters: list[ChapterRecord] = field(default_factory=list)
+    decision: RouteDecision | None = None
 
 
 class StructuredQAEngine:
@@ -98,6 +112,7 @@ class StructuredQAEngine:
         self.library = LibraryStore(library_path or config.LIBRARY_DB)
         self.ollama = ollama or OllamaClient()
         self.answer_model = answer_model or config.ANSWER_MODEL
+        self.router = QueryRouter()
         self._model_lock = threading.Lock()
         self._last_embedding_error = ""
         # Stage timings for telemetry (compare routes record the last pass).
@@ -141,19 +156,25 @@ class StructuredQAEngine:
         scope: QueryScope | None = None,
     ) -> PreparedAnswer:
         question = validate_question(question)
-        history = normalize_history(history)
         resolution = self.library.resolve_scope(scope)
         allowed = self.library.effective_allowed_ids(resolution)
-        routing_question = question
-        if history and looks_like_follow_up(question):
-            # Resolve fragments like "那第二章呢" against the previous turn:
-            # routing and retrieval see the merged text, while the prompt keeps
-            # the raw question plus the dialogue history.
-            routing_question = f"{history[-1]['question']}{question}"
-        route = classify_route(routing_question)
+        decision = self.router.route(
+            question,
+            history,
+            document_titles={record.id: record.title for record in self.library.documents},
+            allowed_document_ids=allowed,
+        )
+        # Routing sees the rewritten question; the prompt keeps the raw
+        # question plus the dialogue history.
+        routing_question = decision.normalized_question
+        route = decision.route
+        if decision.scope_conflict:
+            return PreparedAnswer(question, route, [], "none", "none", True, [], decision)
+        if route == "unsupported":
+            return PreparedAnswer(question, route, [], "none", "high", False, [], decision)
         if route == "book_toc":
             chapters = self.library.chapter_catalog(allowed)
-            return PreparedAnswer(question, route, [], "chapter-catalog", "high" if chapters else "none", not chapters, chapters)
+            return PreparedAnswer(question, route, [], "chapter-catalog", "high" if chapters else "none", not chapters, chapters, decision)
         if route == "book_overview":
             summaries = self.library.summary_contexts(allowed_document_ids=allowed)
             global_summaries = [item for item in summaries if item.chapter == "全书概览"]
@@ -167,11 +188,15 @@ class StructuredQAEngine:
                 "high" if contexts else "none",
                 not contexts,
                 chapters,
+                decision,
             )
         if route == "chapter_overview":
             chapter_number = extract_chapter_number(routing_question)
             contexts = self.library.summary_contexts(chapter_number, allowed)
-            return PreparedAnswer(question, route, contexts[:4], "chapter-summary", "high" if contexts else "none", not contexts)
+            return PreparedAnswer(question, route, contexts[:4], "chapter-summary", "high" if contexts else "none", not contexts, [], decision)
+        if decision.resolution_status == "ambiguous":
+            # 无法确定 referent：不检索、不猜，交给 answer() 输出澄清提示。
+            return PreparedAnswer(question, route, [], "none", "low", False, [], decision)
 
         top_k = 10 if route == "locate_chapter" else 7 if route == "compare" else 5
         retrieval_query = clean_location_query(routing_question) if route in {"locate", "locate_chapter"} else routing_question
@@ -185,7 +210,7 @@ class StructuredQAEngine:
             except (OllamaError, ValueError, IndexError) as exc:
                 self._last_embedding_error = str(exc)
         if route == "compare":
-            return self._prepare_compare(routing_question, top_k, query_vector, scope)
+            return self._prepare_compare(routing_question, top_k, query_vector, scope, decision)
         search = self.library.retrieve(
             retrieval_query,
             query_vector,
@@ -236,6 +261,8 @@ class StructuredQAEngine:
             search.retrieval_mode,
             search.confidence,
             search.out_of_scope,
+            [],
+            decision,
         )
 
     def _prepare_compare(
@@ -244,6 +271,7 @@ class StructuredQAEngine:
         top_k: int,
         question_vector: list[float] | None,
         scope: QueryScope | None = None,
+        decision: RouteDecision | None = None,
     ) -> PreparedAnswer:
         """Retrieve evidence for each compared side, not just the full question.
 
@@ -304,6 +332,8 @@ class StructuredQAEngine:
             mode,
             confidence,
             all(scopes) if scopes else True,
+            [],
+            decision,
         )
 
     def answer(
@@ -320,6 +350,18 @@ class StructuredQAEngine:
         known_documents = {record.id for record in self.library.documents}
         allowed = self.library.effective_allowed_ids(resolution)
         prepared = self.prepare(question, history, scope)
+        decision = prepared.decision
+        if decision is not None and decision.scope_conflict:
+            # §8 安全不变量：history 提到范围外文档时绝不静默扩大 scope。
+            answer = "当前查询范围不包含你提到的文档。请调整查询范围（选择对应知识库或文档）后再提问。"
+            return self._result(answer, [], prepared, started, citation_verified=True)
+        if prepared.route == "unsupported":
+            answer = "你好！我是本地教材助教，可以回答概念解释、章节概要、内容定位与对比类问题。请提出与教材相关的问题。"
+            return self._result(answer, [], prepared, started, citation_verified=True)
+        if decision is not None and decision.resolution_status == "ambiguous":
+            # 无法确定指代对象：宁可澄清，也不自信地解析错。
+            answer = "我无法确定你指的是什么。请补充具体概念、章节或文档名称。"
+            return self._result(answer, [], prepared, started, citation_verified=True)
         if prepared.route == "book_toc":
             citations = [chapter.citation(index) for index, chapter in enumerate(prepared.chapters, 1)]
             self._assert_citations_in_scope(citations, resolution, known_documents)
@@ -434,6 +476,14 @@ class StructuredQAEngine:
                 "scope_tag_count": len(scope.tags) if scope else 0,
                 "scope_fingerprint": scope_fingerprint(resolution),
                 **({"scope_document_ids": sorted(resolution.document_ids)} if os.getenv("QA_DEBUG_SCOPE") else {}),
+                # v3.4 Phase E routing fields (additive; never full paths or tokens)
+                "route_reason": decision.reason_code if decision is not None else "",
+                "resolution_status": decision.resolution_status if decision is not None else "",
+                "rewritten_question": (
+                    decision.normalized_question[:120]
+                    if decision is not None and decision.normalized_question != decision.original_question
+                    else ""
+                ),
             }
         )
         return self._result(answer, used_citations, prepared, started, citation_verified)
@@ -501,6 +551,7 @@ class StructuredQAEngine:
             out_of_scope=prepared.out_of_scope,
             citation_verified=citation_verified,
             elapsed_ms=round((time.perf_counter() - started) * 1000),
+            history_entry=build_history_entry(prepared, answer, citations),
         )
 
 
@@ -513,106 +564,21 @@ def validate_question(question: str) -> str:
     return value
 
 
-def normalize_history(history: list[Any] | None) -> list[dict[str, str]]:
-    """Keep the last few valid turns; tolerate garbage items from clients."""
-    if not history:
-        return []
-    turns: list[dict[str, str]] = []
-    for item in history:
-        if not isinstance(item, dict):
-            continue
-        question = item.get("question")
-        answer = item.get("answer")
-        if not isinstance(question, str) or not question.strip():
-            continue
-        turns.append(
-            {
-                "question": question.strip()[:2000],
-                "answer": answer.strip()[:6000] if isinstance(answer, str) else "",
-            }
-        )
-    return turns[-HISTORY_MAX_TURNS:]
-
-
-def looks_like_follow_up(question: str) -> bool:
-    """Heuristic for fragments that only make sense with the previous turn."""
-    value = normalize_query(question)
-    if not value:
-        return False
-    if any(value.startswith(prefix) for prefix in FOLLOW_UP_PREFIXES):
-        return True
-    if re.fullmatch(r"第[0-9一二三四五六七八九十]{1,3}章[呢吗]*", value):
-        return True
-    if re.search(r"第[0-9一二三四五六七八九十]+[层类个种条篇部]", value):
-        # 裸序数指代（“第二层”“第三个”）指向上一轮回答里的列举内容。
-        return True
-    return len(value) <= 8 and value.endswith(("呢", "吗"))
-
-
-def classify_route(question: str) -> str:
-    normalized = normalize_query(question)
-    if is_book_toc_query(normalized):
-        return "book_toc"
-    if any(word in normalized for word in COMPARE_WORDS):
-        # Compare must outrank chapter/book overview: "第一章和第二章内容有
-        # 什么区别" contains both a chapter number and the overview word
-        # "内容", but it is a comparison question.
-        return "compare"
-    if extract_chapter_number(normalized) is not None and any(word in normalized for word in CHAPTER_OVERVIEW_WORDS):
-        return "chapter_overview"
-    if is_book_overview_query(normalized):
-        return "book_overview"
-    if any(word in normalized for word in CHAPTER_LOCATION_WORDS):
-        return "locate_chapter"
-    if any(word in normalized for word in LOCATION_WORDS):
-        return "locate"
-    legacy = route_by_rules(normalized)
-    return "book_overview" if legacy == "summary" else "qa"
-
-
-def extract_chapter_number(question: str) -> int | None:
-    # A follow-up merges the previous question in front of this one, so the
-    # latest chapter number is the one the user is asking about now.
-    numbers = [int(value) for value in re.findall(r"第\s*(\d{1,3})\s*章", question)]
-    if numbers:
-        return numbers[-1]
-    numerals = re.findall(r"第\s*([一二三四五六七八九十]{1,3})\s*章", question)
-    return chinese_numeral_to_int(numerals[-1]) if numerals else None
-
-
-def chinese_numeral_to_int(text: str) -> int | None:
-    """Parse chapter numerals like 十、十一、二十一、三十 (up to 99)."""
-    digits = {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
-    if text == "十":
-        return 10
-    if "十" in text:
-        left, _, right = text.partition("十")
-        if (left and left not in digits) or (right and right not in digits):
-            return None
-        return (digits.get(left, 1) if left else 1) * 10 + (digits.get(right, 0) if right else 0)
-    return digits.get(text)
+# Phase E: routing rules moved to core/query_router.py (single pipeline).
+# These imports keep the historical public names available on engine_v2.
+# normalize_history / looks_like_follow_up / classify_route /
+# extract_chapter_number / chinese_numeral_to_int / split_compare_entities
 
 
 def clean_location_query(question: str) -> str:
     value = question
     for phrase in sorted(LOCATION_WORDS + CHAPTER_LOCATION_WORDS + ("哪一页", "在哪一章"), key=len, reverse=True):
         value = value.replace(phrase, "")
+    for phrase in sorted(("帮我", "找一下", "里面", "书中", "的地方", "地方", "内容", "相关", "一下", "的"), key=len, reverse=True):
+        value = value.replace(phrase, "")
     value = re.sub(r"[？?。！!]", "", value).strip()
-    value = re.sub(r"(?:位于|属于|是在|在)$", "", value).strip()
+    value = re.sub(r"(?:位于|属于|是在|在|讲到|讲|找)$", "", value).strip()
     return value or question
-
-
-def split_compare_entities(question: str) -> list[str]:
-    """Extract the compared sides from a question like "GSM 和 WCDMA 有什么区别？"."""
-    value = question
-    for phrase in ("有什么区别", "有何区别", "有什么异同", "区别是什么", "区别", "异同", "比较", "对比", "相比"):
-        value = value.replace(phrase, " ")
-    entities: list[str] = []
-    for part in re.split(r"[和与及跟、]", value):
-        part = part.strip(" ？?。！!，,、的是哪有什怎么怎样如何请")
-        if part and part not in entities:
-            entities.append(part)
-    return entities
 
 
 def build_messages(

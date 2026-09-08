@@ -50,7 +50,12 @@ class QAThreadingHTTPServer(ThreadingHTTPServer):
 
 
 def sanitize_history(history: Any) -> list[dict[str, str]]:
-    """Validate the client-supplied conversation history for a follow-up ask."""
+    """Validate the client-supplied conversation history for a follow-up ask.
+
+    Phase E: optional structured fields (route / chapter / document_ids /
+    compare_entities / referent) are whitelist-passed so the router can use
+    them; old clients that send only {question, answer} keep working.
+    """
     if history is None:
         return []
     if not isinstance(history, list):
@@ -67,7 +72,21 @@ def sanitize_history(history: Any) -> list[dict[str, str]]:
             raise ValueError("history 项缺少 question。")
         if not isinstance(answer, str):
             raise ValueError("history 项的 answer 必须是字符串。")
-        turns.append({"question": question.strip()[:2000], "answer": answer.strip()[:6000]})
+        turn: dict[str, Any] = {"question": question.strip()[:2000], "answer": answer.strip()[:6000]}
+        route = item.get("route")
+        if isinstance(route, str) and route:
+            turn["route"] = route[:40]
+        chapter = item.get("chapter")
+        if isinstance(chapter, int) and not isinstance(chapter, bool) and 1 <= chapter <= 999:
+            turn["chapter"] = chapter
+        for field_name in ("document_ids", "compare_entities"):
+            value = item.get(field_name)
+            if isinstance(value, list) and all(isinstance(entry, str) for entry in value):
+                turn[field_name] = [str(entry)[:200] for entry in value][:50]
+        referent = item.get("referent")
+        if isinstance(referent, str) and referent:
+            turn["referent"] = referent.strip()[:200]
+        turns.append(turn)
     return turns
 
 

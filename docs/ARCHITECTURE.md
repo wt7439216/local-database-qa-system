@@ -105,10 +105,12 @@ Phase D 在导入能力之上建立受管知识库域：
   An explicitly selected document scope may include a disabled-but-READY
   document; enabled is a default-selection control, not an authorization ACL.
   ```
-- Phase E Router Safety Invariant（backlog 约束，本轮只记录）：任何未来的
-  Router、document/global summary、multi-document QA、query rewrite 组件必须
+- Phase E Router Safety Invariant（v3.4 已实现，见 docs/V3_PHASE_E_ROUTER_DECISION.md）：
+  任何 Router、document/global summary、multi-document QA、query rewrite 组件必须
   接收 effective QueryScope，且禁止绕过 LibraryService / scoped retrieval 访问
-  非 READY、DELETE_FAILED 或 scope 外文档。
+  非 READY、DELETE_FAILED 或 scope 外文档。Phase E 实现：router 只决定语义与路由、
+  零 scope 变更；问题点名范围外文档时只报告 `scope_conflict`，由既有 scope 门限
+  继续保证检索与 citation 不越界（eval 实测 leakage=0）。
 
 ### 运行时集成收口（v3.3 Phase D.1）
 

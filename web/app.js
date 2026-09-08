@@ -281,7 +281,10 @@ async function ask(question) {
     renderSources(finalResult.citations || finalResult.sources || []);
     $("#copyButton").disabled = !finalResult.answer;
     $("#copyButton").dataset.answer = finalResult.answer || "";
-    state.history.push({ question, answer: finalResult.answer || "" });
+    // Phase E: round-trip the server's structured turn metadata so follow-up
+    // questions resolve referents deterministically; old servers fall back.
+    const historyEntry = finalResult.history_entry || { question, answer: finalResult.answer || "" };
+    state.history.push(historyEntry);
     if (state.history.length > MAX_HISTORY_TURNS) state.history.shift();
     if (finalResult.citation_verified === false) {
       toast("部分引用未通过原文核对，请谨慎采信");

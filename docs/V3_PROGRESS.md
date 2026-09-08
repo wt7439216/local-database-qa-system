@@ -535,3 +535,51 @@ Phase D 主体 + Security Closure 之后的运行时收口：Library Manager 与
 - 首个发布提交 `7de0e4e`（feat(v3.3): close Phase D.1.1 legacy library migration compatibility closure）经 `publication_sync.py` 同步（+2 改 6 删 0，`.github/` 未触碰）；上传版复核 ruff / unittest 333/333 / compileall / node --check（web ×3）全过，`publication_scan.py` 无真实凭据与本机路径；
 - GitHub Actions run `34213629093`：**completed / success**（job test 3m8s，五步全绿：Install ingestion dependencies / Lint Python sources / Run unit tests / Compile Python sources / Check browser JavaScript）；唯一 annotation 为 actions 自身 Node 20 弃用提示（与本仓库代码无关）；
 - 本地数据侧：`LOCAL_DATA_COMPATIBILITY = PASS`，`MIGRATION_COMPATIBILITY_CLOSURE = PASS`（证据见本记录上文）；Phase E = NOT STARTED，等待用户单独授权。
+
+## Phase E — v3.4 Router + Query Rewrite + Follow-up Resolution（2026-09-08）
+
+- Status: **PASS**
+- Authorized scope: Query Intent Router + Query Rewrite + Follow-up / Pronoun Resolution + Conversation-aware routing + 与 QueryScope / retrieval / book routes 安全接线（分 Gate E0–E4 执行）
+- Branch / workspace: `Local Database Q&A System本地版v3`
+- Rollback snapshot: `..\_phase_backups\kb-v3-phase-e-pre\`（121 文件 + SHA256SUMS.txt，roundtrip 校验通过）
+- 架构决策：`docs/V3_PHASE_E_ROUTER_DECISION.md`
+
+### E0 Recovery / Baseline
+
+- 上传版 HEAD == origin/main == `f6782c3`，worktree clean；本地版v3 无 .git（正常）
+- runtime 数据核验（只读）：managed v5 = 6 docs / 637 chunks / 637 embeddings；legacy v4 = 1 doc / 617 chunks（与 D.1.1 一致，未重迁移）
+- baseline 全量：**333/333 PASS**（0 fail / 0 error / 0 skip，196.6s）
+- 审计结论：现有路由 = classify_route 确定性规则链；现有追问 = looks_like_follow_up + 上一轮问题字符串拼接（naive merge）；缺口 = 无 RouteDecision/置信/原因码、无代词/省略解析、无 topic shift、无 ambiguity、无结构化 history、telemetry 无 original/rewritten
+
+### Changes
+
+- 新增 `core/query_router.py`：单一确定性 Routing Pipeline——`HistoryTurn`（结构化 history 解析）→ `_resolve_followup`（9 类确定性解析规则）→ 最小语义改写（`_attach_referent`）→ `RouteDecision(route, confidence, reason_code, original_question, normalized_question, resolution_status, referent, follow_up, scope_conflict)`。纯规则实现，**无 LLM**（ADR §1 记录边界与理由）；classify_route / looks_like_follow_up / extract_chapter_number / chinese_numeral_to_int / normalize_history / split_compare_entities 迁移至此，engine_v2 保留 re-export（`__all__`），既有 import 合同不变
+- 修改 `core/engine_v2.py`：prepare/answer 接入 router；ambiguous → 澄清回答（不检索）；unsupported（问候/无内容）→ 固定引导语；scope_conflict → 范围提示（§8 安全不变量）；`PreparedAnswer.decision` + `AnswerResultV2.history_entry`（加性）；telemetry 新增 route_reason / resolution_status / rewritten_question；clean_location_query 扩展「帮我找一下…的地方」类脚手架
+- 修改 `desktop/web_server.py`：`sanitize_history` 白名单透传 route / chapter / document_ids / compare_entities / referent（旧客户端纯 {question, answer} 合同不变）
+- 修改 `web/app.js`：history_entry 整体往返（旧服务端无此字段时自动降级）
+- 新增测试：`tests/test_query_router.py`（E1，20）、`tests/test_query_rewrite.py`（E2，13）、`tests/test_followup_resolution.py`（E3，26）
+- 新增 eval：`eval/phase_e_router_golden.json`（108 cases / 12 类，含中文真实问法、ambiguity、scope-sensitive、topic shift、adversarial）+ `scripts/eval_phase_e_router.py`（离线确定性，含 engine 级 scope leakage 检查：真实临时 v5 库 + fake embedder）
+- 新增 `docs/V3_PHASE_E_ROUTER_DECISION.md`；修改 `docs/V3_PROGRESS.md`、`docs/ARCHITECTURE.md`（Router Safety Invariant 由 backlog 约束更新为实现状态）
+- 未触碰：RRF/FTS/dense 公式、reranker、embedding、chunking、Qdrant schema、QueryScope contract、citation verification、library lifecycle、D.1.1 migration guard
+
+### Tests / Eval
+
+- 全套回归（本机，Qdrant 1.19 + Ollama 在线）：**392/392 PASS**（333 基线未删改 + Phase E 59；0 fail / 0 error / 0 skip）
+- ruff（repo）/ compileall / node --check（web ×3）全过
+- Phase E eval（108 cases）：**route accuracy 108/108 = 100%（≥95%）、follow-up 66/66 = 100%（≥90%）、ambiguous false-resolution 0/8 = 0%（≤2%）、scope conflict 10/10、engine scope leakage 0/4 runs**；failure cases 0
+
+### Performance
+
+- deterministic fast-path：**≈15.9 µs/decision**（12k 次决策实测，纯规则无 LLM 调用）
+- LLM-assisted path：未启用（无 LLM 组件，ADR §1）
+
+### Known issues / limitations
+
+- 文档级元问题（deferred_meta_queries.json 4 条）仍 DEFERRED：需文档级元数据查询路径，超出本轮 route 枚举，未伪装 PASS
+- 纯文本 history 下链式代词追问依赖 history_entry 往返；文本降级路径宁可 AMBIGUOUS
+- Phase B reranker efficacy 保持 DEFERRED / RERANKER_ENABLED=false（Phase E 未重开）
+
+### Gate decision
+
+**Phase E = PASS。** READY_FOR_NEXT_PHASE_AUTHORIZATION（Phase F 未授权，STOP）。
+

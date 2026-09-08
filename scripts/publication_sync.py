@@ -26,7 +26,7 @@ if not (DEV / "core").is_dir() or not (DEV / "scripts").is_dir():
 if UPLOAD == DEV or not (UPLOAD / ".git").is_dir():
     raise SystemExit("UPLOAD publish workspace (with .git) not found as sibling of DEV.")
 
-SYNC_TREES = ("core", "desktop", "scripts", "tests", "web", "docs")
+SYNC_TREES = ("core", "desktop", "scripts", "tests", "web", "docs", "eval")
 RERANKER_FILES = ("server.py", "requirements.txt", "README.md")
 TOP_FILES = (
     "README.md", "requirements.txt", "requirements-ingest.txt", "requirements-build.txt",

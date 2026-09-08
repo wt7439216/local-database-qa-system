@@ -42,6 +42,7 @@ Phase E（Router / Query Rewrite）尚未开始。
 - **QueryScope 全链路贯穿**：知识库 / 文档 / 类型 / 标签范围选择从 UI → API → 引用 → 检索（FTS SQL 级 pushdown + Qdrant filter）→ 引用核验（越界引用属严重失败）→ telemetry；scope leakage 评测为 0（34 例双后端评测集）；
 - **Web 路径导入安全边界**：`LIBRARY_IMPORT_ROOTS` 显式配置允许目录（canonical 路径包含判断，防 `..`/symlink/junction 逃逸）；未配置时 Web 路径导入默认禁用，CLI 保持本机用户权限；API 不回显服务器绝对路径。
 - **运行时整合（Phase D.1）**：Library Manager 与问答引擎共享同一 SQLite 库身份（静态三规则：受管库优先原地升级 → legacy 教材库原地接管 → 全新受管库；失败显式报错，绝不静默换库）；管理端变更即时通知服务端刷新快照、重算库指纹并清空答案缓存（无需重启）；书籍级路由与检索共用同一 effective scope；API 错误体路径脱敏单点收口；PDF 资源守卫（`QA_PDF_MAX_PAGES` / `QA_PDF_MAX_EXTRACTED_CHARS` 超限类型化拒绝）。
+- **迁移闭包（Phase D.1.1）**：双库冲突守卫——managed 与 legacy 同时含数据且缺少迁移证据（`legacy_migration_completed` 标记 + 文档 id/sha256/chunk 数核对）时显式报错，绝不静默让受管库赢；`scripts/migrate_legacy_library.py` 单事务合并 legacy v4 教材库进 managed v5 库（可回滚、幂等、冲突安全），embeddings 逐字节复用（零重嵌入），迁移后写入带内容指纹的证据标记，并可 `--qdrant-sync` 把教材 points 收敛进 managed collection（`general_documents`），旧 collection 不删除。
 
 ### 问答与对话
 

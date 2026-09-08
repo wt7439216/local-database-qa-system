@@ -1103,9 +1103,9 @@ class LibraryService:
             ))
         return records
 
-    def _sync_document_payload(self, document_id: str) -> None:
+    def _sync_document_payload(self, document_id: str, *, force: bool = False) -> None:
         """Re-upsert one document's points so payload matches the registry."""
-        if config.VECTOR_BACKEND != "qdrant":
+        if config.VECTOR_BACKEND != "qdrant" and not force:
             return
         records = self._build_records(document_id)
         if not records:
@@ -1115,18 +1115,19 @@ class LibraryService:
         store.upsert(records)
         self._delete_stale_points(store, document_id, {record.chunk_id for record in records})
 
-    def sync_index_payloads(self) -> dict:
+    def sync_index_payloads(self, *, force: bool = False) -> dict:
         """Re-upsert every READY document's points from the SQLite registry.
 
         One-shot convergence for migrations / backend switches; also usable
-        as an ops command.  No-op with the sqlite backend.
+        as an ops command.  No-op with the sqlite backend unless force=True
+        (vectors are copied from SQLite, never re-embedded).
         """
         synced: list[str] = []
-        if config.VECTOR_BACKEND != "qdrant":
+        if config.VECTOR_BACKEND != "qdrant" and not force:
             return {"synced": synced, "backend": "sqlite"}
         for row in self.list_documents():
             if row["status"] == "READY":
-                self._sync_document_payload(row["document_id"])
+                self._sync_document_payload(row["document_id"], force=force)
                 synced.append(row["document_id"])
         return {"synced": synced, "backend": "qdrant", "collection": self.qdrant_collection}
 

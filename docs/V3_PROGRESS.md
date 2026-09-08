@@ -473,3 +473,63 @@ Phase D 主体 + Security Closure 之后的运行时收口：Library Manager 与
 - 同步方式：`scripts/publication_sync.py`（allowlist 单向 本地版v3 → 上传版）；`.github/` 为 GitHub-only 资产，脚本不复制不删除，`git ls-files .github` 确认 `ci.yml` 持续受跟踪。
 - 上传版复核：ruff / unittest 全量 / compileall / node --check（web ×3）全过；`publication_scan.py` secret/路径扫描全部命中均为认证实现代码、测试期生成 token 与脱敏测试的故意假路径（`C:\Users\secretuser\...`），无真实凭据与本机路径。
 - 最终：HEAD == origin/main、ahead/behind 0/0、worktree clean。
+
+## D11 Phase D.1.1 — Legacy Library Migration Compatibility Closure（2026-09-08）
+
+### 现场核验（只读 preflight）
+
+- GitHub main = `57e0bb2`（与已知记录一致），上传版 HEAD == origin/main、ahead/behind 0/0、worktree clean；
+- 真实本机：`documents.sqlite3`（v5，5 docs / 20 chunks / bge-m3 1024）、`textbooks.sqlite3`（v4，1 doc `doc-01d13356ce2f` / 617 chunks / 352 pages / bge-m3 1024），两者 integrity ok；
+- 迁移前 `resolve_runtime_library()` 在真实机状态正确 **FAIL LOUDLY**（双库有数据 + 无迁移证据）；
+- Qdrant 1.19 在线：`general_documents` 20 点（managed）、`local_knowledge_chunks` 617 点（legacy 教材），均 1024 维；
+- 发现 v3 已有未发布的 D.1.1 进行中代码（guard + 迁移工具），但含 3 处缺陷且无专用测试——本会话修复后才进入 Gate。
+
+### 本会话修复的工具缺陷（未发布代码审计）
+
+1. `scripts/migrate_legacy_library.py` 缺 `ROOT_DIR` sys.path 引导（直接运行 ModuleNotFoundError）→ 已按仓库统一模式补齐；
+2. dry-run 返回结构与非 dry-run 不一致导致 `main()` 取 `result["plan"]` KeyError → 已修；
+3. `analyze()` 返回语句后的死代码 → 已删；
+4. Windows 上 sqlite3 cursor 引用环在 GC 前持有文件句柄，迁移类测试的临时目录清理失败 → `tests/test_runtime_integration.py` 与 `tests/test_migrate_legacy_library.py` 在 temp cleanup 前补 `gc.collect()`（测试环境修复，非生产行为）。
+
+### 迁移工具与守卫（本次发布内容）
+
+- `core/runtime_library.py` dual-library conflict guard：managed 与 legacy 同时存在且 legacy 含文档时，必须凭 `legacy_migration_completed` 标记 + 逐文档 id/sha256/chunk 数核对证明已吸收，否则 RuntimeError 显式报错并给出修复命令；空 legacy 视为已吸收；绝不 silent managed wins；
+- `scripts/migrate_legacy_library.py`：单事务合并（BEGIN IMMEDIATE + 前/后计数与引用完整性校验，失败回滚）；文档/chunk/chapter/summary id 冲突（内容不一致）显式中止；内容逐字节一致则 ALREADY_MIGRATED（幂等 NOOP）；embeddings 逐字节复制（工具不 import Ollama，零重嵌入）；embedding 空间不一致（model/dimension）中止，空目标库采纳源空间；迁移后写证据标记（counts + 源文件名 + 时间戳 + 内容指纹）；`--qdrant-sync` 将 points 收敛进 managed collection `general_documents`（向量取自 SQLite，旧 collection 不删）；
+- `core/library_service.py`：`sync_index_payloads(force=True)` / `_sync_document_payload(force=True)` 支持 sqlite 后端下的强制收敛（ops 命令路径）。
+
+### 测试
+
+- 新增 `tests/test_migrate_legacy_library.py`（20 项）：dry-run 零写入、全行合并与 document_id 保留、embeddings 字节级一致、源库绝不修改、证据标记内容、二次运行幂等 NOOP、文档/chunk/chapter/summary id 冲突中止、embedding 空间 model/dimension 不一致中止、空目标采纳源空间、源/目标 schema 版本拒绝、事务中途失败回滚、同文件拒绝、缺文件拒绝、迁移后满足 runtime absorbed 检查、Qdrant 收敛目标为 managed collection；
+- `tests/test_runtime_integration.py`：旧 "managed wins" 测试替换为 3 项守卫测试（无证据 FAIL LOUDLY / 有证据服务 managed / 空 legacy 服务 managed）；
+- 全套回归（本机，Qdrant 1.19 + Ollama bge-m3 在线）：**333/333 PASS（0 fail / 0 error / 0 skip）**——迁移前与真实迁移后各跑一次；ruff（repo）全过。
+
+### 仓库外备份（`_phase_backups/kb-v3-phase-d11-pre/`）
+
+| 文件 | SHA256 |
+|---|---|
+| documents.sqlite3 | `34255abf8382622f33da4859c39b06344b7a155a7e8bbe5181e715077fefa912` |
+| textbooks.sqlite3 | `bb2a5cd83cb977f6371c4e37b735c10ac992606f4739049f89eb304097c165cc` |
+| general_documents.snapshot | `23bd9e9a5cb087d31a6df5df9c63f839199d4b385776204c5626e17589d9928f` |
+| local_knowledge_chunks.snapshot | `7207a403c72ee5b1c63b4b7127f9113ca32168d7e6306c78a8e3fb0ba5ed04b2` |
+
+备份 == 源文件逐字节比对通过，清单写入 `SHA256SUMS.txt`。
+
+### Dry-run Gate（全绿后放行真实迁移）
+
+- 计划：`doc-01d13356ce2f` NEW；迁移 617 chunks / 617 embeddings / 7 chapters / 8 summaries / 352 pages；目标总量 6 docs / 637 chunks / 637 embeddings / 17 chapters / 13 summaries / 352 pages；embedding bge-m3/1024 兼容；fingerprint `99da771f66ac1fa942e3a982c1e1eeb518f1d38dbd862b5bc206bce9578dd45f`；
+- 零写入验证：dry-run 前后双库 SHA256 完全不变、marker 未出现、exit 0。
+
+### 真实迁移与验证（`--qdrant-sync`，exit 0）
+
+- managed 库：6 docs / 637 chunks / 637 embeddings / 17 chapters / 13 summaries / 352 pages / chunk_fts 637 / document_sources 6，integrity ok；
+- `doc-01d13356ce2f`《移动通信 (李兆玉)》page_count 352 完整保留；证据标记完整（counts、源名、时间戳、指纹）；
+- embeddings：617/617 与 legacy 逐字节一致（零重嵌入）；
+- legacy 库：SHA256 与备份一致（未修改、未删除），仍为 v4；
+- 幂等：二次 dry-run 全部 ALREADY_MIGRATED、0 待迁移；
+- Qdrant：`general_documents` 20 → 637 点（含教材 617 点）；`local_knowledge_chunks` 保持 617 点未删除；
+- runtime：`resolve_runtime_library()` 返回 managed 路径，absorbed check 通过；
+- QA 真实冒烟（bge-m3 检索）：教材专属问题（Um接口 / OFDMA）教材 rank 1；与 sample 文档主题重叠的问题（多径衰落 / 均衡）教材 top-10 可见（rank 6）——5 个示例文档本身含移动通信测试语料，排名竞争属语料重叠的预期行为，如实记录，不属于迁移正确性问题。
+
+### 发布与 CI
+
+（本记录随首个发布提交推送，CI 复核成功后以收尾提交追加 run id 与最终 0/0 clean 证据。）

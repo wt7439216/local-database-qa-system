@@ -15,6 +15,7 @@ Covered:
 from __future__ import annotations
 
 from contextlib import closing
+import gc
 import json
 import sqlite3
 import tempfile
@@ -567,6 +568,10 @@ class RuntimeLibrarySelectionTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
+        # Windows: sqlite3 cursors in reference cycles keep file handles until
+        # GC (the migration tests are the worst offenders); collect first or
+        # the temp dir cannot be removed.
+        self.addCleanup(gc.collect)
         self.root = Path(self.temp.name)
         self.managed = self.root / "managed.sqlite3"
         self.legacy = self.root / "textbooks.sqlite3"
@@ -602,12 +607,35 @@ class RuntimeLibrarySelectionTests(unittest.TestCase):
         self.assertEqual(self._count(resolved, "documents"), 1)
         self.assertEqual(self._count(resolved, "document_sources"), 1)
 
-    def test_managed_wins_and_legacy_stays_untouched(self):
+    def test_dual_libraries_without_migration_evidence_fail_loudly(self):
         self._resolve()
         build_v4_fixture(self.legacy)
+        with self.assertRaisesRegex(RuntimeError, "migration compatibility closure"):
+            self._resolve()
+        self.assertEqual(self._schema_version(self.legacy), SCHEMA_VERSION)
+        self.assertEqual(self._count(self.legacy, "documents"), 1)
+
+    def test_dual_libraries_with_migration_evidence_serve_managed(self):
+        self._resolve()
+        build_v4_fixture(self.legacy)
+        from scripts import migrate_legacy_library
+
+        result = migrate_legacy_library.migrate(self.legacy, self.managed)
+        self.assertEqual(result["status"], "merged")
         resolved = self._resolve()
         self.assertEqual(resolved, self.managed)
-        self.assertEqual(self._schema_version(self.legacy), SCHEMA_VERSION)
+        self.assertEqual(self._count(self.managed, "documents"), 1)
+        self.assertEqual(self._count(self.managed, "document_sources"), 1)
+
+    def test_dual_libraries_with_empty_legacy_serve_managed(self):
+        self._resolve()
+        build_v4_fixture(self.legacy)
+        with closing(sqlite3.connect(self.legacy)) as connection:
+            connection.execute("DELETE FROM chunks")
+            connection.execute("DELETE FROM documents")
+            connection.commit()
+        resolved = self._resolve()
+        self.assertEqual(resolved, self.managed)
 
     def test_v4_managed_upgraded_in_place(self):
         build_v4_fixture(self.managed)

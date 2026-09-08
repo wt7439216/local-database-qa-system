@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "name": "phase_f_citation_golden",
+    "version": "f2-v2",
+    "verifier_version": "f2-v2",
+    "description": "Phase F.2 deterministic citation verifier contract dataset（非 F.4 最终 Golden Set）。完全离线 fixture，无 LLM / NLI / embedding / 外部服务。每个 case 断言：citation validity（valid/invalid ids）、citation coverage、deterministic support（SUPPORTED / UNSUPPORTED / UNCERTAIN / NOT_APPLICABLE）与 claim 计数。",
+    "created_at": "2026-09-08",
+    "shared_evidence": {
+      "1": "GSM系统使用GMSK调制，载波间隔为200 kHz，最大数据速率约为270.833 kbit/s。",
+      "2": "WCDMA系统采用QPSK调制，带宽为5 MHz，码片速率为3.84 Mcps。",
+      "3": "香农公式 C = B log2(1 + S/N)，其中B为带宽。"
+    },
+    "default_citation_count": 3,
+    "categories": [
+      "valid_citation", "invalid_citation", "duplicate_citation",
+      "malformed_citation", "no_citation", "partial_coverage",
+      "full_coverage", "wrong_evidence", "wrong_document", "scope_violation",
+      "correct_number", "wrong_number", "correct_unit", "wrong_unit",
+      "latin_entity", "cjk_entity", "unsupported_cjk",
+      "uncertain_paraphrase", "multi_citation", "mixed_supported_unsupported",
+      "not_applicable"
+    ],
+    "expected_totals": {
+      "valid_citation": 2, "invalid_citation": 4, "duplicate_citation": 2,
+      "malformed_citation": 1, "no_citation": 1, "partial_coverage": 1,
+      "full_coverage": 2, "wrong_evidence": 1, "wrong_document": 1,
+      "scope_violation": 1, "correct_number": 2, "wrong_number": 1,
+      "correct_unit": 2, "wrong_unit": 1, "latin_entity": 1,
+      "cjk_entity": 1, "unsupported_cjk": 1, "uncertain_paraphrase": 1,
+      "multi_citation": 1, "mixed_supported_unsupported": 1,
+      "not_applicable": 2
+    }
+  },
+  "cases": [
+    {"id": "valid-01", "category": "valid_citation", "answer": "GSM使用GMSK调制[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+    {"id": "valid-02", "category": "valid_citation", "answer": "WCDMA采用QPSK调制[2]。", "expected": {"valid_ids": [2], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+
+    {"id": "invalid-01", "category": "invalid_citation", "answer": "GSM使用GMSK调制[9]。", "expected": {"valid_ids": [], "invalid_ids": [9], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNSUPPORTED"]}},
+    {"id": "invalid-02", "category": "invalid_citation", "answer": "GSM使用GMSK调制[0]。", "expected": {"valid_ids": [], "invalid_ids": [0], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNSUPPORTED"]}},
+    {"id": "invalid-03", "category": "invalid_citation", "answer": "GSM使用GMSK调制[100]。", "expected": {"valid_ids": [], "invalid_ids": [100], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNSUPPORTED"]}},
+    {"id": "invalid-04", "category": "invalid_citation", "answer": "GSM使用GMSK调制[-1]。", "expected": {"valid_ids": [], "invalid_ids": [-1], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNSUPPORTED"]}},
+
+    {"id": "dup-01", "category": "duplicate_citation", "answer": "GSM使用GMSK调制[1]和[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+    {"id": "dup-02", "category": "duplicate_citation", "answer": "GSM使用GMSK调制[1]。GSM使用GMSK调制[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 2, "cited_claim_count": 2, "citation_coverage": 1.0, "supports": ["SUPPORTED", "SUPPORTED"]}},
+
+    {"id": "malformed-01", "category": "malformed_citation", "answer": "GSM使用GMSK调制[abc]。", "expected": {"valid_ids": [], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 0, "citation_coverage": 0.0, "supports": ["UNSUPPORTED"]}},
+
+    {"id": "nocite-01", "category": "no_citation", "answer": "GSM使用GMSK调制。", "expected": {"valid_ids": [], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 0, "citation_coverage": 0.0, "supports": ["UNSUPPORTED"]}},
+
+    {"id": "partcov-01", "category": "partial_coverage", "answer": "GSM使用GMSK调制[1]。WCDMA使用QPSK调制。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 2, "cited_claim_count": 1, "citation_coverage": 0.5, "supports": ["SUPPORTED", "UNSUPPORTED"]}},
+
+    {"id": "fullcov-01", "category": "full_coverage", "answer": "GSM使用GMSK调制[1]。WCDMA使用QPSK调制[2]。", "expected": {"valid_ids": [1, 2], "invalid_ids": [], "factual_claim_count": 2, "cited_claim_count": 2, "citation_coverage": 1.0, "supports": ["SUPPORTED", "SUPPORTED"]}},
+    {"id": "fullcov-02", "category": "full_coverage", "answer": "GSM使用GMSK调制[1]。WCDMA采用QPSK调制[2]。载波间隔为200 kHz[1]。", "expected": {"valid_ids": [1, 2], "invalid_ids": [], "factual_claim_count": 3, "cited_claim_count": 3, "citation_coverage": 1.0, "supports": ["SUPPORTED", "SUPPORTED", "SUPPORTED"]}},
+
+    {"id": "wrongev-01", "category": "wrong_evidence", "answer": "GSM使用GMSK调制[2]。", "expected": {"valid_ids": [2], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNSUPPORTED"]}},
+
+    {"id": "wrongdoc-01", "category": "wrong_document", "answer": "LTE使用OFDMA调制[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNSUPPORTED"]}},
+
+    {"id": "scope-01", "category": "scope_violation", "answer": "GSM使用GMSK调制[3]。", "evidence": {"1": "GSM系统使用GMSK调制，载波间隔为200 kHz，最大数据速率约为270.833 kbit/s。", "2": "WCDMA系统采用QPSK调制，带宽为5 MHz，码片速率为3.84 Mcps。"}, "citation_count": 3, "expected": {"valid_ids": [], "invalid_ids": [3], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNSUPPORTED"]}},
+
+    {"id": "num-ok-01", "category": "correct_number", "answer": "码片速率为3.84 Mcps[2]。", "expected": {"valid_ids": [2], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+    {"id": "num-ok-02", "category": "correct_number", "answer": "载波间隔为200 kHz[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+
+    {"id": "num-bad-01", "category": "wrong_number", "answer": "码片速率为3.84 Mcps[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNSUPPORTED"]}},
+
+    {"id": "unit-ok-01", "category": "correct_unit", "answer": "带宽为5 MHz[2]。", "expected": {"valid_ids": [2], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+    {"id": "unit-ok-02", "category": "correct_unit", "answer": "最大数据速率为270.833 kbit/s[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+
+    {"id": "unit-bad-01", "category": "wrong_unit", "answer": "带宽为5 kHz[2]。", "expected": {"valid_ids": [2], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNSUPPORTED"]}},
+
+    {"id": "latin-01", "category": "latin_entity", "answer": "WCDMA采用QPSK调制[2]。", "expected": {"valid_ids": [2], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+
+    {"id": "cjk-01", "category": "cjk_entity", "answer": "载波间隔为二百千赫兹[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNCERTAIN"]}},
+
+    {"id": "cjk-unsup-01", "category": "unsupported_cjk", "answer": "扩频技术采用跳频方式。", "expected": {"valid_ids": [], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 0, "citation_coverage": 0.0, "supports": ["UNSUPPORTED"]}},
+
+    {"id": "uncertain-01", "category": "uncertain_paraphrase", "answer": "香农定理给出了信道容量的计算公式[3]。", "expected": {"valid_ids": [3], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNCERTAIN"]}},
+
+    {"id": "multi-01", "category": "multi_citation", "answer": "GSM使用GMSK调制，载波间隔为200 kHz[1][2]。", "expected": {"valid_ids": [1, 2], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+
+    {"id": "mixed-01", "category": "mixed_supported_unsupported", "answer": "GSM使用GMSK调制[1]。WCDMA使用GMSK调制[2]。", "expected": {"valid_ids": [1, 2], "invalid_ids": [], "factual_claim_count": 2, "cited_claim_count": 2, "citation_coverage": 1.0, "supports": ["SUPPORTED", "UNSUPPORTED"]}},
+
+    {"id": "na-01", "category": "not_applicable", "answer": "详见材料[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 0, "cited_claim_count": 0, "citation_coverage": null, "supports": ["NOT_APPLICABLE"]}},
+    {"id": "na-02", "category": "not_applicable", "answer": "回答如下。", "expected": {"valid_ids": [], "invalid_ids": [], "factual_claim_count": 0, "cited_claim_count": 0, "citation_coverage": null, "supports": ["NOT_APPLICABLE"]}}
+  ]
+}

@@ -217,6 +217,22 @@ class RuntimeIntegrationTests(RuntimeHarness):
         self.assertEqual(result["route"], "qa")
         self.assertIn(document_id, self._cited_documents(result))
 
+    def test_answer_carries_deterministic_citation_report(self):
+        # Phase F.2: the answer result must expose the additive citation_report
+        # with the deterministic verifier contract fields (backward compatible).
+        self._import("doc_b.md", sample_markdown(BODY_B))
+        result = self._answer(Q_B)
+        report = result.get("citation_report")
+        self.assertIsNotNone(report, "answer must carry a citation_report")
+        self.assertEqual(report["verifier_version"], "f2-v2")
+        self.assertIn("citation_count", report)
+        self.assertIn("citation_coverage", report)
+        self.assertIn("factual_claim_count", report)
+        self.assertIn("supported_claim_count", report)
+        self.assertIn("unsupported_claim_count", report)
+        self.assertIn("uncertain_claim_count", report)
+        self.assertIn("invalid_citation_count", report)
+
     def test_empty_library_answers_are_all_out_of_scope(self):
         result = self._answer(Q_B)
         self.assertTrue(result["out_of_scope"])

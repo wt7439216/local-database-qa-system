@@ -147,6 +147,17 @@ F.1 建立统一 Summary 生命周期（`core/summary.py`）；SQLite `summaries
 - LLM 路径语义：`--llm-summaries` 被明确标记为 **summary rewrite**（generator_type=`llm_rewrite` + model + prompt_version，source 绑定不变），而非 source-grounded 文档摘要；失败保留机械文本，库级标签如实记 `mixed`（不再把混合库误标为纯机械）。
 - 双真相裁决：`chapters.overview` 裁定为兼容镜像——写路径从同一 summary record 文本生成，业务真相只在 summaries 表；两者由测试锁定不漂移。
 
+### Deterministic Citation Quality（v3.5 Phase F.2）
+
+F.2 建立确定性 Citation 质量闭环（`core/citation_verifier.py`，纯标准库、无 LLM/NLI/embedding/外部 IO，`CITATION_VERIFIER_VERSION="f2-v2"`）：
+
+- 四层概念严格区分：**Validity**（引用是否真实对应 Evidence）/ **Scope Safety**（引用是否在当前 QueryScope，后端 `_assert_citations_in_scope` 强制，不可降级为 UI warning）/ **Coverage**（`cited factual claims / factual claims`）/ **Support**（claim 与 cited Evidence 的支持关系）。
+- Support 四值：`SUPPORTED`（确定性证据足够）/ `UNSUPPORTED`（明确确定性冲突或缺失）/ `UNCERTAIN`（需语义理解，如 CJK 同义、单位换算、字符串不完全重合）/ `NOT_APPLICABLE`（非事实性 claim）。
+- Deterministic Layer-1 判定链：claim segmentation（句边界切分 + factual-claim 启发式，纯连接词/元话语为 NOT_APPLICABLE）→ citation validity（`[1, citation_count]` 范围 + present_ids）→ number/unit check（相同数字配不同单位 = 确定性冲突）→ Latin key-term check（单位词排除，含 `kbit/s` 类斜杠单位）→ CJK key-term check（缺失仅标 UNCERTAIN，绝不因 CJK 缺失判 UNSUPPORTED）。多引用 claim、SUPPORTED/UNSUPPORTED 混合逐 claim 判定，reason codes 稳定可测。
+- Engine 集成：`StructuredQAEngine.citation_verifier` 在 `renumber_citations` **之前**用 pre-renumber 编号对真实 sent contexts + 确定性章节引用做 verify（避免模型乱序编号时 clause↔evidence 错位）；`AnswerResultV2.citation_report` 加性暴露；telemetry 加性增加 `citation_count / factual_claim_count / cited_claim_count / citation_coverage / supported_claim_count / unsupported_claim_count / uncertain_claim_count / invalid_citation_count / citation_scope_violation / citation_verifier_version`（`citation_verified` 冻结含义不变）。
+- 离线评测：`eval/phase_f_citation_golden.json`（30 条 fixture，覆盖 21 类）+ `scripts/eval_phase_f_citation.py`（纯离线，30/30 PASS）。
+- 边界：这是 deterministic Layer-1，非 semantic entailment / NLI / complete factual verification；KB Summary / Multi-document Summary / NLI / LLM Citation Judge / Coverage 正式阈值 / 最终 Golden Set 均 DEFERRED 到后续阶段。
+
 ### Reranker（可选，默认关闭）
 
 已实现可选本地 Cross-Encoder Reranker（`BAAI/bge-reranker-v2-m3`，经独立 sidecar 进程调用），并完成真实 CPU/CUDA 性能、故障回退及排名评测；当前单教材饱和基线下整体收益有限（MRR +0.0048 / nDCG@5 +0.0084，未达 0.02 有意义增益参考值），因此**默认关闭**，待多文档阶段重新评估。

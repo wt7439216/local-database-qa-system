@@ -624,3 +624,53 @@ F.0（只读，未改任何仓库文件）：Summary/Citation AS-IS 审计 + Gap
 ### Gate decision
 
 **Phase F.1 = PASS。** Phase F overall = IN_PROGRESS（F.2 / F.3 / F.4 = NOT STARTED，等待单独授权，STOP）。
+
+## Phase F.2 — Deterministic Citation Quality Closure（2026-09-08）
+
+- Status: **PASS**
+- Authorized scope: 完整 Citation validity / deterministic factual-claim heuristic / Citation Coverage / deterministic Layer-1 Citation Support / CJK key-term / Latin entity / number / unit / multi-citation / SUPPORTED·UNSUPPORTED·UNCERTAIN·NOT_APPLICABLE / unsupported·uncited 行为 / Citation telemetry / 独立离线 eval / 保持 API·UI 向后兼容 / 不破坏 Phase A–F.1 资产
+- Branch / workspace: `Local Database Q&A System本地版v3`
+- 权威发布基线：`35b439b`（F.1 发布 commit，HEAD == origin/main，ahead/behind 0/0，worktree clean）
+
+### Preflight 冲突报告（以代码为最高事实源）
+
+- 授权提示声称 "Phase F.2 = NOT STARTED"，但现场核验发现 `core/citation_verifier.py`（已含 Claim/CitationVerification/CitationReport DTO、claim segmentation、validity、coverage、四值 support、number+unit check、CJK meta 检测、reason codes）、`tests/test_citation_verifier.py`（31 项）已存在，且 `core/engine_v2.py` 已集成（verify 调用 + telemetry 11 字段）。
+- 按权威规则（当前代码 = AS-IS 最高事实源），F.2 实际状态 = **部分实现未闭环**：core + tests + engine 集成已完成；`eval/phase_f_citation_golden.json`、`scripts/eval_phase_f_citation.py`、文档记录、publication sync 缺失。
+- 本轮动作：继承已有实现、不重写；补齐缺失 eval/文档/发布，并修复现场核验发现的 2 个真实缺陷。
+
+### 修复的 2 个真实缺陷
+
+1. **renumber 编号错位（真实 bug）**：`engine_v2.py::answer()` 在 `renumber_citations` **之后**才调用 `citation_verifier.verify(answer, ...)`，但 `evidence_texts` 的 key 是 pre-renumber 的原始编号（`1..len(sent_contexts)` + 章节 offset）。模型乱序输出 citation（如 `...结论[2]...结论[1]`）时，renumber 按首次出现重编号（`[2]→1,[1]→2`），导致 clause 被错误配对到另一条 evidence chunk，verify 结果失真。修复：在 renumber 前保存 `pre_renumber_answer`，verify 改用它（与 evidence_texts 编号对齐）。注释原意即如此，代码此前未落实。
+2. **斜杠单位误判（真实 bug）**：`_latin_key_terms` 把 `270.833 kbit/s` 提取为 key term `kbits`（去斜杠），但证据里保留 `kbit/s`（`_normalize_compact` 只去空格不去斜杠），`kbits not in "kbit/s"` → 正确 claim 被误判 UNSUPPORTED。修复：`_latin_key_terms` 先用 `_extract_number_units` 识别"数字+单位"，把这些单位从 key-term 集合中排除（单位属于 number/unit check，不属于 key-term check）。`CITATION_VERIFIER_VERSION` 随之 `f2-v1 → f2-v2`（确定性合同变化，eval/telemetry 据此检测 stale 结果）。
+
+### Changes
+
+- 修改 `core/engine_v2.py`：`answer()` 捕获 `pre_renumber_answer` 供 verify 使用（renumber 前），消除 clause↔evidence 错位；其余 F.2 集成（`DeterministicCitationVerifier` 实例化、`verify().to_dict()`、`AnswerResultV2.citation_report` 加性字段、telemetry 11 字段 + `citation_verified` 冻结）保留。
+- 修改 `core/citation_verifier.py`：`_latin_key_terms` 排除"数字+单位"单位词（含 `kbit/s` 斜杠单位）；`CITATION_VERIFIER_VERSION = "f2-v2"`。既有 number+unit check（`_extract_number_units`）、claim_body（strip citation markers）、CJK meta 检测（`_is_pure_meta_discourse`）保留。
+- 修改 `tests/test_citation_verifier.py`：+`test_unsupported_wrong_unit`（相同数字不同单位 → UNSUPPORTED）+ `test_supported_slash_unit`（`kbit/s` 斜杠单位 → SUPPORTED）。
+- 新增 `eval/phase_f_citation_golden.json`：30 条完全离线 fixture，覆盖 21 类（valid/invalid/duplicate/malformed/no citation/partial+full coverage/wrong evidence/wrong document/scope violation/correct+wrong number/correct+wrong unit/Latin entity/CJK entity/unsupported CJK/uncertain paraphrase/multi-citation/mixed/not_applicable）。
+- 新增 `scripts/eval_phase_f_citation.py`：纯离线确定性 eval（无 LLM/NLI/embedding/外部服务），逐 case 断言 validity/coverage/support/计数 + verifier version 一致，exit code 0/1。
+- 修改 `docs/ARCHITECTURE.md`（Citation Quality AS-IS 小节）、`docs/V3_PROGRESS.md`（本节）。
+
+### Tests / Eval
+
+- `tests/test_citation_verifier.py`：**33/33 PASS**（31 既有未删改 + 2 新）。
+- F.2 offline eval：**30/30 PASS**（21 类全覆盖，failure 0，version golden=f2-v2 runtime=f2-v2，wall 1.9ms）。
+- 全套回归见下方 "Final Gate"（含 Qdrant 环境脏状态处理说明）。
+
+### Known limitations（不伪装）
+
+- **单位换算超出 deterministic 范围**：`5 GHz` vs `5000 MHz` 这类等值换算在 number check 会因数字不相等被判定 number mismatch（UNSUPPORTED），不会静默判 SUPPORTED——这是 conservative 方向的误判，语义换算属 `F.3 CANDIDATE`。
+- **unit mismatch 复用 number mismatch reason code**：wrong-unit 与 wrong-number 均归 `unsupported_number_mismatch`（`mismatched_numbers` 内已携带 `"3.84 kbps"` 这类 unit 信息），未引入独立 unit reason code（避免行为变更，非缺陷）。
+- 本模块是 **deterministic Layer-1**，非 semantic entailment / NLI / complete factual verification；不得宣传为语义蕴涵或完整事实核查。
+- KB Summary / Multi-document Summary / NLI Citation Verifier / LLM Citation Judge / Coverage 正式质量阈值 / 最终 150–300 Golden Set = **DEFERRED**（`F.3 CANDIDATE` 或后续阶段），未声称支持。
+
+### Rollback
+
+- 源码：`core/citation_verifier.py` 行为变化仅 2 处（`_latin_key_terms` 排除数字单位 + version bump），`core/engine_v2.py` 仅 verify 输入改为 pre-renumber answer；回滚到 F.1 发布 commit `35b439b` 即完全恢复 F.1 行为（F.1 无 citation verifier 集成，verify 输出为 None）。
+- 数据：零 schema 变化、零数据迁移、零 Qdrant 变化；无回滚数据成本。
+- 运行时：`citation_verified` 字段语义冻结不变；`citation_report` 为加性字段，旧客户端忽略。
+
+### Gate decision
+
+**Phase F.2 = PASS。** Phase F overall = IN_PROGRESS（F.3 / F.4 = NOT STARTED，等待单独授权，STOP）。

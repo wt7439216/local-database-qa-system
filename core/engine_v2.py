@@ -20,6 +20,7 @@ from core.library_store import (
     normalize_for_similarity,
 )
 from core.ollama_http import OllamaClient, OllamaError
+from core.citation_verifier import DeterministicCitationVerifier
 from core.query_router import (
     CHAPTER_LOCATION_WORDS,
     LOCATION_WORDS,
@@ -85,6 +86,10 @@ class AnswerResultV2:
     # Phase E: additive per-turn metadata the client may round-trip into
     # history (structured referent resolution).  Old clients ignore it.
     history_entry: dict[str, Any] | None = None
+    # Phase F.2: additive deterministic citation quality report.  None when the
+    # route produces no model answer (catalog / refusal / clarification paths).
+    # Old clients ignore it; ``citation_verified`` keeps its frozen meaning.
+    citation_report: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -113,6 +118,7 @@ class StructuredQAEngine:
         self.ollama = ollama or OllamaClient()
         self.answer_model = answer_model or config.ANSWER_MODEL
         self.router = QueryRouter()
+        self.citation_verifier = DeterministicCitationVerifier()
         self._model_lock = threading.Lock()
         self._last_embedding_error = ""
         # Stage timings for telemetry (compare routes record the last pass).
@@ -446,7 +452,32 @@ class StructuredQAEngine:
                     f"- {chapter.title}（PDF 第{chapter.pdf_page_start}–{chapter.pdf_page_end}页）[{offset + index}]"
                 )
             answer = answer.rstrip() + "\n\n" + "\n".join(index_lines)
+
+        # Phase F.2: deterministic citation quality report.  The evidence map
+        # uses the *pre-renumber* citation numbering (sent contexts then
+        # deterministic chapter citations) so the verifier evaluates the same
+        # clause↔evidence pairing the model produced.  Capture the answer
+        # *before* renumbering: renumber_citations reassigns ids by first
+        # appearance, which would otherwise misalign a clause with the wrong
+        # evidence chunk whenever the model emits out-of-order ids.  Empty
+        # routes (catalog / refusal / clarify) skip this block and keep
+        # citation_report=None.
+        pre_renumber_answer = answer
         answer, used_citations = renumber_citations(answer, citations)
+
+        evidence_texts: dict[int, str] = {
+            index + 1: chunk.text for index, chunk in enumerate(sent_contexts)
+        }
+        offset = len(sent_contexts)
+        for index, chapter in enumerate(prepared.chapters):
+            evidence_texts[offset + index + 1] = getattr(chapter, "overview", "")
+        citation_report = (
+            self.citation_verifier.verify(
+                pre_renumber_answer, evidence_texts, citation_count=len(citations)
+            ).to_dict()
+            if sent_contexts or prepared.chapters
+            else None
+        )
         write_telemetry(
             {
                 "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
@@ -484,9 +515,22 @@ class StructuredQAEngine:
                     if decision is not None and decision.normalized_question != decision.original_question
                     else ""
                 ),
+                # v3.5 Phase F.2 deterministic citation quality (additive;
+                # ``citation_verified`` keeps its frozen meaning and is never
+                # removed or repurposed).
+                "citation_count": citation_report["citation_count"] if citation_report else 0,
+                "factual_claim_count": citation_report["factual_claim_count"] if citation_report else 0,
+                "cited_claim_count": citation_report["cited_claim_count"] if citation_report else 0,
+                "citation_coverage": citation_report["citation_coverage"] if citation_report else None,
+                "supported_claim_count": citation_report["supported_claim_count"] if citation_report else 0,
+                "unsupported_claim_count": citation_report["unsupported_claim_count"] if citation_report else 0,
+                "uncertain_claim_count": citation_report["uncertain_claim_count"] if citation_report else 0,
+                "invalid_citation_count": citation_report["invalid_citation_count"] if citation_report else 0,
+                "citation_scope_violation": citation_report["citation_scope_violation"] if citation_report else 0,
+                "citation_verifier_version": citation_report["verifier_version"] if citation_report else "",
             }
         )
-        return self._result(answer, used_citations, prepared, started, citation_verified)
+        return self._result(answer, used_citations, prepared, started, citation_verified, citation_report)
 
     def _assert_citations_in_scope(
         self,
@@ -540,6 +584,7 @@ class StructuredQAEngine:
         prepared: PreparedAnswer,
         started: float,
         citation_verified: bool,
+        citation_report: dict[str, Any] | None = None,
     ) -> AnswerResultV2:
         return AnswerResultV2(
             answer=answer,
@@ -552,6 +597,7 @@ class StructuredQAEngine:
             citation_verified=citation_verified,
             elapsed_ms=round((time.perf_counter() - started) * 1000),
             history_entry=build_history_entry(prepared, answer, citations),
+            citation_report=citation_report,
         )
 
 

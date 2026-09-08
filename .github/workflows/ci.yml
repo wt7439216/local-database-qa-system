@@ -43,3 +43,5 @@ jobs:
           node --check web/markdown.js
       - name: Run Phase E router evaluation
         run: python -X utf8 scripts/eval_phase_e_router.py
+      - name: Run Phase F.2 citation evaluation
+        run: python -X utf8 scripts/eval_phase_f_citation.py

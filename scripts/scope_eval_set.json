@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "description": "Phase D scope 评测集：KB-A(通信原理库)/KB-B(网络协议库) 各多文档，覆盖 KB/文档/标签/组合 scope、同术语两文档、冲突陈述、scope 内离题、停用与删除文档。标注基于真实导入后的内容（人工核对）。指标 Gate：scope leakage = 0，citation leakage = 0。",
+    "min_cases": 30,
+    "kb_a": "kb-a",
+    "kb_b": "kb-b",
+    "embedding_model": "bge-m3"
+  },
+  "documents": [
+    {"alias": "docA1", "kb": "kb-a", "file": "scope-docA1.md", "title": "移动通信原理讲义", "tags": ["通信", "课程资料"], "sections": {
+      "多径传播": "多径传播指信号经多条路径到达接收端，不同路径的幅度与相位不同，多径叠加导致接收信号发生衰落与码间串扰，是移动信道最重要的特征之一。",
+      "OFDMA与LTE": "LTE 下行采用 OFDMA 多址方式，将带宽划分为多个正交子载波，通过调度将子载波分配给不同用户，从而对抗频率选择性衰落并提高频谱利用率。",
+      "RAKE接收机": "RAKE 接收机主要用于蜂窝 CDMA 系统，它按多径分量的相对时延对各支路分别解相关，再合并多径能量以对抗衰落。"
+    }},
+    {"alias": "docA2", "kb": "kb-a", "file": "scope-docA2.md", "title": "分集与均衡技术", "tags": ["通信"], "sections": {
+      "分集接收": "分集接收通过多条独立衰落支路的合并来对抗衰落，常见方式包括空间分集、时间分集与频率分集，合并增益随支路相关性降低而增大。",
+      "均衡技术": "均衡技术用于补偿信道引入的码间串扰，线性均衡与判决反馈均衡是经典的时域均衡结构，训练序列用于均衡器系数的收敛。",
+      "RAKE的工程限制": "RAKE 接收机的支路数有限，当可分辨多径数目超过支路数时，只能合并能量最强的若干条路径，其余多径能量被放弃。"
+    }},
+    {"alias": "docB1", "kb": "kb-b", "file": "scope-docB1.md", "title": "计算机网络基础", "tags": ["网络", "课程资料"], "sections": {
+      "TCP可靠传输": "TCP 通过序号、确认应答、超时重传与滑动窗口机制提供可靠的字节流传输，拥塞控制利用慢启动与拥塞避免调节发送速率。",
+      "路由与转发": "路由器根据转发表对分组进行逐跳转发，路由协议在路由器之间交换网络可达性信息，静态路由适合小型网络，动态路由适合大规模网络。"
+    }},
+    {"alias": "docB2", "kb": "kb-b", "file": "scope-docB2.md", "title": "网络安全指南", "tags": ["安全"], "sections": {
+      "对称加密": "对称加密使用同一把密钥进行加密与解密，AES 是目前最广泛使用的分组密码，密钥分发是对称体制的主要难题。",
+      "防火墙": "防火墙依据安全策略控制进出网络的流量，包过滤防火墙工作在网络层，状态检测防火墙维护连接状态表以识别合法会话。"
+    }},
+    {"alias": "docA3", "kb": "kb-a", "file": "scope-docA3.md", "title": "卫星通信专题", "tags": ["通信", "卫星"], "sections": {
+      "卫星信道均衡": "卫星信道中的均衡主要针对低符号速率下的载波相位漂移，与地面移动信道的时域均衡目标不同，重点在载波同步与相位噪声抑制。",
+      "RAKE在卫星场景": "RAKE 接收机主要用于卫星扩频系统的多径分离，直射与海面反射路径构成典型的两径模型，合并策略以最大比合并为主。"
+    }}
+  ],
+  "cases": [
+    {"id": 1,  "category": "kb_a_only",        "q": "什么是多径传播？",                  "scope": {"knowledge_base_ids": ["__KB_A__"]}, "expect": {"hits_from": ["docA1"], "content": true}},
+    {"id": 2,  "category": "kb_a_only",        "q": "LTE 为什么采用 OFDMA？",            "scope": {"knowledge_base_ids": ["__KB_A__"]}, "expect": {"hits_from": ["docA1"], "content": true}},
+    {"id": 3,  "category": "kb_a_only",        "q": "RAKE 接收机是如何对抗衰落的？",      "scope": {"knowledge_base_ids": ["__KB_A__"]}, "expect": {"hits_from": ["docA1", "docA2", "docA3"], "content": true}},
+    {"id": 4,  "category": "kb_a_only",        "q": "分集接收为什么能对抗衰落？",          "scope": {"knowledge_base_ids": ["__KB_A__"]}, "expect": {"hits_from": ["docA2"], "content": true}},
+    {"id": 5,  "category": "kb_a_only",        "q": "量子计算的肖尔算法原理是什么？",       "scope": {"knowledge_base_ids": ["__KB_A__"]}, "expect": {"out_of_scope": true}},
+    {"id": 6,  "category": "kb_b_only",        "q": "TCP 如何保证可靠传输？",             "scope": {"knowledge_base_ids": ["__KB_B__"]}, "expect": {"hits_from": ["docB1"], "content": true}},
+    {"id": 7,  "category": "kb_b_only",        "q": "路由器是如何转发分组的？",            "scope": {"knowledge_base_ids": ["__KB_B__"]}, "expect": {"hits_from": ["docB1"], "content": true}},
+    {"id": 8,  "category": "kb_b_only",        "q": "AES 对称加密的密钥分发难点是什么？",   "scope": {"knowledge_base_ids": ["__KB_B__"]}, "expect": {"hits_from": ["docB2"], "content": true}},
+    {"id": 9,  "category": "kb_b_only",        "q": "状态检测防火墙有什么特点？",           "scope": {"knowledge_base_ids": ["__KB_B__"]}, "expect": {"hits_from": ["docB2"], "content": true}},
+    {"id": 10, "category": "kb_b_only",        "q": "多径衰落是怎么产生的？",             "scope": {"knowledge_base_ids": ["__KB_B__"]}, "expect": {"out_of_scope": true}},
+    {"id": 11, "category": "document_scope",   "q": "OFDMA 有什么优点？",                "scope": {"document_ids": ["__docA1__"]}, "expect": {"hits_from": ["docA1"], "content": true}},
+    {"id": 12, "category": "document_scope",   "q": "均衡技术的作用是什么？",              "scope": {"document_ids": ["__docA2__"]}, "expect": {"hits_from": ["docA2"], "content": true}},
+    {"id": 13, "category": "document_scope",   "q": "卫星信道的均衡有什么特点？",           "scope": {"document_ids": ["__docA3__"]}, "expect": {"hits_from": ["docA3"], "content": true}},
+    {"id": 14, "category": "document_scope",   "q": "TCP 的拥塞控制是如何工作的？",        "scope": {"document_ids": ["__docB1__"]}, "expect": {"hits_from": ["docB1"], "content": true}},
+    {"id": 15, "category": "document_set",     "q": "衰落和码间串扰分别怎么解决？",          "scope": {"document_ids": ["__docA1__", "__docB1__"]}, "expect": {"hits_from": ["docA1", "docB1"], "content": true}},
+    {"id": 16, "category": "document_set",     "q": "慢启动和空间分集分别属于什么技术？",     "scope": {"document_ids": ["__docA2__", "__docB1__"]}, "expect": {"hits_from": ["docA2", "docB1"], "content": true}},
+    {"id": 17, "category": "document_set",     "q": "加密密钥分发与频率分集分别是什么？",     "scope": {"document_ids": ["__docA2__", "__docB2__"]}, "expect": {"hits_from": ["docA2", "docB2"], "content": true}},
+    {"id": 18, "category": "tag_scope",        "q": "RAKE 接收机的多径合并方式是什么？",    "scope": {"tags": ["卫星"]}, "expect": {"hits_from": ["docA3"], "content": true}},
+    {"id": 19, "category": "tag_scope",        "q": "防火墙如何控制网络流量？",             "scope": {"tags": ["安全"]}, "expect": {"hits_from": ["docB2"], "content": true}},
+    {"id": 20, "category": "tag_scope",        "q": "TCP 通过哪些机制保证可靠传输？",       "scope": {"tags": ["课程资料"]}, "expect": {"hits_from": ["docA1", "docA2", "docB1"], "content": true}},
+    {"id": 21, "category": "combined_scope",   "q": "均衡器系数如何收敛？",               "scope": {"knowledge_base_ids": ["__KB_A__"], "tags": ["通信"]}, "expect": {"hits_from": ["docA2"], "content": true}},
+    {"id": 22, "category": "combined_scope",   "q": "卫星扩频系统的 RAKE 合并策略是什么？",   "scope": {"knowledge_base_ids": ["__KB_A__"], "tags": ["卫星"]}, "expect": {"hits_from": ["docA3"], "content": true}},
+    {"id": 23, "category": "oos_within_scope", "q": "今天天气怎么样？",                  "scope": {"knowledge_base_ids": ["__KB_A__"]}, "expect": {"out_of_scope": true}},
+    {"id": 24, "category": "oos_within_scope", "q": "番茄炒蛋应该怎么做才好吃？",           "scope": {"knowledge_base_ids": ["__KB_B__"]}, "expect": {"out_of_scope": true}},
+    {"id": 25, "category": "oos_within_scope", "q": "NBA 比赛比分是多少？",               "scope": {"tags": ["通信"]}, "expect": {"out_of_scope": true}},
+    {"id": 26, "category": "oos_within_scope", "q": "附近哪家火锅店好吃？",               "scope": {"document_ids": ["__docA1__"]}, "expect": {"out_of_scope": true}},
+    {"id": 27, "category": "same_term_two_docs", "q": "地面移动信道中的时域均衡是什么？",    "scope": {"document_ids": ["__docA2__"]}, "expect": {"hits_from": ["docA2"], "content": true}},
+    {"id": 28, "category": "same_term_two_docs", "q": "卫星信道均衡的重点是什么？",          "scope": {"document_ids": ["__docA3__"]}, "expect": {"hits_from": ["docA3"], "content": true}},
+    {"id": 29, "category": "conflict_scope",   "q": "RAKE 接收机主要用于什么系统？",        "scope": {"document_ids": ["__docA1__"]}, "expect": {"hits_from": ["docA1"], "content": true}},
+    {"id": 30, "category": "conflict_scope",   "q": "RAKE 合并策略在卫星链路里怎么选？",     "scope": {"document_ids": ["__docA3__"]}, "expect": {"hits_from": ["docA3"], "content": true}},
+    {"id": 31, "category": "disabled_document", "q": "线性均衡的结构是什么？",             "scope": null, "disabled": ["docA2"], "expect": {"hits_from": [], "forbidden": ["docA2"]}},
+    {"id": 32, "category": "disabled_document", "q": "线性均衡的结构是什么？",             "scope": {"document_ids": ["__docA2__"]}, "disabled": ["docA2"], "expect": {"hits_from": ["docA2"], "content": true}},
+    {"id": 33, "category": "deleted_document", "q": "分组密码 AES 的使用现状如何？",        "scope": null, "deleted": ["docB2"], "expect": {"hits_from": [], "forbidden": ["docB2"]}},
+    {"id": 34, "category": "deleted_document", "q": "RAKE 接收机主要用于什么系统？",        "scope": {"knowledge_base_ids": ["__KB_A__"]}, "deleted": ["docB2"], "expect": {"hits_from": ["docA1", "docA2", "docA3"], "content": true}}
+  ]
+}

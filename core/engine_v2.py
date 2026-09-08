@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 import json
+import os
 import re
 import threading
 import time
@@ -19,7 +20,16 @@ from core.library_store import (
     normalize_for_similarity,
 )
 from core.ollama_http import OllamaClient, OllamaError
+from core.query_scope import QueryScope, ScopeResolution
 from core.text_rules import is_book_overview_query, is_book_toc_query, normalize_query, route_by_rules
+
+
+class CitationScopeViolationError(RuntimeError):
+    """A citation referenced a chunk outside the effective QueryScope.
+
+    Contract §27 treats this as a severe failure: the scope propagation is
+    supposed to make it impossible; the assertion is the last line of defense.
+    """
 
 
 LOCATION_WORDS = ("哪页", "第几页", "哪里", "位置", "出处", "来源", "在哪")
@@ -90,6 +100,9 @@ class StructuredQAEngine:
         self.answer_model = answer_model or config.ANSWER_MODEL
         self._model_lock = threading.Lock()
         self._last_embedding_error = ""
+        # Stage timings for telemetry (compare routes record the last pass).
+        self._last_embedding_ms: float | None = None
+        self._last_retrieval_timings: dict[str, float] = {}
 
     def health(self, check_ollama: bool = True) -> dict[str, Any]:
         models: list[str] = []
@@ -121,9 +134,16 @@ class StructuredQAEngine:
         )
         return result
 
-    def prepare(self, question: str, history: list[dict[str, str]] | None = None) -> PreparedAnswer:
+    def prepare(
+        self,
+        question: str,
+        history: list[dict[str, str]] | None = None,
+        scope: QueryScope | None = None,
+    ) -> PreparedAnswer:
         question = validate_question(question)
         history = normalize_history(history)
+        resolution = self.library.resolve_scope(scope)
+        allowed = None if resolution.is_default else set(resolution.document_ids)
         routing_question = question
         if history and looks_like_follow_up(question):
             # Resolve fragments like "那第二章呢" against the previous turn:
@@ -132,13 +152,13 @@ class StructuredQAEngine:
             routing_question = f"{history[-1]['question']}{question}"
         route = classify_route(routing_question)
         if route == "book_toc":
-            chapters = self.library.chapter_catalog()
+            chapters = self.library.chapter_catalog(allowed)
             return PreparedAnswer(question, route, [], "chapter-catalog", "high" if chapters else "none", not chapters, chapters)
         if route == "book_overview":
-            summaries = self.library.summary_contexts()
-            global_summaries = [context for context in summaries if context.chapter == "全书概览"]
+            summaries = self.library.summary_contexts(allowed_document_ids=allowed)
+            global_summaries = [item for item in summaries if item.chapter == "全书概览"]
             contexts = global_summaries or summaries[:4]
-            chapters = self.library.chapter_catalog()
+            chapters = self.library.chapter_catalog(allowed)
             return PreparedAnswer(
                 question,
                 route,
@@ -150,26 +170,30 @@ class StructuredQAEngine:
             )
         if route == "chapter_overview":
             chapter_number = extract_chapter_number(routing_question)
-            contexts = self.library.summary_contexts(chapter_number)
+            contexts = self.library.summary_contexts(chapter_number, allowed)
             return PreparedAnswer(question, route, contexts[:4], "chapter-summary", "high" if contexts else "none", not contexts)
 
         top_k = 10 if route == "locate_chapter" else 7 if route == "compare" else 5
         retrieval_query = clean_location_query(routing_question) if route in {"locate", "locate_chapter"} else routing_question
         query_vector = None
         if self.library.has_vectors:
+            started_embed = time.perf_counter()
             try:
                 query_vector = self.ollama.embed(retrieval_query, model=self.library.embedding_model)[0]
+                self._last_embedding_ms = round((time.perf_counter() - started_embed) * 1000, 1)
                 self._last_embedding_error = ""
             except (OllamaError, ValueError, IndexError) as exc:
                 self._last_embedding_error = str(exc)
         if route == "compare":
-            return self._prepare_compare(routing_question, top_k, query_vector)
+            return self._prepare_compare(routing_question, top_k, query_vector, scope)
         search = self.library.retrieve(
             retrieval_query,
             query_vector,
             top_k=top_k,
             include_front_matter=route in {"qa", "compare"},
+            scope=scope,
         )
+        self._last_retrieval_timings = getattr(self.library, "last_retrieval_timings", {})
         hits = list(search.hits)
         if route in {"locate", "locate_chapter"}:
             exact = normalize_for_similarity(retrieval_query)
@@ -214,7 +238,13 @@ class StructuredQAEngine:
             search.out_of_scope,
         )
 
-    def _prepare_compare(self, question: str, top_k: int, question_vector: list[float] | None) -> PreparedAnswer:
+    def _prepare_compare(
+        self,
+        question: str,
+        top_k: int,
+        question_vector: list[float] | None,
+        scope: QueryScope | None = None,
+    ) -> PreparedAnswer:
         """Retrieve evidence for each compared side, not just the full question.
 
         A single retrieval over "A 和 B 有什么区别" tends to return only chunks
@@ -235,12 +265,15 @@ class StructuredQAEngine:
         modes: list[str] = []
         for query, vector in queries:
             if vector is None and self.library.has_vectors:
+                started_embed = time.perf_counter()
                 try:
                     vector = self.ollama.embed(query, model=self.library.embedding_model)[0]
+                    self._last_embedding_ms = round((time.perf_counter() - started_embed) * 1000, 1)
                     self._last_embedding_error = ""
                 except (OllamaError, ValueError, IndexError) as exc:
                     self._last_embedding_error = str(exc)
-            search = self.library.retrieve(query, vector, top_k=per_k, include_front_matter=True)
+            search = self.library.retrieve(query, vector, top_k=per_k, include_front_matter=True, scope=scope)
+            self._last_retrieval_timings = getattr(self.library, "last_retrieval_timings", {})
             scopes.append(search.out_of_scope)
             confidences.append(search.confidence)
             modes.append(search.retrieval_mode)
@@ -279,12 +312,16 @@ class StructuredQAEngine:
         on_token: Callable[[str], None] | None = None,
         cancelled: Callable[[], bool] | None = None,
         history: list[dict[str, str]] | None = None,
+        scope: QueryScope | None = None,
     ) -> AnswerResultV2:
         started = time.perf_counter()
         history = normalize_history(history)
-        prepared = self.prepare(question, history)
+        resolution = self.library.resolve_scope(scope)
+        known_documents = {record.id for record in self.library.documents}
+        prepared = self.prepare(question, history, scope)
         if prepared.route == "book_toc":
             citations = [chapter.citation(index) for index, chapter in enumerate(prepared.chapters, 1)]
+            self._assert_citations_in_scope(citations, resolution, known_documents)
             if not prepared.chapters:
                 answer = "当前教材库还没有可用的章节目录。请重新构建知识库。"
                 return self._result(answer, [], prepared, started, citation_verified=True)
@@ -298,6 +335,7 @@ class StructuredQAEngine:
             return self._result("\n".join(lines), citations, prepared, started, citation_verified=True)
 
         citations = [chunk.citation(index) for index, chunk in enumerate(prepared.contexts, 1)]
+        self._assert_citations_in_scope(citations, resolution, known_documents)
 
         if prepared.out_of_scope or not prepared.contexts:
             if prepared.route == "chapter_overview":
@@ -326,12 +364,14 @@ class StructuredQAEngine:
         # The prompt budget may drop tail materials, so only the contexts that
         # were actually sent are valid citation targets for the answer.
         citations = [chunk.citation(index) for index, chunk in enumerate(sent_contexts, 1)]
+        self._assert_citations_in_scope(citations, resolution, known_documents)
         if prepared.route == "book_overview":
             offset = len(citations)
             citations.extend(
                 chapter.citation(offset + index)
                 for index, chapter in enumerate(prepared.chapters, 1)
             )
+            self._assert_citations_in_scope(citations, resolution, known_documents)
         pieces: list[str] = []
         with self._model_lock:
             if on_token is not None and hasattr(self.ollama, "chat_stream"):
@@ -375,9 +415,55 @@ class StructuredQAEngine:
                 "citation_verified": citation_verified,
                 "elapsed_ms": round((time.perf_counter() - started) * 1000),
                 "answer_chars": len(answer),
+                # v3.0/v3.1 additive fields (existing fields keep their semantics)
+                "vector_backend": getattr(self.library, "vector_backend", ""),
+                "embedding_ms": self._last_embedding_ms,
+                "lexical_ms": self._last_retrieval_timings.get("lexical_ms"),
+                "dense_ms": self._last_retrieval_timings.get("dense_ms"),
+                "fusion_ms": self._last_retrieval_timings.get("fusion_ms"),
+                "reranker_enabled": self._last_retrieval_timings.get("reranker_enabled", False),
+                "reranker_candidate_count": self._last_retrieval_timings.get("reranker_candidate_count", 0),
+                "reranker_ms": self._last_retrieval_timings.get("reranker_ms"),
+                "reranker_truncated_candidates": self._last_retrieval_timings.get("reranker_truncated_candidates"),
+                # v3.3 scope fields: counts + fingerprint, never the full id
+                # list (debug env var only).
+                "scope_mode": resolution.mode,
+                "scope_document_count": len(resolution.document_ids),
+                "scope_knowledge_base_count": len(scope.knowledge_base_ids) if scope else 0,
+                "scope_tag_count": len(scope.tags) if scope else 0,
+                "scope_fingerprint": scope_fingerprint(resolution),
+                **({"scope_document_ids": sorted(resolution.document_ids)} if os.getenv("QA_DEBUG_SCOPE") else {}),
             }
         )
         return self._result(answer, used_citations, prepared, started, citation_verified)
+
+    def _assert_citations_in_scope(
+        self,
+        citations: list[dict[str, Any]],
+        resolution: ScopeResolution,
+        known_document_ids: set[str] | None = None,
+    ) -> None:
+        """Contract §27: every citation must live inside the effective scope.
+
+        The scope propagation makes violations impossible by construction;
+        this assertion is the last line of defense and treats any violation
+        as a severe failure instead of silently dropping the citation.
+        Document ids that do not exist in the library at all are skipped:
+        citations are built from retrieved chunks, so a real citation always
+        references a registered document — an unknown id can only be a
+        synthetic fixture, never a scope leak.
+        """
+        for citation in citations:
+            document_id = str(citation.get("document_id") or "")
+            if not document_id:
+                continue
+            if known_document_ids is not None and document_id not in known_document_ids:
+                continue
+            if not resolution.allows(document_id):
+                raise CitationScopeViolationError(
+                    f"引用越界（scope_mode={resolution.mode}）：citation document_id={document_id} "
+                    f"不在有效范围内（{len(resolution.document_ids)} 个文档）。"
+                )
 
     def _missing_chapter_answer(self, question: str) -> str:
         # The user asked for a chapter the library does not have; list what
@@ -668,3 +754,11 @@ def renumber_citations(answer: str, citations: list[dict[str, Any]]) -> tuple[st
 def model_available(required: str, installed: list[str]) -> bool:
     required_base = required.strip().removesuffix(":latest")
     return any(item.strip().removesuffix(":latest") == required_base for item in installed)
+
+
+def scope_fingerprint(resolution: ScopeResolution) -> str:
+    """Short fingerprint of the resolved document-id set for telemetry."""
+    import hashlib
+
+    joined = "|".join(sorted(resolution.document_ids))
+    return hashlib.sha256(joined.encode("utf-8")).hexdigest()[:12]

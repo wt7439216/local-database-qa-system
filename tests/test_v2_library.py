@@ -19,6 +19,7 @@ from core.engine_v2 import (
     renumber_citations,
     split_compare_entities,
 )
+from core import config
 from core.library_store import MODEL_DENSE_GATES, ChunkRecord, LibraryStore, SearchHit, SearchResult
 from scripts.build_library import ChunkDraft, build_library, chapter_summaries, make_chunks, parse_pages
 
@@ -98,6 +99,12 @@ class V2LibraryTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         root = Path(self.temp.name)
+        # Hermetic telemetry: engine.answer() appends JSONL to config.LOG_DIR;
+        # redirect it into the temp dir so test runs never touch the real
+        # project log at data/logs/qa_log.jsonl.
+        telemetry = patch.object(config, "LOG_DIR", root / "logs")
+        telemetry.start()
+        self.addCleanup(telemetry.stop)
         self.input = root / "book.txt"
         self.database = root / "library.sqlite3"
         self.input.write_text(SAMPLE, encoding="utf-8")

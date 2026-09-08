@@ -20,6 +20,7 @@ Thumbs.db
 
 # Private source documents and generated knowledge bases
 *.pdf
+!tests/fixtures/documents/sample.pdf
 data/pdf/**
 !data/pdf/.gitkeep
 data/raw/**
@@ -34,3 +35,30 @@ build/
 dist/
 release/
 runtime/
+
+# Reranker sidecar runtime (Phase B): isolated env and model cache
+reranker_service/.venv/
+
+# Databases / backups / model weights (publication safety net)
+*.sqlite
+*.sqlite3
+*.db
+*.bak
+*.safetensors
+*.onnx
+*.pt
+*.pth
+*.bin
+
+# HF / model caches
+.cache/
+huggingface/
+models/
+
+# Phase snapshots live OUTSIDE the repo, but guard anyway
+_phase_backups/
+
+# Telemetry files (data/logs/** already covered; belt and suspenders)
+qa_log.jsonl
+import_log.jsonl
+library_log.jsonl

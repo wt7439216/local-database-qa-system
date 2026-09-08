@@ -7,6 +7,7 @@ const state = {
   lanUrls: [],
   localHost: false,
   history: [],
+  libraryAvailable: false,
 };
 
 const MAX_HISTORY_TURNS = 3;
@@ -168,6 +169,7 @@ async function checkHealth() {
     $("#chunkCount").textContent = data.chunks ?? "—";
     $("#documentCount").textContent = data.documents ?? 1;
     if (data.library_name) $("#libraryName").textContent = data.library_name;
+    loadScopeOptions();
     return data;
   } catch (error) {
     setStatus(error.message || "连接失败", "error");
@@ -232,10 +234,13 @@ async function ask(question) {
   renderSources([]);
   let streamedAnswer = "";
   try {
+    const payload = { question, history: state.history };
+    const scope = buildScopePayload();
+    if (scope) payload.scope = scope;
     const response = await fetch(`${state.baseUrl}/api/v2/jobs`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeaders() },
-      body: JSON.stringify({ question, history: state.history }),
+      body: JSON.stringify(payload),
     });
     const created = await response.json();
     if (!response.ok) {
@@ -384,6 +389,85 @@ $("#shutdownButton").addEventListener("click", async () => {
   }
 });
 
+// --- Phase D scope selector (v3.3) -------------------------------------------
+// 选择会真实进入 API 请求（/api/v2/jobs 的 scope 字段），不是纯前端状态。
+
+function scopeSelections() {
+  return {
+    kb: $("#scopeKb").value,
+    docs: [...$("#scopeDocs").selectedOptions].map((option) => option.value),
+    tags: [...$("#scopeTags").selectedOptions].map((option) => option.value),
+  };
+}
+
+function buildScopePayload() {
+  if (!state.libraryAvailable) return null;
+  const mode = $("#scopeMode").value;
+  const { kb, docs, tags } = scopeSelections();
+  if (mode === "kb" && kb) return { knowledge_base_ids: [kb] };
+  if (mode === "docs" && docs.length) return { document_ids: docs };
+  if (mode === "tags" && tags.length) return { tags };
+  return null; // all / nothing selected -> default range
+}
+
+function updateScopeCurrentLabel() {
+  const mode = $("#scopeMode").value;
+  const { kb, docs, tags } = scopeSelections();
+  const kbName = $("#scopeKb").selectedOptions[0]?.textContent || "";
+  let text = "全部可用文档";
+  if (mode === "kb" && kb) text = `知识库：${kbName}`;
+  else if (mode === "docs" && docs.length) text = `${docs.length} 个选定文档`;
+  else if (mode === "tags" && tags.length) text = `标签：${tags.join("、")}`;
+  $("#scopeCurrent").textContent = text;
+}
+
+function fillSelect(select, items, { multiple }) {
+  select.innerHTML = "";
+  select.multiple = multiple;
+  for (const item of items) {
+    const option = document.createElement("option");
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  }
+}
+
+async function loadScopeOptions() {
+  try {
+    const response = await fetch(`${state.baseUrl}/api/v3/library`, { headers: authHeaders() });
+    if (!response.ok) throw new Error("library api unavailable");
+    const data = await response.json();
+    state.libraryAvailable = true;
+    $("#scopeRow").hidden = false;
+    $("#libraryLink").hidden = false;
+    fillSelect($("#scopeKb"), (data.knowledge_bases || []).map((kb) => ({
+      value: kb.knowledge_base_id,
+      label: `${kb.name}（${kb.document_count}）`,
+    })), { multiple: false });
+    fillSelect($("#scopeDocs"), (data.documents || [])
+      .filter((doc) => doc.status === "READY")
+      .map((doc) => ({ value: doc.document_id, label: doc.title || doc.source_display || doc.document_id })), { multiple: true });
+    fillSelect($("#scopeTags"), (data.statistics?.tag_names || []).map((name) => ({ value: name, label: name })), { multiple: true });
+    updateScopeCurrentLabel();
+  } catch (_error) {
+    // Library API 未启用（旧引擎/未配置）时保持隐藏，问答行为不变。
+    state.libraryAvailable = false;
+    $("#scopeRow").hidden = true;
+    $("#libraryLink").hidden = true;
+  }
+}
+
+$("#scopeMode").addEventListener("change", () => {
+  const mode = $("#scopeMode").value;
+  $("#scopeKb").hidden = mode !== "kb";
+  $("#scopeDocs").hidden = mode !== "docs";
+  $("#scopeTags").hidden = mode !== "tags";
+  updateScopeCurrentLabel();
+});
+for (const id of ["#scopeKb", "#scopeDocs", "#scopeTags"]) {
+  $(id).addEventListener("change", updateScopeCurrentLabel);
+}
+
 function registerModelTools() {
   const context = document.modelContext;
   if (!context?.registerTool) return;
@@ -414,4 +498,5 @@ function registerModelTools() {
 }
 
 registerModelTools();
+loadScopeOptions();
 checkHealth();

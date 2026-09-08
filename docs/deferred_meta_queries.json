@@ -1,0 +1,35 @@
+{
+  "record_type": "deferred_meta_queries",
+  "recorded_at": "2026-09-07",
+  "context": "Phase C Closure Audit。Phase C 通用导入评测聚焦内容型问题（25/25 PASS）；文档级元问题（问文档/结构本身）在评测定稿前曾被冻结 Scope Gate 拒答，未纳入 25 条内容评测集。本文件保留该历史证据并补充机器实测观察，不将这 4 条伪装成 PASS。",
+  "current_support": "DEFERRED",
+  "target_phase": "Phase E / Router + document-level intent",
+  "evidence_source": "2026-09-07 实测：bge-m3 真实嵌入 + 冻结检索管线（VECTOR_BACKEND=sqlite），对 data/library/eval/ 各格式独立评测库执行 LibraryStore.retrieve(top_k=5)",
+  "queries": [
+    {
+      "query": "这份文档一共有几个小节？",
+      "source_format": "markdown",
+      "observed_current_behavior": "out_of_scope=true, confidence=low, retrieval_mode=vector, top_dense_score=0.4582, top_section='移动通信测试文档 / 3. 参数表'（内容型命中，无法回答计数）",
+      "reason_deferred": "文档结构计数属于 document-level intent，需要 Router 识别元问题并改走目录/元数据查询，冻结 Scope Gate 正确拒答"
+    },
+    {
+      "query": "这个文档的标题是什么？",
+      "source_format": "txt",
+      "observed_current_behavior": "out_of_scope=true, confidence=low, retrieval_mode=vector, top_dense_score=0.4011, top_section='3. 参数表'",
+      "reason_deferred": "文档标题是文档级元数据，不是 chunk 内容检索可回答的问题，属 Phase E Router 范畴"
+    },
+    {
+      "query": "这份演示文稿一共有几张幻灯片？",
+      "source_format": "pptx",
+      "observed_current_behavior": "out_of_scope=true, confidence=low, retrieval_mode=vector, top_dense_score=0.3697, top_section='3. 参数表'",
+      "reason_deferred": "slide 计数存在于导入元数据（import_extras.slide_count），运行时尚无文档级元数据查询路径，属 Phase E"
+    },
+    {
+      "query": "把这份 PDF 文档的目录列出来",
+      "source_format": "pdf",
+      "observed_current_behavior": "out_of_scope=true, confidence=low, retrieval_mode=vector, top_dense_score=0.2479, top_section='1. 多径传播'",
+      "reason_deferred": "列目录是书籍级意图（教材管线已有全书目录路由），通用文档管线尚未接入等价的文档级意图路由，属 Phase E Router"
+    }
+  ],
+  "reporting_rule": "Phase C 最终报告必须同时写明：content ingestion eval = 25/25 PASS；deferred meta queries = 4，current support = DEFERRED。"
+}

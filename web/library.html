@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#10243e">
+  <title>知识库管理</title>
+  <meta name="description" content="管理本地知识库：文档导入、状态、启用/停用与删除。">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .manager-main { max-width: 1080px; margin: 0 auto; padding: 16px 20px 60px; display: grid; gap: 18px; }
+    .manager-card { background: #fff; border: 1px solid #dbe4ee; border-radius: 14px; padding: 16px 18px; }
+    .manager-card h2 { margin: 0 0 10px; font-size: 1.05rem; }
+    .manager-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    .manager-table th, .manager-table td { text-align: left; padding: 7px 8px; border-bottom: 1px solid #e7edf4; vertical-align: top; }
+    .manager-table th { color: #5a6b7f; font-weight: 600; font-size: 0.8rem; }
+    .status-chip { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 0.78rem; background: #eef3f8; }
+    .status-chip.READY { background: #e2f5e9; color: #176d3a; }
+    .status-chip.FAILED, .status-chip.FAILED_INDEX, .status-chip.DELETE_FAILED { background: #fdeaea; color: #a02929; }
+    .status-chip.DELETING, .status-chip.UPDATING, .status-chip.IMPORTING { background: #fdf3dd; color: #8a6116; }
+    .row-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+    .mini-button { border: 1px solid #c8d4e0; background: #f6f9fc; border-radius: 8px; padding: 3px 9px; cursor: pointer; font-size: 0.8rem; }
+    .mini-button.danger { border-color: #e4b6b6; background: #fdf1f1; color: #a02929; }
+    .manager-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .manager-form input, .manager-form select { border: 1px solid #c8d4e0; border-radius: 8px; padding: 6px 9px; font-size: 0.9rem; }
+    .manager-form input.grow { flex: 1 1 320px; }
+    .muted { color: #6a7b8d; font-size: 0.85rem; }
+    .error-text { color: #a02929; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="知识库管理">
+        <span class="brand-mark" aria-hidden="true">知</span>
+        <div>
+          <h1>知识库管理</h1>
+          <p>文档生命周期 · 状态 · 范围</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <a class="quiet-button" href="/">返回问答</a>
+        <span class="status-pill" id="serviceStatus"><span class="status-dot"></span>等待连接</span>
+      </div>
+    </header>
+
+    <main class="manager-main">
+      <section class="manager-card">
+        <h2>总览</h2>
+        <div class="library-stats" id="statistics">
+          <span>知识库 <strong id="statKb">—</strong></span>
+          <span>文档 <strong id="statDocs">—</strong></span>
+          <span>可检索 <strong id="statReady">—</strong></span>
+          <span>片段 <strong id="statChunks">—</strong></span>
+          <span>标签 <strong id="statTags">—</strong></span>
+        </div>
+        <p class="muted">当前受管库：documents.sqlite3（schema v5）。教材库保持 legacy，不在此页面管理。</p>
+      </section>
+
+      <section class="manager-card">
+        <h2>知识库</h2>
+        <form class="manager-form" id="kbCreateForm">
+          <input class="grow" id="kbName" placeholder="新知识库名称" required>
+          <input class="grow" id="kbDescription" placeholder="描述（可选）">
+          <button class="primary-button" type="submit"><span>创建</span></button>
+        </form>
+        <table class="manager-table" id="kbTable">
+          <thead><tr><th>名称</th><th>描述</th><th>文档数</th><th>片段数</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section class="manager-card">
+        <h2>导入文档</h2>
+        <form class="manager-form" id="importForm">
+          <input class="grow" id="importPath" placeholder="导入目录中的文件名或相对路径，例如 讲义/第1章.docx" required>
+          <select id="importKb"></select>
+          <input id="importTags" placeholder="标签（逗号分隔，可选）">
+          <button class="primary-button" type="submit"><span>导入</span></button>
+        </form>
+        <p class="muted">支持 md / txt / docx / pptx / pdf。浏览器文件上传为 deferred；此处按服务端导入目录（LIBRARY_IMPORT_ROOTS）内的路径导入，目录外路径会被拒绝。</p>
+      </section>
+
+      <section class="manager-card">
+        <h2>文档</h2>
+        <table class="manager-table" id="docTable">
+          <thead><tr>
+            <th>标题</th><th>类型</th><th>状态</th><th>启用</th><th>片段</th><th>标签</th><th>来源</th><th>更新时间</th><th>操作</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/library.js" defer></script>
+</body>
+</html>

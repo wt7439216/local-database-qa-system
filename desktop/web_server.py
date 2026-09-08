@@ -18,9 +18,17 @@ import socket
 import threading
 import time
 from typing import Any
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 from core import config
+from core.library_service import (
+    DocumentNotFoundError,
+    KnowledgeBaseNotFoundError,
+    LibraryServiceError,
+    LibraryStateError,
+)
+from core.query_scope import QueryScope, QueryScopeError
+from desktop.library_api_safety import redact_source_paths
 
 API_VERSION = 2
 DEFAULT_PORT = 8765
@@ -97,6 +105,7 @@ class AnswerJob:
     id: str
     question: str
     history: list[dict[str, str]] = field(default_factory=list)
+    scope: QueryScope | None = None
     created_at: float = field(default_factory=time.time)
     status: str = "queued"
     events: list[dict[str, Any]] = field(default_factory=list)
@@ -119,8 +128,10 @@ class WebQAServer:
         pairing_code: str | None = None,
         web_root: Path | None = None,
         log_file: str | Path | None = None,
+        library_service: Any | None = None,
     ) -> None:
         self.engine = engine
+        self.library_service = library_service
         self.host = host
         self.requested_port = int(port)
         self.pairing_code = pairing_code or create_pairing_code()
@@ -320,9 +331,14 @@ class WebQAServer:
         data.update({"service": "local-textbook-qa", "api_version": API_VERSION, "queue_depth": self._queue.qsize(), "lan_urls": self.lan_urls})
         return data
 
-    def create_job(self, question: str, history: list[dict[str, str]] | None = None) -> AnswerJob:
+    def create_job(
+        self,
+        question: str,
+        history: list[dict[str, str]] | None = None,
+        scope: QueryScope | None = None,
+    ) -> AnswerJob:
         self._prune_jobs()
-        job = AnswerJob(secrets.token_urlsafe(12), question, list(history or []))
+        job = AnswerJob(secrets.token_urlsafe(12), question, list(history or []), scope)
         with self._jobs_lock:
             self._jobs[job.id] = job
         try:
@@ -360,6 +376,7 @@ class WebQAServer:
                 job.question.strip(),
                 self._engine_fingerprint,
                 str(getattr(self.engine, "answer_model", "")),
+                scope_cache_key(job.scope),
             )
             try:
                 cached = None if job.history else self._cache_get(cache_key)
@@ -368,11 +385,15 @@ class WebQAServer:
                     job.emit("status", message="命中缓存")
                 else:
                     with self._engine_lock:
+                        # Only pass scope when actually set: engines without a
+                        # scope parameter (Phase C contract) keep working.
+                        scope_kwargs = {} if job.scope is None else {"scope": job.scope}
                         result = self.engine.answer(
                             job.question,
                             history=job.history,
                             on_token=lambda token: job.emit("token", text=token),
                             cancelled=job.cancelled.is_set,
+                            **scope_kwargs,
                         )
                     if job.cancelled.is_set():
                         raise InterruptedError("回答已取消。")
@@ -428,6 +449,11 @@ def make_handler(owner: WebQAServer) -> type[BaseHTTPRequestHandler]:
                     return
                 self._stream_job(job)
                 return
+            if path.startswith("/api/v3/library"):
+                if not self._authorized():
+                    return
+                self._v3_library(path)
+                return
             if path.startswith("/api/"):
                 self._error(HTTPStatus.NOT_FOUND, "接口不存在。")
                 return
@@ -462,6 +488,14 @@ def make_handler(owner: WebQAServer) -> type[BaseHTTPRequestHandler]:
                 self._json(HTTPStatus.OK, {"status": "stopping"})
                 owner.shutdown_requested.set()
                 return
+            if path.startswith("/api/v3/library"):
+                if not self._authorized():
+                    return
+                payload = self._read_json()
+                if payload is None:
+                    return
+                self._v3_library(path, payload)
+                return
             payload = self._read_json()
             if payload is None:
                 return
@@ -472,7 +506,8 @@ def make_handler(owner: WebQAServer) -> type[BaseHTTPRequestHandler]:
             if path == "/api/v2/jobs":
                 try:
                     history = sanitize_history(payload.get("history"))
-                    job = owner.create_job(question.strip(), history)
+                    scope = parse_scope_payload(payload)
+                    job = owner.create_job(question.strip(), history, scope)
                     self._json(HTTPStatus.ACCEPTED, {"job_id": job.id, "status": job.status})
                 except ValueError as exc:
                     self._error(HTTPStatus.BAD_REQUEST, str(exc))
@@ -486,6 +521,11 @@ def make_handler(owner: WebQAServer) -> type[BaseHTTPRequestHandler]:
                 self._error(HTTPStatus.FORBIDDEN, "Host 头不匹配，拒绝访问。")
                 return
             path = urlsplit(self.path).path
+            if path.startswith("/api/v3/library"):
+                if not self._authorized():
+                    return
+                self._v3_library(path)
+                return
             match = re_fullmatch(r"/api/v2/jobs/([^/]+)", path)
             if not match:
                 self._error(HTTPStatus.NOT_FOUND, "接口不存在。")
@@ -499,6 +539,93 @@ def make_handler(owner: WebQAServer) -> type[BaseHTTPRequestHandler]:
             job.cancelled.set()
             job.emit("status", message="正在取消")
             self._json(HTTPStatus.OK, {"job_id": job.id, "status": "cancelling"})
+
+        def _v3_library(self, path: str, payload: dict | None = None) -> None:
+            """Phase D library-manager API (backed by core.library_service)."""
+            service = owner.library_service
+            if service is None:
+                self._error(HTTPStatus.NOT_FOUND, "Library 管理未启用。")
+                return
+            try:
+                status, body = self._v3_library_dispatch(service, path, payload)
+            except (DocumentNotFoundError, KnowledgeBaseNotFoundError) as exc:
+                self._error(HTTPStatus.NOT_FOUND, str(exc))
+            except LibraryStateError as exc:
+                self._error(HTTPStatus.CONFLICT, str(exc))
+            except (LibraryServiceError, QueryScopeError, ValueError) as exc:
+                self._error(HTTPStatus.BAD_REQUEST, str(exc))
+            except OSError as exc:
+                self._error(HTTPStatus.BAD_REQUEST, f"源文件不可读：{exc}")
+            except Exception as exc:  # pragma: no cover - unexpected service bug
+                self._error(HTTPStatus.INTERNAL_SERVER_ERROR, str(exc))
+            else:
+                # Security closure: never return server absolute paths.
+                self._json(status, redact_source_paths(body, service.source_display))
+
+        def _v3_library_dispatch(self, service, path: str, payload: dict | None) -> tuple[HTTPStatus, dict[str, Any]]:
+            if path == "/api/v3/library":
+                return HTTPStatus.OK, {
+                    "statistics": service.statistics(),
+                    "knowledge_bases": service.list_knowledge_bases(),
+                    "documents": service.list_documents(),
+                }
+            if path == "/api/v3/library/knowledge-bases":
+                if self.command == "POST":
+                    return HTTPStatus.CREATED, service.create_knowledge_base(
+                        payload.get("name"), payload.get("description", ""))
+                return HTTPStatus.OK, {"knowledge_bases": service.list_knowledge_bases()}
+            match = re_fullmatch(r"/api/v3/library/knowledge-bases/([^/]+)", path)
+            if match:
+                if self.command == "DELETE":
+                    return HTTPStatus.OK, service.delete_knowledge_base(match)
+                if self.command == "POST":
+                    return HTTPStatus.OK, service.update_knowledge_base(
+                        match, name=payload.get("name"), description=payload.get("description"))
+                return HTTPStatus.OK, service.get_knowledge_base(match)
+            if path == "/api/v3/library/tags":
+                return HTTPStatus.OK, {"tags": service.list_tags()}
+            if path == "/api/v3/library/documents":
+                if self.command == "POST" and payload is not None and payload.get("action") == "import":
+                    result = service.import_document(
+                        payload.get("path"),
+                        knowledge_base_id=payload.get("knowledge_base_id") or "kb-default",
+                        tags=payload.get("tags") or (),
+                        force=bool(payload.get("force")),
+                        dry_run=bool(payload.get("dry_run")),
+                    )
+                    status = HTTPStatus.CREATED if result.get("import_status") == "READY" else HTTPStatus.OK
+                    return status, result
+                query = urlsplit(self.path).query
+                kb = parse_qs(query).get("kb", [None])[0]
+                return HTTPStatus.OK, {"documents": service.list_documents(kb)}
+            match = re_fullmatch(r"/api/v3/library/documents/([^/]+)", path)
+            if match:
+                if self.command == "DELETE":
+                    return HTTPStatus.OK, service.delete_document(match)
+                if self.command == "GET":
+                    return HTTPStatus.OK, service.get_document(match)
+                self._error(HTTPStatus.NOT_FOUND, "接口不存在。")
+                return HTTPStatus.NOT_FOUND, {}
+            action = re_fullmatch_groups(r"/api/v3/library/documents/([^/]+)/(enable|disable|retry-index|retry-delete|relink|tags)", path)
+            if action:
+                document_id, operation = action
+                if operation == "enable":
+                    return HTTPStatus.OK, service.set_document_enabled(document_id, True)
+                if operation == "disable":
+                    return HTTPStatus.OK, service.set_document_enabled(document_id, False)
+                if operation == "retry-index":
+                    return HTTPStatus.OK, service.retry_index(document_id)
+                if operation == "retry-delete":
+                    return HTTPStatus.OK, service.retry_delete(document_id)
+                if operation == "relink":
+                    return HTTPStatus.OK, service.relink_document(
+                        document_id, payload.get("path"),
+                        update_if_changed=bool(payload.get("update_if_changed")),
+                    )
+                tags = service.set_document_tags(document_id, payload.get("tags") or ())
+                return HTTPStatus.OK, {"document_id": document_id, "tags": tags}
+            self._error(HTTPStatus.NOT_FOUND, "接口不存在。")
+            return HTTPStatus.NOT_FOUND, {}
 
         def _is_loopback(self) -> bool:
             return self.client_address[0] in {"127.0.0.1", "::1"}
@@ -621,3 +748,25 @@ def re_fullmatch(pattern: str, value: str) -> str | None:
 
     match = re.fullmatch(pattern, value)
     return match.group(1) if match else None
+
+
+def re_fullmatch_groups(pattern: str, value: str) -> tuple[str, ...] | None:
+    import re
+
+    match = re.fullmatch(pattern, value)
+    return match.groups() if match else None
+
+
+def scope_cache_key(scope: QueryScope | None) -> str:
+    """Cache-key component for a scope: None and empty stay distinct from any
+    non-default scope so a scoped answer can never be served unscoped."""
+    if scope is None:
+        return "none"
+    return json.dumps(scope.to_dict(), ensure_ascii=False, sort_keys=True)
+
+
+def parse_scope_payload(payload: dict) -> QueryScope | None:
+    try:
+        return QueryScope.from_payload(payload.get("scope"))
+    except QueryScopeError as exc:
+        raise ValueError(str(exc)) from exc

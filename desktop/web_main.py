@@ -8,7 +8,11 @@ import signal
 import sys
 import webbrowser
 
+from core import config
 from core.engine_v2 import StructuredQAEngine
+from core.importer import DEFAULT_GENERAL_LIBRARY
+from core.library_service import LibraryService
+from core.path_policy import ImportPathPolicy
 from desktop.web_server import DEFAULT_PORT, WebQAServer
 
 
@@ -23,7 +27,22 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     engine = StructuredQAEngine()
-    server = WebQAServer(engine, host=args.host, port=args.port, pairing_code=os.getenv("QA_PAIRING_CODE") or None)
+    # Phase D: managed general-documents library (v5 registry).  The manager
+    # page and /api/v3/library endpoints fail soft when this is unavailable.
+    # Security closure: web-triggered path imports are confined to the
+    # configured LIBRARY_IMPORT_ROOTS (disabled entirely when none are set).
+    try:
+        library_service = LibraryService(
+            DEFAULT_GENERAL_LIBRARY, path_policy=ImportPathPolicy(config.LIBRARY_IMPORT_ROOTS)
+        )
+    except Exception as exc:
+        print(f"知识库管理不可用：{exc}")
+        library_service = None
+    server = WebQAServer(
+        engine, host=args.host, port=args.port,
+        pairing_code=os.getenv("QA_PAIRING_CODE") or None,
+        library_service=library_service,
+    )
     server.start()
     print(f"本机地址：{server.local_url}")
     print(f"配对码：{server.pairing_code}")

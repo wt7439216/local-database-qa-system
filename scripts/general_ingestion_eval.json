@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "description": "Phase C 通用导入评测集：5 种格式各自导入独立知识库（每格式一个库，消除相同内容跨库竞争），每格式 5 条查询验证 document hit / section hit / 无误判离题。标注基于各格式实际导入后的 section 结构（人工核对）；查询全部为内容型问题，元问题（问文档/表本身）会被冻结 Scope Gate 拒答，属 Phase E Router 范畴，不与教材 Golden Set 混用。PDF 小节为 OCR 提取，标题检测有已知局限（第2/3节标题未独立成节），故 pdf 用例的 section 期望仅覆盖已识别节。",
+    "min_queries": 25,
+    "formats": {
+      "markdown": "sample.md",
+      "txt": "sample.txt",
+      "docx": "sample.docx",
+      "pptx": "sample.pptx",
+      "pdf": "sample.pdf"
+    }
+  },
+  "queries": [
+    {
+      "q": "什么是多径传播？",
+      "format": "markdown",
+      "expect_section_contains": "1. 多径传播"
+    },
+    {
+      "q": "RAKE 接收机的作用是什么？",
+      "format": "markdown",
+      "expect_section_contains": "1. 多径传播"
+    },
+    {
+      "q": "分集接收如何对抗衰落？",
+      "format": "markdown",
+      "expect_section_contains": "2. 抗衰落技术"
+    },
+    {
+      "q": "均衡技术有什么作用？",
+      "format": "markdown",
+      "expect_section_contains": "2. 抗衰落技术"
+    },
+    {
+      "q": "哪些系统需要对抗多径衰落？",
+      "format": "markdown",
+      "expect_section_contains": "3. 参数表"
+    },
+    {
+      "q": "多径传播是移动信道中的什么现象？",
+      "format": "txt",
+      "expect_section_contains": "1. 多径传播"
+    },
+    {
+      "q": "CDMA 系列系统的关键部件是什么？",
+      "format": "txt",
+      "expect_section_contains": "1. 多径传播"
+    },
+    {
+      "q": "OFDMA 被哪个系统采用？",
+      "format": "txt",
+      "expect_section_contains": "2. 抗衰落技术"
+    },
+    {
+      "q": "慢衰落由什么导致？",
+      "format": "txt",
+      "expect_section_contains": "2. 抗衰落技术"
+    },
+    {
+      "q": "术语表中列出了哪些内容？",
+      "format": "txt",
+      "expect_section_contains": "3. 参数表"
+    },
+    {
+      "q": "移动信道的信号经几条路径到达接收端？",
+      "format": "docx",
+      "expect_section_contains": "移动通信测试文档"
+    },
+    {
+      "q": "信号经多条路径到达接收端会怎样？",
+      "format": "docx",
+      "expect_section_contains": "1. 多径传播"
+    },
+    {
+      "q": "分集接收的原理是什么？",
+      "format": "docx",
+      "expect_section_contains": "1. 多径传播"
+    },
+    {
+      "q": "哪些系统需要对抗衰落影响？",
+      "format": "docx",
+      "expect_section_contains": "1. 多径传播"
+    },
+    {
+      "q": "均衡技术补偿什么？",
+      "format": "docx",
+      "expect_section_contains": "2. 抗衰落技术"
+    },
+    {
+      "q": "多径传播会导致什么现象？",
+      "format": "pptx",
+      "expect_section_contains": "移动通信测试文档"
+    },
+    {
+      "q": "多径信号的能量如何被合并？",
+      "format": "pptx",
+      "expect_section_contains": "移动通信测试文档"
+    },
+    {
+      "q": "GSM 系统为什么需要对抗衰落？",
+      "format": "pptx",
+      "expect_section_contains": "移动通信测试文档"
+    },
+    {
+      "q": "参数表中分集的含义是什么？",
+      "format": "pptx",
+      "expect_section_contains": "3. 参数表"
+    },
+    {
+      "q": "参数表中分集的含义是什么？",
+      "format": "pptx",
+      "expect_section_contains": "3. 参数表"
+    },
+    {
+      "q": "什么是多径传播现象？",
+      "format": "pdf",
+      "expect_section_contains": "1. 多径传播"
+    },
+    {
+      "q": "RAKE 接收机合并什么能量？",
+      "format": "pdf",
+      "expect_section_contains": "1. 多径传播"
+    },
+    {
+      "q": "GSM 与 WCDMA 要对抗什么？",
+      "format": "pdf",
+      "expect_section_contains": "1. 多径传播"
+    },
+    {
+      "q": "CDMA 系列系统的关键部件是什么？",
+      "format": "pdf",
+      "expect_section_contains": "1. 多径传播"
+    },
+    {
+      "q": "分集接收通过什么方式对抗衰落？",
+      "format": "pdf",
+      "expect_section_contains": "1. 多径传播"
+    }
+  ]
+}

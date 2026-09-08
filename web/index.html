@@ -20,6 +20,7 @@
         </div>
       </div>
       <div class="topbar-actions">
+        <a class="quiet-button library-link" href="/library.html" id="libraryLink" hidden>知识库管理</a>
         <span class="status-pill" id="serviceStatus"><span class="status-dot"></span>等待连接</span>
         <button class="icon-button" id="settingsButton" type="button" aria-label="打开连接设置" title="连接设置">⚙</button>
       </div>
@@ -35,6 +36,19 @@
               <span>发送问题</span><span aria-hidden="true">→</span>
             </button>
             <button class="quiet-button cancel-button" id="cancelButton" type="button" hidden>取消</button>
+          </div>
+          <div class="scope-row" id="scopeRow" hidden>
+            <label for="scopeMode">检索范围</label>
+            <select id="scopeMode">
+              <option value="all">全部可用文档</option>
+              <option value="kb">按知识库</option>
+              <option value="docs">按文档</option>
+              <option value="tags">按标签</option>
+            </select>
+            <select id="scopeKb" hidden></select>
+            <select id="scopeDocs" hidden multiple size="3"></select>
+            <select id="scopeTags" hidden multiple size="3"></select>
+            <span class="scope-current" id="scopeCurrent">全部可用文档</span>
           </div>
           <div class="composer-meta">
             <span>Ctrl + Enter 发送</span>

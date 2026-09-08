@@ -6,12 +6,35 @@ import json
 import urllib.error
 import urllib.request
 from typing import Any, Iterator
+from urllib.parse import urlsplit
 
 from core import config
 
 
 class OllamaError(RuntimeError):
     """A user-facing Ollama connection or response error."""
+
+
+# Loopback services must be reached DIRECTLY: HTTP_PROXY / HTTPS_PROXY (or
+# Windows system proxy settings) pointing at a local proxy such as
+# 127.0.0.1:7890 must never intercept them.  Non-loopback hosts keep urllib's
+# default behavior (environment/system proxies still apply).
+_LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
+
+_NO_PROXY_OPENER = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+
+
+def is_loopback_url(url: str) -> bool:
+    """True for http://127.0.0.1, http://localhost, http://[::1] (any port)."""
+    host = (urlsplit(url).hostname or "").lower()
+    return host in _LOOPBACK_HOSTS
+
+
+def open_request(request: urllib.request.Request, timeout: float):
+    """Send ``request`` with the proxy policy described above."""
+    if is_loopback_url(request.full_url):
+        return _NO_PROXY_OPENER.open(request, timeout=timeout)
+    return urllib.request.urlopen(request, timeout=timeout)
 
 
 class OllamaClient:
@@ -133,7 +156,7 @@ class OllamaClient:
             method="POST",
         )
         try:
-            with urllib.request.urlopen(request, timeout=timeout) as response:
+            with open_request(request, timeout=timeout) as response:
                 for raw_line in response:
                     if not raw_line.strip():
                         continue
@@ -169,7 +192,7 @@ class OllamaClient:
         )
 
         try:
-            with urllib.request.urlopen(request, timeout=timeout) as response:
+            with open_request(request, timeout=timeout) as response:
                 raw = response.read()
         except urllib.error.HTTPError as exc:
             detail = ""

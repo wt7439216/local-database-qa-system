@@ -2,29 +2,34 @@
 
 from __future__ import annotations
 
-from array import array
 from contextlib import closing
 from dataclasses import asdict, dataclass
 import hashlib
 import json
-import math
 from pathlib import Path
 import re
 import sqlite3
-import sys
 import threading
-from typing import Any, Iterable
+from typing import TYPE_CHECKING, Any
 
+from core import config
 from core.text_rules import extract_terms
+# normalize_vector lives with the vector backend contract now; re-exported so
+# scripts/build_library.py keeps its import surface.
+from core.vector_store import create_vector_store, normalize_vector as normalize_vector
 
-try:
-    from math import sumprod as _sumprod  # Python 3.12+ 的 C 实现，避免纯 Python 内积循环
-except ImportError:  # pragma: no cover - Python 3.11 兼容路径
-    def _sumprod(left, right):
-        return sum(a * b for a, b in zip(left, right))
+if TYPE_CHECKING:  # annotations only; runtime import stays lazy (no cycles)
+    from core.query_scope import QueryScope, ScopeResolution
 
 
 SCHEMA_VERSION = 4
+# Phase D (v3.3): managed libraries carry the additive v5 registry tables
+# (knowledge_bases / document_sources / tags / document_tags).  v5 is purely
+# additive, so the v4 read path stays valid on both — the runtime accepts
+# either version; LibraryService owns the v5 write path (see
+# docs/V3_SCHEMA_IMPACT_NOTE_PHASE_D.md).
+MANAGED_SCHEMA_VERSION = 5
+ACCEPTED_SCHEMA_VERSIONS = (SCHEMA_VERSION, MANAGED_SCHEMA_VERSION)
 DEFAULT_LIBRARY_NAME = "教材知识库"
 # bm25 列权重：正文列 1.0，章节/小节标题列 4.0（标题命中是更强的主题信号）。
 FTS_BODY_WEIGHT = 1.0
@@ -49,6 +54,34 @@ def _gates_for_model(model: str) -> dict[str, float]:
         if base == name.removesuffix(":latest"):
             return dict(gates)
     return dict(DEFAULT_DENSE_GATES)
+
+
+# --- Embedding profile registry (Phase A) -----------------------------------
+# 已识别的 embedding profile。bge-m3 的门限继承自 v2 运行时的冻结值
+# （compatibility baseline / legacy frozen gates），并非校准结果；
+# 真正的 threshold calibration 属于后续独立阶段。运行时行为不受此表影响。
+@dataclass(frozen=True)
+class EmbeddingProfile:
+    model: str
+    dimension: int
+    normalize: bool
+    gates: dict[str, float]
+    calibrated: bool = False
+    note: str = ""
+
+
+EMBEDDING_PROFILES: dict[str, EmbeddingProfile] = {
+    "nomic-embed-text": EmbeddingProfile(
+        model="nomic-embed-text", dimension=768, normalize=True,
+        gates=dict(MODEL_DENSE_GATES["nomic-embed-text"]),
+        note="legacy/current frozen gates",
+    ),
+    "bge-m3": EmbeddingProfile(
+        model="bge-m3", dimension=1024, normalize=True,
+        gates=dict(DEFAULT_DENSE_GATES),
+        note="compatibility baseline; not calibrated",
+    ),
+}
 
 
 @dataclass(frozen=True)
@@ -168,6 +201,9 @@ class SearchHit:
     dense_score: float | None
     lexical_rank: int | None
     dense_rank: int | None
+    # v3.1: cross-encoder relevance score; None on the RRF-only path.
+    # ``score`` keeps its frozen meaning: the RRF/hybrid fused score.
+    rerank_score: float | None = None
 
     def to_dict(self) -> dict[str, Any]:
         data = asdict(self)
@@ -196,21 +232,44 @@ class LibraryStore:
         self._lock = threading.Lock()
         self.metadata = self._load_metadata()
         version = int(self.metadata.get("schema_version", 0))
-        if version != SCHEMA_VERSION:
-            raise RuntimeError(f"教材库版本不兼容：{version}，需要 {SCHEMA_VERSION}")
+        if version not in ACCEPTED_SCHEMA_VERSIONS:
+            raise RuntimeError(f"教材库版本不兼容：{version}，需要 {' 或 '.join(str(v) for v in ACCEPTED_SCHEMA_VERSIONS)}")
+        self.schema_version = version
         self.documents = self._load_documents()
         self.chapters = self._load_chapters()
-        self.chunks, self.dimension, self.embedding_model, self._vectors = self._load_chunks()
+        self.chunks = self._load_chunks()
+        # Dense backend is pluggable since v3.0; default stays the in-process
+        # SQLite brute-force store so existing behavior is untouched.
+        self._vector_store = create_vector_store(self.path)
+        if self._vector_store.backend == "sqlite":
+            self.dimension = self._vector_store.dimension
+            self.embedding_model = self._vector_store.model
+        else:
+            # With an external dense index, model/dimension still come from
+            # the SQLite source of truth (query embedding must match rebuilds).
+            self.dimension = int(self.metadata.get("embedding_dimension") or 0)
+            self.embedding_model = str(self.metadata.get("embedding_model") or "")
+        self.has_vectors = self._vector_store.has_vectors
         self.dense_gates = _gates_for_model(self.embedding_model)
         self._chunk_by_id = {chunk.id: chunk for chunk in self.chunks}
+        # Lazy import: core.hybrid_retriever imports this module's helpers.
+        from core.hybrid_retriever import HybridRetriever
+        from core.reranker import create_reranker
+
+        self._retriever = HybridRetriever(
+            self,
+            self._vector_store,
+            reranker=create_reranker(),
+            rerank_candidate_k=config.RERANK_CANDIDATE_K,
+        )
+
+    @property
+    def vector_backend(self) -> str:
+        return getattr(self._vector_store, "backend", "unknown")
 
     @property
     def library_name(self) -> str:
         return self.metadata.get("library_name") or DEFAULT_LIBRARY_NAME
-
-    @property
-    def has_vectors(self) -> bool:
-        return self.dimension > 0 and self._vectors is not None
 
     def health(self) -> dict[str, Any]:
         return {
@@ -222,6 +281,7 @@ class LibraryStore:
             "embedding_model": self.embedding_model,
             "embedding_dimension": self.dimension,
             "vector_index": self.has_vectors,
+            "vector_backend": self.vector_backend,
             "dense_gates": dict(self.dense_gates),
             "source_sha256": self.metadata.get("source_sha256", ""),
             "built_at": self.metadata.get("built_at", ""),
@@ -234,171 +294,71 @@ class LibraryStore:
         top_k: int = 6,
         candidate_limit: int = 30,
         include_front_matter: bool = False,
+        scope: "QueryScope | None" = None,
     ) -> SearchResult:
-        query = query.strip()
-        if not query:
+        """Thin delegate — fusion and scope-gate logic live in
+        core/hybrid_retriever.py since v3.0; the signature and behavior are
+        unchanged for all callers (engine, tests, regression).
+
+        Phase D: an optional QueryScope restricts retrieval.  ``None`` keeps
+        the exact Phase C behavior (whole library).  The scope is resolved
+        against the SQLite registry once here; both FTS and the dense
+        backend receive the same concrete document-id set."""
+        resolution = self.resolve_scope(scope)
+        if resolution.mode == "nothing":
             return SearchResult([], True, "none", "none", None, 0)
-
-        lexical_ids = self._fts_search(query, candidate_limit)
-        dense_rows: list[tuple[float, int]] = []
-        if query_vector is not None and self.has_vectors:
-            dense_scores = self._similarities(query_vector)
-            dense_rows = sorted(
-                (
-                    (score, position)
-                    for position, score in enumerate(dense_scores)
-                    if score >= DENSE_CANDIDATE_FLOOR
-                ),
-                reverse=True,
-            )[:candidate_limit]
-
-        # Reciprocal Rank Fusion is stable across unrelated score scales.
-        # 中文 2-gram 分词让词法路召回高但噪声大，中文语义向量（bge-m3 级别）
-        # 排序更准，因此语义路权重更高。
-        fused: dict[str, dict[str, Any]] = {}
-        for rank, chunk_id in enumerate(lexical_ids, 1):
-            fused.setdefault(chunk_id, {"score": 0.0, "lexical_rank": None, "dense_rank": None, "dense": None})
-            fused[chunk_id]["score"] += 1.0 / (60 + rank)
-            fused[chunk_id]["lexical_rank"] = rank
-
-        for rank, (dense_score, position) in enumerate(dense_rows, 1):
-            chunk_id = self.chunks[position].id
-            fused.setdefault(chunk_id, {"score": 0.0, "lexical_rank": None, "dense_rank": None, "dense": None})
-            fused[chunk_id]["score"] += 1.25 / (60 + rank)
-            fused[chunk_id]["dense_rank"] = rank
-            fused[chunk_id]["dense"] = dense_score
-
-        # 建库时算好的 OCR 质量分参与排序：扫描噪声/乱码多的片段在融合分上打折，
-        # 但不直接剔除，避免质量评估误伤唯一命中的片段。标题精确包含查询词的
-        # 片段（往往是定义性小节）获得小幅加权，量级与 RRF 单路贡献相当。
-        focus_terms = [
-            normalize_for_similarity(term)
-            for term in query_search_terms(query)[:3]
-            if len(term) >= 2
-        ]
-        for chunk_id, values in fused.items():
-            chunk = self._chunk_by_id.get(chunk_id)
-            if chunk is None:
-                continue
-            quality = max(0.0, min(1.0, chunk.quality_score))
-            values["score"] *= 0.5 + 0.5 * quality
-            if focus_terms:
-                heading = normalize_for_similarity(chunk.section or "")
-                if any(term in heading for term in focus_terms):
-                    values["score"] += FTS_HEADING_BONUS
-
-        ranked = sorted(
-            fused.items(),
-            key=lambda item: (
-                item[1]["score"],
-                item[1]["dense"] if item[1]["dense"] is not None else -1.0,
-            ),
-            reverse=True,
-        )
-        selected: list[SearchHit] = []
-        normalized_selected: list[str] = []
-        section_counts: dict[str, int] = {}
-
-        def try_select(chunk, values) -> None:
-            section_key = f"{chunk.document_id}:{chunk.section}"
-            if chunk.section and section_counts.get(section_key, 0) >= 2:
-                return
-            normalized = normalize_for_similarity(chunk.text)
-            if any(near_duplicate(normalized, previous) for previous in normalized_selected):
-                return
-            normalized_selected.append(normalized)
-            section_counts[section_key] = section_counts.get(section_key, 0) + 1
-            selected.append(
-                SearchHit(
-                    chunk=chunk,
-                    score=float(values["score"]),
-                    dense_score=values["dense"],
-                    lexical_rank=values["lexical_rank"],
-                    dense_rank=values["dense_rank"],
-                )
-            )
-
-        for chunk_id, values in ranked:
-            chunk = self._chunk_by_id.get(chunk_id)
-            if chunk is None or chunk.kind == "front_matter":
-                continue
-            try_select(chunk, values)
-            if len(selected) >= max(1, top_k):
-                break
-
-        # 封面/目录/简介 front_matter 只回填剩余名额，绝不挤掉正文证据；
-        # 定位类路由保持排除，避免目录页抢答位置问题。
-        if include_front_matter and len(selected) < max(1, top_k):
-            for chunk_id, values in ranked:
-                chunk = self._chunk_by_id.get(chunk_id)
-                if chunk is None or chunk.kind != "front_matter":
-                    continue
-                try_select(chunk, values)
-                if len(selected) >= max(1, top_k):
-                    break
-
-        top_dense = dense_rows[0][0] if dense_rows else None
-        lexical_matches = len(lexical_ids)
-        lexical_strength, longest_match, matched_chunks = self._lexical_strength(query, lexical_ids[:8])
-        if lexical_strength >= 2:
-            confidence = "high" if top_dense is None or top_dense >= self.dense_gates["strong"] else "medium"
-            out_of_scope = False
-        elif lexical_strength == 1 and top_dense is not None and top_dense >= self.dense_gates["accept"] and longest_match >= 3:
-            confidence = "medium"
-            out_of_scope = False
-        elif (
-            lexical_strength == 1
-            and longest_match == 2
-            and matched_chunks >= 5
-            and top_dense is not None
-            and top_dense >= 0.30
-        ):
-            # “什么是切换”这类两字概念问题：词法残留停用词后只剩一个二字词。
-            # 向量分的绝对值随模型变化（nomic 与 bge-m3 分布不同），不参与放行
-            # 判定，只留一个防退化下限；真正的判据是主题词集中命中至少 5 个片段
-            # ——离题问题的碎片残留词（天气/最近）只能零星命中。
-            confidence = "medium"
-            out_of_scope = False
+        # Pass the resolved set to the retriever unless the default scope
+        # still covers every document (then the unrestricted Phase C path
+        # runs byte-identical).  A default scope that resolves to a strict
+        # subset — or to nothing at all, e.g. every document disabled — MUST
+        # be enforced, never widened back to the whole library.
+        all_document_ids = {record.id for record in self.documents}
+        if resolution.is_default and set(resolution.document_ids) == all_document_ids:
+            allowed = None
         else:
-            confidence = "low"
-            out_of_scope = True
+            allowed = set(resolution.document_ids)
+        return self._retriever.retrieve(
+            query,
+            query_vector,
+            top_k=top_k,
+            candidate_limit=candidate_limit,
+            include_front_matter=include_front_matter,
+            allowed_document_ids=allowed,
+        )
 
-        mode = "hybrid" if lexical_ids and dense_rows else "vector" if dense_rows else "keyword"
-        return SearchResult(selected, out_of_scope, confidence, mode, top_dense, lexical_matches)
+    def resolve_scope(self, scope: "QueryScope | None") -> "ScopeResolution":
+        """Resolve a QueryScope against this library's SQLite registry.
 
-    def _lexical_strength(self, query: str, chunk_ids: list[str]) -> tuple[int, int, int]:
-        """Return (most terms matched in one chunk, longest matched term, most chunks one term hits).
+        Legacy v4 libraries (no registry tables) resolve any scope to the
+        full document set — the textbook legacy scope.  A v5 managed library
+        resolves via document_sources/document_tags with status=READY gating
+        (default range: READY + enabled)."""
+        from core.query_scope import resolve_scope as _resolve
 
-        计数取“单个词命中的最多片段数”而不是并集：碎片化残留（如“天气样”里的
-        天气）只能零星命中，而真正的主题词会在大量片段中集中出现。
-        """
-        terms = query_search_terms(query)
-        if not terms or not chunk_ids:
-            return 0, 0, 0
-        strongest = 0
-        longest = 0
-        term_chunk_counts: dict[str, int] = {}
-        for chunk_id in chunk_ids:
-            chunk = self._chunk_by_id.get(chunk_id)
-            if chunk is None:
-                continue
-            compact = normalize_for_similarity(chunk.text)
-            matched_terms = [term for term in terms if normalize_for_similarity(term) in compact]
-            for term in matched_terms:
-                term_chunk_counts[term] = term_chunk_counts.get(term, 0) + 1
-            matched = len(matched_terms)
-            strongest = max(strongest, matched)
-            if matched == strongest:
-                longest = max((len(normalize_for_similarity(term)) for term in matched_terms), default=0)
-        concentrated = max(term_chunk_counts.values(), default=0)
-        return strongest, longest, concentrated
+        with closing(self._connect()) as connection:
+            return _resolve(connection, scope)
 
-    def summary_contexts(self, chapter_number: int | None = None) -> list[ChunkRecord]:
+    @property
+    def last_retrieval_timings(self) -> dict[str, float]:
+        """Stage timings (lexical/dense/fusion) from the most recent retrieve."""
+        return dict(self._retriever.last_timings)
+
+    def summary_contexts(
+        self,
+        chapter_number: int | None = None,
+        allowed_document_ids: frozenset[str] | set[str] | None = None,
+    ) -> list[ChunkRecord]:
         where = "WHERE s.scope_type = 'chapter'"
-        parameters: tuple[Any, ...] = ()
+        parameters: list[Any] = []
         if chapter_number is not None:
             where += " AND c.chapter_number = ?"
-            parameters = (int(chapter_number),)
+            parameters.append(int(chapter_number))
+        if allowed_document_ids is not None:
+            document_ids = sorted(allowed_document_ids)
+            if not document_ids:
+                return []
+            where += f" AND s.document_id IN ({', '.join('?' * len(document_ids))})"
+            parameters.extend(document_ids)
         with closing(self._connect()) as connection:
             rows = connection.execute(
                 f"""
@@ -410,7 +370,7 @@ class LibraryStore:
                 {where}
                 ORDER BY d.rowid, s.sort_order
                 """,
-                parameters,
+                tuple(parameters),
             ).fetchall()
         return [
             ChunkRecord(
@@ -430,8 +390,30 @@ class LibraryStore:
             for row in rows
         ]
 
-    def chapter_catalog(self) -> list[ChapterRecord]:
-        return list(self.chapters)
+    def chapter_catalog(
+        self, allowed_document_ids: frozenset[str] | set[str] | None = None
+    ) -> list[ChapterRecord]:
+        if allowed_document_ids is None:
+            return list(self.chapters)
+        document_ids = sorted(allowed_document_ids)
+        if not document_ids:
+            return []
+        with closing(self._connect()) as connection:
+            rows = connection.execute(
+                f"""
+                SELECT c.id, c.document_id, d.title AS document_title,
+                       c.chapter_number AS number, c.title,
+                       c.pdf_page_start, c.pdf_page_end,
+                       c.printed_page_start, c.printed_page_end,
+                       c.overview, c.sort_order
+                FROM chapters c
+                JOIN documents d ON d.id = c.document_id
+                WHERE c.document_id IN ({', '.join('?' * len(document_ids))})
+                ORDER BY d.rowid, c.sort_order
+                """,
+                tuple(document_ids),
+            ).fetchall()
+        return [ChapterRecord(**dict(row)) for row in rows]
 
     def _connect(self) -> sqlite3.Connection:
         connection = sqlite3.connect(
@@ -470,108 +452,73 @@ class LibraryStore:
             ).fetchall()
         return [ChapterRecord(**dict(row)) for row in rows]
 
-    def _load_chunks(self) -> tuple[list[ChunkRecord], int, str, array[float] | None]:
+    def _load_chunks(self) -> list[ChunkRecord]:
         with closing(self._connect()) as connection:
             rows = connection.execute(
                 """
                 SELECT c.id, c.document_id, d.title AS document_title,
                        c.chapter, c.section, c.pdf_page_start, c.pdf_page_end,
                        c.printed_page_start, c.printed_page_end, c.text,
-                       c.quality_score, c.kind, e.model, e.dimension, e.vector
+                       c.quality_score, c.kind
                 FROM chunks c
                 JOIN documents d ON d.id = c.document_id
-                LEFT JOIN embeddings e ON e.chunk_id = c.id
                 ORDER BY c.document_id, c.sort_order
                 """
             ).fetchall()
 
-        chunks: list[ChunkRecord] = []
-        vectors = array("f")
-        dimension = 0
-        model = ""
-        complete_vectors = True
-        for row in rows:
-            chunks.append(
-                ChunkRecord(
-                    id=str(row["id"]),
-                    document_id=str(row["document_id"]),
-                    document_title=str(row["document_title"]),
-                    chapter=str(row["chapter"] or ""),
-                    section=str(row["section"] or ""),
-                    pdf_page_start=int(row["pdf_page_start"] or 0),
-                    pdf_page_end=int(row["pdf_page_end"] or 0),
-                    printed_page_start=int(row["printed_page_start"]) if row["printed_page_start"] is not None else None,
-                    printed_page_end=int(row["printed_page_end"]) if row["printed_page_end"] is not None else None,
-                    text=str(row["text"]),
-                    quality_score=float(row["quality_score"]),
-                    kind=str(row["kind"]),
-                )
+        return [
+            ChunkRecord(
+                id=str(row["id"]),
+                document_id=str(row["document_id"]),
+                document_title=str(row["document_title"]),
+                chapter=str(row["chapter"] or ""),
+                section=str(row["section"] or ""),
+                pdf_page_start=int(row["pdf_page_start"] or 0),
+                pdf_page_end=int(row["pdf_page_end"] or 0),
+                printed_page_start=int(row["printed_page_start"]) if row["printed_page_start"] is not None else None,
+                printed_page_end=int(row["printed_page_end"]) if row["printed_page_end"] is not None else None,
+                text=str(row["text"]),
+                quality_score=float(row["quality_score"]),
+                kind=str(row["kind"]),
             )
-            blob = row["vector"]
-            row_dimension = int(row["dimension"] or 0)
-            if blob is None or row_dimension <= 0:
-                complete_vectors = False
-                continue
-            if dimension == 0:
-                dimension = row_dimension
-                model = str(row["model"] or "")
-            if row_dimension != dimension or str(row["model"] or "") != model:
-                complete_vectors = False
-                continue
-            vector = array("f")
-            vector.frombytes(bytes(blob))
-            if sys.byteorder != "little":
-                vector.byteswap()
-            if len(vector) != dimension:
-                complete_vectors = False
-                continue
-            vectors.extend(vector)
+            for row in rows
+        ]
 
-        if not chunks or not complete_vectors or len(vectors) != len(chunks) * dimension:
-            return chunks, 0, model, None
-        return chunks, dimension, model, vectors
-
-    def _fts_search(self, query: str, limit: int) -> list[str]:
+    def _fts_search(
+        self,
+        query: str,
+        limit: int,
+        allowed_document_ids: frozenset[str] | set[str] | None = None,
+    ) -> list[str]:
         terms = query_search_terms(query)
         if not terms:
             return []
+        if allowed_document_ids is not None and not allowed_document_ids:
+            return []
         expression = " OR ".join(f'"{term.replace(chr(34), chr(34) * 2)}"' for term in terms[:24])
+        # Phase D scope pushdown: the document restriction happens in SQL via
+        # a chunk_id subquery, never as a post-filter over the full library.
+        scope_sql = ""
+        parameters: list[Any] = [expression]
+        if allowed_document_ids is not None:
+            document_ids = sorted(allowed_document_ids)
+            scope_sql = (
+                " AND chunk_id IN "
+                f"(SELECT id FROM chunks WHERE document_id IN ({', '.join('?' * len(document_ids))}))"
+            )
+            parameters.extend(document_ids)
+        parameters.append(int(limit))
         try:
             with self._lock, closing(self._connect()) as connection:
                 rows = connection.execute(
                     "SELECT chunk_id FROM chunk_fts WHERE chunk_fts MATCH ?"
+                    f"{scope_sql}"
                     f" ORDER BY bm25(chunk_fts, {FTS_BODY_WEIGHT}, {FTS_HEADING_WEIGHT}) LIMIT ?",
-                    (expression, int(limit)),
+                    tuple(parameters),
                 ).fetchall()
         except sqlite3.OperationalError:
             return []
         return [str(row["chunk_id"]) for row in rows]
-
-    def _similarities(self, query_vector: list[float]) -> list[float]:
-        if self._vectors is None or self.dimension <= 0:
-            return []
-        normalized = normalize_vector(query_vector)
-        if len(normalized) != self.dimension:
-            raise ValueError(
-                f"查询向量维度为 {len(normalized)}，教材库维度为 {self.dimension}。"
-            )
-        rows = memoryview(self._vectors)
-        dimension = self.dimension
-        return [
-            _sumprod(normalized, rows[offset : offset + dimension])
-            for offset in range(0, len(self._vectors), dimension)
-        ]
-
-
-def normalize_vector(values: Iterable[float]) -> list[float]:
-    vector = [float(value) for value in values]
-    norm = math.sqrt(sum(value * value for value in vector))
-    if norm <= 0 or not math.isfinite(norm):
-        raise ValueError("向量无效或范数为 0")
-    normalized = [value / norm for value in vector]
-    if not all(math.isfinite(value) for value in normalized):
-        raise ValueError("向量包含非有限数值")
-    return normalized
 
 
 def fts_tokenize(text: str) -> str:

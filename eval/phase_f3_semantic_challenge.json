@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "name": "phase_f3_semantic_challenge",
+    "version": "f3-v1",
+    "description": "Phase F.3 Semantic Challenge Set（隔离评估集，非 F.2 deterministic contract golden，非 F.4 最终 Golden Set）。Ground truth 为人工标注（SUPPORTED / UNSUPPORTED / UNCERTAIN），可人工复核，未使用待评估 LLM 生成。用于量化比较 F.2 deterministic Layer-1 与候选 L2 LLM Judge 的 Citation Support 能力。",
+    "created_at": "2026-09-08",
+    "categories": [
+      "cjk_paraphrase", "english_paraphrase", "abbreviation",
+      "unit_equivalence", "numeric_equivalence", "negation",
+      "causal_reversal", "comparison", "condition_omission",
+      "multi_citation", "related_not_supported", "contradiction",
+      "partial_support", "genuinely_uncertain", "direct_supported"
+    ]
+  },
+  "cases": [
+    {"id": "f3-001", "category": "direct_supported", "claim": "GSM 使用 GMSK 调制。", "evidence": ["GSM 系统使用 GMSK 调制。"], "ground_truth": "SUPPORTED", "reason": "claim 与 evidence 逐字一致（Latin 实体 + 调制方式匹配）"},
+    {"id": "f3-002", "category": "direct_supported", "claim": "WCDMA 采用 QPSK 调制。", "evidence": ["WCDMA 系统采用 QPSK 调制。"], "ground_truth": "SUPPORTED", "reason": "逐字一致"},
+    {"id": "f3-003", "category": "direct_supported", "claim": "香农公式为 C = B log2(1 + S/N)。", "evidence": ["香农公式 C = B log2(1 + S/N)。"], "ground_truth": "SUPPORTED", "reason": "公式逐字一致"},
+    {"id": "f3-004", "category": "direct_supported", "claim": "载波间隔为200 kHz。", "evidence": ["载波间隔为200 kHz。"], "ground_truth": "SUPPORTED", "reason": "数值+单位一致"},
+
+    {"id": "f3-005", "category": "cjk_paraphrase", "claim": "均衡器能够降低符号间干扰。", "evidence": ["均衡器用于减轻码间串扰。"], "ground_truth": "SUPPORTED", "reason": "符号间干扰 = 码间串扰（ISI），CJK 同义表达"},
+    {"id": "f3-006", "category": "cjk_paraphrase", "claim": "多径衰落会导致信号幅度起伏。", "evidence": ["多径传播会使接收信号强度发生波动。"], "ground_truth": "SUPPORTED", "reason": "幅度起伏 ≈ 强度波动，CJK 同义"},
+    {"id": "f3-007", "category": "cjk_paraphrase", "claim": "扩频技术能够提高抗干扰能力。", "evidence": ["扩频通信增强了系统抵御噪声的性能。"], "ground_truth": "SUPPORTED", "reason": "抗干扰 ≈ 抵御噪声，CJK 同义"},
+    {"id": "f3-008", "category": "cjk_paraphrase", "claim": "信道编码可以纠正传输错误。", "evidence": ["纠错码能够修复数据传输过程中的差错。"], "ground_truth": "SUPPORTED", "reason": "纠正错误 ≈ 修复差错，CJK 同义"},
+
+    {"id": "f3-009", "category": "english_paraphrase", "claim": "OFDM 把数据分配到多个子载波上并行传输。", "evidence": ["OFDM 将高速数据流划分到大量子载波上同时发送。"], "ground_truth": "SUPPORTED", "reason": "并行传输 = 同时发送，英文/中文同义改写"},
+    {"id": "f3-010", "category": "english_paraphrase", "claim": "循环前缀可以消除符号间干扰。", "evidence": ["循环前缀用于对抗多径引起的码间串扰。"], "ground_truth": "SUPPORTED", "reason": "消除干扰 = 对抗串扰，同义改写"},
+    {"id": "f3-011", "category": "english_paraphrase", "claim": "信噪比越高，信道容量越大。", "evidence": ["香农公式表明容量随信噪比的增大而提高。"], "ground_truth": "SUPPORTED", "reason": "越高→越大 与 增大→提高 同义"},
+
+    {"id": "f3-012", "category": "abbreviation", "claim": "正交频分复用技术在4G中广泛使用。", "evidence": ["OFDM 是4G系统的核心技术。"], "ground_truth": "SUPPORTED", "reason": "正交频分复用 = OFDM（全称↔缩写）"},
+    {"id": "f3-013", "category": "abbreviation", "claim": "码分多址接入使用正交码区分用户。", "evidence": ["CDMA 通过正交扩频码来区分不同用户。"], "ground_truth": "SUPPORTED", "reason": "码分多址 = CDMA"},
+    {"id": "f3-014", "category": "abbreviation", "claim": "正交频分复用技术的英文全称是 Orthogonal Frequency Division Multiplexing。", "evidence": ["OFDM 表示 Orthogonal Frequency Division Multiplexing。"], "ground_truth": "SUPPORTED", "reason": "缩写↔全称完全对应"},
+
+    {"id": "f3-015", "category": "unit_equivalence", "claim": "载波频率为5 GHz。", "evidence": ["载波频率为5000 MHz。"], "ground_truth": "SUPPORTED", "reason": "5 GHz = 5000 MHz，单位等价（×1000）"},
+    {"id": "f3-016", "category": "unit_equivalence", "claim": "带宽为2000 kHz。", "evidence": ["带宽为2 MHz。"], "ground_truth": "SUPPORTED", "reason": "2000 kHz = 2 MHz，单位等价"},
+    {"id": "f3-017", "category": "unit_equivalence", "claim": "信号功率为0 dBm。", "evidence": ["信号功率为1 mW。"], "ground_truth": "SUPPORTED", "reason": "0 dBm = 1 mW，单位等价（对数↔线性）"},
+
+    {"id": "f3-018", "category": "numeric_equivalence", "claim": "信道利用率达到50%。", "evidence": ["信道利用率达到0.5。"], "ground_truth": "SUPPORTED", "reason": "50% = 0.5，数值表达等价"},
+    {"id": "f3-019", "category": "numeric_equivalence", "claim": "误码率为10的负3次方。", "evidence": ["误码率为0.001。"], "ground_truth": "SUPPORTED", "reason": "10^-3 = 0.001，数值等价"},
+    {"id": "f3-020", "category": "numeric_equivalence", "claim": "信噪比为20 dB。", "evidence": ["信噪比为100倍。"], "ground_truth": "SUPPORTED", "reason": "20 dB = 100 倍（10 lg 100 = 20），对数↔线性等价"},
+
+    {"id": "f3-021", "category": "negation", "claim": "该系统支持多用户并行传输。", "evidence": ["该系统不支持多用户并行传输。"], "ground_truth": "UNSUPPORTED", "reason": "claim 丢失否定词，与 evidence 相反"},
+    {"id": "f3-022", "category": "negation", "claim": "OFDM 不需要循环前缀。", "evidence": ["OFDM 需要循环前缀来对抗多径。"], "ground_truth": "UNSUPPORTED", "reason": "需要 vs 不需要，否定相反"},
+    {"id": "f3-023", "category": "negation", "claim": "均衡器可以完全消除衰落。", "evidence": ["均衡器无法完全消除衰落。"], "ground_truth": "UNSUPPORTED", "reason": "可以 vs 无法，否定相反"},
+    {"id": "f3-024", "category": "negation", "claim": "该系统适用于所有场景。", "evidence": ["该系统并非适用于所有场景。"], "ground_truth": "UNSUPPORTED", "reason": "适用 vs 并非适用，否定相反"},
+
+    {"id": "f3-025", "category": "causal_reversal", "claim": "信号衰落导致多径传播。", "evidence": ["多径传播导致信号衰落。"], "ground_truth": "UNSUPPORTED", "reason": "因果颠倒（多径→衰落，而非衰落→多径）"},
+    {"id": "f3-026", "category": "causal_reversal", "claim": "使用均衡器导致多径衰落。", "evidence": ["多径衰落需要使用均衡器。"], "ground_truth": "UNSUPPORTED", "reason": "因果颠倒（多径→用均衡器，而非均衡器→多径）"},
+    {"id": "f3-027", "category": "causal_reversal", "claim": "循环前缀导致符号间干扰。", "evidence": ["符号间干扰导致需要循环前缀。"], "ground_truth": "UNSUPPORTED", "reason": "因果颠倒（干扰→前缀，而非前缀→干扰）"},
+
+    {"id": "f3-028", "category": "comparison", "claim": "GSM 的带宽大于 LTE 的带宽。", "evidence": ["LTE 的带宽大于 GSM 的带宽。"], "ground_truth": "UNSUPPORTED", "reason": "比较方向颠倒（大于 vs 小于）"},
+    {"id": "f3-029", "category": "comparison", "claim": "4G 的速率高于 5G 的速率。", "evidence": ["5G 的速率高于 4G 的速率。"], "ground_truth": "UNSUPPORTED", "reason": "比较方向颠倒"},
+    {"id": "f3-030", "category": "comparison", "claim": "OFDM 的子载波数少于单载波系统。", "evidence": ["OFDM 的子载波数多于单载波系统。"], "ground_truth": "UNSUPPORTED", "reason": "少于 vs 多于，比较方向颠倒"},
+
+    {"id": "f3-031", "category": "condition_omission", "claim": "系统性能接近理论极限。", "evidence": ["在高信噪比条件下，系统性能接近理论极限。"], "ground_truth": "UNSUPPORTED", "reason": "claim 丢失「高信噪比」条件，过度概括"},
+    {"id": "f3-032", "category": "condition_omission", "claim": "循环前缀可以完全消除干扰。", "evidence": ["当循环前缀长度大于最大多径时延时，循环前缀可以完全消除干扰。"], "ground_truth": "UNSUPPORTED", "reason": "claim 丢失「长度大于时延」条件"},
+    {"id": "f3-033", "category": "condition_omission", "claim": "均衡器效果很好。", "evidence": ["在慢衰落信道中，均衡器效果很好。"], "ground_truth": "UNSUPPORTED", "reason": "claim 丢失「慢衰落信道」条件"},
+
+    {"id": "f3-034", "category": "multi_citation", "claim": "OFDM 用于4G且能对抗多径。", "evidence": ["OFDM 是4G的核心技术。", "OFDM 通过循环前缀对抗多径。"], "ground_truth": "SUPPORTED", "reason": "两条 evidence 联合支持 claim 的两部分"},
+    {"id": "f3-035", "category": "multi_citation", "claim": "香农公式描述了容量、带宽和信噪比的关系。", "evidence": ["香农公式为 C = B log2(1 + S/N)。", "其中B为带宽，S/N为信噪比。"], "ground_truth": "SUPPORTED", "reason": "两条 evidence 联合支持"},
+    {"id": "f3-036", "category": "multi_citation", "claim": "GSM 和 CDMA 使用不同的调制方式。", "evidence": ["GSM 使用 GMSK 调制。", "CDMA 使用 QPSK 调制。"], "ground_truth": "SUPPORTED", "reason": "两条 evidence 联合支持「不同调制方式」"},
+
+    {"id": "f3-037", "category": "related_not_supported", "claim": "OFDM 比单载波系统更抗干扰。", "evidence": ["OFDM 是一种多载波调制技术。"], "ground_truth": "UNSUPPORTED", "reason": "evidence 只说 OFDM 是多载波，未提抗干扰（相关但不蕴含）"},
+    {"id": "f3-038", "category": "related_not_supported", "claim": "均衡器能够提高数据传输速率。", "evidence": ["均衡器用于补偿信道失真。"], "ground_truth": "UNSUPPORTED", "reason": "补偿失真 ≠ 提高速率（相关但不蕴含）"},
+    {"id": "f3-039", "category": "related_not_supported", "claim": "5G 使用 OFDM 技术。", "evidence": ["4G 使用 OFDM 技术。"], "ground_truth": "UNSUPPORTED", "reason": "evidence 谈 4G，claim 谈 5G（相关但不支持）"},
+    {"id": "f3-040", "category": "related_not_supported", "claim": "香农公式给出了信道编码的具体实现方法。", "evidence": ["香农公式给出了信道容量的理论上限。"], "ground_truth": "UNSUPPORTED", "reason": "容量上限 ≠ 编码实现方法（相关但不蕴含）"},
+
+    {"id": "f3-041", "category": "contradiction", "claim": "该系统能够同时支持大量用户。", "evidence": ["该系统仅支持少量用户。"], "ground_truth": "UNSUPPORTED", "reason": "大量 vs 少量，确定性矛盾（CJK 语义层）"},
+    {"id": "f3-042", "category": "contradiction", "claim": "均衡器增加了码间串扰。", "evidence": ["均衡器减轻了码间串扰。"], "ground_truth": "UNSUPPORTED", "reason": "增加 vs 减轻，矛盾"},
+    {"id": "f3-043", "category": "contradiction", "claim": "该方案降低了系统复杂度。", "evidence": ["该方案增加了系统复杂度。"], "ground_truth": "UNSUPPORTED", "reason": "降低 vs 增加，矛盾"},
+
+    {"id": "f3-044", "category": "partial_support", "claim": "均衡器能够补偿信道失真并提高速率。", "evidence": ["均衡器能够补偿信道失真。"], "ground_truth": "UNCERTAIN", "reason": "前半被支持，后半「提高速率」未被支持（部分支持）"},
+    {"id": "f3-045", "category": "partial_support", "claim": "CDMA 使用正交码区分用户，且不需要扩频。", "evidence": ["CDMA 使用正交码区分用户。"], "ground_truth": "UNCERTAIN", "reason": "前半支持，后半「不需要扩频」与常识相反（部分支持）"},
+    {"id": "f3-046", "category": "partial_support", "claim": "香农公式给出容量上限，并且给出编码实现方法。", "evidence": ["香农公式给出容量上限。"], "ground_truth": "UNCERTAIN", "reason": "前半支持，后半不支持（部分支持）"},
+
+    {"id": "f3-047", "category": "genuinely_uncertain", "claim": "均衡器能够改善信号质量。", "evidence": ["均衡器用于补偿信道失真。"], "ground_truth": "UNCERTAIN", "reason": "「改善信号质量」与「补偿失真」相关但需语义推断，是否等价不明确"},
+    {"id": "f3-048", "category": "genuinely_uncertain", "claim": "OFDM 能够有效利用频谱。", "evidence": ["OFDM 使用多个正交子载波。"], "ground_truth": "UNCERTAIN", "reason": "正交子载波→频谱利用是合理推断但不直接蕴含"},
+    {"id": "f3-049", "category": "genuinely_uncertain", "claim": "循环前缀增加了系统开销。", "evidence": ["循环前缀在符号前插入一段保护间隔。"], "ground_truth": "UNCERTAIN", "reason": "保护间隔→开销增加是合理推断但不直接"},
+    {"id": "f3-050", "category": "genuinely_uncertain", "claim": "该系统的性能优于传统方案。", "evidence": ["该系统采用了新的调制技术。"], "ground_truth": "UNCERTAIN", "reason": "新技术≠性能更优，是否支持不明确"}
+  ]
+}

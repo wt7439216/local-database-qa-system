@@ -674,3 +674,25 @@ F.0（只读，未改任何仓库文件）：Summary/Citation AS-IS 审计 + Gap
 ### Gate decision
 
 **Phase F.2 = PASS。** Phase F overall = IN_PROGRESS（F.3 / F.4 = NOT STARTED，等待单独授权，STOP）。
+
+## Phase F.3 — Semantic Citation Verifier Decision Gate（2026-09-08）
+
+- Status: **PASS**（评估与决策完成，结论 **DEFER_L2**）
+- 阶段性质：EVALUATION / DECISION GATE——只读分析 + 隔离临时评测资产；**未修改任何 production code**，未接入 runtime，未改变 F.2 deterministic verifier / `citation_verified` 语义。
+- 决策文档：`docs/V3_PHASE_F3_CITATION_DECISION.md`（含 L1 Capability Matrix、Judge 合同、逐指标对比、决策依据）。
+
+### 核心结论
+
+- 建立 `eval/phase_f3_semantic_challenge.json`（**50 cases** 人工标注 ground truth：SUPPORTED 23 / UNSUPPORTED 20 / UNCERTAIN 7，15 类语义边界）+ `scripts/eval_phase_f3.py`（离线 L1 + Ollama L2 judge 评测，L1 不进外部服务）。
+- L1（f2-v2）在语义挑战集：accuracy 0.28，false-support 0.10（5），uncertain rate 0.54（27）——「否定/因果/比较/条件省略」类 token 匹配但语义相反 → false-support（最高风险）。
+- 候选 L2（qwen2.5:7b judge，temperature=0，`judge-f3-v1` 冻结合同，复用现有模型零新依赖）：accuracy 0.74，false-support 0.04（2），false-reject 0.08（4）。
+- **但 L2 契约未闭合**：从不输出 UNCERTAIN（7 个真 UNCERTAIN 强行二值化全错，resolution accuracy 19/27=0.70）；2 个 false-support 均为「条件省略」未消除；通信领域知识不足（0 dBm=1 mW、20 dB=100 倍、2000 kHz=2 MHz 判错）；延迟 p50 2.74s/case 且与 answer 共用 qwen2.5:7b（Strategy A 不可接受）。
+- **决策 = DEFER_L2**：L2 有明确价值（accuracy +0.46、false-support -0.06），但 judge 契约未闭合 + 真实回答级语义难度分布未知（本挑战集为人工困难集，L1 在 F.2 逐字分布下为 30/30）。触发 IMPLEMENT_L2 复评条件：F.4 真实 Golden Set 建立后量化真实 uncertain rate；judge prompt 调优实现正确 UNCERTAIN 输出；Strategy B/C 在真实分布下证明延迟可接受。
+
+### F.2 Regression 确认
+
+- F.2 offline eval 30/30 PASS；Phase E router eval 冻结指标保持（route 108/108、follow-up 66/66、ambiguous 0/8、scope conflict 10/10、leakage 0）；F.1 / deterministic verifier 零改动。
+
+### Gate decision
+
+**Phase F.3 = PASS。** Phase F overall = IN_PROGRESS（F.4 = NOT STARTED）。按合同 **STOP**：不实施 L2、不进入 F.4、不扩充最终 Golden Set，等待新的单独授权。

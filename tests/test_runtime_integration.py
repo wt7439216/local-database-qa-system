@@ -67,7 +67,11 @@ Q_C_NEG = "载波同步与频偏估计如何进行"
 Q_TOC = "教材有哪些章节"
 Q_TOC2 = "教材包括哪些章节"
 Q_OVERVIEW = "这本书主要讲了什么"
-Q_MISSING = "第3章讲了什么"
+# Phase F.1: every imported chapter now carries a section summary, so the
+# missing-summary fallback is exercised with a chapter that does not exist
+# at all (pre-F.1 the fallback also fired for existing chapters without a
+# summary row — that case no longer exists by construction).
+Q_MISSING = "第9章讲了什么"
 
 OUT_OF_SCOPE_ANSWER = "当前教材没有检索到足够依据来回答这个问题。"
 EMPTY_CATALOG_ANSWER = "当前教材库还没有可用的章节目录。请重新构建知识库。"
@@ -415,14 +419,14 @@ class RuntimeIntegrationTests(RuntimeHarness):
         self.assertTrue(result["out_of_scope"])
         self.assertEqual(
             result["answer"],
-            "教材库中没有第3章的摘要。当前识别到的章节：第1章、第2章、第3章。",
+            "教材库中没有第9章的摘要。当前识别到的章节：第1章、第2章、第3章。",
         )
         self.assertEqual(result["citations"], [])
 
         result = self._answer(Q_MISSING, {"document_ids": [str(doc_e["document_id"])]})
         self.assertEqual(
             result["answer"],
-            "教材库中没有第3章的摘要。当前识别到的章节：第1章、第2章。",
+            "教材库中没有第9章的摘要。当前识别到的章节：第1章、第2章。",
         )
 
     def test_book_overview_respects_scope(self):

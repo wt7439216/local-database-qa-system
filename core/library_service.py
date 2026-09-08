@@ -119,7 +119,7 @@ def ensure_managed_schema(connection: sqlite3.Connection) -> int:
                 "embedding_model": "",
                 "embedding_dimension": "0",
                 "build_options": "{}",
-                "summaries": "structural",
+                "summaries": "mechanical",
             }.items(),
         )
         connection.commit()
@@ -133,6 +133,14 @@ def ensure_managed_schema(connection: sqlite3.Connection) -> int:
     integrity = connection.execute("PRAGMA integrity_check").fetchone()[0]
     if integrity != "ok":
         raise LibraryServiceError(f"迁移前完整性检查失败：{integrity}")
+    # Phase F.1: additive summary provenance columns.  Runs for BOTH v4 and
+    # already-v5 libraries (idempotent); legacy rows fall back to defaults.
+    # Committed separately so the metadata write closes its implicit
+    # transaction before the migration's explicit BEGIN below.
+    from core.summary import ensure_summary_provenance_schema
+
+    if ensure_summary_provenance_schema(connection):
+        connection.commit()
     if version == MANAGED_SCHEMA_VERSION:
         return version
 

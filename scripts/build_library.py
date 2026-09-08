@@ -28,6 +28,21 @@ if str(ROOT_DIR) not in sys.path:
 from core import config
 from core.library_store import SCHEMA_VERSION, fts_tokenize, json_dumps, normalize_vector, sha256_file
 from core.ollama_http import OllamaClient, OllamaError
+from core.summary import (
+    DOCUMENT_CHAPTER_LABEL,
+    GENERATOR_AGGREGATE,
+    GENERATOR_LLM_REWRITE,
+    GENERATOR_MECHANICAL,
+    SCOPE_TYPE_CHAPTER,
+    SUMMARY_PROMPT_VERSION,
+    SummaryRecord,
+    aggregate_document_summary_text,
+    content_hash,
+    dependency_hash,
+    ensure_summary_provenance_schema,
+    summary_insert_sql,
+    utc_now,
+)
 
 
 PAGE_MARKER = re.compile(r"^\[page_(\d{4})\s+method=([^\]]+)\]$")
@@ -404,62 +419,126 @@ def create_schema(connection: sqlite3.Connection) -> None:
     )
 
 
-def chapter_summaries(chunks: list[ChunkDraft]) -> list[tuple[str, str, str, str, int, int, str, int]]:
-    grouped: dict[tuple[str, str], list[ChunkDraft]] = defaultdict(list)
+def mechanical_chapter_summary_text(chapter: str, values: list[ChunkDraft]) -> str:
+    """Mechanical chapter summary: chapter intro + section names (pre-F.1 composition)."""
+    chapter_number = detect_chapter_number(chapter)
+    sections: list[str] = []
+    for item in values:
+        if (
+            item.section
+            and section_belongs_to_chapter(item.section, chapter_number)
+            and item.section not in sections
+        ):
+            sections.append(item.section)
+    preferred = next(
+        (
+            item
+            for item in values[:12]
+            if "学习重点和要求" in item.text or "本章主要介绍" in item.text
+        ),
+        values[0],
+    )
+    introduction = preferred.text.strip()
+    if "学习重点和要求" in introduction:
+        introduction = introduction[introduction.index("学习重点和要求") :]
+    introduction = introduction[:650].strip()
+    section_line = "、".join(sections[:16])
+    return (
+        f"【{chapter}】PDF 第{values[0].pdf_page_start}—{values[-1].pdf_page_end}页。\n"
+        f"章节开篇：{introduction}\n"
+        f"主要小节：{section_line}"
+    )[:1200]
+
+
+def chapter_summary_records(chunks: list[ChunkDraft]) -> list[SummaryRecord]:
+    """F.1 mechanical summaries with full provenance.
+
+    Section/chapter rows bind the chapter's real chunks (source ids +
+    content hashes).  The document row is an aggregation over the chapter
+    summaries — front-matter chunks are never used as a document summary.
+    """
+    by_document: dict[str, list[ChunkDraft]] = defaultdict(list)
     for chunk in chunks:
-        grouped[(chunk.document_id, chunk.chapter or "全书概览")].append(chunk)
-    rows = []
-    for order, ((document_id, chapter), values) in enumerate(grouped.items()):
-        if chapter == "全书概览":
-            preferred = next(
-                (item for item in values if re.search(r"全部内容分为\s*\d+\s*章", item.text)),
-                values[0],
+        by_document[chunk.document_id].append(chunk)
+
+    records: list[SummaryRecord] = []
+    for document_id, values in by_document.items():
+        chapter_groups: dict[str, list[ChunkDraft]] = defaultdict(list)
+        for chunk in values:
+            chapter_groups[chunk.chapter or DOCUMENT_CHAPTER_LABEL].append(chunk)
+
+        chapter_records: list[SummaryRecord] = []
+        for chapter, chapter_values in chapter_groups.items():
+            if chapter == DOCUMENT_CHAPTER_LABEL:
+                continue  # front matter is not a summary source
+            text = mechanical_chapter_summary_text(chapter, chapter_values)
+            number = detect_chapter_number(chapter)
+            scope_id = ""
+            if number is not None:
+                scope_id = "chp-" + hashlib.sha256(f"{document_id}:{number}".encode("utf-8")).hexdigest()[:16]
+            sources = [(chunk.id, content_hash(chunk.text)) for chunk in chapter_values]
+            chapter_records.append(
+                SummaryRecord(
+                    id="sum-" + hashlib.sha256(f"{document_id}:{chapter}".encode("utf-8")).hexdigest()[:16],
+                    document_id=document_id,
+                    scope_type=SCOPE_TYPE_CHAPTER,
+                    chapter=chapter,
+                    page_start=chapter_values[0].pdf_page_start,
+                    page_end=chapter_values[-1].pdf_page_end,
+                    text=text,
+                    sort_order=len(chapter_records) + 1,
+                    scope_id=scope_id,
+                    source_ids=[chunk_id for chunk_id, _ in sources],
+                    dependency_hash=dependency_hash(sources, generator_type=GENERATOR_MECHANICAL),
+                    generator_type=GENERATOR_MECHANICAL,
+                    generated_at=utc_now(),
+                    summary_version=1,
+                    source_entries=tuple(sources),
+                )
             )
-            overview = preferred.text.strip()
-            for marker in ("未经许可", "版权所有", "图书在版编目", "策划编辑"):
-                overview = overview.split(marker, 1)[0].rstrip()
-            text = f"【全书概览】{overview[:1200]}"
-        else:
-            chapter_number = detect_chapter_number(chapter)
-            sections: list[str] = []
-            for item in values:
-                if (
-                    item.section
-                    and section_belongs_to_chapter(item.section, chapter_number)
-                    and item.section not in sections
-                ):
-                    sections.append(item.section)
-            preferred = next(
-                (
-                    item
-                    for item in values[:12]
-                    if "学习重点和要求" in item.text or "本章主要介绍" in item.text
-                ),
-                values[0],
+
+        doc_sources = sorted(
+            {(chunk.id, content_hash(chunk.text)) for chunk in values}
+        )
+        doc_text = aggregate_document_summary_text(
+            DOCUMENT_CHAPTER_LABEL, [record.text for record in chapter_records]
+        )
+        records.extend(chapter_records)
+        records.append(
+            SummaryRecord(
+                id="sum-" + hashlib.sha256(f"{document_id}:{DOCUMENT_CHAPTER_LABEL}".encode("utf-8")).hexdigest()[:16],
+                document_id=document_id,
+                scope_type=SCOPE_TYPE_CHAPTER,
+                chapter=DOCUMENT_CHAPTER_LABEL,
+                page_start=0,
+                page_end=0,
+                text=doc_text,
+                sort_order=0,
+                scope_id="",
+                source_ids=[chunk_id for chunk_id, _ in doc_sources],
+                dependency_hash=dependency_hash(doc_sources, generator_type=GENERATOR_AGGREGATE),
+                generator_type=GENERATOR_AGGREGATE,
+                generated_at=utc_now(),
+                summary_version=1,
+                source_entries=tuple(doc_sources),
             )
-            introduction = preferred.text.strip()
-            if "学习重点和要求" in introduction:
-                introduction = introduction[introduction.index("学习重点和要求") :]
-            introduction = introduction[:650].strip()
-            section_line = "、".join(sections[:16])
-            text = (
-                f"【{chapter}】PDF 第{values[0].pdf_page_start}—{values[-1].pdf_page_end}页。\n"
-                f"章节开篇：{introduction}\n"
-                f"主要小节：{section_line}"
-            )[:1200]
-        stable_id = "sum-" + hashlib.sha256(f"{document_id}:{chapter}".encode("utf-8")).hexdigest()[:16]
-        rows.append((stable_id, document_id, "chapter", chapter, values[0].pdf_page_start, values[-1].pdf_page_end, text, order))
-    return rows
+        )
+    return records
+
+
+def chapter_summaries(chunks: list[ChunkDraft]) -> list[tuple[str, str, str, str, int, int, str, int]]:
+    """Legacy pre-F.1 8-column projection of the mechanical summaries."""
+    return [record.core_row() for record in chapter_summary_records(chunks)]
 
 
 def chapter_rows(
     pages: list[Page],
-    summaries: list[tuple[str, str, str, str, int, int, str, int]],
+    summaries: list[SummaryRecord],
 ) -> list[tuple[str, str, int, str, int, int, int | None, int | None, str, int]]:
     summary_by_chapter = {
-        (document_id, chapter): text
-        for _summary_id, document_id, _scope, chapter, _start, _end, text, _order in summaries
-        if chapter != "全书概览"
+        (record.document_id, record.chapter): record.text
+        for record in summaries
+        if record.chapter != DOCUMENT_CHAPTER_LABEL
     }
     grouped: dict[tuple[str, str], list[Page]] = defaultdict(list)
     for page in pages:
@@ -537,23 +616,35 @@ def llm_chapter_summary(chapter: str, material: str, client: OllamaClient, model
 
 
 def rewrite_summaries_with_llm(
-    summary_rows: list[tuple[str, str, str, str, int, int, str, int]],
+    summary_rows: list[SummaryRecord],
     client: OllamaClient,
     model: str,
-) -> tuple[list[tuple[str, str, str, str, int, int, str, int]], bool]:
-    """Replace mechanical summaries with LLM-written ones; failures keep the original."""
+) -> tuple[list[SummaryRecord], bool]:
+    """LLM polish of mechanical summaries; failures keep the mechanical text.
+
+    F.1 semantics: this is a labeled ``summary rewrite`` (generator_type =
+    llm_rewrite, model + prompt version recorded), never a source-grounded
+    document summarization — the recorded sources stay the real chunks.
+    """
     rewritten = []
     all_ok = True
-    for row in summary_rows:
-        summary_id, document_id, scope, chapter, start, end, text, order = row
-        improved = llm_chapter_summary(chapter, text, client, model)
+    for record in summary_rows:
+        improved = llm_chapter_summary(record.chapter, record.text, client, model)
         if improved:
-            print(f"[INFO] LLM 摘要完成：{chapter}")
-            text = improved
+            print(f"[INFO] LLM 摘要完成：{record.chapter}")
+            rewritten.append(
+                record.with_generator(
+                    GENERATOR_LLM_REWRITE,
+                    text=improved[:1200],
+                    model=model,
+                    prompt_version=SUMMARY_PROMPT_VERSION,
+                    generated_at=utc_now(),
+                )
+            )
         else:
             all_ok = False
-            print(f"[WARN] LLM 摘要失败，保留机械摘要：{chapter}")
-        rewritten.append((summary_id, document_id, scope, chapter, start, end, text, order))
+            print(f"[WARN] LLM 摘要失败，保留机械摘要：{record.chapter}")
+            rewritten.append(record)
     return rewritten, all_ok
 
 
@@ -597,6 +688,7 @@ def build_library(
         connection = sqlite3.connect(temp_path)
         try:
             create_schema(connection)
+            ensure_summary_provenance_schema(connection)
             documents: dict[str, list[Page]] = defaultdict(list)
             for page in pages:
                 documents[page.document_name].append(page)
@@ -626,15 +718,19 @@ def build_library(
                     "INSERT INTO chunk_fts VALUES (?, ?, ?)",
                     (chunk.id, fts_tokenize(chunk.text), fts_tokenize(heading_text)),
                 )
-            summary_rows = chapter_summaries(chunks)
+            summary_records = chapter_summary_records(chunks)
             summaries_llm = False
+            summaries_mixed = False
             if llm_summaries and include_embeddings:
                 ollama = client or OllamaClient()
-                summary_rows, summaries_llm = rewrite_summaries_with_llm(summary_rows, ollama, config.ANSWER_MODEL)
-            connection.executemany("INSERT INTO summaries VALUES (?, ?, ?, ?, ?, ?, ?, ?)", summary_rows)
+                summary_records, summaries_llm = rewrite_summaries_with_llm(summary_records, ollama, config.ANSWER_MODEL)
+                summaries_mixed = not summaries_llm and any(
+                    record.generator_type == GENERATOR_LLM_REWRITE for record in summary_records
+                )
+            connection.executemany(summary_insert_sql(), [record.to_row() for record in summary_records])
             connection.executemany(
                 "INSERT INTO chapters VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                chapter_rows(pages, summary_rows),
+                chapter_rows(pages, summary_records),
             )
 
             dimension = 0
@@ -677,7 +773,8 @@ def build_library(
                 "embedding_model": model if include_embeddings else "",
                 "embedding_dimension": str(dimension),
                 "build_options": json_dumps({"target_chars": target_chars, "max_chars": max_chars}),
-                "summaries": "llm" if summaries_llm else "mechanical",
+                # Coarse legacy label; per-row generator_type is the F.1 truth.
+                "summaries": "llm" if summaries_llm else ("mixed" if summaries_mixed else "mechanical"),
             }
             connection.executemany("INSERT INTO metadata VALUES (?, ?)", metadata.items())
             connection.commit()

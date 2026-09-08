@@ -236,9 +236,12 @@ class DocumentImporter:
                 "embedding_model": self.embedding_model,
                 "embedding_dimension": "0",
                 "build_options": "{}",
-                "summaries": "structural",
+                "summaries": "mechanical",
             }
             connection.executemany("INSERT OR REPLACE INTO metadata VALUES (?, ?)", metadata.items())
+            from core.summary import ensure_summary_provenance_schema
+
+            ensure_summary_provenance_schema(connection)
             return
         version_row = connection.execute("SELECT value FROM metadata WHERE key='schema_version'").fetchone()
         # v5 (managed) is purely additive on v4, so the v4 write path stays
@@ -251,6 +254,10 @@ class DocumentImporter:
                 f"知识库嵌入模型不匹配：库为 {model_row[0]}，导入请求 {self.embedding_model}。"
                 "请使用 --embedding-model 匹配库模型，或另建库。"
             )
+        # Phase F.1: additive summary provenance columns (idempotent).
+        from core.summary import ensure_summary_provenance_schema
+
+        ensure_summary_provenance_schema(connection)
 
     def _existing_document(self, document_id: str) -> sqlite3.Row | None:
         if not self.library_path.is_file():
@@ -358,7 +365,7 @@ class DocumentImporter:
                     )
                     embedded_new += 1
 
-            self._write_chapters(connection, document)
+            self._write_chapters(connection, document, chunks)
             connection.executemany(
                 "INSERT OR REPLACE INTO metadata VALUES (?, ?)",
                 {
@@ -379,34 +386,97 @@ class DocumentImporter:
         finally:
             connection.close()
 
-    def _write_chapters(self, connection: sqlite3.Connection, document: NormalizedDocument) -> None:
-        """Map level-1 sections to the legacy chapters table (compatibility)."""
+    def _write_chapters(self, connection: sqlite3.Connection, document: NormalizedDocument, chunks) -> None:
+        """F.1 hierarchical summaries: section rows bound to real chunks,
+        document row aggregated from section summaries (never a single block).
+
+        ``chapters.overview`` is written from the same record text and stays
+        a compatibility mirror — the summaries table is the business truth.
+        """
         import hashlib
 
+        from core.summary import (
+            DOCUMENT_CHAPTER_LABEL,
+            GENERATOR_AGGREGATE,
+            SCOPE_TYPE_CHAPTER,
+            SummaryRecord,
+            aggregate_document_summary_text,
+            content_hash,
+            dependency_hash,
+            extractive_section_summary_text,
+            summary_insert_sql,
+            utc_now,
+        )
+
+        section_chunks: dict[str, list] = {}
+        for chunk in chunks:
+            section_chunks.setdefault(_chapter_label(chunk.section_path), []).append(chunk)
+
         order = 0
+        section_summaries: list[str] = []
+        all_sources: list[tuple[str, str]] = []
+        insert_sql = summary_insert_sql()
         for section in document.root_sections:
             chapter_number = 0 if section.ordinal == 0 else section.ordinal
-            overview = section.blocks[0].text[:300] if section.blocks else ""
+            heading = section.heading
             chapter_id = "chp-" + hashlib.sha256(f"{document.document_id}:{chapter_number}".encode("utf-8")).hexdigest()[:12]
             page_start = next((b.location.page for b in section.blocks if b.location.page), 0) if section.blocks else 0
             page_end = page_start
+            bodies = [chunk.body for chunk in section_chunks.get(heading, [])]
+            lead = next((body.strip() for body in bodies if body.strip()), "")
+            summary_text, generator = extractive_section_summary_text(lead, heading)
+            sources = [(chunk.chunk_id, content_hash(chunk.body)) for chunk in section_chunks.get(heading, [])]
+            all_sources.extend(sources)
             connection.execute(
                 "INSERT INTO chapters VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (chapter_id, document.document_id, chapter_number, section.heading,
-                 page_start, page_end, None, None, overview, order),
+                (chapter_id, document.document_id, chapter_number, heading,
+                 page_start, page_end, None, None, summary_text, order),
             )
+            summary_id = "sum-" + hashlib.sha256(f"{document.document_id}:{chapter_id}".encode("utf-8")).hexdigest()[:12]
+            record = SummaryRecord(
+                id=summary_id,
+                document_id=document.document_id,
+                scope_type=SCOPE_TYPE_CHAPTER,
+                chapter=heading,
+                page_start=page_start,
+                page_end=page_end,
+                text=summary_text,
+                sort_order=order + 1,
+                scope_id=chapter_id,
+                source_ids=[chunk_id for chunk_id, _ in sources],
+                dependency_hash=dependency_hash(sources, generator_type=generator),
+                generator_type=generator,
+                generated_at=utc_now(),
+                summary_version=1,
+                source_entries=tuple(sources),
+            )
+            connection.execute(insert_sql, record.to_row())
+            section_summaries.append(summary_text)
             order += 1
-        # document-level summary row so the book_overview route keeps working
-        section_names = "、".join(
-            section.heading for section in document.root_sections if section.ordinal != 0
-        )[:400]
-        summary_id = "sum-" + hashlib.sha256(f"{document.document_id}:全书概览".encode("utf-8")).hexdigest()[:12]
-        first_text = document.blocks[0].text[:600] if document.blocks else ""
-        connection.execute(
-            "INSERT INTO summaries VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            (summary_id, document.document_id, "chapter", "全书概览", 0, 0,
-             f"【{document.title}】{section_names}\n{first_text}"[:1200], 0),
+
+        # Document summary: aggregation over the section summaries (F.1
+        # contract §13 — never the first block or a single front-matter chunk).
+        doc_sources = sorted(set(all_sources))
+        doc_text = aggregate_document_summary_text(document.title, section_summaries)
+        doc_summary_id = "sum-" + hashlib.sha256(f"{document.document_id}:{DOCUMENT_CHAPTER_LABEL}".encode("utf-8")).hexdigest()[:12]
+        doc_record = SummaryRecord(
+            id=doc_summary_id,
+            document_id=document.document_id,
+            scope_type=SCOPE_TYPE_CHAPTER,
+            chapter=DOCUMENT_CHAPTER_LABEL,
+            page_start=0,
+            page_end=0,
+            text=doc_text,
+            sort_order=0,
+            scope_id="",
+            source_ids=[chunk_id for chunk_id, _ in doc_sources],
+            dependency_hash=dependency_hash(doc_sources, generator_type=GENERATOR_AGGREGATE),
+            generator_type=GENERATOR_AGGREGATE,
+            generated_at=utc_now(),
+            summary_version=1,
+            source_entries=tuple(doc_sources),
         )
+        connection.execute(insert_sql, doc_record.to_row())
 
     def _combined_hash(self, connection: sqlite3.Connection) -> str:
         rows = connection.execute("SELECT sha256 FROM documents ORDER BY id").fetchall()

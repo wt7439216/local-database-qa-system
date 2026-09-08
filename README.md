@@ -16,8 +16,9 @@
 | Phase D | v3.3 | 知识库管理 + 文档生命周期 + QueryScope | FINAL PASS |
 | Phase D.1 | v3.3 | 运行时整合 + Scope 收口 + 错误脱敏 | FINAL PASS |
 | Phase E | v3.4 | Conversation-aware Router + Query Rewrite + Follow-up Resolution | FINAL PASS |
+| Phase F.1 | v3.5 | Hierarchical Summary + Provenance / Invalidation | FINAL PASS |
 
-Phase F 尚未开始，等待单独授权。
+Phase F 进行中：F.1（Hierarchical Summary + Provenance/Invalidation）已完成；F.2 / F.3 / F.4 尚未开始，等待单独授权。
 
 ## 核心特性
 
@@ -48,6 +49,7 @@ Phase F 尚未开始，等待单独授权。
 ### 问答与对话
 
 - 意图路由：全书目录、全书介绍、单章概括、页码/章节定位、比较（按双方分侧检索）、普通问答；书籍级问题不调用模型；
+- 层级摘要（Phase F.1）：section 摘要绑定真实 chunks（extractive），文档摘要由多个 section 摘要聚合（禁止单块冒充）；每行记录 source ids/hash、dependency 指纹、generator 类型（mechanical/extractive/aggregate/llm_rewrite/legacy）、模型与 prompt 版本、生成时间；文档变化自动重建、删除无 orphan、旧库 additive 迁移（legacy 行绝不伪造 provenance）；
 - Conversation-aware Query Router（Phase E）：确定性 rules-first 路由；追问/代词/省略解析与最小 Query Rewrite；模糊指代宁可澄清、不猜错；Router 只解释语义、不扩大 QueryScope；最终答案仍受 citation verification 约束；
 - 多轮追问：追问与上一问合并用于路由和检索，最近 3 轮对话进入模型消息；回答仍只依据本轮材料；
 - 引用纪律：范围/列表引用展开、越界剔除、拉丁实体核验（先核验后重编号）、按首次出现重编号；引用核验未通过会提示；
@@ -68,7 +70,7 @@ Phase F 尚未开始，等待单独授权。
 ### 工程化
 
 - 运行时仅用 Python 标准库（建库环境另需 requirements-ingest.txt）；
-- 392 项单元/集成测试（真实 Qdrant/Ollama/Reranker 集成在服务不可达时自动 skip）；
+- 419 项单元/集成测试（真实 Qdrant/Ollama/Reranker 集成在服务不可达时自动 skip）；
 - 评测门禁：教材 Golden Set（召回/范围/路由）、通用导入 25 例、Scope 34 例（leakage=0）、Reranker 53 例、Phase E Router Golden 108 例（route 100% / follow-up 100% / ambiguous false-resolution 0% / scope leakage 0）；
 - ruff 静态检查、GitHub Actions CI、PyInstaller 一键打包；
 - 数据目录保持可移植布局（`data/` 随程序存放）；Windows 受保护安装目录场景的 `%LOCALAPPDATA%` 搬迁为已登记 backlog（见 docs/V3_PROGRESS.md）。

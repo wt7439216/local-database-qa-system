@@ -136,6 +136,17 @@ book 路由 scope / 路径泄露）：
   pushdown + dense 候选）与书籍级路由（目录/全书概览/章节摘要/缺章提示）；
   空 scope 永不回退全库，book 路由与检索看到同一文档集。
 
+### Hierarchical Summary（v3.5 Phase F.1）
+
+F.1 建立统一 Summary 生命周期（`core/summary.py`）；SQLite `summaries` 表是唯一业务真相源（Qdrant / 进程缓存都不是 summary 真相源）：
+
+- 层级：source chunks → **section/chapter summary**（extractive：绑定该 section 真实 chunk ids + 内容哈希，无正文的 section 用显式 heading-only 描述符）→ **document summary**（aggregate：由多个 section summary 聚合生成；禁止单个 chunk / 前置章节块冒充完整文档摘要——F.0 审计发现的旧模式已关闭）。
+- Provenance（additive 列，metadata `summary_provenance=1` 标记）：`scope_id`（稳定章节 ID 关联，summary_contexts 优先按 ID join、legacy 行按标题相等回落，解决同名/改题串数据与标题漂移）、`source_ids`、`dependency_hash`、`generator_type`（mechanical / extractive / aggregate / llm_rewrite / heading_only / legacy）、`model`、`prompt_version`、`generated_at`、`summary_version`。旧库行 migration 后默认 `generator_type='legacy'`、provenance 全空——可识别、不崩溃、绝不伪造。
+- Dependency fingerprint：`(算法版本 + generator + prompt/model + 有序 source id/hash)` 的稳定哈希；source 或配置变化 → 指纹变化 → 旧摘要不再 CURRENT。
+- Invalidation：文档未变（source_hash 相同）跳过全部写入、摘要安全复用；文档变化 → 文档级重建（受影响 section 摘要与 document 摘要全部重新生成，无 stale 行）；删除 → summaries 按 document_id 清空，无 orphan，其他文档不受影响。迁移幂等（ALTER ADD COLUMN + INSERT OR REPLACE 标记）。
+- LLM 路径语义：`--llm-summaries` 被明确标记为 **summary rewrite**（generator_type=`llm_rewrite` + model + prompt_version，source 绑定不变），而非 source-grounded 文档摘要；失败保留机械文本，库级标签如实记 `mixed`（不再把混合库误标为纯机械）。
+- 双真相裁决：`chapters.overview` 裁定为兼容镜像——写路径从同一 summary record 文本生成，业务真相只在 summaries 表；两者由测试锁定不漂移。
+
 ### Reranker（可选，默认关闭）
 
 已实现可选本地 Cross-Encoder Reranker（`BAAI/bge-reranker-v2-m3`，经独立 sidecar 进程调用），并完成真实 CPU/CUDA 性能、故障回退及排名评测；当前单教材饱和基线下整体收益有限（MRR +0.0048 / nDCG@5 +0.0084，未达 0.02 有意义增益参考值），因此**默认关闭**，待多文档阶段重新评估。

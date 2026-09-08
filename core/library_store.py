@@ -266,6 +266,14 @@ class LibraryStore:
         self.has_vectors = self._vector_store.has_vectors
         self.dense_gates = _gates_for_model(self.embedding_model)
         self._chunk_by_id = {chunk.id: chunk for chunk in self.chunks}
+        # Phase F.1: summaries gain an additive scope_id column linking a
+        # summary to its chapter by stable id.  Pre-F.1 libraries lack the
+        # column; the read path falls back to the legacy title join there.
+        self._summaries_have_scope_id = False
+        with closing(self._connect()) as connection:
+            self._summaries_have_scope_id = any(
+                row[1] == "scope_id" for row in connection.execute("PRAGMA table_info(summaries)")
+            )
 
     def _vector_collection(self) -> str | None:
         """Qdrant collection bound to this library's identity (Phase D.1).
@@ -392,11 +400,26 @@ class LibraryStore:
         chapter_number: int | None = None,
         allowed_document_ids: frozenset[str] | set[str] | None = None,
     ) -> list[ChunkRecord]:
-        where = "WHERE s.scope_type = 'chapter'"
         parameters: list[Any] = []
-        if chapter_number is not None:
-            where += " AND c.chapter_number = ?"
-            parameters.append(int(chapter_number))
+        if self._summaries_have_scope_id:
+            # F.1: join by stable chapter id first; legacy rows (scope_id='')
+            # keep the title-join fallback so pre-F.1 data still resolves.
+            chapter_join = (
+                "LEFT JOIN chapters c1 ON c1.id = s.scope_id "
+                "LEFT JOIN chapters c2 ON c2.document_id = s.document_id AND c2.title = s.chapter"
+            )
+            where = "WHERE s.scope_type = 'chapter'"
+            if chapter_number is not None:
+                where += " AND COALESCE(c1.chapter_number, c2.chapter_number) = ?"
+                parameters.append(int(chapter_number))
+        else:
+            chapter_join = (
+                "LEFT JOIN chapters c ON c.document_id = s.document_id AND c.title = s.chapter"
+            )
+            where = "WHERE s.scope_type = 'chapter'"
+            if chapter_number is not None:
+                where += " AND c.chapter_number = ?"
+                parameters.append(int(chapter_number))
         if allowed_document_ids is not None:
             document_ids = sorted(allowed_document_ids)
             if not document_ids:
@@ -410,7 +433,7 @@ class LibraryStore:
                        s.chapter, s.text, s.page_start, s.page_end
                 FROM summaries s
                 JOIN documents d ON d.id = s.document_id
-                LEFT JOIN chapters c ON c.document_id = s.document_id AND c.title = s.chapter
+                {chapter_join}
                 {where}
                 ORDER BY d.rowid, s.sort_order
                 """,

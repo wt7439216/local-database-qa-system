@@ -583,3 +583,44 @@ Phase D 主体 + Security Closure 之后的运行时收口：Library Manager 与
 
 **Phase E = PASS。** READY_FOR_NEXT_PHASE_AUTHORIZATION（Phase F 未授权，STOP）。
 
+
+## Phase F.0 — 只读就绪审计（2026-09-08）
+
+F.0（只读，未改任何仓库文件）：Summary/Citation AS-IS 审计 + Gap Matrix + 文件级设计 + 内部 Gate 拆分建议（F.1 Summary+Provenance/Invalidation → F.2 确定性 Citation Quality → F.3 Verifier 仅评估 → F.4 Golden/Eval/Release Gate）。关键发现：禁止模式在线上存在（机械摘要→LLM 改写→充当文档摘要 + 单前置 chunk 充当 whole-document overview）；summaries 表零 provenance；Citation coverage/support NOT IMPLEMENTED；golden 集距 TO-BE 目标差距大。
+
+**Phase F.0 = PASS。READY_FOR_PHASE_F_AUTHORIZATION。**
+
+## Phase F.1 — Hierarchical Summary + Provenance / Invalidation（2026-09-08）
+
+授权范围：统一 Summary 生命周期；修正禁止模式；provenance；dependency/invalidation；修复 re-import 静默降级；保持 Phase A–E 行为不回归。Out of scope：Citation Coverage/Support、claim extraction、F.2/F.3/F.4、Golden Set 扩充、Router/QueryRewrite/Retrieval/Reranker/Qdrant 改动。
+
+### 实施
+
+- 新增 `core/summary.py`：SummaryRecord DTO（16 列：8 核心 + 8 provenance）、dependency fingerprint（算法版本 + generator + prompt/model + 有序 source id/hash 的稳定哈希）、extractive section summary（带标题前缀；无正文 → heading_only 显式描述符）、aggregate document summary（多 section 聚合，cap 1200）、`ensure_summary_provenance_schema`（幂等 additive ALTER + metadata `summary_provenance=1` 标记）。
+- `core/importer.py`：UPDATE 路径按 section 生成 extractive 摘要行（scope_id=chapter_id、source_ids=该 section 全部 chunk ids、dependency_hash），document 行改为 aggregate（不再用首块文本）；chapters.overview 从同一 record 文本写入（兼容镜像，不漂移）；`_ensure_schema` 补 ensure 调用（新库分支早退 bug 已修）。
+- `scripts/build_library.py`：机械章摘要逻辑原样迁入 `mechanical_chapter_summary_text`；`chapter_summary_records` 生成带 provenance 的记录（scope_id 与 chapter_rows 的章节 ID 同公式）；`chapter_summaries` 保留为 8 列 legacy 投影（既有测试兼容）；`rewrite_summaries_with_llm` 改为 SummaryRecord 流并明确标记 `llm_rewrite`（model/prompt_version/generated_at/version+1，source 绑定不变）；库级标签支持 `mixed`（部分改写失败不再误标 mechanical）。
+- `core/library_store.py`：`summary_contexts` 在存在 scope_id 列时优先 `c.id = s.scope_id` join、legacy 行按标题相等回落；无列（pre-F.1 库）走原标题 join——读路径双兼容，标题漂移不再丢摘要。
+- `core/library_service.py`：`ensure_managed_schema` 对 v4 与已 v5 库都执行幂等 provenance 迁移（提交独立事务，避免与 v4→v5 迁移的显式 BEGIN 冲突）。
+- `scripts/migrate_legacy_library.py`：summaries 迁移改为显式 8 核心列 INSERT——目标库新列以默认值把旧行标为 `generator_type='legacy'`，provenance 未知、绝不伪造。
+
+### 行为变化（old → new mapping，均已加回归测试）
+
+- 通用文档 `chapter_overview`：旧 = 章节存在但无摘要行 → 目录 fallback；新 = 章节存在 → 用该章节 extractive 摘要作答（F.1 要求 section summary 真实存在）；章节不存在 → 目录 fallback 文案不变。`test_runtime_integration.test_missing_chapter_lists_scoped_catalog` 相应改用不存在的第 9 章（语义不变：缺摘要 → 列 scoped 目录）。
+
+### 验证（本机）
+
+- 新增 `tests/test_summary_lifecycle.py` 27 项：provenance / hierarchy / invalidation / migration / failure 全覆盖。
+- 全套回归：419/419 PASS（392 基线 + 27 新；0 fail / 0 error）。
+- Phase E router eval 冻结指标全部保持：route 108/108、follow-up 66/66、ambiguous false-resolution 0/8、scope conflict 10/10、engine scope leakage 0。
+- ruff / compileall / node --check 全过。
+
+### Known limitations（不伪装）
+
+- KB Summary / Multi-document Summary：DEFERRED_TO_LATER_PHASE_F（接口与 scope_type 已为 future-ready，无自然低风险实现路径，未声称支持）。
+- 同标题 chunk 分组（section→chunk 映射）继承 Phase C 数据模型限制（section_path 首段 = 标题）；summary↔chapter 的 join 已改用稳定 ID。
+- 旧程序可读新库（SELECT 均为显式列），但旧程序对新库执行导入/重建会因 16 列位置 INSERT 失败——additive migration 的固有属性，无需 destructive down-migration；代码回滚到 b57e68a 即恢复旧写入路径。
+- 发布库摘要内容未重生成（data safety）：legacy textbooks v4（summaries=llm）与 managed v5（structural）的既有行保持原文本，仅被标为 legacy；下次 rebuild / 重导入时以新格式重建。
+
+### Gate decision
+
+**Phase F.1 = PASS。** Phase F overall = IN_PROGRESS（F.2 / F.3 / F.4 = NOT STARTED，等待单独授权，STOP）。

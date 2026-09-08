@@ -391,7 +391,14 @@ def _copy_document(
         """,
         (document_id,),
     ):
-        destination_connection.execute("INSERT INTO summaries VALUES (?, ?, ?, ?, ?, ?, ?, ?)", tuple(row))
+        # Explicit core columns: the destination may already carry the F.1
+        # additive provenance columns, whose defaults mark migrated legacy
+        # rows as generator_type='legacy' (provenance unknown — never faked).
+        destination_connection.execute(
+            "INSERT INTO summaries (id, document_id, scope_type, chapter, page_start, page_end, text, sort_order) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            tuple(row),
+        )
     for row in source_connection.execute(
         "SELECT document_id, pdf_page, printed_page, extraction_method, chapter, text "
         "FROM pages WHERE document_id = ? ORDER BY pdf_page",

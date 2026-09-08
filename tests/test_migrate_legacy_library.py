@@ -122,7 +122,8 @@ def _build_managed(path: Path, *, with_sample: bool = True) -> None:
                 "INSERT INTO embeddings VALUES ('chk-1', 'test-embed', 8, ?)", (V8,)
             )
             connection.execute(
-                "INSERT INTO summaries VALUES ('sum-1', 'doc-aaa', 'chapter', '第1章', 0, 0, '已有概览', 0)"
+                "INSERT INTO summaries (id, document_id, scope_type, chapter, page_start, page_end, text, sort_order) "
+                "VALUES ('sum-1', 'doc-aaa', 'chapter', '第1章', 0, 0, '已有概览', 0)"
             )
             connection.execute(
                 """
@@ -316,7 +317,8 @@ class MigrationToolTests(unittest.TestCase):
         _build_managed(self.destination)
         with closing(sqlite3.connect(self.destination)) as connection:
             connection.execute(
-                "INSERT INTO summaries VALUES ('sum-b1', 'doc-aaa', 'chapter', '第1章', 0, 0, '已有小结', 0)"
+                "INSERT INTO summaries (id, document_id, scope_type, chapter, page_start, page_end, text, sort_order) "
+                "VALUES ('sum-b1', 'doc-aaa', 'chapter', '第1章', 0, 0, '已有小结', 0)"
             )
             connection.commit()
         _build_v4(self.source, summaries=(("sum-b1", "doc-bbb", "chapter", "第1章", 1, 2, "小结文本", 0),))

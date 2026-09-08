@@ -230,6 +230,20 @@ class LibraryStore:
         if not self.path.is_file():
             raise FileNotFoundError(f"结构化教材库不存在：{self.path}")
         self._lock = threading.Lock()
+        self._load_snapshots()
+        # Lazy import: core.hybrid_retriever imports this module's helpers.
+        from core.hybrid_retriever import HybridRetriever
+        from core.reranker import create_reranker
+
+        self._retriever = HybridRetriever(
+            self,
+            self._vector_store,
+            reranker=create_reranker(),
+            rerank_candidate_k=config.RERANK_CANDIDATE_K,
+        )
+
+    def _load_snapshots(self) -> None:
+        """(Re)load every construction-time snapshot from SQLite."""
         self.metadata = self._load_metadata()
         version = int(self.metadata.get("schema_version", 0))
         if version not in ACCEPTED_SCHEMA_VERSIONS:
@@ -240,7 +254,7 @@ class LibraryStore:
         self.chunks = self._load_chunks()
         # Dense backend is pluggable since v3.0; default stays the in-process
         # SQLite brute-force store so existing behavior is untouched.
-        self._vector_store = create_vector_store(self.path)
+        self._vector_store = create_vector_store(self.path, collection=self._vector_collection())
         if self._vector_store.backend == "sqlite":
             self.dimension = self._vector_store.dimension
             self.embedding_model = self._vector_store.model
@@ -252,16 +266,32 @@ class LibraryStore:
         self.has_vectors = self._vector_store.has_vectors
         self.dense_gates = _gates_for_model(self.embedding_model)
         self._chunk_by_id = {chunk.id: chunk for chunk in self.chunks}
-        # Lazy import: core.hybrid_retriever imports this module's helpers.
-        from core.hybrid_retriever import HybridRetriever
-        from core.reranker import create_reranker
 
-        self._retriever = HybridRetriever(
-            self,
-            self._vector_store,
-            reranker=create_reranker(),
-            rerank_candidate_k=config.RERANK_CANDIDATE_K,
-        )
+    def _vector_collection(self) -> str | None:
+        """Qdrant collection bound to this library's identity (Phase D.1).
+
+        Managed libraries (v5 registry) are written by LibraryService into
+        DEFAULT_GENERAL_COLLECTION, so the runtime must read the same
+        collection — never config.QDRANT_COLLECTION, which belongs to the
+        legacy textbook pipeline.  Legacy v4 libraries keep the config
+        default (byte-identical Phase C behavior)."""
+        if self.metadata.get("schema_version") == str(MANAGED_SCHEMA_VERSION):
+            from core.importer import DEFAULT_GENERAL_COLLECTION
+
+            return DEFAULT_GENERAL_COLLECTION
+        return None
+
+    def refresh(self) -> None:
+        """Reload all snapshots in place after a manager mutation committed.
+
+        The HybridRetriever keeps referencing this store, so reloading the
+        attributes in place (including the vector backend, which caches the
+        SQLite vectors in memory) makes new content visible without a
+        restart.  Safe under the caller's engine lock; read-only connections
+        only."""
+        with self._lock:
+            self._load_snapshots()
+            self._retriever.vector_store = self._vector_store
 
     @property
     def vector_backend(self) -> str:
@@ -274,7 +304,7 @@ class LibraryStore:
     def health(self) -> dict[str, Any]:
         return {
             "library_name": self.library_name,
-            "schema_version": SCHEMA_VERSION,
+            "schema_version": self.schema_version,
             "documents": len(self.documents),
             "chapters": len(self.chapters),
             "chunks": len(self.chunks),
@@ -312,11 +342,7 @@ class LibraryStore:
         # runs byte-identical).  A default scope that resolves to a strict
         # subset — or to nothing at all, e.g. every document disabled — MUST
         # be enforced, never widened back to the whole library.
-        all_document_ids = {record.id for record in self.documents}
-        if resolution.is_default and set(resolution.document_ids) == all_document_ids:
-            allowed = None
-        else:
-            allowed = set(resolution.document_ids)
+        allowed = self.effective_allowed_ids(resolution)
         return self._retriever.retrieve(
             query,
             query_vector,
@@ -325,6 +351,24 @@ class LibraryStore:
             include_front_matter=include_front_matter,
             allowed_document_ids=allowed,
         )
+
+    def effective_allowed_ids(
+        self, resolution: "ScopeResolution"
+    ) -> frozenset[str] | set[str] | None:
+        """The concrete document-id filter for a resolved scope (Phase D.1).
+
+        Single source of truth shared by retrieval AND the book routes
+        (TOC / overview / missing-chapter catalog): ``None`` means "whole
+        library" and is returned only when the default scope still covers
+        every document — the unrestricted Phase C path.  Every other
+        resolution, including a default scope narrowed by disabled
+        documents, yields the explicit set that must be enforced."""
+        if resolution.mode == "nothing":
+            return set()
+        all_document_ids = {record.id for record in self.documents}
+        if resolution.is_default and set(resolution.document_ids) == all_document_ids:
+            return None
+        return set(resolution.document_ids)
 
     def resolve_scope(self, scope: "QueryScope | None") -> "ScopeResolution":
         """Resolve a QueryScope against this library's SQLite registry.

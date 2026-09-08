@@ -19,12 +19,14 @@ docs/V3_IMPROVEMENT_PLAN.md §11 for the phase contract.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from contextlib import closing, contextmanager
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 import json
 import sqlite3
+import threading
 import uuid
 
 from core import config
@@ -298,6 +300,7 @@ class LibraryService:
         qdrant_store=None,
         log_dir: Path | str | None = None,
         path_policy=None,
+        on_mutated: Callable[[], None] | None = None,
     ):
         self.library_path = Path(library_path or DEFAULT_GENERAL_LIBRARY)
         self.embedding_model = embedding_model or config.EMBEDDING_MODEL
@@ -310,6 +313,12 @@ class LibraryService:
         # configured import roots.  CLI construction leaves it None — local
         # user permission.
         self.path_policy = path_policy
+        # Phase D.1: mutations are serialized so concurrent imports of the
+        # same path resolve to one identity (reproduced duplicate-identity
+        # race), and each committed mutation notifies the QA runtime so its
+        # snapshots and answer cache stay in sync without a restart.
+        self.on_mutated = on_mutated
+        self._mutation_lock = threading.RLock()
         self.library_path.parent.mkdir(parents=True, exist_ok=True)
         with closing(self._connect()) as connection:
             self.schema_version = ensure_managed_schema(connection)
@@ -319,7 +328,22 @@ class LibraryService:
     def _connect(self) -> sqlite3.Connection:
         connection = sqlite3.connect(self.library_path, timeout=30)
         connection.row_factory = sqlite3.Row
+        # FK discipline (Phase D.1 P1 audit): enforced on every service
+        # connection.  The importer keeps its own FK-off connection because
+        # its delete-replace write pattern predates the registry.
+        connection.execute("PRAGMA foreign_keys = ON")
         return connection
+
+    def _notify_mutated(self) -> None:
+        """Notify the runtime that persisted content changed (Phase D.1)."""
+        if self.on_mutated is None:
+            return
+        try:
+            self.on_mutated()
+        except Exception as exc:
+            # A callback failure must never masquerade as a failed import;
+            # the mutation itself already committed.
+            self._log_op("NOTIFY_FAILED", error=str(exc)[:300])
 
     def _check_path_policy(self, source, *, purpose: str) -> Path:
         """Apply the import-root policy when attached (Web); CLI passes None."""
@@ -518,81 +542,92 @@ class LibraryService:
         except OSError as exc:
             raise LibraryServiceError(f"无法读取源文件：{exc}") from exc
 
-        with closing(self._connect()) as connection:
-            existing = connection.execute(
-                "SELECT * FROM document_sources WHERE source_path = ?", (canonical_path,)
-            ).fetchone()
-        is_new = existing is None
-        document_id = str(existing["document_id"]) if existing else new_document_id()
+        with self._mutation_lock:
+            with closing(self._connect()) as connection:
+                existing = connection.execute(
+                    "SELECT * FROM document_sources WHERE source_path = ?", (canonical_path,)
+                ).fetchone()
+            is_new = existing is None
+            document_id = str(existing["document_id"]) if existing else new_document_id()
 
-        if not is_new and not force and existing["status"] == "READY" and existing["source_hash"] == source_hash:
-            # UNCHANGED short-circuit only applies to fully indexed documents:
-            # a DELETE_FAILED row has no content left and must be re-imported.
-            self._log_op("IMPORT", document_id=document_id, result="UNCHANGED", source=canonical_path)
+            if not is_new and not force and existing["status"] == "READY" and existing["source_hash"] == source_hash:
+                # UNCHANGED short-circuit only applies to fully indexed documents:
+                # a DELETE_FAILED row has no content left and must be re-imported.
+                self._log_op("IMPORT", document_id=document_id, result="UNCHANGED", source=canonical_path)
+                return {
+                    **self.get_document(document_id),
+                    "import_status": "UNCHANGED",
+                    "duplicate_candidates": self.duplicate_candidates(document_id),
+                }
+
+            if not dry_run:
+                now = utc_now()
+                with self._transaction() as connection:
+                    if is_new:
+                        # FK discipline: document_sources references documents,
+                        # so a placeholder row must exist before the registry
+                        # row.  sha256 stays empty — the importer's unchanged
+                        # check treats an equal stored hash as "already
+                        # indexed", which would skip the first import.
+                        connection.execute(
+                            "INSERT INTO documents (id, title, source_name, sha256, page_count) VALUES (?, ?, ?, '', 0)",
+                            (document_id, source.name, source.name),
+                        )
+                        connection.execute(
+                            "INSERT INTO document_sources VALUES (?, ?, ?, '', '', ?, 'IMPORTING', 1, ?, ?, '')",
+                            (document_id, knowledge_base_id, canonical_path, source_hash, now, now),
+                        )
+                    else:
+                        connection.execute(
+                            "UPDATE document_sources SET status = 'UPDATING', updated_at = ?, last_error = '' WHERE document_id = ?",
+                            (now, document_id),
+                        )
+
+            if dry_run:
+                result = self._importer().import_file(source, dry_run=True)
+                return {**result.to_dict(), "import_status": result.status,
+                        "knowledge_base_id": knowledge_base_id, "tags": list(tags)}
+
+            result = self._importer().import_file(source, force=force, document_id=document_id)
+            if result.status == "UNCHANGED" and not is_new and existing["status"] != "READY":
+                # Registry says the document is not READY (e.g. a DELETE_FAILED
+                # row with no chunks left) while the documents row still matches:
+                # rebuild so the registry and the stored content converge.
+                result = self._importer().import_file(source, force=True, document_id=document_id)
+            op = "IMPORT" if is_new else "UPDATE"
+            if result.status == "READY":
+                with self._transaction() as connection:
+                    connection.execute(
+                        """
+                        UPDATE document_sources
+                        SET status = 'READY', source_hash = ?, source_type = ?, document_type = ?,
+                            last_error = '', updated_at = ?
+                        WHERE document_id = ?
+                        """,
+                        (result.source_hash, result.source_type, result.source_type, utc_now(), document_id),
+                    )
+                if tags:
+                    self.set_document_tags(document_id, tags)
+                self._sync_document_payload(document_id)
+                self._log_op(op, document_id=document_id, result="READY", chunk_count=result.chunk_count, source=canonical_path)
+            elif result.status in {"FAILED", "FAILED_INDEX"}:
+                with self._transaction() as connection:
+                    connection.execute(
+                        "UPDATE document_sources SET status = ?, last_error = ?, updated_at = ? WHERE document_id = ?",
+                        (result.status, result.error[:1000], utc_now(), document_id),
+                    )
+                self._log_op(op, document_id=document_id, result=result.status, error=result.error[:300], source=canonical_path)
+            else:
+                # UNCHANGED / DRY_RUN: no lifecycle transition (the pre-check gate
+                # already handles the READY+unchanged case before the importer).
+                self._log_op(op, document_id=document_id, result=result.status, source=canonical_path)
+            self._notify_mutated()
             return {
-                **self.get_document(document_id),
-                "import_status": "UNCHANGED",
-                "duplicate_candidates": self.duplicate_candidates(document_id),
+                **result.to_dict(),
+                "import_status": result.status,
+                "knowledge_base_id": knowledge_base_id if is_new else str(existing["knowledge_base_id"]),
+                "duplicate_candidates": self.duplicate_candidates(document_id) if result.status == "READY" else [],
             }
-
-        if not dry_run:
-            now = utc_now()
-            with self._transaction() as connection:
-                if is_new:
-                    connection.execute(
-                        "INSERT INTO document_sources VALUES (?, ?, ?, '', '', ?, 'IMPORTING', 1, ?, ?, '')",
-                        (document_id, knowledge_base_id, canonical_path, source_hash, now, now),
-                    )
-                else:
-                    connection.execute(
-                        "UPDATE document_sources SET status = 'UPDATING', updated_at = ?, last_error = '' WHERE document_id = ?",
-                        (now, document_id),
-                    )
-
-        if dry_run:
-            result = self._importer().import_file(source, dry_run=True)
-            return {**result.to_dict(), "import_status": result.status,
-                    "knowledge_base_id": knowledge_base_id, "tags": list(tags)}
-
-        result = self._importer().import_file(source, force=force, document_id=document_id)
-        if result.status == "UNCHANGED" and not is_new and existing["status"] != "READY":
-            # Registry says the document is not READY (e.g. a DELETE_FAILED
-            # row with no chunks left) while the documents row still matches:
-            # rebuild so the registry and the stored content converge.
-            result = self._importer().import_file(source, force=True, document_id=document_id)
-        op = "IMPORT" if is_new else "UPDATE"
-        if result.status == "READY":
-            with self._transaction() as connection:
-                connection.execute(
-                    """
-                    UPDATE document_sources
-                    SET status = 'READY', source_hash = ?, source_type = ?, document_type = ?,
-                        last_error = '', updated_at = ?
-                    WHERE document_id = ?
-                    """,
-                    (result.source_hash, result.source_type, result.source_type, utc_now(), document_id),
-                )
-            if tags:
-                self.set_document_tags(document_id, tags)
-            self._sync_document_payload(document_id)
-            self._log_op(op, document_id=document_id, result="READY", chunk_count=result.chunk_count, source=canonical_path)
-        elif result.status in {"FAILED", "FAILED_INDEX"}:
-            with self._transaction() as connection:
-                connection.execute(
-                    "UPDATE document_sources SET status = ?, last_error = ?, updated_at = ? WHERE document_id = ?",
-                    (result.status, result.error[:1000], utc_now(), document_id),
-                )
-            self._log_op(op, document_id=document_id, result=result.status, error=result.error[:300], source=canonical_path)
-        else:
-            # UNCHANGED / DRY_RUN: no lifecycle transition (the pre-check gate
-            # already handles the READY+unchanged case before the importer).
-            self._log_op(op, document_id=document_id, result=result.status, source=canonical_path)
-        return {
-            **result.to_dict(),
-            "import_status": result.status,
-            "knowledge_base_id": knowledge_base_id if is_new else str(existing["knowledge_base_id"]),
-            "duplicate_candidates": self.duplicate_candidates(document_id) if result.status == "READY" else [],
-        }
 
     def relink_document(
         self, document_id: str, new_source: Path | str, *, update_if_changed: bool = False
@@ -615,96 +650,101 @@ class LibraryService:
         except OSError as exc:
             raise LibraryServiceError(f"无法读取新源文件：{exc}") from exc
 
-        with closing(self._connect()) as connection:
-            row = self._source_row(connection, document_id)
-            owner_row = connection.execute(
-                "SELECT document_id FROM document_sources WHERE source_path = ? AND document_id != ?",
-                (canonical_path, document_id),
-            ).fetchone()
-        if row is None:
-            raise DocumentNotFoundError(f"文档不存在：{document_id}")
-        if owner_row is not None:
-            # Another document already owns this path: relinking would make
-            # two documents share one source.  Refuse explicitly — never
-            # auto-merge via source_hash (frozen Phase C policy).
-            raise LibraryStateError(
-                f"路径已属于另一个文档（{owner_row['document_id']}），拒绝 relink 以避免隐式合并。"
-            )
-        if row["status"] in {"DELETING", "DELETE_FAILED"}:
-            raise LibraryStateError(f"文档处于 {row['status']} 状态，不能 relink。")
+        with self._mutation_lock:
+            with closing(self._connect()) as connection:
+                row = self._source_row(connection, document_id)
+                owner_row = connection.execute(
+                    "SELECT document_id FROM document_sources WHERE source_path = ? AND document_id != ?",
+                    (canonical_path, document_id),
+                ).fetchone()
+            if row is None:
+                raise DocumentNotFoundError(f"文档不存在：{document_id}")
+            if owner_row is not None:
+                # Another document already owns this path: relinking would make
+                # two documents share one source.  Refuse explicitly — never
+                # auto-merge via source_hash (frozen Phase C policy).
+                raise LibraryStateError(
+                    f"路径已属于另一个文档（{owner_row['document_id']}），拒绝 relink 以避免隐式合并。"
+                )
+            if row["status"] in {"DELETING", "DELETE_FAILED"}:
+                raise LibraryStateError(f"文档处于 {row['status']} 状态，不能 relink。")
 
-        if row["source_path"] == canonical_path and row["source_hash"] == new_hash:
-            return {"status": "UNCHANGED", "document_id": document_id, "source_path": canonical_path}
+            if row["source_path"] == canonical_path and row["source_hash"] == new_hash:
+                return {"status": "UNCHANGED", "document_id": document_id, "source_path": canonical_path}
 
-        if row["source_hash"] and new_hash == row["source_hash"]:
+            if row["source_hash"] and new_hash == row["source_hash"]:
+                with self._transaction() as connection:
+                    connection.execute(
+                        "UPDATE document_sources SET source_path = ?, updated_at = ? WHERE document_id = ?",
+                        (canonical_path, utc_now(), document_id),
+                    )
+                    connection.execute(
+                        "UPDATE documents SET source_name = ? WHERE id = ?",
+                        (new_source.name, document_id),
+                    )
+                self._log_op("RELINK", document_id=document_id, source=canonical_path, result="RELINKED")
+                self._notify_mutated()
+                return {"status": "RELINKED", "document_id": document_id, "source_path": canonical_path}
+
+            if not update_if_changed:
+                self._log_op("RELINK", document_id=document_id, source=canonical_path, result="SOURCE_CHANGED")
+                return {
+                    "status": "SOURCE_CHANGED",
+                    "document_id": document_id,
+                    "source_path": canonical_path,
+                    "message": "新路径内容与当前文档不同；确认后带 update_if_changed=true 重新 relink 以执行更新。",
+                }
+
             with self._transaction() as connection:
                 connection.execute(
-                    "UPDATE document_sources SET source_path = ?, updated_at = ? WHERE document_id = ?",
+                    "UPDATE document_sources SET source_path = ?, status = 'UPDATING', updated_at = ? WHERE document_id = ?",
                     (canonical_path, utc_now(), document_id),
                 )
-                connection.execute(
-                    "UPDATE documents SET source_name = ? WHERE id = ?",
-                    (new_source.name, document_id),
-                )
-            self._log_op("RELINK", document_id=document_id, source=canonical_path, result="RELINKED")
-            return {"status": "RELINKED", "document_id": document_id, "source_path": canonical_path}
-
-        if not update_if_changed:
-            self._log_op("RELINK", document_id=document_id, source=canonical_path, result="SOURCE_CHANGED")
+            result = self._importer().import_file(new_source, document_id=document_id)
+            if result.status == "READY":
+                with self._transaction() as connection:
+                    connection.execute(
+                        """
+                        UPDATE document_sources
+                        SET status = 'READY', source_hash = ?, source_type = ?, document_type = ?,
+                            last_error = '', updated_at = ?
+                        WHERE document_id = ?
+                        """,
+                        (result.source_hash, result.source_type, result.source_type, utc_now(), document_id),
+                    )
+                self._sync_document_payload(document_id)
+            else:
+                with self._transaction() as connection:
+                    connection.execute(
+                        "UPDATE document_sources SET status = ?, last_error = ?, updated_at = ? WHERE document_id = ?",
+                        (result.status, result.error[:1000], utc_now(), document_id),
+                    )
+            self._log_op("RELINK", document_id=document_id, source=canonical_path, result=result.status)
+            self._notify_mutated()
             return {
-                "status": "SOURCE_CHANGED",
+                **result.to_dict(),
+                "import_status": result.status,
                 "document_id": document_id,
                 "source_path": canonical_path,
-                "message": "新路径内容与当前文档不同；确认后带 update_if_changed=true 重新 relink 以执行更新。",
+                "relink_status": result.status,
             }
 
-        with self._transaction() as connection:
-            connection.execute(
-                "UPDATE document_sources SET source_path = ?, status = 'UPDATING', updated_at = ? WHERE document_id = ?",
-                (canonical_path, utc_now(), document_id),
-            )
-        result = self._importer().import_file(new_source, document_id=document_id)
-        if result.status == "READY":
-            with self._transaction() as connection:
-                connection.execute(
-                    """
-                    UPDATE document_sources
-                    SET status = 'READY', source_hash = ?, source_type = ?, document_type = ?,
-                        last_error = '', updated_at = ?
-                    WHERE document_id = ?
-                    """,
-                    (result.source_hash, result.source_type, result.source_type, utc_now(), document_id),
-                )
-            self._sync_document_payload(document_id)
-        else:
-            with self._transaction() as connection:
-                connection.execute(
-                    "UPDATE document_sources SET status = ?, last_error = ?, updated_at = ? WHERE document_id = ?",
-                    (result.status, result.error[:1000], utc_now(), document_id),
-                )
-        self._log_op("RELINK", document_id=document_id, source=canonical_path, result=result.status)
-        return {
-            **result.to_dict(),
-            "import_status": result.status,
-            "document_id": document_id,
-            "source_path": canonical_path,
-            "relink_status": result.status,
-        }
-
     def set_document_enabled(self, document_id: str, enabled: bool) -> dict:
-        with closing(self._connect()) as connection:
-            row = self._source_row(connection, document_id)
-        if row is None:
-            raise DocumentNotFoundError(f"文档不存在：{document_id}")
-        if row["status"] in {"DELETING", "DELETE_FAILED"}:
-            raise LibraryStateError(f"文档处于 {row['status']} 状态，不能修改启用状态。")
-        with self._transaction() as connection:
-            connection.execute(
-                "UPDATE document_sources SET enabled = ?, updated_at = ? WHERE document_id = ?",
-                (1 if enabled else 0, utc_now(), document_id),
-            )
-        self._log_op("ENABLE" if enabled else "DISABLE", document_id=document_id)
-        return self.get_document(document_id)
+        with self._mutation_lock:
+            with closing(self._connect()) as connection:
+                row = self._source_row(connection, document_id)
+            if row is None:
+                raise DocumentNotFoundError(f"文档不存在：{document_id}")
+            if row["status"] in {"DELETING", "DELETE_FAILED"}:
+                raise LibraryStateError(f"文档处于 {row['status']} 状态，不能修改启用状态。")
+            with self._transaction() as connection:
+                connection.execute(
+                    "UPDATE document_sources SET enabled = ?, updated_at = ? WHERE document_id = ?",
+                    (1 if enabled else 0, utc_now(), document_id),
+                )
+            self._log_op("ENABLE" if enabled else "DISABLE", document_id=document_id)
+            self._notify_mutated()
+            return self.get_document(document_id)
 
     # -- delete -----------------------------------------------------------------
 
@@ -718,65 +758,69 @@ class LibraryService:
         finishes the job.  Never touches other documents or the whole
         collection.
         """
-        with closing(self._connect()) as connection:
-            row = self._source_row(connection, document_id)
-        if row is None:
-            raise DocumentNotFoundError(f"文档不存在：{document_id}")
-        if row["status"] == "DELETING":
-            pass  # resume an interrupted delete
-        now = utc_now()
-        with self._transaction() as connection:
-            connection.execute(
-                "UPDATE document_sources SET status = 'DELETING', enabled = 0, updated_at = ? WHERE document_id = ?",
-                (now, document_id),
-            )
-        self._log_op("DELETE", document_id=document_id, stage="marked")
+        with self._mutation_lock:
+            with closing(self._connect()) as connection:
+                row = self._source_row(connection, document_id)
+            if row is None:
+                raise DocumentNotFoundError(f"文档不存在：{document_id}")
+            if row["status"] == "DELETING":
+                pass  # resume an interrupted delete
+            now = utc_now()
+            with self._transaction() as connection:
+                connection.execute(
+                    "UPDATE document_sources SET status = 'DELETING', enabled = 0, updated_at = ? WHERE document_id = ?",
+                    (now, document_id),
+                )
+            self._log_op("DELETE", document_id=document_id, stage="marked")
 
-        # 1. invalidate searchable content (one transaction, documents row
-        #    survives until finalize so the manager can still show status).
-        with self._transaction() as connection:
-            connection.execute(
-                "DELETE FROM embeddings WHERE chunk_id IN (SELECT id FROM chunks WHERE document_id = ?)",
-                (document_id,),
-            )
-            connection.execute(
-                "DELETE FROM chunk_fts WHERE chunk_id IN (SELECT id FROM chunks WHERE document_id = ?)",
-                (document_id,),
-            )
-            connection.execute("DELETE FROM chunks WHERE document_id = ?", (document_id,))
-            connection.execute("DELETE FROM chapters WHERE document_id = ?", (document_id,))
-            connection.execute("DELETE FROM summaries WHERE document_id = ?", (document_id,))
-            connection.execute("DELETE FROM pages WHERE document_id = ?", (document_id,))
-            connection.execute("DELETE FROM document_tags WHERE document_id = ?", (document_id,))
-            connection.execute(
-                "DELETE FROM metadata WHERE key IN ('import_source_type_' || ?, 'import_extras_' || ?)",
-                (document_id, document_id),
-            )
-        self._log_op("DELETE", document_id=document_id, stage="sqlite_cleared")
+            # 1. invalidate searchable content (one transaction, documents row
+            #    survives until finalize so the manager can still show status).
+            with self._transaction() as connection:
+                connection.execute(
+                    "DELETE FROM embeddings WHERE chunk_id IN (SELECT id FROM chunks WHERE document_id = ?)",
+                    (document_id,),
+                )
+                connection.execute(
+                    "DELETE FROM chunk_fts WHERE chunk_id IN (SELECT id FROM chunks WHERE document_id = ?)",
+                    (document_id,),
+                )
+                connection.execute("DELETE FROM chunks WHERE document_id = ?", (document_id,))
+                connection.execute("DELETE FROM chapters WHERE document_id = ?", (document_id,))
+                connection.execute("DELETE FROM summaries WHERE document_id = ?", (document_id,))
+                connection.execute("DELETE FROM pages WHERE document_id = ?", (document_id,))
+                connection.execute("DELETE FROM document_tags WHERE document_id = ?", (document_id,))
+                connection.execute(
+                    "DELETE FROM metadata WHERE key IN ('import_source_type_' || ?, 'import_extras_' || ?)",
+                    (document_id, document_id),
+                )
+            self._log_op("DELETE", document_id=document_id, stage="sqlite_cleared")
 
-        # 2. dense index cleanup (only meaningful for the qdrant backend).
-        failure = None
-        if config.VECTOR_BACKEND == "qdrant":
-            try:
-                store = self._qdrant()
-                store.delete_documents([document_id])
-            except Exception as exc:  # typed store errors all count as failures
-                failure = str(exc)
-                self._mark_delete_failed(document_id, failure)
-                return {"status": "DELETE_FAILED", "document_id": document_id, "error": failure}
+            # 2. dense index cleanup (only meaningful for the qdrant backend).
+            failure = None
+            if config.VECTOR_BACKEND == "qdrant":
+                try:
+                    store = self._qdrant()
+                    store.delete_documents([document_id])
+                except Exception as exc:  # typed store errors all count as failures
+                    failure = str(exc)
+                    self._mark_delete_failed(document_id, failure)
+                    self._notify_mutated()
+                    return {"status": "DELETE_FAILED", "document_id": document_id, "error": failure}
 
-        # 3. verify before finalize.
-        verification_problem = self._verify_after_delete(failure is None, document_id)
-        if verification_problem:
-            self._mark_delete_failed(document_id, verification_problem)
-            return {"status": "DELETE_FAILED", "document_id": document_id, "error": verification_problem}
+            # 3. verify before finalize.
+            verification_problem = self._verify_after_delete(failure is None, document_id)
+            if verification_problem:
+                self._mark_delete_failed(document_id, verification_problem)
+                self._notify_mutated()
+                return {"status": "DELETE_FAILED", "document_id": document_id, "error": verification_problem}
 
-        # 4. finalize.
-        with self._transaction() as connection:
-            connection.execute("DELETE FROM document_sources WHERE document_id = ?", (document_id,))
-            connection.execute("DELETE FROM documents WHERE id = ?", (document_id,))
-        self._log_op("DELETE", document_id=document_id, stage="finalized", result="DELETED")
-        return {"status": "DELETED", "document_id": document_id}
+            # 4. finalize.
+            with self._transaction() as connection:
+                connection.execute("DELETE FROM document_sources WHERE document_id = ?", (document_id,))
+                connection.execute("DELETE FROM documents WHERE id = ?", (document_id,))
+            self._log_op("DELETE", document_id=document_id, stage="finalized", result="DELETED")
+            self._notify_mutated()
+            return {"status": "DELETED", "document_id": document_id}
 
     def _mark_delete_failed(self, document_id: str, error: str) -> None:
         with self._transaction() as connection:
@@ -831,51 +875,54 @@ class LibraryService:
 
     def retry_index(self, document_id: str) -> dict:
         """Re-index one document from the SQLite source of truth (FAILED_INDEX repair)."""
-        with closing(self._connect()) as connection:
-            row = self._source_row(connection, document_id)
-        if row is None:
-            raise DocumentNotFoundError(f"文档不存在：{document_id}")
-        if row["status"] != "FAILED_INDEX":
-            raise LibraryStateError(f"文档状态为 {row['status']}，仅 FAILED_INDEX 需要重试索引。")
-        from core.sqlite_vector_store import build_index_manifest
+        with self._mutation_lock:
+            with closing(self._connect()) as connection:
+                row = self._source_row(connection, document_id)
+            if row is None:
+                raise DocumentNotFoundError(f"文档不存在：{document_id}")
+            if row["status"] != "FAILED_INDEX":
+                raise LibraryStateError(f"文档状态为 {row['status']}，仅 FAILED_INDEX 需要重试索引。")
+            from core.sqlite_vector_store import build_index_manifest
 
-        try:
-            if config.VECTOR_BACKEND == "qdrant":
-                store = self._qdrant()
-                dimension = int(
-                    self._library_dimension()
-                )
-                store.ensure_collection(dimension)
-                records = self._build_records(document_id)
-                store.upsert(records)
-                self._delete_stale_points(store, document_id, {record.chunk_id for record in records})
-                manifest = build_index_manifest(self.library_path)
-                verification = store.verify(manifest)
-                if not verification.ok:
-                    raise LibraryServiceError(f"重试后校验未通过：{verification.to_dict()}")
-            else:
-                manifest = build_index_manifest(self.library_path)
-                from core.sqlite_vector_store import SQLiteVectorStore
+            try:
+                if config.VECTOR_BACKEND == "qdrant":
+                    store = self._qdrant()
+                    dimension = int(
+                        self._library_dimension()
+                    )
+                    store.ensure_collection(dimension)
+                    records = self._build_records(document_id)
+                    store.upsert(records)
+                    self._delete_stale_points(store, document_id, {record.chunk_id for record in records})
+                    manifest = build_index_manifest(self.library_path)
+                    verification = store.verify(manifest)
+                    if not verification.ok:
+                        raise LibraryServiceError(f"重试后校验未通过：{verification.to_dict()}")
+                else:
+                    manifest = build_index_manifest(self.library_path)
+                    from core.sqlite_vector_store import SQLiteVectorStore
 
-                verification = SQLiteVectorStore(self.library_path).verify(manifest)
-                if not verification.ok:
-                    raise LibraryServiceError(f"重试后 SQLite 校验未通过：{verification.to_dict()}")
-        except Exception as exc:
+                    verification = SQLiteVectorStore(self.library_path).verify(manifest)
+                    if not verification.ok:
+                        raise LibraryServiceError(f"重试后 SQLite 校验未通过：{verification.to_dict()}")
+            except Exception as exc:
+                with self._transaction() as connection:
+                    connection.execute(
+                        "UPDATE document_sources SET status = 'FAILED_INDEX', last_error = ?, updated_at = ? WHERE document_id = ?",
+                        (str(exc)[:1000], utc_now(), document_id),
+                    )
+                self._log_op("RETRY_INDEX", document_id=document_id, result="FAILED", error=str(exc)[:300])
+                self._notify_mutated()
+                return {"status": "FAILED_INDEX", "document_id": document_id, "error": str(exc)}
+
             with self._transaction() as connection:
                 connection.execute(
-                    "UPDATE document_sources SET status = 'FAILED_INDEX', last_error = ?, updated_at = ? WHERE document_id = ?",
-                    (str(exc)[:1000], utc_now(), document_id),
+                    "UPDATE document_sources SET status = 'READY', last_error = '', updated_at = ? WHERE document_id = ?",
+                    (utc_now(), document_id),
                 )
-            self._log_op("RETRY_INDEX", document_id=document_id, result="FAILED", error=str(exc)[:300])
-            return {"status": "FAILED_INDEX", "document_id": document_id, "error": str(exc)}
-
-        with self._transaction() as connection:
-            connection.execute(
-                "UPDATE document_sources SET status = 'READY', last_error = '', updated_at = ? WHERE document_id = ?",
-                (utc_now(), document_id),
-            )
-        self._log_op("RETRY_INDEX", document_id=document_id, result="READY")
-        return {"status": "READY", "document_id": document_id}
+            self._log_op("RETRY_INDEX", document_id=document_id, result="READY")
+            self._notify_mutated()
+            return {"status": "READY", "document_id": document_id}
 
     # -- tags -------------------------------------------------------------------
 
@@ -887,26 +934,28 @@ class LibraryService:
                 normalized.append(value[:_TAG_NAME_MAX])
         if len(normalized) > _TAG_MAX_PER_DOCUMENT:
             raise LibraryServiceError(f"每个文档最多 {_TAG_MAX_PER_DOCUMENT} 个标签。")
-        with self._transaction() as connection:
-            self._require_source(connection, document_id)
-            for name in normalized:
-                connection.execute("INSERT OR IGNORE INTO tags VALUES (?, ?)", (_new_tag_id(), name))
-            tag_ids = [
-                str(row[0])
-                for name in normalized
-                for row in connection.execute("SELECT tag_id FROM tags WHERE name = ?", (name,)).fetchall()
-            ]
-            connection.execute("DELETE FROM document_tags WHERE document_id = ?", (document_id,))
-            connection.executemany(
-                "INSERT OR IGNORE INTO document_tags VALUES (?, ?)",
-                [(document_id, tag_id) for tag_id in tag_ids],
-            )
-            connection.execute(
-                "UPDATE document_sources SET updated_at = ? WHERE document_id = ?", (utc_now(), document_id)
-            )
-        self._sync_document_payload(document_id)
-        self._log_op("TAG", document_id=document_id, tags=normalized)
-        return normalized
+        with self._mutation_lock:
+            with self._transaction() as connection:
+                self._require_source(connection, document_id)
+                for name in normalized:
+                    connection.execute("INSERT OR IGNORE INTO tags VALUES (?, ?)", (_new_tag_id(), name))
+                tag_ids = [
+                    str(row[0])
+                    for name in normalized
+                    for row in connection.execute("SELECT tag_id FROM tags WHERE name = ?", (name,)).fetchall()
+                ]
+                connection.execute("DELETE FROM document_tags WHERE document_id = ?", (document_id,))
+                connection.executemany(
+                    "INSERT OR IGNORE INTO document_tags VALUES (?, ?)",
+                    [(document_id, tag_id) for tag_id in tag_ids],
+                )
+                connection.execute(
+                    "UPDATE document_sources SET updated_at = ? WHERE document_id = ?", (utc_now(), document_id)
+                )
+            self._sync_document_payload(document_id)
+            self._log_op("TAG", document_id=document_id, tags=normalized)
+            self._notify_mutated()
+            return normalized
 
     def list_tags(self) -> list[dict]:
         with closing(self._connect()) as connection:

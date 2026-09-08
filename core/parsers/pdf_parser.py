@@ -14,6 +14,7 @@ from pathlib import Path
 from types import SimpleNamespace
 import re
 
+from core import config
 from core.document_model import (
     DocumentMetadata,
     NormalizedBlock,
@@ -24,6 +25,7 @@ from core.document_model import (
 )
 from core.parsers.base import (
     CorruptDocumentError,
+    DocumentTooLargeError,
     EmptyDocumentError,
     EncryptedDocumentError,
     ParseFailureError,
@@ -32,7 +34,6 @@ from core.parsers.base import (
 
 _CHAPTER_RE = re.compile(r"^第\s*[0-9一二三四五六七八九十百千]+\s*[章节篇卷]")
 _NUMBERED_RE = re.compile(r"^\d{1,2}(?:\.\d{1,2}){0,2}[.．、]\s*\S")
-_FITZ_TEXT_LIMIT = 20 * 1024 * 1024
 
 
 class PdfParser:
@@ -92,6 +93,16 @@ class PdfParser:
             except Exception as exc:
                 raise CorruptDocumentError(self.name, source, f"PDF 加密校验失败：{exc}", cause=exc)
 
+        # Phase D.1 resource guard: cap page count and extracted characters
+        # BEFORE the per-page OCR loop so a pathological PDF fails fast with
+        # a typed error instead of exhausting memory/CPU.
+        page_count = int(document.page_count)
+        if page_count > config.PDF_MAX_PAGES:
+            raise DocumentTooLargeError(
+                self.name, source,
+                f"PDF 共 {page_count} 页，超过导入上限 {config.PDF_MAX_PAGES} 页。",
+            )
+
         try:
             from scripts.pdf_to_book_txt import extract_page_text
 
@@ -108,6 +119,7 @@ class PdfParser:
                     engine = None
             blocks: list[NormalizedBlock] = []
             ocr_pages = 0
+            total_chars = 0
             for page_index, page in enumerate(document, 1):
                 try:
                     text, method = extract_page_text(page, extraction_args, engine)
@@ -116,6 +128,12 @@ class PdfParser:
                 except Exception as exc:
                     raise CorruptDocumentError(
                         self.name, source, f"第 {page_index} 页提取失败：{exc}", cause=exc
+                    )
+                total_chars += len(text)
+                if total_chars > config.PDF_MAX_EXTRACTED_CHARS:
+                    raise DocumentTooLargeError(
+                        self.name, source,
+                        f"PDF 提取文本超过导入上限 {config.PDF_MAX_EXTRACTED_CHARS} 字符。",
                     )
                 if method == "ocr":
                     ocr_pages += 1

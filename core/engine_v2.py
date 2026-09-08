@@ -143,7 +143,7 @@ class StructuredQAEngine:
         question = validate_question(question)
         history = normalize_history(history)
         resolution = self.library.resolve_scope(scope)
-        allowed = None if resolution.is_default else set(resolution.document_ids)
+        allowed = self.library.effective_allowed_ids(resolution)
         routing_question = question
         if history and looks_like_follow_up(question):
             # Resolve fragments like "那第二章呢" against the previous turn:
@@ -318,6 +318,7 @@ class StructuredQAEngine:
         history = normalize_history(history)
         resolution = self.library.resolve_scope(scope)
         known_documents = {record.id for record in self.library.documents}
+        allowed = self.library.effective_allowed_ids(resolution)
         prepared = self.prepare(question, history, scope)
         if prepared.route == "book_toc":
             citations = [chapter.citation(index) for index, chapter in enumerate(prepared.chapters, 1)]
@@ -339,7 +340,7 @@ class StructuredQAEngine:
 
         if prepared.out_of_scope or not prepared.contexts:
             if prepared.route == "chapter_overview":
-                return self._result(self._missing_chapter_answer(prepared.question), [], prepared, started, citation_verified=True)
+                return self._result(self._missing_chapter_answer(prepared.question, allowed), [], prepared, started, citation_verified=True)
             answer = "当前教材没有检索到足够依据来回答这个问题。你可以换用教材中的术语，或询问具体章节、概念和系统。"
             return self._result(answer, [], prepared, started, citation_verified=True)
 
@@ -465,11 +466,17 @@ class StructuredQAEngine:
                     f"不在有效范围内（{len(resolution.document_ids)} 个文档）。"
                 )
 
-    def _missing_chapter_answer(self, question: str) -> str:
+    def _missing_chapter_answer(
+        self,
+        question: str,
+        allowed_document_ids: frozenset[str] | set[str] | None = None,
+    ) -> str:
         # The user asked for a chapter the library does not have; list what
-        # exists instead of a generic refusal.
+        # exists inside the effective scope instead of a generic refusal.
         number = extract_chapter_number(question)
-        numbers = sorted({chapter.number for chapter in self.library.chapter_catalog()})
+        numbers = sorted(
+            {chapter.number for chapter in self.library.chapter_catalog(allowed_document_ids)}
+        )
         if numbers:
             prefix = f"教材库中没有第{number}章的摘要。" if number is not None else "教材库中没有这一章的摘要。"
             listing = "、".join(f"第{value}章" for value in numbers)

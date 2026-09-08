@@ -110,6 +110,30 @@ Phase D 在导入能力之上建立受管知识库域：
   接收 effective QueryScope，且禁止绕过 LibraryService / scoped retrieval 访问
   非 READY、DELETE_FAILED 或 scope 外文档。
 
+### 运行时集成收口（v3.3 Phase D.1）
+
+Phase D 主体验收后的运行时整合（4 项 P0 关闭：双库分叉 / 运行中导入不可见 /
+book 路由 scope / 路径泄露）：
+
+- `core/runtime_library.py`：整机唯一库身份的静态决策点（非动态路由）——受管库
+  `documents.sqlite3` 存在即以它为准并原地升级（v4→v5 纯加性）；无受管库但
+  legacy 教材库存在则原地接管（同一文件升级，绝不复制出第二真相源）；两者皆无
+  则创建空受管库。升级/创建失败显式抛错，绝不静默换库。
+- 变更可见性（P0-02 关闭）：`LibraryService` 每次提交式变更后回调 `on_mutated`；
+  `WebQAServer._on_library_mutated` 在引擎锁内 `library.refresh()` → 重算库指纹
+  → 清空 LRU 答案缓存；导入/启停/更新/删除对问答即时生效，无需重启。同路径并发
+  导入由变更锁串行化，收敛为单一身份（READY + UNCHANGED）。
+- 错误脱敏统一收口（P0-04 关闭）：`desktop/library_api_safety.py` 单点处理——API
+  响应经 `redact_source_paths` 把绝对路径替换为 `source_name` / `source_display`；
+  错误消息经 `sanitize_error_message` 把路径形 token（盘符/UNC/POSIX）统一降为
+  basename，导入根目录整体替换为 `<导入目录>`（含 Windows OSError 双反斜杠
+  归一化，防根目录名残留）。
+- PDF 资源守卫（P1）：`QA_PDF_MAX_PAGES` / `QA_PDF_MAX_EXTRACTED_CHARS` 上限，
+  超限以 `DocumentTooLargeError`（RESOURCE_LIMIT）类型化拒绝。
+- Scope 单一真相（P0-03 关闭）：`effective_allowed_ids` 同时驱动检索（FTS
+  pushdown + dense 候选）与书籍级路由（目录/全书概览/章节摘要/缺章提示）；
+  空 scope 永不回退全库，book 路由与检索看到同一文档集。
+
 ### Reranker（可选，默认关闭）
 
 已实现可选本地 Cross-Encoder Reranker（`BAAI/bge-reranker-v2-m3`，经独立 sidecar 进程调用），并完成真实 CPU/CUDA 性能、故障回退及排名评测；当前单教材饱和基线下整体收益有限（MRR +0.0048 / nDCG@5 +0.0084，未达 0.02 有意义增益参考值），因此**默认关闭**，待多文档阶段重新评估。

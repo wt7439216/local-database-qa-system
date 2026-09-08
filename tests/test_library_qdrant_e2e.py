@@ -16,6 +16,7 @@ import unittest
 from unittest.mock import patch
 
 import core.config as config
+import core.importer as importer
 from core.library_service import LibraryService
 from core.library_store import LibraryStore
 from core.query_scope import QueryScope
@@ -69,8 +70,10 @@ class LibraryLifecycleE2ETests(unittest.TestCase):
             pass
 
     def _store(self) -> LibraryStore:
+        # Phase D.1: managed (v5) libraries bind to the manager's collection
+        # (importer.DEFAULT_GENERAL_COLLECTION), never config.QDRANT_COLLECTION.
         with patch.object(config, "VECTOR_BACKEND", "qdrant"), \
-             patch.object(config, "QDRANT_COLLECTION", TEST_COLLECTION):
+             patch.object(importer, "DEFAULT_GENERAL_COLLECTION", TEST_COLLECTION):
             return LibraryStore(self.library)
 
     def _import_fixture(self, name: str) -> str:

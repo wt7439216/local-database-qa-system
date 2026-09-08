@@ -269,9 +269,13 @@ def validate_query_vector(vector: list[float], dimension: int) -> list[float]:
     return normalize_vector(vector)
 
 
-def create_vector_store(path, backend: str | None = None) -> VectorStore:
+def create_vector_store(path, backend: str | None = None, collection: str | None = None) -> VectorStore:
     """Build the configured backend.  Default stays ``sqlite`` (frozen for
-    the whole Phase A); Qdrant is opt-in only, never a silent fallback."""
+    the whole Phase A); Qdrant is opt-in only, never a silent fallback.
+
+    ``collection`` overrides the Qdrant collection for managed runtime
+    libraries so the dense index is bound to the same library identity the
+    manager writes (Phase D.1); legacy libraries keep the config default."""
     chosen = str(backend or config.VECTOR_BACKEND or "sqlite").strip().lower()
     if chosen == "sqlite":
         from core.sqlite_vector_store import SQLiteVectorStore
@@ -280,5 +284,5 @@ def create_vector_store(path, backend: str | None = None) -> VectorStore:
     if chosen == "qdrant":
         from core.qdrant_store import QdrantVectorStore
 
-        return QdrantVectorStore.from_config()
+        return QdrantVectorStore.from_config(collection=collection)
     raise VectorStoreError(f"未知的向量后端：{chosen}（可选 sqlite|qdrant）")

@@ -37,6 +37,7 @@ class ParserErrorKind(str, Enum):
     ENCRYPTED_DOCUMENT = "encrypted_document"
     EMPTY_DOCUMENT = "empty_document"
     CORRUPT_DOCUMENT = "corrupt_document"
+    RESOURCE_LIMIT = "resource_limit"
 
 
 class ParserError(Exception):
@@ -84,6 +85,13 @@ class EmptyDocumentError(ParserError):
 class CorruptDocumentError(ParserError):
     def __init__(self, parser: str, source: Path, reason: str, cause: Exception | None = None):
         super().__init__(ParserErrorKind.CORRUPT_DOCUMENT, parser, source, reason, cause)
+
+
+class DocumentTooLargeError(ParserError):
+    """A well-formed document exceeds the configured import resource caps."""
+
+    def __init__(self, parser: str, source: Path, reason: str):
+        super().__init__(ParserErrorKind.RESOURCE_LIMIT, parser, source, reason)
 
 
 @runtime_checkable

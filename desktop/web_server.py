@@ -28,7 +28,7 @@ from core.library_service import (
     LibraryStateError,
 )
 from core.query_scope import QueryScope, QueryScopeError
-from desktop.library_api_safety import redact_source_paths
+from desktop.library_api_safety import redact_source_paths, sanitize_error_message
 
 API_VERSION = 2
 DEFAULT_PORT = 8765
@@ -143,11 +143,7 @@ class WebQAServer:
         # 追问（带 history）依赖上下文，不参与缓存。
         self._answer_cache: OrderedDict[tuple[str, str, str], dict[str, Any]] = OrderedDict()
         self._cache_lock = threading.Lock()
-        library = getattr(engine, "library", None)
-        metadata = getattr(library, "metadata", None) if library is not None else None
-        fingerprint = metadata.get("built_at", "") if isinstance(metadata, dict) else ""
-        fingerprint += "|" + str(metadata.get("source_sha256", "")) if isinstance(metadata, dict) else ""
-        self._engine_fingerprint = fingerprint
+        self._recompute_fingerprint()
         self._tokens: dict[str, float] = {}
         self._token_lock = threading.Lock()
         self._auth_failures: dict[str, tuple[int, float, float]] = {}
@@ -173,6 +169,30 @@ class WebQAServer:
         handler.setFormatter(logging.Formatter("%(asctime)s %(message)s"))
         logger.addHandler(handler)
         return logger
+
+    def _recompute_fingerprint(self) -> None:
+        """Rebuild the cache fingerprint from the current library metadata
+        (Phase D.1): runtime mutations change it, so stale cached answers
+        can never survive an import/update/disable/delete."""
+        library = getattr(self.engine, "library", None)
+        metadata = getattr(library, "metadata", None) if library is not None else None
+        fingerprint = metadata.get("built_at", "") if isinstance(metadata, dict) else ""
+        fingerprint += "|" + str(metadata.get("source_sha256", "")) if isinstance(metadata, dict) else ""
+        self._engine_fingerprint = fingerprint
+
+    def _on_library_mutated(self) -> None:
+        """Phase D.1 runtime integration: after a committed library mutation
+        the QA runtime is brought back in sync in place — snapshots and the
+        dense index reload, the fingerprint is recomputed and the answer
+        cache is dropped.  Runs under _engine_lock so an in-flight answer
+        finishes against the old consistent snapshot."""
+        with self._engine_lock:
+            library = getattr(self.engine, "library", None)
+            if library is not None and hasattr(library, "refresh"):
+                library.refresh()
+            self._recompute_fingerprint()
+            with self._cache_lock:
+                self._answer_cache.clear()
 
     def _cache_get(self, key: tuple[str, str, str]) -> dict[str, Any] | None:
         with self._cache_lock:
@@ -546,19 +566,38 @@ def make_handler(owner: WebQAServer) -> type[BaseHTTPRequestHandler]:
             if service is None:
                 self._error(HTTPStatus.NOT_FOUND, "Library 管理未启用。")
                 return
+            policy = getattr(service, "path_policy", None)
+            import_roots = tuple(str(root) for root in policy.roots) if policy is not None else ()
+
+            def _log_detail(exc: BaseException) -> None:
+                # P0-04: full details (including server paths) go to the log
+                # only; the HTTP body carries the sanitized message.
+                if owner.logger is not None:
+                    owner.logger.error("v3 library error %s: %r", path, exc)
+
             try:
                 status, body = self._v3_library_dispatch(service, path, payload)
             except (DocumentNotFoundError, KnowledgeBaseNotFoundError) as exc:
-                self._error(HTTPStatus.NOT_FOUND, str(exc))
+                _log_detail(exc)
+                self._error(HTTPStatus.NOT_FOUND, sanitize_error_message(exc, import_roots))
             except LibraryStateError as exc:
-                self._error(HTTPStatus.CONFLICT, str(exc))
+                _log_detail(exc)
+                self._error(HTTPStatus.CONFLICT, sanitize_error_message(exc, import_roots))
             except (LibraryServiceError, QueryScopeError, ValueError) as exc:
-                self._error(HTTPStatus.BAD_REQUEST, str(exc))
+                _log_detail(exc)
+                self._error(HTTPStatus.BAD_REQUEST, sanitize_error_message(exc, import_roots))
             except OSError as exc:
-                self._error(HTTPStatus.BAD_REQUEST, f"源文件不可读：{exc}")
+                _log_detail(exc)
+                self._error(HTTPStatus.BAD_REQUEST, sanitize_error_message(exc, import_roots))
             except Exception as exc:  # pragma: no cover - unexpected service bug
-                self._error(HTTPStatus.INTERNAL_SERVER_ERROR, str(exc))
+                _log_detail(exc)
+                self._error(HTTPStatus.INTERNAL_SERVER_ERROR, "服务器内部错误，详情已记录到日志。")
             else:
+                if status == HTTPStatus.NOT_FOUND and body == {}:
+                    # Route-miss sentinel: the dispatch never emits a response
+                    # itself, so this is the only write for the request.
+                    self._error(HTTPStatus.NOT_FOUND, "接口不存在。")
+                    return
                 # Security closure: never return server absolute paths.
                 self._json(status, redact_source_paths(body, service.source_display))
 
@@ -604,7 +643,6 @@ def make_handler(owner: WebQAServer) -> type[BaseHTTPRequestHandler]:
                     return HTTPStatus.OK, service.delete_document(match)
                 if self.command == "GET":
                     return HTTPStatus.OK, service.get_document(match)
-                self._error(HTTPStatus.NOT_FOUND, "接口不存在。")
                 return HTTPStatus.NOT_FOUND, {}
             action = re_fullmatch_groups(r"/api/v3/library/documents/([^/]+)/(enable|disable|retry-index|retry-delete|relink|tags)", path)
             if action:
@@ -624,7 +662,6 @@ def make_handler(owner: WebQAServer) -> type[BaseHTTPRequestHandler]:
                     )
                 tags = service.set_document_tags(document_id, payload.get("tags") or ())
                 return HTTPStatus.OK, {"document_id": document_id, "tags": tags}
-            self._error(HTTPStatus.NOT_FOUND, "接口不存在。")
             return HTTPStatus.NOT_FOUND, {}
 
         def _is_loopback(self) -> bool:

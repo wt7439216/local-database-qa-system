@@ -408,3 +408,41 @@ Phase D 主体验收后、Phase E 前的短范围收口：Library Manager 本地
 
 - 新增 `tests/test_path_policy_security.py`（21 项）：根内导入 PASS、`..` traversal 拒绝、域外绝对路径拒绝、相对路径拒绝、**真实 junction/symlink 逃逸拒绝**（环境可创建时实测，否则 skip 并注明原因）、域外 relink 拒绝 + 域内 relink 通过、未配置根默认禁用、CLI 无策略保持 Phase C 行为、根内 parser 安全链保持、list/detail/overview 响应零绝对路径（含盘符正则扫描）+ `source_display` 正确 + SQLite 保留完整路径、未认证 v3 调用仍 401（配对/令牌/Host 校验无回归）。
 - 全套回归（Security Closure Gate 实测）：**283/283 PASS**（262 + test_path_policy_security 21）；scope eval sqlite/qdrant 双后端 leakage=0 保持；qa/import telemetry 基线字节不变。
+
+## Phase D.1 Runtime Integration Closure（2026-09-08）
+
+Phase D 主体 + Security Closure 之后的运行时收口：Library Manager 与 QA 运行时的整机整合。授权范围：Runtime Integration / Scope / Error Redaction 收口 + 必要测试/文档/发布修复。**Phase E = NOT STARTED**，等待单独授权。
+
+### 复现的 4 项 P0（修复前 D2 实测，全部确认）
+
+- **P0-01 双库分叉**：Library Manager 写 `documents.sqlite3`，QA Engine 读 `config.LIBRARY_DB`（textbooks.sqlite3）——管理端导入对问答不可见，Qdrant 读写也各指一库；
+- **P0-02 运行中变更不可见**：服务运行期间导入/启停/更新/删除后，库快照不重载、指纹不变、答案缓存按旧指纹继续命中；
+- **P0-03 书籍级路由 scope 缺口**：book_toc / book_overview / chapter_overview 未按 effective scope 过滤，disabled 文档仍出现在目录（触发 CitationScopeViolationError 崩溃路径）；
+- **P0-04 错误体路径泄露 3/3**：missing file / relink / unexpected exception 三类响应均含服务器绝对路径。
+
+### 修复
+
+- 新增 `core/runtime_library.py`：整机唯一库身份的静态三规则——managed 存在即优先并原地升级（v4→v5 纯加性）→ 无 managed 则 legacy 原地接管（同一文件升级，不复制第二真相源）→ 两者皆无则创建空 managed；升级/创建失败显式抛错，绝不静默换库。
+- `core/library_service.py`：`on_mutated` 回调（每次提交式变更后触发，自身绝不抛错）；import/relink/delete 全流程变更锁（RLock）串行化；FK 纪律（每连接 `PRAGMA foreign_keys=ON` + 注册表行前先插 placeholder documents 行，其 sha256 置空——否则 importer 的 unchanged-check 会把首次导入误判为 UNCHANGED）。
+- `desktop/web_server.py`：`_on_library_mutated`（引擎锁内 `library.refresh()` → `_recompute_fingerprint()` → 清空 LRU 答案缓存）；缓存命中显式 "命中缓存" status 事件。
+- `core/library_store.py`：`effective_allowed_ids` 作为单一 scope 真相（检索 pushdown 与 book 路由共用同一文档集）；`refresh()` 原地重载快照；managed（v5）库的 Qdrant collection 绑定 `importer.DEFAULT_GENERAL_COLLECTION`（不再读 `config.QDRANT_COLLECTION`，杜绝 manager/engine 指到不同 collection）；engine health 上报 `schema_version`。
+- `desktop/library_api_safety.py`：错误体路径形 token（盘符/UNC/POSIX）统一降为 basename + 导入根整体替换为 `<导入目录>`；含 Windows OSError 双反斜杠归一化（否则根目录名残留泄露）。
+- `core/config.py` + pdf parser：`QA_PDF_MAX_PAGES`（默认 2000）/ `QA_PDF_MAX_EXTRACTED_CHARS`（默认 20 MiB）资源守卫，超限 `DocumentTooLargeError`（RESOURCE_LIMIT）类型化拒绝。
+- Windows 数据目录方案：仅 ADR + backlog + README 登记，本轮不改行为（见下方 Backlog）。
+- 禁用清单全程保持：未把 disabled 文档重新加入默认 scope、未删除 CitationScopeViolationError、未让空 scope 回退全库、未关闭 Host 校验/pairing/path policy、未返回服务器绝对路径、未把 LIBRARY_IMPORT_ROOTS 默认改为任意目录、未删除 ZIP bomb 守卫、无 Qdrant 静默 fallback。
+
+### Backlog（登记，不在当前阶段执行）
+
+- **Windows 数据目录搬迁**：当前 `data/` 目录随程序可移植布局。若未来出现安装到受保护目录（Program Files 等）的真实场景，再设计并搬迁至 `%LOCALAPPDATA%\LocalDatabaseQA\`（含迁移与回滚方案）。本轮不改行为；ADR 见 `docs/V3_RUNTIME_LIBRARY_DECISION.md`。
+
+### 测试
+
+- 新增 `tests/test_runtime_integration.py`（24 项）：真实 LibraryService + 真实 StructuredQAEngine + 真实 WebQAServer + 临时 SQLite + fake 嵌入/模型（无 fake engine 替代）——导入即时可见（P0-01）、空库全拒答、KB/文档/标签 scope、停用/启用即时生效、全停用默认 scope 为空、更新保身份 + 缓存失效（P0-02）、删除、book 路由 scope（目录/缺章列表/全书概览，P0-03）、错误脱敏（盘符/UNC/POSIX/嵌套异常/500/parser 失败，P0-04）、engine health schema 版本、runtime 库选择三规则、v4 原地升级。
+- 新增 `tests/test_library_concurrency.py`（1 项）：同路径并发导入（barrier 同步）→ 单一 document_id、状态收敛（READY + UNCHANGED）、document_sources 恰一行。
+- 新增 `tests/test_pdf_guard.py`（3 项）：页数/提取字符上限类型化拒绝 + 默认上限正常解析。
+- 修正 `tests/test_library_qdrant_e2e.py`：按 D.1 新契约，managed 库 Qdrant collection 绑定 `importer.DEFAULT_GENERAL_COLLECTION`（patch 点同步更新）；本机真实 Qdrant 1.19.1 可达时 5/5 PASS。
+- 全套回归（本机，Qdrant 1.19.1 + Ollama 可达，PYTHONUTF8=1/PYTHONIOENCODING=utf-8）：**311/311 PASS**（283 + 28，0 skip）；ruff（repo）/ compileall / node --check（web ×3）全过；telemetry 隔离测试（内嵌子进程全量重跑）PASS。
+
+### Gate decision（本地初评）
+
+**Phase D.1 本地验收 = PASS**（4 项 P0 关闭 + 回归锁定 + 311/311）。远端 CI 复核与发布记录见 D10。Phase E = NOT STARTED，等待用户单独授权。

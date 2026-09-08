@@ -135,10 +135,10 @@ class QdrantVectorStore:
         self._distance: str | None = None
 
     @classmethod
-    def from_config(cls) -> "QdrantVectorStore":
+    def from_config(cls, collection: str | None = None) -> "QdrantVectorStore":
         return cls(
             base_url=config.QDRANT_URL,
-            collection=config.QDRANT_COLLECTION,
+            collection=collection or config.QDRANT_COLLECTION,
             timeout=config.QDRANT_TIMEOUT_SECONDS,
         )
 

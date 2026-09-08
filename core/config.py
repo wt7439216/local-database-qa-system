@@ -63,3 +63,10 @@ def _parse_import_roots() -> tuple:
     )
 
 LIBRARY_IMPORT_ROOTS = _parse_import_roots()
+
+# --- Phase D.1 PDF resource guard ----------------------------------------------
+# Caps for a single PDF import: page count and extracted characters.  Generous
+# defaults (a printed textbook is a few hundred pages / a few MB of text) that
+# still stop pathological PDFs before OCR/embedding work explodes.
+PDF_MAX_PAGES = max(1, int(os.getenv("QA_PDF_MAX_PAGES", "2000")))
+PDF_MAX_EXTRACTED_CHARS = max(1, int(os.getenv("QA_PDF_MAX_EXTRACTED_CHARS", str(20 * 1024 * 1024))))

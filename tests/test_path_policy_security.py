@@ -29,6 +29,7 @@ from core.library_service import LibraryService
 from core.path_policy import (
     ImportPathPolicy,
     ImportPathPolicyError,
+    canonical_source_path,
     policy_from_roots_value,
 )
 from desktop.web_server import WebQAServer
@@ -371,7 +372,7 @@ class SourcePathDisclosureTests(unittest.TestCase):
                 "SELECT source_path FROM document_sources WHERE document_id = ?",
                 (self.document_id,),
             ).fetchone()[0]
-        self.assertEqual(stored, str(self.source).replace("\\", "/"))
+        self.assertEqual(stored, canonical_source_path(self.source).as_posix())
 
     def test_library_api_http_responses_are_redacted(self):
         server = WebQAServer(

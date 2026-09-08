@@ -35,6 +35,7 @@ from core.library_service import (
     KnowledgeBaseNotFoundError,
 )
 from core.qdrant_store import QdrantHTTPError, VectorProtocolError
+from core.path_policy import canonical_source_path
 from core.query_scope import QueryScope
 from core.vector_store import VectorBackendUnavailableError
 from tests.test_importer import fake_embedder
@@ -188,7 +189,7 @@ class RelinkTests(LibraryServiceTestBase):
         relinked = service.relink_document(document_id, moved)
         self.assertEqual(relinked["status"], "RELINKED")
         detail = service.get_document(document_id)
-        self.assertEqual(detail["source_path"], str(moved).replace("\\", "/"))
+        self.assertEqual(detail["source_path"], canonical_source_path(moved).as_posix())
         self.assertEqual(detail["status"], "READY")
         with self.sqlite() as connection:
             chunks_after = connection.execute("SELECT count(*) FROM chunks WHERE document_id=?", (document_id,)).fetchone()[0]
@@ -206,13 +207,13 @@ class RelinkTests(LibraryServiceTestBase):
         refused = service.relink_document(document_id, changed)
         self.assertEqual(refused["status"], "SOURCE_CHANGED")
         detail = service.get_document(document_id)
-        self.assertEqual(detail["source_path"], str(source).replace("\\", "/"), "拒绝时不得改动来源")
+        self.assertEqual(detail["source_path"], canonical_source_path(source).as_posix(), "拒绝时不得改动来源")
 
         confirmed = service.relink_document(document_id, changed, update_if_changed=True)
         self.assertEqual(confirmed["relink_status"], "READY")
         detail = service.get_document(document_id)
         self.assertEqual(detail["document_id"], document_id, "更新后身份不变")
-        self.assertEqual(detail["source_path"], str(changed).replace("\\", "/"))
+        self.assertEqual(detail["source_path"], canonical_source_path(changed).as_posix())
 
     def test_relink_never_merges_documents(self):
         service = self.service()

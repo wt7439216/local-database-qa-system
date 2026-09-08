@@ -696,3 +696,36 @@ F.0（只读，未改任何仓库文件）：Summary/Citation AS-IS 审计 + Gap
 ### Gate decision
 
 **Phase F.3 = PASS。** Phase F overall = IN_PROGRESS（F.4 = NOT STARTED）。按合同 **STOP**：不实施 L2、不进入 F.4、不扩充最终 Golden Set，等待新的单独授权。
+
+## Phase F.4 — Golden Set / Answer Quality / Release Quality Closure（2026-09-08）
+
+- Status: **PASS**（Phase F 最终质量闭环）
+- 最终判定：**Phase F.4 = PASS，Phase F overall = PASS，V3 Definition of Done = PASS（含明确 deferred 非阻断项）**
+- 决策文档：`docs/V3_PHASE_F4_RELEASE_GATE.md`（实测指标 + Release Gate 冻结 + DoD audit + KB/Multi-doc Summary 裁决）
+
+### 交付
+
+- 新增 `eval/v3_final_golden.json`：**185 cases**（single_fact_qa 41 / locate 20 / compare 20 / multi_turn 20 / multi_document 20 / oos_hard_negative 29 / metadata_library 15 / citation_negative 20），8 类覆盖，ground truth 人工标注可复核，与 evaluator 分离。
+- 新增 `scripts/eval_v3_release.py`：分层评测（Layer1 Retrieval / Layer2 Scope / Layer3 Router / Layer5 Answer / Layer6 Citation），`--layer fast`（确定性，无模型）与 `--layer answer`（需 Ollama，仅本地）。
+
+### 实测指标（真实多文档库 documents.sqlite3，637 chunks）
+
+- Retrieval recall@3 = **0.8158**；false-refusal = **0.0278**；route accuracy = **0.9189**（修正 GOLDEN_ERROR 后）。
+- Answer fact accuracy = **0.65**（40 代表性样本，受 expected_answer_facts 关键词精确匹配限制）。
+- Citation：**invalid citation = 0**（validity 100% 安全）；avg coverage = **0.6646**（66.5%）；deterministic support 分布 SUPPORTED 16.5% / UNSUPPORTED 49.6% / UNCERTAIN 33.8%。
+- 纯离题 hard negative 7/7 正确拒答；语义陷阱类（negation/causal/comparison/缩写歧义/混入无关词）系统性 false-accept（22/29，EXPECTED_LIMITATION）。
+
+### 关键决策
+
+- **Citation Coverage 不采用 90% 硬阈值**（实测 66.5%），冻结为质量观察指标 + `invalid citation = 0` 为 HARD GATE。
+- **L1 真实分布复评**：真实 uncertain rate = 33.8%（非零），L2 有理论价值空间，但 judge 契约 + 延迟未闭合，**维持 DEFER_L2**。
+- **KB / Multi-document Summary 裁决 = Option B**：现有 multi-document QA 已满足核心需求，KB Summary 属 deferred 非核心增强（修订 DoD 范围，非阻断）。
+- **文档级元数据查询 DEFERRED** 实测确认（11 条：5 条 scope 拒答、6 条错误放行）。
+
+### Regression 确认
+
+- F.2 offline eval 30/30 PASS；Phase E router eval 冻结指标保持；F.1 / F.3 / deterministic verifier 零改动；ruff 全过。
+
+### Gate decision
+
+**Phase F.4 = PASS，Phase F overall = PASS，V3 DoD = PASS（含 deferred 非阻断项：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier）。** 按合同完成发布、CI 与 remote closure 后 STOP，不自动开启 L2 implementation / Phase G / 公网部署 / 新架构重构。

@@ -35,7 +35,7 @@ from typing import Any
 
 # Bump whenever the deterministic contract changes; recorded in telemetry and
 # offline eval so stale results can be detected.
-CITATION_VERIFIER_VERSION = "f2-v3"
+CITATION_VERIFIER_VERSION = "f2-v4"
 
 # Support state enum.
 SUPPORTED = "SUPPORTED"
@@ -72,11 +72,24 @@ _NON_ENTITY_LATIN = {
     "xls", "xlsx", "csv",
 }
 
+# Generic Latin words that appear in an expanded acronym ("Time Division
+# Multiple Access") but are not themselves a technology entity.  Requiring
+# "time"/"division"/"multiple"/"access" to appear literally in evidence that
+# only carries the acronym "TDMA" is a deterministic false negative.
+_GENERIC_LATIN_STOPWORDS = {
+    "time", "division", "multiple", "access", "code", "frequency",
+    "channel", "division", "multiplexing",
+}
+
 # A bracket group that is *not* a citation: a number glued to a Latin unit
 # (e.g. "[450]MHz") is a value, not a reference.  A leading minus is allowed
 # so malformed ``[-1]`` references are still recognised (and then rejected as
 # invalid) rather than silently ignored.
 _CITATION_TOKEN = re.compile(r"\[(-?\d+)\](?![A-Za-z])")
+
+# A citation group / range like "[3,6-7]" or "[2][3]".  A claim consisting of
+# only such tokens carries no factual content.
+_CITATION_GROUP_RE = re.compile(r"\[[\d,\s\-–—]+\]")
 
 # A sentence-ish boundary for claim splitting.
 _SENTENCE_BOUNDARY = re.compile(r"[。！？!?；;\n]+")
@@ -150,6 +163,10 @@ _MATERIAL_REF_RE = re.compile(r"材料\s*\d+(?:\s*[、,和]\s*\d+)*")
 _STRUCTURAL_LOCATOR_RE = re.compile(r"第\s*\d+\s*[章页节]")
 _PAGE_RANGE_RE = re.compile(r"第\s*\d+\s*[–—-]\s*\d+\s*页")
 _LEADING_LIST_NUMBER_RE = re.compile(r"(?m)^\s*[-*•·]?\s*\d+[.、)）]\s*")
+# SNR / ratio symbols whose trailing digit is a subscript ("E/N0", "Eb/N0"),
+# not a factual magnitude.  Stripping them keeps "E/N0=0.7dB" from extracting a
+# spurious "0" while still keeping the real value "0.7".
+_SNR_SYMBOL_RE = re.compile(r"[A-Za-z]+\s*/\s*[A-Za-z]*\d+")
 
 
 def _strip_non_factual_numbers(text: str) -> str:
@@ -162,6 +179,7 @@ def _strip_non_factual_numbers(text: str) -> str:
     text = _MATERIAL_REF_RE.sub("", str(text or ""))
     text = _STRUCTURAL_LOCATOR_RE.sub("", text)
     text = _PAGE_RANGE_RE.sub("", text)
+    text = _SNR_SYMBOL_RE.sub("", text)
     text = _LEADING_LIST_NUMBER_RE.sub("", text)
     return text
 
@@ -182,9 +200,11 @@ def _latin_key_terms(text: str, min_length: int = 2) -> set[str]:
         value = re.sub(r"[^A-Za-z0-9]", "", token).lower()
         if (
             len(value) >= min_length
+            and "/" not in token  # SNR symbols ("E/N0") / rate units are not entities
             and value not in LATIN_UNITS
             and value not in number_units
             and value not in _NON_ENTITY_LATIN
+            and value not in _GENERIC_LATIN_STOPWORDS
         ):
             terms.add(value)
     return terms
@@ -323,13 +343,19 @@ def is_factual_claim(text: str) -> bool:
     text = str(text or "").strip()
     if not text:
         return False
-    if _is_pure_meta_discourse(text):
+    # Strip citation tokens (single + group/range) so a bare "[3,6-7][2]" is
+    # not mistaken for a factual claim via its numeric digits.
+    body = _CITATION_TOKEN.sub("", text)
+    body = _CITATION_GROUP_RE.sub("", body)
+    if not body.strip():
         return False
-    if _latin_key_terms(text):
+    if _is_pure_meta_discourse(body):
+        return False
+    if _latin_key_terms(body):
         return True
-    if _cjk_key_terms(text):
+    if _cjk_key_terms(body):
         return True
-    if _extract_numbers(text):
+    if _extract_numbers(body):
         return True
     return False
 

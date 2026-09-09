@@ -1007,3 +1007,36 @@ coverage 0.5524 → 0.5558（噪声级），Q3 不改变 citation marker 数量�
 
 ### Gate decision
 **Q3 = PASS；PRODUCT_HIGH_CONFIDENCE_UNSUPPORTED_GATE = PASS。** 按合同 STOP：不实现 citation completion、不重启 Q2、不改 Prompt/Retriever、不实施 L2、不改 Quality Contract。等待下一次单独授权。
+
+## Quality Remediation Q3.1 — Remaining Deterministic Verifier Edge Closure（2026-09-10）
+
+- Status: **Q3.1 = PASS**（verifier `f2-v3 → f2-v4`；9 个剩余 edge 中 6 个关闭，2 个 TRUE 保留，1 个 SEMANTIC 保留）
+- 性质：SMALL DETERMINISTIC VERIFIER CLOSURE，不追求 high_conf=0，核心是 selector safety。
+
+### Remaining Edge Inventory（9 个，基于 answer-eval-v4 cache + 重建 evidence）
+| Case | Current | Ground truth | 分类 | 修复 |
+|---|---|---|---|---|
+| qa-021 / cit-020 | number_mismatch '0.0' | E/N0 下标不是数字 | DETERMINISTIC_FALSE_POSITIVE | ✅ E/N0 符号剥离 |
+| cmp-018 | number_mismatch '36,-7' | 纯 citation "[3,6-7][2]" | DETERMINISTIC_FALSE_POSITIVE | ✅ 纯 citation → NOT_APPLICABLE |
+| cmp-006 | missing access/code/time | 全称普通词 | DETERMINISTIC_FALSE_NEGATIVE | ✅ generic stopwords |
+| cmp-001 / cmp-014 | missing wcdma | evidence 含 WCDMA | renumber 编号错位 artifact | ✅ 正确 evidence 下 SUPPORTED |
+| cmp-001 | 频段 1920-2170 | evidence 无这些数字 | TRUE_NUMERIC_CONTRADICTION | 保留 UNSUPPORTED（正确） |
+| cmp-020 | missing ofdma | evidence 无 OFDMA | TRUE_MISSING | 保留 UNSUPPORTED（正确） |
+| cit-003 | missing lte/ofdma/tdma | 否定句语义 | SEMANTIC_UNCERTAIN | 保留（需 L2） |
+
+### 修复（core/citation_verifier.py，f2-v3 → f2-v4）
+1. `_SNR_SYMBOL_RE`：剥离 "E/N0"、"Eb/N0" 等信噪比符号，避免下标数字被误判 factual number（"E/N0=0.7dB" 只提取 0.7）。
+2. `_CITATION_GROUP_RE` + `is_factual_claim`：剥离单个 + 组/范围 citation token，纯 citation fragment（"[3,6-7][2]"）→ NOT_APPLICABLE。
+3. `_GENERIC_LATIN_STOPWORDS`：排除全称组成词（time/division/multiple/access/code 等），"Time Division Multiple Access" 不再要求这些普通词出现在只有缩写 "TDMA" 的 evidence。
+4. `_latin_key_terms`：排除含 "/" 的 token（SNR 符号 "E/N0"、速率单位），避免 "en0" 被当实体。
+
+### Selector Simulation（新增 tests/test_citation_completion_selector.py，7 项）
+保守 selector 契约（模拟，不改 answer）：唯一 SUPPORTED → SELECTABLE；多 SUPPORTED → AMBIGUOUS；仅 UNCERTAIN / UNSUPPORTED / invalid / out-of-scope → NO_AUTOFILL。全部 7/7 PASS，验证 verifier 作为 evidence selector 的保守安全性。
+
+### Tests / Regression
+- F.2 offline eval **37/37 PASS**（34 旧 + 3 新 contract case：snr-01 / pure-cite-01 / fullname-01，旧 label 未改）。
+- verifier unit tests 33/33；selector 7/7；全量 **491/491 PASS**；Phase E router 108/108；ruff/compileall clean。
+- 未 rerun 144 LLM answers（deterministic closure，禁止调用 Ollama）。
+
+### Gate decision
+**Q3.1 = PASS。** `DETERMINISTIC_CITATION_COMPLETION_READINESS = SAFE_CANDIDATE`（9 个 known edge 中 6 个关闭，剩余 3 个为 TRUE/SEMANTIC，不存在"明显错误 Evidence 会被判 SUPPORTED"的系统性模式）。按合同 STOP：不实现 citation completion、不重启 Q2、不改 Prompt/Retriever、不实施 L2。等待下一次单独授权。

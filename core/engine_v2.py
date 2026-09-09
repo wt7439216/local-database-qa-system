@@ -478,6 +478,18 @@ class StructuredQAEngine:
             if sent_contexts or prepared.chapters
             else None
         )
+        # Phase F.4.1 (Workstream B): deterministic unsupported / invalid
+        # citations must not be silently presented as "verified".  The answer
+        # text is preserved (no sentence deletion — L1 UNSUPPORTED is not a
+        # reliable deletion signal); the user-facing flag is downgraded so the
+        # existing UI warning fires.  High-confidence failures (invalid
+        # citation / scope violation) are already surfaced separately.
+        if citation_report and (
+            citation_report.get("unsupported_claim_count", 0) > 0
+            or citation_report.get("invalid_citation_count", 0) > 0
+            or citation_report.get("citation_scope_violation", 0) > 0
+        ):
+            citation_verified = False
         write_telemetry(
             {
                 "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),

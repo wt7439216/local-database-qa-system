@@ -135,7 +135,7 @@ def run_layer5_answer(engine, cases: list[dict], limit: int | None = None) -> di
     if limit:
         subset = subset[:limit]
     for case in subset:
-        result = engine.answer(case["query"], case.get("history"))
+        result = engine.answer(case["query"], history=case.get("history"))
         facts = case.get("expected_answer_facts") or []
         present = [f for f in facts if f in (result.answer or "")]
         missing = [f for f in facts if f not in (result.answer or "")]
@@ -156,7 +156,7 @@ def run_layer6_citation(engine, cases: list[dict], limit: int | None = None) -> 
     supported = unsupported = uncertain = invalid = no_cite = 0
     coverage_vals = []
     for case in subset:
-        result = engine.answer(case["query"], case.get("history"))
+        result = engine.answer(case["query"], history=case.get("history"))
         report = result.citation_report
         if not report:
             no_cite += 1

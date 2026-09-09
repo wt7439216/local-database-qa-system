@@ -12,6 +12,8 @@
 
 ---
 
+> **⚠️ DoD Scope Amendment（`dod-amendment-v1`，2026-09-09）**：原 §13.1 与 §23.3 要求的 **KB Summary / Multi-document Summary** 已按 Phase F.4 授权 §24 的 **Option B** 正式裁决为 **DEFERRED（非阻断）**。裁决理由、非阻断依据与复评条件见 `docs/V3_DOD_SCOPE_AMENDMENT.md`。本文件其余部分仍是 TO-BE 合同，未改为执行日志。
+
 ## 0. 本文档如何使用
 
 本文档不是对当前项目已经实现能力的描述，也不是要求 Agent 一次性完成全部 V3 改造。

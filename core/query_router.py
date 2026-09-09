@@ -233,6 +233,11 @@ def classify_route(question: str) -> str:
     normalized = normalize_query(question)
     if is_book_toc_query(normalized) or "有哪些章节" in normalized:
         return "book_toc"
+    if is_deferred_metadata_query(normalized):
+        # DEFERRED document/library metadata query: deterministic unsupported
+        # response, never qa + RAG (Phase E contract: metadata query must not
+        # force RAG when RAG is unnecessary).
+        return "unsupported"
     if any(word in normalized for word in COMPARE_WORDS):
         # Compare must outrank chapter/book overview: "第一章和第二章内容有
         # 什么区别" contains both a chapter number and the overview word
@@ -415,6 +420,33 @@ def is_unsupported(question: str) -> bool:
     if len(value) <= 2 and not extract_terms(value):
         return True
     return False
+
+
+# Phase F.4.1 (Workstream C): document/library-level metadata queries are
+# DEFERRED (Phase C/D) and must NOT route to qa + RAG — that produced
+# irrelevant evidence for "有哪些文档" style questions.  Book-level metadata
+# (book_toc / book_overview / chapter_overview) is checked BEFORE this in
+# classify_route, so it is never shadowed.  Detection is deterministic.
+DEFERRED_METADATA_PATTERNS = (
+    "知识库",
+    "有哪些文档", "几个文档", "多少文档", "文档类型", "文档状态",
+    "文档标签", "文档的状态", "文档的标签", "文档的类型", "文档有哪些标签",
+    "有哪些标签", "标签有哪些",
+    "当前范围", "当前scope", "范围是什么", "scope是什么",
+    "多少页", "页数", "片段数", "多少片段", "chunk数", "多少chunk",
+    "导入状态", "导入情况", "是否存在",
+)
+
+
+def is_deferred_metadata_query(question: str) -> bool:
+    """True for document/library-level metadata queries that are DEFERRED.
+
+    These queries ask about library *structure* (lists / counts / status /
+    tags / scope / page or chunk counts), not document *content*.  They must
+    not fall through to qa + RAG retrieval.
+    """
+    compact = normalize_query(question).replace(" ", "")
+    return any(pattern in compact for pattern in DEFERRED_METADATA_PATTERNS)
 
 
 def detect_scope_conflict(

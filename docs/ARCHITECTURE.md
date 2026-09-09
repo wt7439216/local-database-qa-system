@@ -156,7 +156,14 @@ F.2 建立确定性 Citation 质量闭环（`core/citation_verifier.py`，纯标
 - Deterministic Layer-1 判定链：claim segmentation（句边界切分 + factual-claim 启发式，纯连接词/元话语为 NOT_APPLICABLE）→ citation validity（`[1, citation_count]` 范围 + present_ids）→ number/unit check（相同数字配不同单位 = 确定性冲突）→ Latin key-term check（单位词排除，含 `kbit/s` 类斜杠单位）→ CJK key-term check（缺失仅标 UNCERTAIN，绝不因 CJK 缺失判 UNSUPPORTED）。多引用 claim、SUPPORTED/UNSUPPORTED 混合逐 claim 判定，reason codes 稳定可测。
 - Engine 集成：`StructuredQAEngine.citation_verifier` 在 `renumber_citations` **之前**用 pre-renumber 编号对真实 sent contexts + 确定性章节引用做 verify（避免模型乱序编号时 clause↔evidence 错位）；`AnswerResultV2.citation_report` 加性暴露；telemetry 加性增加 `citation_count / factual_claim_count / cited_claim_count / citation_coverage / supported_claim_count / unsupported_claim_count / uncertain_claim_count / invalid_citation_count / citation_scope_violation / citation_verifier_version`（`citation_verified` 冻结含义不变）。
 - 离线评测：`eval/phase_f_citation_golden.json`（30 条 fixture，覆盖 21 类）+ `scripts/eval_phase_f_citation.py`（纯离线，30/30 PASS）。
-- 边界：这是 deterministic Layer-1，非 semantic entailment / NLI / complete factual verification；KB Summary / Multi-document Summary / NLI / LLM Citation Judge / Coverage 正式阈值 / 最终 Golden Set 均 DEFERRED 到后续阶段。
+- 边界：这是 deterministic Layer-1，非 semantic entailment / NLI / complete factual verification。
+
+### Semantic Citation Decision + Release Quality（v3.5 Phase F.3 / F.4 / F.4.1）
+
+- **F.3 决策门**：`eval/phase_f3_semantic_challenge.json`（50 条语义困难集）+ `scripts/eval_phase_f3.py` 量化比较 L1 与候选 L2（qwen2.5:7b judge）。结论 **DEFER_L2**（L2 accuracy 0.74 vs L1 0.28，但 judge 契约未闭合 + 延迟 p50 2.74s）。详见 `docs/V3_PHASE_F3_CITATION_DECISION.md`。
+- **F.4 质量闭环**：`eval/v3_final_golden.json`（185 条，8 类）+ `scripts/eval_v3_release.py` 分层评测（Retrieval / Scope / Router / Answer / Citation），冻结 baseline-derived Release Quality Gate。详见 `docs/V3_PHASE_F4_RELEASE_GATE.md`。
+- **F.4.1 收口**：144/144 answer/citation 全量回归（`scripts/eval_v3_answer_full.py`，断点续跑 cache）；deterministic UNSUPPORTED 不再静默呈现为 verified（`citation_verified=false` 触发既有 UI warning）；文档级元数据查询 deterministic guard（`is_deferred_metadata_query` → unsupported，不进 RAG）；TTFT/延迟补测；DoD Option B amendment 正式落实（见 `docs/V3_DOD_SCOPE_AMENDMENT.md`）。
+- **V3 DoD 状态**：达标（含明确 deferred 非阻断项：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier）。
 
 ### Reranker（可选，默认关闭）
 

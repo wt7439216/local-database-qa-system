@@ -729,3 +729,28 @@ F.0（只读，未改任何仓库文件）：Summary/Citation AS-IS 审计 + Gap
 ### Gate decision
 
 **Phase F.4 = PASS，Phase F overall = PASS，V3 DoD = PASS（含 deferred 非阻断项：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier）。** 按合同完成发布、CI 与 remote closure 后 STOP，不自动开启 L2 implementation / Phase G / 公网部署 / 新架构重构。
+
+> **⚠️ 审计纠正（2026-09-09）**：上述 F.4 PASS 声明在 Final Truthfulness Audit 中被判定为**证据不足**，重新裁决为 `Phase F.4 = NOT_YET_PASS / Phase F overall = NOT_YET_PASS / V3 DoD = NOT_YET_PASS`。缺口：answer/citation 仅 40/144（27.8%）、unsupported 仍静默呈现为 verified、文档级元数据 6 条错误放行、LLM TTFT 缺失、DoD Option B 未正式落实、README/ARCHITECTURE 滞后。经 Phase F.4.1 收口修复后，本 PASS 声明重新成立（见下 F.4.1 记录）。
+
+## Phase F.4.1 — Final Closure Remediation（2026-09-09）
+
+- Status: **PASS**
+- 性质：Phase F.4 最小收口修复（关闭 Final Truthfulness Audit 确认的 6 项缺口，不重新实施 F.4）
+- 决策文档：`docs/V3_PHASE_F4.1_CLOSURE.md` + `docs/V3_DOD_SCOPE_AMENDMENT.md`
+
+### 关闭的 6 项缺口
+
+1. **ANSWER_LEVEL_CLOSURE_INCOMPLETE** → 新增 `scripts/eval_v3_answer_full.py`（断点续跑 cache），**144/144 answer/citation 全量**（answer fact accuracy 0.611，missing fact rate 0.175）。
+2. **CITATION_CLOSURE_INCOMPLETE** → `engine_v2.py`：deterministic UNSUPPORTED/invalid 时 `citation_verified=false`（answer 保留不删句，前端既有 warning 自动触发）。144-case citation：invalid=0、scope violation=0、coverage 0.553、UNSUPPORTED 346（其中 no_evidence 301=uncited claim + number_mismatch 35=high-confidence + missing_key_term 10=L1 false-negative）。
+3. **Metadata deferred-query contract violation** → `query_router.py` 新增 `is_deferred_metadata_query` + `DEFERRED_METADATA_PATTERNS`：11 条文档级元数据查询全部 route=unsupported + ctx=0（不进 RAG），book_toc/book_overview 无回归，Phase E 108/108 保持。
+4. **PERFORMANCE_DOD_EVIDENCE_INCOMPLETE** → MODEL TTFT p50 2.14s/p95 2.22s（streaming，标注 model-side）；E2E total answer latency p50 19.77s/p95 50.89s（144-case 实测）。
+5. **DOD_SCOPE_AMENDMENT_AUTHORIZED_BUT_NOT_APPLIED** → 新增 `docs/V3_DOD_SCOPE_AMENDMENT.md`（Option B 正式落实）+ `V3_IMPROVEMENT_PLAN.md` 加 amendment note。
+6. **Documentation truthfulness** → README（阶段表更新到 F.4.1 + 测试数 453）、ARCHITECTURE（F.3/F.4/F.4.1 AS-IS）、本文件（F.4 过度 PASS 审计纠正 + 本记录）。
+
+### Regression
+
+- ruff / compileall / node 全过；F.2 offline eval 30/30 PASS；Phase E router eval 108/108 冻结指标保持；F.1 / F.3 / deterministic verifier 零改动。
+
+### Gate decision
+
+**Phase F.4.1 = PASS。** 经 F.4.1 收口后：**Phase F.4 = PASS，Phase F overall = PASS，V3 DoD = PASS（含 deferred 非阻断项）**。按合同 STOP，等待新授权。

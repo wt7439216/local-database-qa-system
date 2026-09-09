@@ -17,8 +17,12 @@
 | Phase D.1 | v3.3 | 运行时整合 + Scope 收口 + 错误脱敏 | FINAL PASS |
 | Phase E | v3.4 | Conversation-aware Router + Query Rewrite + Follow-up Resolution | FINAL PASS |
 | Phase F.1 | v3.5 | Hierarchical Summary + Provenance / Invalidation | FINAL PASS |
+| Phase F.2 | v3.5 | Deterministic Citation Quality Closure | FINAL PASS |
+| Phase F.3 | v3.5 | Semantic Citation Verifier Decision Gate | PASS（决策 DEFER_L2） |
+| Phase F.4 | v3.5 | Golden Set / Answer Quality / Release Quality Closure | FINAL PASS |
+| Phase F.4.1 | v3.5 | Final Closure Remediation | FINAL PASS |
 
-Phase F 进行中：F.1（Hierarchical Summary + Provenance/Invalidation）已完成；F.2 / F.3 / F.4 尚未开始，等待单独授权。
+Phase F 已完成（F.1–F.4.1）。V3 Definition of Done 达标（含明确 deferred 非阻断项：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier，见 docs/V3_DOD_SCOPE_AMENDMENT.md）。
 
 ## 核心特性
 
@@ -70,7 +74,7 @@ Phase F 进行中：F.1（Hierarchical Summary + Provenance/Invalidation）已�
 ### 工程化
 
 - 运行时仅用 Python 标准库（建库环境另需 requirements-ingest.txt）；
-- 419 项单元/集成测试（真实 Qdrant/Ollama/Reranker 集成在服务不可达时自动 skip）；
+- 453 项单元/集成测试（真实 Qdrant/Ollama/Reranker 集成在服务不可达时自动 skip）；
 - 评测门禁：教材 Golden Set（召回/范围/路由）、通用导入 25 例、Scope 34 例（leakage=0）、Reranker 53 例、Phase E Router Golden 108 例（route 100% / follow-up 100% / ambiguous false-resolution 0% / scope leakage 0）；
 - ruff 静态检查、GitHub Actions CI、PyInstaller 一键打包；
 - 数据目录保持可移植布局（`data/` 随程序存放）；Windows 受保护安装目录场景的 `%LOCALAPPDATA%` 搬迁为已登记 backlog（见 docs/V3_PROGRESS.md）。

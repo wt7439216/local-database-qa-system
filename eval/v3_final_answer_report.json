@@ -1,23 +1,23 @@
 {
   "evaluated_cases": 144,
-  "new_generated": 64,
-  "cache_hits": 80,
-  "answer_fact_accuracy": 0.6111111111111112,
+  "new_generated": 144,
+  "cache_hits": 0,
+  "answer_fact_accuracy": 0.7013888888888888,
   "fact_present": 259,
   "fact_total": 314,
   "missing_fact_rate": 0.1752,
-  "refusal_count": 29,
+  "refusal_count": 4,
   "citation": {
-    "supported": 54,
-    "unsupported": 346,
-    "uncertain": 154,
+    "supported": 55,
+    "unsupported": 347,
+    "uncertain": 153,
     "invalid_citations": 0,
     "scope_violations": 0,
-    "avg_coverage": 0.5534,
-    "claim_total": 554
+    "avg_coverage": 0.5524,
+    "claim_total": 555
   },
   "latency": {
-    "p50_ms": 19769,
-    "p95_ms": 50890
+    "p50_ms": 16186,
+    "p95_ms": 41531
   }
 }

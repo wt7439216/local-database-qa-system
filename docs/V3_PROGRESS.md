@@ -915,3 +915,50 @@ READY_FOR_QUALITY_REMEDIATION_AUTHORIZATION
 ### Gate decision
 
 **Q1 = PASS。** 按合同 STOP：不自动开始 Q2（Prompt/Citation Coverage）/ Q3（Verifier Precision）/ Q4（Retrieval）/ L2。等待下一次单独授权。
+
+## Quality Remediation Q1.1 — Corrected Evaluation Baseline Rebuild（2026-09-09）
+
+- Status: **CORRECTED_EVALUATION_BASELINE = FROZEN**（baseline_version=`q1-corrected-v1`，evaluator_version=`answer-eval-v2`）
+- 性质：MEASUREMENT-ONLY，重跑 144/144 answer/citation，建立修正评测基线。零 production 改动、零 evaluator 逻辑改动。
+
+### Execution Identity
+- model=`qwen2.5:7b`；library=`10698752:c6bc9b3eb63ae4e6`；golden_hash=`6e18ee4ee9669bef`（未变）；evaluator=`answer-eval-v2`
+- Golden total=185 / answer eligible=144 / evaluated=144 / expected-refusal=41
+
+### Q1 Refusal Revalidation
+- answer_text_refusal_count：29 → **4**（全部为 `out_of_scope` 结构化拒答：loc-018 / cmp-015 / mt-006 / md-014）
+- all_facts_present_but_refused：13 → **0**
+- answer_state 分布：ANSWERED 128 / ANSWER_WITH_LIMITATION 12 / REFUSED 4 / EMPTY 0
+- 13 个旧误判 case 全部 → ANSWERED / ANSWER_WITH_LIMITATION（facts 全命中）
+
+### Original vs Corrected Baseline
+| Metric | Original | Corrected | Delta |
+|---|---:|---:|---:|
+| case_exact_fact_match_rate | 0.6111 | 0.7014 | +0.0903 |
+| fact_recall | 0.8248 | 0.8248 | 0.0000 |
+| missing_fact_rate | 0.1752 | 0.1752 | 0.0000 |
+| citation_coverage | 0.5534 | 0.5524 | -0.0010 |
+| high_confidence_unsupported_rate | 0.0812 | 0.0829 | +0.0017 |
+
+### Fact Recall Stability（关键验证）
+fact_recall 完全不变（259/314），验证 Q1 确认的「fact_recall 与 refusal 解耦」。case_exact 的 +0.09 完全来自 refusal 修正（13 个误判 case 的 facts 本就全命中，仅被旧 evaluator 误标 refused），非模型波动。citation / high_conf_unsupported 的微小变化（±0.002）来自 LLM generation variance，非 Q1 影响。
+
+### Category Breakdown（corrected case_exact）
+single_fact_qa 0.732 / **locate 0.400（最差，未变）** / compare 0.700 / multi_turn 0.737 / multi_document 0.750 / metadata 0.750 / citation_negative 0.850。locate 的 fact_recall 0.417 仍最低（非 refusal 问题，是 golden 设计偏严 + 定位答案未复述概念词）。
+
+### Product Quality Gate 静态比较（Contract v1.0 冻结，未改）
+| Metric | Corrected | Target | 结果 |
+|---|---:|---:|---|
+| case_exact_fact_match_rate | 0.7014 | ≥0.80 | FAIL |
+| fact_recall | 0.8248 | ≥0.90 | FAIL |
+| false_refusal_rate | 0.0278 | ≤0.03 | PASS |
+| citation_coverage | 0.5524 | ≥0.80 | FAIL |
+| high_confidence_unsupported_rate | 0.0829 | ≤0.05 | FAIL |
+
+### 交付
+- 新增 `eval/v3_corrected_baseline.json`（ORIGINAL_BASELINE + CORRECTED_EVALUATION_BASELINE 并排，旧 baseline 保留）。
+- `eval/v3_final_answer_report.json` 被 eval 脚本覆盖为 corrected 数据（旧 aggregate 从旧 cache entry 可重建）。
+- `data/eval_cache/` 保持 ignored，raw answer cache 不提交。
+
+### Gate decision
+**CORRECTED_EVALUATION_BASELINE = FROZEN（q1-corrected-v1）。** 推荐 **NEXT = Q2**（Citation Coverage）：coverage 0.5524 距 0.80 缺口最大，且根因已明确为「Prompt 鼓励 uncited sentence + 未强制逐句 marker」，非 verifier 问题。按合同 STOP，等待授权。

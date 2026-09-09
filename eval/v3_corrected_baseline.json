@@ -1,0 +1,50 @@
+{
+  "baseline_version": "q1-corrected-v1",
+  "evaluator_version": "answer-eval-v2",
+  "created": "2026-09-09",
+  "execution_identity": {
+    "model": "qwen2.5:7b",
+    "library_identity": "10698752:c6bc9b3eb63ae4e6",
+    "golden_hash": "6e18ee4ee9669bef",
+    "golden_total": 185,
+    "answer_eligible": 144,
+    "answer_evaluated": 144,
+    "expected_refusal_non_answer": 41
+  },
+  "original_baseline": {
+    "evaluator_version": "f4.1-v1",
+    "case_exact_fact_match_rate": 0.6111,
+    "fact_recall": 0.8248,
+    "missing_fact_rate": 0.1752,
+    "answer_text_refusal_count": 29,
+    "all_facts_present_but_refused": 13,
+    "citation_coverage": 0.5534,
+    "high_confidence_unsupported_rate": 0.0812
+  },
+  "corrected_baseline": {
+    "evaluator_version": "answer-eval-v2",
+    "case_exact_fact_match_rate": 0.7014,
+    "fact_recall": 0.8248,
+    "missing_fact_rate": 0.1752,
+    "answer_text_refusal_count": 4,
+    "answer_text_refusal_rate": 0.0278,
+    "all_facts_present_but_refused": 0,
+    "empty_answer_count": 0,
+    "answer_state_distribution": {
+      "ANSWERED": 128,
+      "ANSWER_WITH_LIMITATION": 12,
+      "REFUSED": 4,
+      "EMPTY": 0
+    },
+    "citation_coverage_case_level": 0.5524,
+    "claim_level_citation_coverage": 0.4577,
+    "supported_claim_count": 55,
+    "unsupported_claim_count": 347,
+    "uncertain_claim_count": 153,
+    "invalid_citation_count": 0,
+    "scope_violation_count": 0,
+    "number_mismatch": 36,
+    "missing_key_term": 10,
+    "high_confidence_unsupported_rate": 0.0829
+  }
+}

@@ -699,8 +699,8 @@ F.0（只读，未改任何仓库文件）：Summary/Citation AS-IS 审计 + Gap
 
 ## Phase F.4 — Golden Set / Answer Quality / Release Quality Closure（2026-09-08）
 
-- Status: **PASS**（Phase F 最终质量闭环）
-- 最终判定：**Phase F.4 = PASS，Phase F overall = PASS，V3 Definition of Done = PASS（含明确 deferred 非阻断项）**
+- Status: **Engineering / Evaluation Closure PASS**（Phase F 实现与评估基础设施闭环；Product Quality DoD 见本文件末尾 Remediation 记录）
+- 最终判定：**Phase F.4 工程/评估闭环 = PASS**。原「V3 Definition of Done = PASS」声明经 Final Truthfulness Audit 裁决为证据不足（overclaim）。
 - 决策文档：`docs/V3_PHASE_F4_RELEASE_GATE.md`（实测指标 + Release Gate 冻结 + DoD audit + KB/Multi-doc Summary 裁决）
 
 ### 交付
@@ -728,9 +728,9 @@ F.0（只读，未改任何仓库文件）：Summary/Citation AS-IS 审计 + Gap
 
 ### Gate decision
 
-**Phase F.4 = PASS，Phase F overall = PASS，V3 DoD = PASS（含 deferred 非阻断项：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier）。** 按合同完成发布、CI 与 remote closure 后 STOP，不自动开启 L2 implementation / Phase G / 公网部署 / 新架构重构。
+**Phase F.4 工程/评估闭环 = PASS（实现与评估基础设施已完成）。** Product Quality DoD 与 V3 DoD 的最终状态经 Final Truthfulness Audit 重新裁决，见本文件末尾「Truthfulness Remediation」记录。按合同完成发布、CI 与 remote closure 后 STOP，不自动开启 L2 implementation / Phase G / 公网部署 / 新架构重构。
 
-> **⚠️ 审计纠正（2026-09-09）**：上述 F.4 PASS 声明在 Final Truthfulness Audit 中被判定为**证据不足**，重新裁决为 `Phase F.4 = NOT_YET_PASS / Phase F overall = NOT_YET_PASS / V3 DoD = NOT_YET_PASS`。缺口：answer/citation 仅 40/144（27.8%）、unsupported 仍静默呈现为 verified、文档级元数据 6 条错误放行、LLM TTFT 缺失、DoD Option B 未正式落实、README/ARCHITECTURE 滞后。经 Phase F.4.1 收口修复后，本 PASS 声明重新成立（见下 F.4.1 记录）。
+> **⚠️ 审计纠正（2026-09-09）**：上述 F.4「V3 DoD = PASS」声明在 Final Truthfulness Audit 中被判定为**证据不足（overclaim）**。F.4.1 关闭了工程/评估层面的 6 项缺口（144/144 answer、citation 用户可见、metadata guard、TTFT、DoD Option B 落实、文档真值），但**产品质量验收标准仍未独立满足**（answer fact accuracy 0.6111 与 citation coverage 0.5534 缺乏独立 quality acceptance threshold）。最终状态见本文件末尾「Truthfulness Remediation」记录。
 
 ## Phase F.4.1 — Final Closure Remediation（2026-09-09）
 
@@ -753,4 +753,68 @@ F.0（只读，未改任何仓库文件）：Summary/Citation AS-IS 审计 + Gap
 
 ### Gate decision
 
-**Phase F.4.1 = PASS。** 经 F.4.1 收口后：**Phase F.4 = PASS，Phase F overall = PASS，V3 DoD = PASS（含 deferred 非阻断项）**。按合同 STOP，等待新授权。
+**Phase F.4.1 = Closure PASS（6 项工程/评估缺口关闭）。** Product Quality DoD 与 V3 DoD 的最终状态经 Final Truthfulness Audit 重新裁决为 overclaim，见本文件末尾「Truthfulness Remediation」记录。按合同 STOP，等待新授权。
+
+## Truthfulness Remediation — Quality Acceptance Contract Freeze（2026-09-09）
+
+- Status: **Final Truthfulness Remediation = PASS（文档真值修复 + 质量合同冻结）**
+- 性质：修正 Final Truthfulness Audit 确认的 overclaim；区分 Engineering Closure 与 Product Quality DoD；修正指标命名；建立非 post-hoc 的产品质量接受合同。**未修改 production code / tests / Golden / evaluator / threshold 实现。**
+
+### 修正的 overclaim
+
+- 原「V3 Definition of Done = PASS」→ 修正为 5 项独立状态（见下）。
+- 原「Phase F overall = PASS」→ 修正为「Phase F Engineering / Evaluation Closure = PASS」（避免读者误以为 Product Quality 已达标）。
+- 原「answer fact accuracy = 0.6111」与「fact present 259/314」混称「回答事实准确率」→ 修正为两个独立指标（见下）。
+
+### 最终独立状态（Final Truthfulness Audit 冻结）
+
+```text
+Engineering Closure       = PASS
+Evaluation Infrastructure = PASS
+Quality Baseline          = FROZEN
+Product Quality DoD       = NOT_YET_PASS
+V3 Release Readiness      = CONDITIONALLY_READY
+```
+
+### 指标命名修正（Metric Glossary）
+
+| 旧名 | 新名 | 值 | 定义 |
+|---|---|---|---|
+| answer fact accuracy | case_exact_fact_match_rate | 0.6111 | case 所有 expected facts 均命中且非拒答才算通过 |
+| （混称） | fact_recall | 0.8248（259/314） | 单个 expected fact 命中比例 |
+| （混称） | missing_fact_rate | 0.1752 | 1 - fact_recall |
+| citation coverage | citation_coverage | 0.5534 | cited factual claims / factual claims |
+| （新） | high_confidence_unsupported_rate | 0.0812（45/554） | (number_mismatch + missing_key_term) / total claims |
+
+### Citation 指标拆分（禁止混称）
+
+- Citation Validity：invalid citation = 0（hard gate，✅）
+- Citation Scope Safety：scope violation = 0（hard gate，✅）
+- Citation Coverage：0.5534（quality gate，待用户冻结阈值）
+- Citation Deterministic Support：SUPPORTED 54 / UNSUPPORTED 346（no_evidence 301 + number_mismatch 35 + missing_key_term 10）/ UNCERTAIN 154
+
+### 交付
+
+- 新增 `docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md`：产品质量接受合同（draft），区分 `CURRENT_REGRESSION_BASELINE` 与 `PRODUCT_QUALITY_THRESHOLD`，含 Metric Glossary、Candidate Quality Contract（Minimum/Target/Stretch 三档）、Threshold Provenance Table、阈值来源规则、Citation Coverage 专门裁决、L2 触发条件。
+- 新增 `eval/v3_quality_acceptance.json`：机器可读合同（version `quality-contract-v1-draft`，frozen=false）。
+- 新增 `tests/test_quality_acceptance.py`：合同 validator（14 项，校验 schema / 阈值语义分离 / hard gate 绝对零 / USER_DECISION_REQUIRED）。
+- 修正 `README.md`（阶段状态 + 最终状态声明）、`docs/V3_PHASE_F4_RELEASE_GATE.md`（threshold provenance + 最终判定）、`docs/V3_PHASE_F4.1_CLOSURE.md`（Gate decision + threshold truthfulness）、`docs/ARCHITECTURE.md`（V3 DoD 状态）、本文件。
+
+### 阈值来源（合法 / 禁止）
+
+- 合法：原始 V3 计划目标（如 citation coverage 90%）、UX 要求、质量风险等级、可解释工程标准、人工审核需求。
+- 禁止：「当前 baseline 是 X，所以 threshold 设为略低于 X」——只能叫 regression threshold，不能叫 quality acceptance threshold。
+
+### 待用户决策（USER_DECISION_REQUIRED）
+
+| Metric | 当前 baseline | 候选（Min / Target / Stretch） |
+|---|---|---|
+| case_exact_fact_match_rate | 0.6111 | ≥0.70 / ≥0.80 / ≥0.90 |
+| fact_recall | 0.8248 | ≥0.85 / ≥0.90 / ≥0.95 |
+| false_refusal_rate | 0.0278 | ≤0.05 / ≤0.03 / ≤0.01 |
+| citation_coverage | 0.5534 | ≥0.70 / ≥0.80 / ≥0.90 |
+| high_confidence_unsupported_rate | 0.0812 | ≤0.10 / ≤0.05 / ≤0.02 |
+
+### Gate decision
+
+**Final Truthfulness Remediation = PASS。** 产品状态保持：Engineering Closure = PASS / Evaluation Infrastructure = PASS / Quality Baseline = FROZEN / Product Quality DoD = NOT_YET_PASS / V3 Release Readiness = CONDITIONALLY_READY。按合同 STOP：不开始质量优化代码、不重跑 144-case、不修改 Prompt/Retriever/Citation、不实施 L2、不进入 Phase G。等待用户明确冻结 Product Quality Acceptance Contract。

@@ -20,9 +20,9 @@
 | 指标 | 结果 |
 |---|---|
 | **evaluated cases** | **144/144**（新生成 64 + cache 复用 80） |
-| answer fact accuracy | 0.6111 |
-| fact present / total | 259 / 314 |
-| missing fact rate | 0.1752 |
+| case_exact_fact_match_rate（原 answer fact accuracy） | 0.6111 |
+| fact_recall（fact present / total） | 0.8248（259 / 314） |
+| missing_fact_rate | 0.1752 |
 | refusal count | 29 |
 
 ## 3. Workstream B — Citation Closure
@@ -88,11 +88,13 @@ answer preserved + explicit unsupported flag + UI warning + citation_verified=fa
 
 冻结规则：后续版本不得为了 PASS 单方面下调；任何下调需 versioned amendment + rationale + explicit review。
 
+> **进一步澄清（2026-09-09 Truthfulness Remediation）**：这些是 regression baseline（防退化），不是 quality acceptance standard。产品质量接受标准（候选阈值）见 `docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md`，待用户冻结。
+
 ## 8. Documentation Truthfulness
 
-- README：阶段状态表更新到 F.4.1，测试数 419→453，明确「Phase F 已完成 + V3 DoD 达标（含 deferred 非阻断项）」。
+- README：阶段状态表更新到 F.4.1，测试数 419→453，明确「Phase F 已完成 + V3 DoD 达标（含 deferred 非阻断项）」。（**注：此「V3 DoD 达标」措辞经 Final Truthfulness Audit 纠正后，已在 2026-09-09 Truthfulness Remediation 中进一步修正为 5 项独立状态。**）
 - ARCHITECTURE：新增 F.3/F.4/F.4.1 AS-IS 描述，更新 F.2 边界（移除「最终 Golden Set DEFERRED」的过时表述）。
-- V3_PROGRESS：见下（旧过度 PASS 记录经 F.4.1 收口后重新成立，追加 F.4.1 记录）。
+- V3_PROGRESS：见下（F.4 过度 PASS 记录经 Final Truthfulness Audit 纠正，追加 F.4.1 记录与 Truthfulness Remediation 记录）。
 
 ## 9. 环境问题（单独分类，不计入产品 PASS）
 
@@ -100,4 +102,6 @@ Qdrant E2E collection flakiness + Windows junction/symlink（CodeBuddy shim WinE
 
 ## 10. Gate Decision
 
-**Phase F.4.1 = PASS**（6 项审计缺口全部关闭）。
+**Phase F.4.1 = Closure PASS**（6 项工程/评估审计缺口全部关闭）。
+
+> 注意：本 PASS 仅表示 F.4.1 的工程/评估收口完成。Product Quality DoD 仍为 NOT_YET_PASS（见 `docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md`），Final Truthfulness Audit 的 overclaim 裁决未因本收口而撤销。

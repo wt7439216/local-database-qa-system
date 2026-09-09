@@ -5,6 +5,8 @@
 > 日期：2026-09-09
 > 关联证据：`docs/V3_PHASE_F4_RELEASE_GATE.md`（F.4 实测）、`docs/V3_PHASE_F4.1_CLOSURE.md`（F.4.1 收口）
 
+> **⚠️ 本文件是 SCOPE AMENDMENT，不是 IMPLEMENTED 声明**：下列 deferred 项**未被实现**，而是被明确移出 V3 核心 DoD。读者须清楚看到 original scope → current scope 的变化，不得把「DEFERRED」误读为「已实现」。
+
 ## 1. Original Target（原 DoD 要求）
 
 `docs/V3_IMPROVEMENT_PLAN.md` §13.1 hierarchical-summary target 与 §23.3 DoD 明确要求：
@@ -24,14 +26,14 @@ Phase F.4 授权文档 §24「特别处理 KB / Multi-document Summary」明确�
 
 F.4 已选择 **Option B**（授权范围内）。本文件是 Option B 的正式落实：修订 DoD 范围，消除「原 DoD 要求 KB Summary + V3 DoD PASS + 无 amendment」三者并存的自相矛盾。
 
-## 3. 裁决：deferred items（非阻断）
+## 3. 裁决：deferred items（非阻断，original scope → current scope）
 
-| 项 | 原 DoD 状态 | 裁决 | 理由 |
-|---|---|---|---|
-| **KB Summary（知识库级摘要）** | 要求 | **DEFERRED（非阻断）** | 属「整库一键摘要」增强，非问答核心路径 |
-| **Multi-document Summary feature（多文档聚合摘要）** | 要求 | **DEFERRED（非阻断）** | 同上，跨文档聚合摘要 |
-| 文档级元数据查询（列表/页数/片段数/状态/scope） | Phase C/D 已 DEFERRED | **DEFERRED（非阻断）** | 已登记 deferred_meta_queries；F.4.1 加 deterministic guard 拒绝进 RAG |
-| L2 semantic verifier（NLI/LLM Judge） | Phase F 可选 | **DEFERRED（F.3 决策）** | F.3 = DEFER_L2，未实现 |
+| 项 | 原 DoD 状态 | 当前实现 | 裁决 | 理由 |
+|---|---|---|---|---|
+| **KB Summary（知识库级摘要）** | 要求 | **未实现** | **SCOPE AMENDMENT → DEFERRED（非阻断）** | 属「整库一键摘要」增强，非问答核心路径 |
+| **Multi-document Summary feature（多文档聚合摘要）** | 要求 | **未实现**（Multi-document QA 已实现，Summary 未实现） | **SCOPE AMENDMENT → DEFERRED（非阻断）** | 同上，跨文档聚合摘要 |
+| 文档级元数据查询（列表/页数/片段数/状态/scope） | Phase C/D 已 DEFERRED | **未实现**（F.4.1 加 deterministic guard 明确拒答） | **SCOPE AMENDMENT → DEFERRED（非阻断）** | 已登记 deferred_meta_queries；F.4.1 加 deterministic guard 拒绝进 RAG |
+| L2 semantic verifier（NLI/LLM Judge） | Phase F 可选 | **未实现** | **DEFERRED（F.3 决策 DEFER_L2）** | F.3 = DEFER_L2，未实现 |
 
 ## 4. Non-blocking rationale（为什么非阻断）
 

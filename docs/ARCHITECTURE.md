@@ -163,7 +163,7 @@ F.2 建立确定性 Citation 质量闭环（`core/citation_verifier.py`，纯标
 - **F.3 决策门**：`eval/phase_f3_semantic_challenge.json`（50 条语义困难集）+ `scripts/eval_phase_f3.py` 量化比较 L1 与候选 L2（qwen2.5:7b judge）。结论 **DEFER_L2**（L2 accuracy 0.74 vs L1 0.28，但 judge 契约未闭合 + 延迟 p50 2.74s）。详见 `docs/V3_PHASE_F3_CITATION_DECISION.md`。
 - **F.4 质量闭环**：`eval/v3_final_golden.json`（185 条，8 类）+ `scripts/eval_v3_release.py` 分层评测（Retrieval / Scope / Router / Answer / Citation），冻结 baseline-derived Release Quality Gate。详见 `docs/V3_PHASE_F4_RELEASE_GATE.md`。
 - **F.4.1 收口**：144/144 answer/citation 全量回归（`scripts/eval_v3_answer_full.py`，断点续跑 cache）；deterministic UNSUPPORTED 不再静默呈现为 verified（`citation_verified=false` 触发既有 UI warning）；文档级元数据查询 deterministic guard（`is_deferred_metadata_query` → unsupported，不进 RAG）；TTFT/延迟补测；DoD Option B amendment 正式落实（见 `docs/V3_DOD_SCOPE_AMENDMENT.md`）。
-- **V3 DoD 状态**：达标（含明确 deferred 非阻断项：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier）。
+- **V3 最终状态（Truthfulness Remediation 后）**：Engineering Closure = PASS / Evaluation Infrastructure = PASS / Quality Baseline = FROZEN / Product Quality DoD = NOT_YET_PASS / V3 Release Readiness = CONDITIONALLY_READY。deferred 非阻断项（SCOPE AMENDMENT，非 IMPLEMENTED）：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier（见 `docs/V3_DOD_SCOPE_AMENDMENT.md`）。产品质量接受合同见 `docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md`。
 
 ### Reranker（可选，默认关闭）
 

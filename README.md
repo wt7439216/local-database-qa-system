@@ -19,10 +19,18 @@
 | Phase F.1 | v3.5 | Hierarchical Summary + Provenance / Invalidation | FINAL PASS |
 | Phase F.2 | v3.5 | Deterministic Citation Quality Closure | FINAL PASS |
 | Phase F.3 | v3.5 | Semantic Citation Verifier Decision Gate | PASS（决策 DEFER_L2） |
-| Phase F.4 | v3.5 | Golden Set / Answer Quality / Release Quality Closure | FINAL PASS |
-| Phase F.4.1 | v3.5 | Final Closure Remediation | FINAL PASS |
+| Phase F.4 | v3.5 | Golden Set / Answer Quality / Release Quality Closure | Engineering / Evaluation Closure PASS |
+| Phase F.4.1 | v3.5 | Final Closure Remediation | Closure PASS |
 
-Phase F 已完成（F.1–F.4.1）。V3 Definition of Done 达标（含明确 deferred 非阻断项：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier，见 docs/V3_DOD_SCOPE_AMENDMENT.md）。
+Phase F（F.1–F.4.1）的实现与评估基础设施已闭环。但需严格区分两个概念：
+
+- **Engineering Closure = PASS**（代码/测试/CI/迁移/安全/文档闭环）；
+- **Evaluation Infrastructure = PASS**（Golden 185 + 分层评测 + 指标 + telemetry 闭环）；
+- **Quality Baseline = FROZEN**（`CURRENT_REGRESSION_BASELINE` 已冻结，用于防退化）；
+- **Product Quality DoD = NOT_YET_PASS**（产品质量验收标准尚未独立满足，见 docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md）；
+- **V3 Release Readiness = CONDITIONALLY_READY**（非 FAILED）。
+
+产品质量阈值（case exact fact match / fact recall / citation coverage 等）**待用户明确冻结**，本轮未擅自定夺。deferred 非阻断项：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier（见 docs/V3_DOD_SCOPE_AMENDMENT.md）。
 
 ## 核心特性
 

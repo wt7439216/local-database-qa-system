@@ -1,0 +1,142 @@
+{
+  "version": "quality-contract-v1-draft",
+  "frozen": false,
+  "status": "DRAFT",
+  "created": "2026-09-09",
+  "trigger": "FINAL_TRUTHFULNESS_AUDIT_FINDS_OVERCLAIM",
+  "decision_required": [
+    "case_exact_fact_match_rate",
+    "fact_recall",
+    "false_refusal_rate",
+    "citation_coverage",
+    "high_confidence_unsupported_rate"
+  ],
+  "metrics": [
+    {
+      "name": "case_exact_fact_match_rate",
+      "definition": "An answer case passes only when all expected facts are hit AND it is not wrongly refused.",
+      "formula": "fact_ok / fact_cases",
+      "current_baseline": 0.6111,
+      "measurement_dataset": "144-case answer (Ollama qwen2.5:7b)",
+      "gate_type": "quality",
+      "regression_threshold": {"operator": ">=", "value": 0.60, "kind": "regression"},
+      "quality_threshold": {
+        "status": "USER_DECISION_REQUIRED",
+        "candidates": [
+          {"level": "minimum_acceptable", "operator": ">=", "value": 0.70},
+          {"level": "target", "operator": ">=", "value": 0.80},
+          {"level": "stretch", "operator": ">=", "value": 0.90}
+        ]
+      },
+      "source": "interpretable engineering standard + manual review requirement"
+    },
+    {
+      "name": "fact_recall",
+      "definition": "Proportion of individual expected facts that are hit.",
+      "formula": "sum(fact_present) / sum(fact_total)",
+      "current_baseline": 0.8248,
+      "measurement_dataset": "144-case answer (259 / 314 facts)",
+      "gate_type": "quality",
+      "regression_threshold": {"operator": ">=", "value": 0.80, "kind": "regression"},
+      "quality_threshold": {
+        "status": "USER_DECISION_REQUIRED",
+        "candidates": [
+          {"level": "minimum_acceptable", "operator": ">=", "value": 0.85},
+          {"level": "target", "operator": ">=", "value": 0.90},
+          {"level": "stretch", "operator": ">=", "value": 0.95}
+        ]
+      },
+      "source": "interpretable engineering standard"
+    },
+    {
+      "name": "false_refusal_rate",
+      "definition": "Proportion of answerable cases wrongly refused.",
+      "formula": "false_refusals / eligible_cases",
+      "current_baseline": 0.0278,
+      "measurement_dataset": "144 eligible cases (4 / 144)",
+      "gate_type": "quality",
+      "regression_threshold": {"operator": "<=", "value": 0.05, "kind": "regression"},
+      "quality_threshold": {
+        "status": "USER_DECISION_REQUIRED",
+        "candidates": [
+          {"level": "minimum_acceptable", "operator": "<=", "value": 0.05},
+          {"level": "target", "operator": "<=", "value": 0.03},
+          {"level": "stretch", "operator": "<=", "value": 0.01}
+        ]
+      },
+      "source": "user experience requirement"
+    },
+    {
+      "name": "citation_coverage",
+      "definition": "Proportion of factual claims that carry a citation.",
+      "formula": "cited_factual_claims / factual_claims",
+      "current_baseline": 0.5534,
+      "measurement_dataset": "144-case citation (554 claims)",
+      "gate_type": "quality",
+      "regression_threshold": {"operator": ">=", "value": 0.55, "kind": "regression"},
+      "quality_threshold": {
+        "status": "USER_DECISION_REQUIRED",
+        "candidates": [
+          {"level": "minimum_acceptable", "operator": ">=", "value": 0.70},
+          {"level": "target", "operator": ">=", "value": 0.80},
+          {"level": "stretch", "operator": ">=", "value": 0.90}
+        ]
+      },
+      "source": "original V3 plan suggested target (90%)"
+    },
+    {
+      "name": "high_confidence_unsupported_rate",
+      "definition": "Proportion of claims with high-confidence deterministic conflict (number_mismatch + missing_key_term). no_evidence is excluded (it is a coverage gap, not a conflict).",
+      "formula": "(number_mismatch + missing_key_term) / total_claims",
+      "current_baseline": 0.0812,
+      "measurement_dataset": "45 / 554 claims (35 number_mismatch + 10 missing_key_term)",
+      "gate_type": "quality",
+      "regression_threshold": {"operator": "<=", "value": 0.10, "kind": "regression"},
+      "quality_threshold": {
+        "status": "USER_DECISION_REQUIRED",
+        "candidates": [
+          {"level": "minimum_acceptable", "operator": "<=", "value": 0.10},
+          {"level": "target", "operator": "<=", "value": 0.05},
+          {"level": "stretch", "operator": "<=", "value": 0.02}
+        ]
+      },
+      "source": "quality risk level"
+    },
+    {
+      "name": "invalid_citation_count",
+      "definition": "Number of citations that do not map to a real evidence chunk.",
+      "formula": "count of invalid citation ids",
+      "current_baseline": 0,
+      "measurement_dataset": "554 claims",
+      "gate_type": "hard",
+      "regression_threshold": {"operator": "==", "value": 0, "kind": "hard"},
+      "quality_threshold": {"operator": "==", "value": 0, "kind": "hard"},
+      "source": "citation validity safety boundary (Phase F.2)"
+    },
+    {
+      "name": "citation_scope_violation",
+      "definition": "Number of citations outside the current QueryScope.",
+      "formula": "count of out-of-scope citations",
+      "current_baseline": 0,
+      "measurement_dataset": "554 claims",
+      "gate_type": "hard",
+      "regression_threshold": {"operator": "==", "value": 0, "kind": "hard"},
+      "quality_threshold": {"operator": "==", "value": 0, "kind": "hard"},
+      "source": "scope safety boundary (Phase D)"
+    }
+  ],
+  "observations": [
+    {"name": "e2e_latency_p50_s", "current": 19.77},
+    {"name": "e2e_latency_p95_s", "current": 50.89},
+    {"name": "model_ttft_p50_s", "current": 2.14},
+    {"name": "model_ttft_p95_s", "current": 2.22},
+    {"name": "l1_uncertain_rate", "current": 0.2780}
+  ],
+  "deferred_capabilities": [
+    "KB Summary",
+    "Multi-document Summary",
+    "document-level metadata query",
+    "L2 semantic verifier (NLI / LLM Judge)"
+  ],
+  "l2_trigger_condition": "If the frozen Product Quality Gate cannot be reached by deterministic L1 alone, reopen L2 evaluation. This is a trigger condition, NOT implementation authorization."
+}

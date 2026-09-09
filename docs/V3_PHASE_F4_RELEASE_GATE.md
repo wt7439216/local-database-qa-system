@@ -2,7 +2,7 @@
 
 > 阶段性质：Phase F 最终质量闭环（建立最终 Golden Set + 分层评测 + 冻结 Release Gate + DoD audit）
 > 日期：2026-09-08
-> 最终判定：**Phase F.4 = PASS**，**Phase F overall = PASS**，**V3 Definition of Done = PASS（含明确 deferred 项）**
+> 最终判定：**Phase F.4 工程/评估闭环 = PASS**。原「V3 Definition of Done = PASS」经 Final Truthfulness Audit（2026-09-09）裁决为 overclaim。最终独立状态（Engineering Closure / Evaluation Infrastructure / Quality Baseline / Product Quality DoD / Release Readiness）见 `docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md` 与本文件 §17。
 
 ---
 
@@ -112,14 +112,16 @@ F.3 结论「DEFER_L2」的复评：
 | migration/integrity | PASS |
 | security/publication scan | PASS |
 
-### QUALITY GATES（实测冻结，回归不得下降）
-| 指标 | 实测 | 冻结阈值 |
+### QUALITY GATES（⚠️ baseline-derived，非 pre-registered quality acceptance）
+> 以下阈值是**首次 F.4 测量后冻结的回归基线**（防止未来退化），**不是**预先注册的产品质量接受标准。它们不应被理解为「当前质量已达标」。真正的产品质量接受标准见 `docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md`（候选阈值，`USER_DECISION_REQUIRED`）。
+
+| 指标 | 实测 | 冻结阈值（regression） |
 |---|---|---|
 | Retrieval recall@3 | 0.82 | ≥ 0.80 |
 | false-refusal | 0.03 | ≤ 0.05 |
 | route accuracy | 0.92 | ≥ 0.90 |
-| answer fact accuracy | 0.65 | ≥ 0.60 |
-| citation validity（invalid=0） | 100% | = 0 |
+| answer fact accuracy（= case_exact_fact_match_rate） | 0.65 | ≥ 0.60 |
+| citation validity（invalid=0） | 100% | = 0（hard gate） |
 
 ### OBSERVATION（记录，不设硬 SLA）
 - citation coverage 66.5%（质量观察）
@@ -148,9 +150,9 @@ F.3 结论「DEFER_L2」的复评：
 | Knowledge Lifecycle（KB CRUD/多格式导入/状态/删除/更新/rebuild/QueryScope） | ✅ PASS（Phase C/D/D.1） |
 | Retrieval（FTS5/Qdrant ANN/RRF/Reranker/filters/OOS/rollback） | ✅ PASS（Phase A/B，Reranker 默认关） |
 | Multi-document（单文档/跨文档 QA/compare/locate/document summary） | ✅ PASS（跨文档 QA 实测） |
-| **KB Summary / Multi-document Summary** | ⚠️ **DEFERRED（见 §13 裁决）** |
+| **KB Summary / Multi-document Summary** | ⚠️ **SCOPE AMENDMENT = DEFERRED（非 IMPLEMENTED，见 §13 裁决）** |
 | Conversation（route/rule-first/LLM fallback/rewrite/topic switch） | ✅ PASS（Phase E） |
-| Evidence（citation validity/coverage/support/scope） | ✅ PASS（validity 100%/coverage 66.5%/support 分层/scope 强制） |
+| Evidence（citation validity/coverage/support/scope） | ⚠️ 部分（validity=100% hard gate ✅ / coverage=55.3% 未达质量门槛，待冻结） |
 | Engineering（CI/Qdrant integration/Golden/performance/telemetry/recovery/docs truthfulness） | ✅ PASS（F.4 建立 Golden + 分层评测 + Gate） |
 
 ## 13. KB / Multi-document Summary 裁决
@@ -170,14 +172,28 @@ F.3 结论「DEFER_L2」的复评：
 
 ## 15. Final Gate Decision
 
-- **Phase F.4 = PASS**
-- **Phase F overall = PASS**（F.0/F.1/F.2/F.3/F.4 全部完成）
-- **V3 Definition of Done = PASS**（含明确 deferred 非阻断项：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier）
+- **Phase F.4 工程/评估闭环 = PASS**
+- **Phase F 工程/评估闭环 = PASS**（F.0/F.1/F.2/F.3/F.4 实现与评估全部完成）
+- **V3 Definition of Done = NOT_YET_PASS**（产品质量验收标准未独立满足；Engineering Closure / Evaluation Infrastructure = PASS，Product Quality DoD = NOT_YET_PASS，见 §17）
 
 ## 16. Known Limitations（不伪装）
 
 - 语义陷阱类 hard negative（negation/causal/comparison）的 false-accept：L1 确定性边界，需 L2 或语义拒绝机制（DEFERRED）。
 - 文档级元数据查询 DEFERRED（列表/页数/片段数/状态/scope）。
 - KB Summary / Multi-document Summary deferred。
-- citation coverage 66.5%（未达 90% 理想值），support 需 L2 区分真/假 unsupported。
-- answer fact accuracy 0.65 受 expected_answer_facts 关键词精确匹配限制（同义表达不匹配），实际 answer 质量需人工抽查补充。
+- citation coverage 55.3%（144-case 全量，未达 90% 理想值），support 需 L2 区分真/假 unsupported。
+- case_exact_fact_match_rate 0.6111 受 expected_answer_facts 关键词精确匹配限制（同义表达不匹配，case-level exact match 保守低估）；fact_recall 0.8248 更接近真实事实命中率。
+
+## 17. Truthfulness Remediation 后最终状态（2026-09-09）
+
+Final Truthfulness Audit 裁决「V3 DoD = PASS」为 overclaim 后，§15 的 PASS 声明已修正。最终独立状态：
+
+```text
+Engineering Closure       = PASS
+Evaluation Infrastructure = PASS
+Quality Baseline          = FROZEN
+Product Quality DoD       = NOT_YET_PASS
+V3 Release Readiness      = CONDITIONALLY_READY
+```
+
+产品质量接受合同（候选阈值，`USER_DECISION_REQUIRED`）见 `docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md`。在用户明确冻结质量阈值、且真实系统重新评测达标之前，不得恢复「V3 DoD = PASS」声明。

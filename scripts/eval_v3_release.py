@@ -32,9 +32,12 @@ if str(ROOT_DIR) not in sys.path:
 from core import config  # noqa: E402
 from core.engine_v2 import StructuredQAEngine  # noqa: E402
 
-GOLDEN = ROOT_DIR / "eval" / "v3_final_golden.json"
+SCRIPTS_DIR = Path(__file__).resolve().parent
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+from eval_refusal import classify_answer_state, is_refused  # noqa: E402
 
-REFUSAL_MARKERS = ("材料不足", "无法", "不支持", "没有", "未提供", "未涵盖", "不确定", "不包含")
+GOLDEN = ROOT_DIR / "eval" / "v3_final_golden.json"
 
 
 def _chapter_number(chunk) -> int | None:
@@ -48,10 +51,12 @@ def _top_chapters(contexts, count: int) -> list[int | None]:
 
 
 def _is_refusal(result) -> bool:
-    if getattr(result, "out_of_scope", False):
-        return True
-    answer = getattr(result, "answer", "") or ""
-    return any(marker in answer for marker in REFUSAL_MARKERS)
+    # Q1: structured / template classification replaces bare-substring markers.
+    state = classify_answer_state(
+        getattr(result, "answer", "") or "",
+        bool(getattr(result, "out_of_scope", False)),
+    )
+    return is_refused(state)
 
 
 def _prepared_refused(prepared) -> bool:

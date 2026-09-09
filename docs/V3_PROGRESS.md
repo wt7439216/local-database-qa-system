@@ -866,3 +866,52 @@ READY_FOR_QUALITY_REMEDIATION_AUTHORIZATION
 ### Gate decision
 
 **Quality Acceptance Contract = FROZEN v1.0。** 产品状态：Product Quality DoD = NOT_YET_PASS（4/5 指标未达 Target 档）。**READY_FOR_QUALITY_REMEDIATION_AUTHORIZATION。** 按合同 STOP：不得自动开始 Quality Remediation，等待下一次单独授权。
+
+## Quality Remediation Q1 — Evaluator Refusal Precision（2026-09-09）
+
+- Status: **Q1 = PASS**（只修评测尺子，不修产品）
+- 性质：关闭 Final Quality Attribution 确认的 answer evaluator refusal false-positive（裸 substring 拒绝词误判）。
+
+### Cache Evidence Resolution（解决历史矛盾）
+
+真实检查 `data/eval_cache/answer_*.json`（144 entry）union of keys：`raw_answer_present=false` / `sent_contexts_present=false` / `structured_result_present=false`（仅 aggregate 字段）/ `refusal_flag_present=true` / `fact_present_present=true` / `missing_facts_present=true` / `citation_report_present=true`。结论：以真实文件检查为准 = **cache 无 raw answer**（F.4.1 曾描述"cache 含 answer 文本"与 Remediation.0 矛盾，本检查解决之）。
+
+### Root Cause Confirmation
+
+旧 evaluator（`eval_v3_answer_full.py` 与 `eval_v3_release.py::_is_refusal`）用裸 substring：`refused = out_of_scope or any(m in answer for m in ("材料不足","无法","不支持","没有","未提供","未涵盖","不确定"))`，导致正常 factual negation（"GSM 没有采用 OFDMA"）被误判为整条拒答。29 refused 中 13 个是"facts 全命中但含拒绝词"的误判。
+
+### New Refusal Contract（`scripts/eval_refusal.py`，evaluator-side，无 production DTO 改动）
+
+1. 结构化 `out_of_scope` → REFUSED；2. 6 个产品固定拒答模板（anchored prefix）→ REFUSED；3. 空答案 → EMPTY（与 REFUSED 区分）；4. limitation 开头（"材料没有…"）+ 有事实内容（citation/转折）→ ANSWER_WITH_LIMITATION，无事实内容 → REFUSED；5. 其余 → ANSWERED。
+
+### Metric Coupling Audit
+
+- **Does refusal affect fact_recall? 否**。源码确认 fact_recall = present_facts/total_facts，只依赖 fact_present/fact_total，与 refusal/answer_state 完全解耦；case_exact 依赖 answer_state（contract 定义要求"all facts present AND not refused"）。
+- **false_refusal 指标区分**：`scope_false_refusal_rate=0.0278`（Layer 2 `_prepared_refused`，结构化）≠ `answer_text_refusal_rate`（Layer 5 answer evaluator，本轮修正）。二者不得混称。
+
+### Changes
+
+- 新增 `scripts/eval_refusal.py`：4-state 分类 + `EXPLICIT_REFUSAL_PREFIXES` + `classify_answer_state/is_refused/is_answered`。
+- 修改 `scripts/eval_v3_answer_full.py`：裸 substring → `classify_answer_state`；cache schema 加性增加 `answer_state/out_of_scope/raw_answer/evaluator_version`；`EVALUATOR_VERSION = "f4.1-v1" → "answer-eval-v2"`（cache key 绑定 version，旧 cache 全部失效）。
+- 修改 `scripts/eval_v3_release.py`：删除 `REFUSAL_MARKERS`，`_is_refusal` 改为 `classify_answer_state`。
+- 新增 `tests/test_eval_refusal.py`：12 项（结构化拒答/模板/空/factual negation/limitation/uncertainty/negation/边界/predicate）。
+
+### Targeted Re-run 验证（7 case，真实 Ollama）
+
+- 5 个旧"facts 全命中但误判 refused"（qa-007/028/038, cmp-006/010）→ 现正确判 ANSWERED（facts 全命中）。
+- 2 个 scope 拒答（loc-018, md-014）→ 结构化 out_of_scope 正确判 REFUSED。
+
+### Historical 13-case Re-evaluation
+
+- cache 无 raw answer → **无法 offline 用 frozen outputs 精确 recompute 历史 13 case**（不伪称可精确 recompute）。
+- 完整 144-case rerun（建立 CORRECTED_EVALUATION_BASELINE）需单独执行（~72 分钟真实 LLM），且 new baseline 含模型运行噪声，delta 无法 100% 归因于 evaluator change。留作后续步骤。
+
+### Tests / Regression
+
+- `tests/test_eval_refusal.py`：12/12 PASS；全量 unittest：**484/484 PASS**（0 fail / 0 error）。
+- F.2 citation eval 30/30 PASS；Phase E router eval 108/108 PASS（确定性 eval 不受影响）；ruff / compileall clean。
+- Golden 未修改；production code（core/）未修改；Quality Contract v1.0 未修改。
+
+### Gate decision
+
+**Q1 = PASS。** 按合同 STOP：不自动开始 Q2（Prompt/Citation Coverage）/ Q3（Verifier Precision）/ Q4（Retrieval）/ L2。等待下一次单独授权。

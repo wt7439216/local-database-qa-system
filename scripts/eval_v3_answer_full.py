@@ -30,8 +30,19 @@ if str(ROOT_DIR) not in sys.path:
 
 from core.engine_v2 import StructuredQAEngine  # noqa: E402
 
+SCRIPTS_DIR = Path(__file__).resolve().parent
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+from eval_refusal import (  # noqa: E402
+    ANSWERED,
+    REFUSED,
+    classify_answer_state,
+    is_answered,
+    is_refused,
+)
+
 GOLDEN = ROOT_DIR / "eval" / "v3_final_golden.json"
-EVALUATOR_VERSION = "f4.1-v1"
+EVALUATOR_VERSION = "answer-eval-v2"
 CACHE_DIR = ROOT_DIR / "data" / "eval_cache"  # ignored runtime directory
 
 
@@ -111,9 +122,10 @@ def main() -> int:
         answer = result.answer or ""
         present = [f for f in facts if f in answer]
         missing = [f for f in facts if f not in answer]
-        refused = bool(result.out_of_scope) or any(
-            m in answer for m in ("材料不足", "无法", "不支持", "没有", "未提供", "未涵盖", "不确定")
-        )
+        # Q1: structured / template refusal classification replaces the old
+        # bare-substring "没有/不确定/..." heuristic.  ``refused`` is kept for
+        # backward-compatible reading; ``answer_state`` is the source of truth.
+        state = classify_answer_state(answer, bool(result.out_of_scope))
         report = result.citation_report or {}
         row = {
             "id": case["id"],
@@ -122,22 +134,33 @@ def main() -> int:
             "fact_present": len(present),
             "fact_total": len(facts),
             "missing_facts": missing,
-            "refused": refused,
+            "answer_state": state,
+            "refused": is_refused(state),
+            "out_of_scope": bool(result.out_of_scope),
+            "raw_answer": answer,
             "citation_report": report,
             "citation_verified": result.citation_verified,
+            "evaluator_version": EVALUATOR_VERSION,
         }
         results.append(row)
         cache[key] = row
         save_cache(cache_file, cache)
-        print(f"  [{new_count}] {case['id']} {case['category']} facts={len(present)}/{len(facts)} refused={refused}", file=sys.stderr)
+        print(f"  [{new_count}] {case['id']} {case['category']} facts={len(present)}/{len(facts)} state={state}", file=sys.stderr)
 
     # Aggregate answer metrics
     total = len(results)
-    fact_ok = sum(1 for r in results if not r["refused"] and r["fact_present"] == r["fact_total"] and r["fact_total"] > 0)
+
+    def _case_exact_pass(r: dict) -> bool:
+        state = r.get("answer_state")
+        if state is None:  # legacy cache rows written by the old evaluator
+            state = REFUSED if r.get("refused") else ANSWERED
+        return is_answered(state) and r["fact_present"] == r["fact_total"] and r["fact_total"] > 0
+
+    fact_ok = sum(1 for r in results if _case_exact_pass(r))
     fact_cases = [r for r in results if r["fact_total"] > 0]
     total_facts = sum(r["fact_total"] for r in fact_cases)
     present_facts = sum(r["fact_present"] for r in fact_cases)
-    refusal_correct = sum(1 for r in results if r["refused"])
+    refusal_correct = sum(1 for r in results if r.get("refused"))
     missing_fact_rate = 1 - (present_facts / total_facts) if total_facts else 0.0
 
     # Citation reason distribution

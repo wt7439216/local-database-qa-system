@@ -42,7 +42,7 @@ from eval_refusal import (  # noqa: E402
 )
 
 GOLDEN = ROOT_DIR / "eval" / "v3_final_golden.json"
-EVALUATOR_VERSION = "answer-eval-v2"
+EVALUATOR_VERSION = "answer-eval-v4"
 CACHE_DIR = ROOT_DIR / "data" / "eval_cache"  # ignored runtime directory
 
 

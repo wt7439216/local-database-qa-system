@@ -224,7 +224,7 @@ class RuntimeIntegrationTests(RuntimeHarness):
         result = self._answer(Q_B)
         report = result.get("citation_report")
         self.assertIsNotNone(report, "answer must carry a citation_report")
-        self.assertEqual(report["verifier_version"], "f2-v2")
+        self.assertEqual(report["verifier_version"], "f2-v3")
         self.assertIn("citation_count", report)
         self.assertIn("citation_coverage", report)
         self.assertIn("factual_claim_count", report)

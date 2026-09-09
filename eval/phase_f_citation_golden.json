@@ -1,8 +1,8 @@
 {
   "meta": {
     "name": "phase_f_citation_golden",
-    "version": "f2-v2",
-    "verifier_version": "f2-v2",
+    "version": "f2-v3",
+    "verifier_version": "f2-v3",
     "description": "Phase F.2 deterministic citation verifier contract dataset（非 F.4 最终 Golden Set）。完全离线 fixture，无 LLM / NLI / embedding / 外部服务。每个 case 断言：citation validity（valid/invalid ids）、citation coverage、deterministic support（SUPPORTED / UNSUPPORTED / UNCERTAIN / NOT_APPLICABLE）与 claim 计数。",
     "created_at": "2026-09-08",
     "shared_evidence": {
@@ -18,17 +18,17 @@
       "correct_number", "wrong_number", "correct_unit", "wrong_unit",
       "latin_entity", "cjk_entity", "unsupported_cjk",
       "uncertain_paraphrase", "multi_citation", "mixed_supported_unsupported",
-      "not_applicable"
+      "not_applicable", "structural_number"
     ],
     "expected_totals": {
       "valid_citation": 2, "invalid_citation": 4, "duplicate_citation": 2,
       "malformed_citation": 1, "no_citation": 1, "partial_coverage": 1,
       "full_coverage": 2, "wrong_evidence": 1, "wrong_document": 1,
       "scope_violation": 1, "correct_number": 2, "wrong_number": 1,
-      "correct_unit": 2, "wrong_unit": 1, "latin_entity": 1,
-      "cjk_entity": 1, "unsupported_cjk": 1, "uncertain_paraphrase": 1,
+      "correct_unit": 2, "wrong_unit": 1, "latin_entity": 2,
+      "cjk_entity": 1, "unsupported_cjk": 1, "uncertain_paraphrase": 2,
       "multi_citation": 1, "mixed_supported_unsupported": 1,
-      "not_applicable": 2
+      "not_applicable": 2, "structural_number": 2
     }
   },
   "cases": [
@@ -81,6 +81,13 @@
     {"id": "mixed-01", "category": "mixed_supported_unsupported", "answer": "GSM使用GMSK调制[1]。WCDMA使用GMSK调制[2]。", "expected": {"valid_ids": [1, 2], "invalid_ids": [], "factual_claim_count": 2, "cited_claim_count": 2, "citation_coverage": 1.0, "supports": ["SUPPORTED", "UNSUPPORTED"]}},
 
     {"id": "na-01", "category": "not_applicable", "answer": "详见材料[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 0, "cited_claim_count": 0, "citation_coverage": null, "supports": ["NOT_APPLICABLE"]}},
-    {"id": "na-02", "category": "not_applicable", "answer": "回答如下。", "expected": {"valid_ids": [], "invalid_ids": [], "factual_claim_count": 0, "cited_claim_count": 0, "citation_coverage": null, "supports": ["NOT_APPLICABLE"]}}
+    {"id": "na-02", "category": "not_applicable", "answer": "回答如下。", "expected": {"valid_ids": [], "invalid_ids": [], "factual_claim_count": 0, "cited_claim_count": 0, "citation_coverage": null, "supports": ["NOT_APPLICABLE"]}},
+
+    {"id": "structural-01", "category": "structural_number", "answer": "第1章介绍了GSM系统[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+    {"id": "structural-02", "category": "structural_number", "answer": "材料1提到GSM使用GMSK调制[1]。", "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+
+    {"id": "hyphen-01", "category": "latin_entity", "answer": "上行采用SC-FDMA[1]。", "evidence": {"1": "LTE上行采用SC-FDMA方式。"}, "citation_count": 1, "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["SUPPORTED"]}},
+
+    {"id": "unit-missing-01", "category": "uncertain_paraphrase", "answer": "频率为1980 MHz[1]。", "evidence": {"1": "该频段为1980。"}, "citation_count": 1, "expected": {"valid_ids": [1], "invalid_ids": [], "factual_claim_count": 1, "cited_claim_count": 1, "citation_coverage": 1.0, "supports": ["UNCERTAIN"]}}
   ]
 }

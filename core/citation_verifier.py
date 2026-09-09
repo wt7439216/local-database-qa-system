@@ -35,7 +35,7 @@ from typing import Any
 
 # Bump whenever the deterministic contract changes; recorded in telemetry and
 # offline eval so stale results can be detected.
-CITATION_VERIFIER_VERSION = "f2-v2"
+CITATION_VERIFIER_VERSION = "f2-v3"
 
 # Support state enum.
 SUPPORTED = "SUPPORTED"
@@ -65,6 +65,13 @@ LATIN_UNITS = {
     "m", "cm", "mm", "um", "nm", "ghz", "khz", "dbm", "dbw",
 }
 
+# Latin document-format markers that are not technology entities.  A catalog
+# line like "（PDF 第0–0页）" must not make "pdf" a required key term.
+_NON_ENTITY_LATIN = {
+    "pdf", "doc", "docx", "txt", "md", "markdown", "ppt", "pptx",
+    "xls", "xlsx", "csv",
+}
+
 # A bracket group that is *not* a citation: a number glued to a Latin unit
 # (e.g. "[450]MHz") is a value, not a reference.  A leading minus is allowed
 # so malformed ``[-1]`` references are still recognised (and then rejected as
@@ -86,10 +93,15 @@ _LATIN_TOKEN_RE = re.compile(r"[A-Za-z][A-Za-z0-9./+-]*")
 
 
 def _normalize_compact(text: str) -> str:
-    """Lowercase, strip whitespace and drop CJK-free punctuation glue."""
+    """Lowercase, strip whitespace and drop non-alphanumeric punctuation glue.
+
+    Removing hyphens/slashes/dots lets "SC-FDMA" match "scfdma" and "S/N" match
+    "sn" in evidence — these are orthographic variants, not semantic inference.
+    """
     text = str(text or "")
     text = re.sub(r"\s+", "", text)
     text = text.lower()
+    text = re.sub(r"[^a-z0-9\u4e00-\u9fff]", "", text)
     return text
 
 
@@ -129,6 +141,31 @@ def _extract_number_units(text: str) -> list[tuple[float, str]]:
     return pairs
 
 
+# Non-factual number patterns.  These carry no scientific/factual numeric
+# payload and must not drive a number-mismatch verdict:
+#   - "材料1" / "材料1和材料2"  (material references, not values)
+#   - "1." / "2、" at line start (list item numbering)
+#   - "第1章" / "第10–62页" (structural locator metadata)
+_MATERIAL_REF_RE = re.compile(r"材料\s*\d+(?:\s*[、,和]\s*\d+)*")
+_STRUCTURAL_LOCATOR_RE = re.compile(r"第\s*\d+\s*[章页节]")
+_PAGE_RANGE_RE = re.compile(r"第\s*\d+\s*[–—-]\s*\d+\s*页")
+_LEADING_LIST_NUMBER_RE = re.compile(r"(?m)^\s*[-*•·]?\s*\d+[.、)）]\s*")
+
+
+def _strip_non_factual_numbers(text: str) -> str:
+    """Remove structural numbers (material refs / list numbers / locators).
+
+    These are deterministic, context-free surface patterns — not semantic
+    inference.  A claim like "第1章 …（PDF 第10–62页）[1]" carries locator
+    metadata whose digits are not a factual claim about the evidence content.
+    """
+    text = _MATERIAL_REF_RE.sub("", str(text or ""))
+    text = _STRUCTURAL_LOCATOR_RE.sub("", text)
+    text = _PAGE_RANGE_RE.sub("", text)
+    text = _LEADING_LIST_NUMBER_RE.sub("", text)
+    return text
+
+
 def _latin_key_terms(text: str, min_length: int = 2) -> set[str]:
     """Latin technology/entity tokens that should appear in cited evidence.
 
@@ -147,6 +184,7 @@ def _latin_key_terms(text: str, min_length: int = 2) -> set[str]:
             len(value) >= min_length
             and value not in LATIN_UNITS
             and value not in number_units
+            and value not in _NON_ENTITY_LATIN
         ):
             terms.add(value)
     return terms
@@ -470,31 +508,44 @@ class DeterministicCitationVerifier:
         mismatched: list[str] = []
 
         # --- number + unit check ------------------------------------------
-        claim_numbers = _extract_numbers(claim_body)
+        # Structural numbers (material refs / list numbering / locators) carry
+        # no factual payload and are stripped before the numeric check.
+        numeric_body = _strip_non_factual_numbers(claim_body)
+        claim_numbers = _extract_numbers(numeric_body)
         evidence_numbers = _extract_numbers(combined)
         number_ok = all(number in evidence_numbers for number in claim_numbers)
-        unit_ok = True
-        if claim_numbers:
-            # When the claim attaches a unit to a number, require the same
-            # (magnitude, unit) pairing in the evidence; a bare number match is
-            # not enough ("5 kHz" vs "5 MHz" is a conflict).
-            claim_pairs = _extract_number_units(claim_body)
-            evidence_pairs = _extract_number_units(combined)
-            for magnitude, unit in claim_pairs:
-                if unit and (magnitude, unit) not in evidence_pairs:
-                    unit_ok = False
-        if claim_numbers and number_ok and unit_ok:
+
+        unit_conflict = False   # same magnitude, provably different unit
+        unit_ambiguous = False  # same magnitude, evidence unit absent (equivalence)
+
+        claim_pairs = _extract_number_units(numeric_body)
+        evidence_pairs = _extract_number_units(combined)
+        for magnitude, unit in claim_pairs:
+            if not unit:
+                continue
+            evidence_units = {u for m, u in evidence_pairs if m == magnitude}
+            if not evidence_units:
+                continue  # magnitude absence is handled by number_ok below
+            if unit not in evidence_units:
+                if any(evidence_units):  # evidence attaches a different unit
+                    unit_conflict = True
+                else:  # evidence carries the bare magnitude, no unit
+                    unit_ambiguous = True
+
+        if claim_numbers and number_ok and not unit_conflict and not unit_ambiguous:
             reason_codes.append(REASON_SUPPORTED_NUMBER)
-        if not number_ok or not unit_ok:
+
+        if not number_ok or unit_conflict:
             # A deterministic numeric conflict is a hard UNSUPPORTED signal.
-            missing = [str(n) for n in claim_numbers if n not in evidence_numbers]
-            if not unit_ok:
-                missing.extend(
+            mismatched.extend(str(n) for n in claim_numbers if n not in evidence_numbers)
+            if unit_conflict:
+                mismatched.extend(
                     f"{magnitude} {unit}".strip()
                     for magnitude, unit in claim_pairs
-                    if unit and (magnitude, unit) not in evidence_pairs
+                    if unit
+                    and {u for m, u in evidence_pairs if m == magnitude}
+                    and unit not in {u for m, u in evidence_pairs if m == magnitude}
                 )
-            mismatched.extend(missing)
             return CitationVerification(
                 claim_index=index,
                 claim_text=claim.text,
@@ -502,6 +553,17 @@ class DeterministicCitationVerifier:
                 support=UNSUPPORTED,
                 reason_codes=(REASON_UNSUPPORTED_NUMBER_MISMATCH,),
                 mismatched_numbers=tuple(mismatched),
+            )
+
+        if unit_ambiguous:
+            # Magnitude present but evidence unit absent: equivalence/omission,
+            # not a provable contradiction — report UNCERTAIN, not UNSUPPORTED.
+            return CitationVerification(
+                claim_index=index,
+                claim_text=claim.text,
+                citation_ids=claim.citation_ids,
+                support=UNCERTAIN,
+                reason_codes=(REASON_UNCERTAIN_NO_DETERMINISTIC_SIGNAL,),
             )
 
         # --- Latin key-term check ----------------------------------------

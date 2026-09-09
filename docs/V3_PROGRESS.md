@@ -962,3 +962,48 @@ single_fact_qa 0.732 / **locate 0.400（最差，未变）** / compare 0.700 / m
 
 ### Gate decision
 **CORRECTED_EVALUATION_BASELINE = FROZEN（q1-corrected-v1）。** 推荐 **NEXT = Q2**（Citation Coverage）：coverage 0.5524 距 0.80 缺口最大，且根因已明确为「Prompt 鼓励 uncited sentence + 未强制逐句 marker」，非 verifier 问题。按合同 STOP，等待授权。
+
+## Quality Remediation Q3 — Deterministic Citation Verifier Precision（2026-09-09）
+
+- Status: **Q3 = PASS**（high_confidence_unsupported_rate 0.0829 → 0.0161，达正式 Gate ≤0.05）
+- 性质：PRODUCTION QUALITY REMEDIATION — 提高 deterministic Layer-1 verifier 精度，不引入 L2/NLI/LLM Judge，不改 Prompt/Retriever/Router/Golden/Quality Contract。
+
+### High-confidence Failure 归因（q1-corrected-v1，46 个）
+- number_mismatch 36：**34 个 false positive**（材料编号 9 / 列表序号 6 / 目录结构 17 / 单位等价 2）+ 2 个真实数字（cmp-018 编码增益、cit-020 E/N0）。
+- missing_key_term 10：**7 个 false negative**（hyphenation SC-FDMA/TD-SCDMA 5 / slash S/N 2）+ 3 个全称普通词（Time Division Multiple Access → access/code/time）。
+
+### 修改（core/citation_verifier.py，`f2-v2 → f2-v3`）
+1. `_normalize_compact`：去非字母数字标点（连字符/斜杠/点），"SC-FDMA"→"scfdma"、"S/N"→"sn" 匹配（orthographic variant，非语义）。
+2. 新增 `_strip_non_factual_numbers`：剥离结构数字（材料引用"材料5、6"、行首列表序号"1."、定位"第1章/第62页/第10–62页"），不再驱动 number mismatch。
+3. number+unit 检查拆分：`unit_conflict`（同数字不同单位 → UNSUPPORTED）vs `unit_ambiguous`（evidence 无单位 → UNCERTAIN）。
+4. 新增 `_NON_ENTITY_LATIN`：排除 "pdf/docx/txt" 等文档格式标记，避免目录行"（PDF 第0–0页）"把 "pdf" 当 key term。
+5. `_MATERIAL_REF_RE` 支持"材料5、6"多编号。
+
+### 结果（144-case 完整 rerun，answer-eval-v4）
+| 指标 | q1-corrected (f2-v2) | Q3 (f2-v3) | Delta |
+|---|---:|---:|---:|
+| high_confidence_unsupported_rate | 0.0829 | **0.0161** | -0.0668 |
+| number_mismatch | 36 | 4 | -32 |
+| missing_key_term | 10 | 5 | -5 |
+| supported / unsupported / uncertain | 55/347/153 | 66/310/183 | +11/-37/+30 |
+| case_exact / fact_recall / coverage | 0.7014 / 0.8248 / 0.5524 | 0.7014 / 0.8217* / 0.5558* | 基本不变 |
+
+（*fact_recall 0.8217 与 coverage 0.5558 为 rerun 模型噪声，非 Q3 影响；case_exact 完全不变。）
+
+### False Support Safety Audit
+- UNSUPPORTED → SUPPORTED 约 11 个：均来自结构数字 strip 后 key term 确定性匹配、或连字符/斜杠规范化后实体匹配，**有明确确定性理由，无 false SUPPORTED**。
+- F.2 offline eval 34/34 PASS（30 旧 + 4 新增 contract case）；verifier unit tests 33/33 PASS；Phase E router eval 108/108 PASS；全量 484/484 PASS。
+
+### 剩余 9 个 high-confidence（确定性边界，非 Q3 范围）
+- number_mismatch 4：E/N0 下标解析（qa-021/cit-020）、频段数字（cmp-001）、编码增益（cmp-018）。
+- missing_key_term 5：缩写写法（wcdma/ofdma/lte/tdma）、全称普通词（access/code/time）。
+- 这些需语义/更精确实体规范化，属 L2/未来范围。
+
+### F.2 Golden 更新
+- `eval/phase_f_citation_golden.json`：version `f2-v2 → f2-v3`，新增 4 个 contract case（structural_number ×2、latin_entity hyphen、uncertain_paraphrase unit-missing），expected_totals 同步。**未改任何旧 expected label**。
+
+### Citation Coverage Non-impact
+coverage 0.5524 → 0.5558（噪声级），Q3 不改变 citation marker 数量，未把 Q3 误称 Coverage 修复。
+
+### Gate decision
+**Q3 = PASS；PRODUCT_HIGH_CONFIDENCE_UNSUPPORTED_GATE = PASS。** 按合同 STOP：不实现 citation completion、不重启 Q2、不改 Prompt/Retriever、不实施 L2、不改 Quality Contract。等待下一次单独授权。

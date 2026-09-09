@@ -1,16 +1,12 @@
 {
-  "version": "quality-contract-v1-draft",
-  "frozen": false,
-  "status": "DRAFT",
+  "version": "quality-contract-v1.0",
+  "frozen": true,
+  "status": "FROZEN",
   "created": "2026-09-09",
+  "frozen_date": "2026-09-09",
+  "frozen_by": "explicit user authorization",
+  "accepted_level": "target",
   "trigger": "FINAL_TRUTHFULNESS_AUDIT_FINDS_OVERCLAIM",
-  "decision_required": [
-    "case_exact_fact_match_rate",
-    "fact_recall",
-    "false_refusal_rate",
-    "citation_coverage",
-    "high_confidence_unsupported_rate"
-  ],
   "metrics": [
     {
       "name": "case_exact_fact_match_rate",
@@ -21,14 +17,17 @@
       "gate_type": "quality",
       "regression_threshold": {"operator": ">=", "value": 0.60, "kind": "regression"},
       "quality_threshold": {
-        "status": "USER_DECISION_REQUIRED",
+        "status": "FROZEN",
+        "accepted_level": "target",
+        "acceptance": {"operator": ">=", "value": 0.80},
+        "stretch_goal": {"operator": ">=", "value": 0.90},
         "candidates": [
-          {"level": "minimum_acceptable", "operator": ">=", "value": 0.70},
-          {"level": "target", "operator": ">=", "value": 0.80},
-          {"level": "stretch", "operator": ">=", "value": 0.90}
+          {"level": "minimum_acceptable", "operator": ">=", "value": 0.70, "role": "intermediate_milestone_not_pass"},
+          {"level": "target", "operator": ">=", "value": 0.80, "role": "formal_acceptance"},
+          {"level": "stretch", "operator": ">=", "value": 0.90, "role": "stretch_goal_not_blocking"}
         ]
       },
-      "source": "interpretable engineering standard + manual review requirement"
+      "source": "explicit user authorization (Target tier)"
     },
     {
       "name": "fact_recall",
@@ -39,14 +38,17 @@
       "gate_type": "quality",
       "regression_threshold": {"operator": ">=", "value": 0.80, "kind": "regression"},
       "quality_threshold": {
-        "status": "USER_DECISION_REQUIRED",
+        "status": "FROZEN",
+        "accepted_level": "target",
+        "acceptance": {"operator": ">=", "value": 0.90},
+        "stretch_goal": {"operator": ">=", "value": 0.95},
         "candidates": [
-          {"level": "minimum_acceptable", "operator": ">=", "value": 0.85},
-          {"level": "target", "operator": ">=", "value": 0.90},
-          {"level": "stretch", "operator": ">=", "value": 0.95}
+          {"level": "minimum_acceptable", "operator": ">=", "value": 0.85, "role": "intermediate_milestone_not_pass"},
+          {"level": "target", "operator": ">=", "value": 0.90, "role": "formal_acceptance"},
+          {"level": "stretch", "operator": ">=", "value": 0.95, "role": "stretch_goal_not_blocking"}
         ]
       },
-      "source": "interpretable engineering standard"
+      "source": "explicit user authorization (Target tier)"
     },
     {
       "name": "false_refusal_rate",
@@ -57,14 +59,17 @@
       "gate_type": "quality",
       "regression_threshold": {"operator": "<=", "value": 0.05, "kind": "regression"},
       "quality_threshold": {
-        "status": "USER_DECISION_REQUIRED",
+        "status": "FROZEN",
+        "accepted_level": "target",
+        "acceptance": {"operator": "<=", "value": 0.03},
+        "stretch_goal": {"operator": "<=", "value": 0.01},
         "candidates": [
-          {"level": "minimum_acceptable", "operator": "<=", "value": 0.05},
-          {"level": "target", "operator": "<=", "value": 0.03},
-          {"level": "stretch", "operator": "<=", "value": 0.01}
+          {"level": "minimum_acceptable", "operator": "<=", "value": 0.05, "role": "intermediate_milestone_not_pass"},
+          {"level": "target", "operator": "<=", "value": 0.03, "role": "formal_acceptance"},
+          {"level": "stretch", "operator": "<=", "value": 0.01, "role": "stretch_goal_not_blocking"}
         ]
       },
-      "source": "user experience requirement"
+      "source": "explicit user authorization (Target tier)"
     },
     {
       "name": "citation_coverage",
@@ -75,14 +80,17 @@
       "gate_type": "quality",
       "regression_threshold": {"operator": ">=", "value": 0.55, "kind": "regression"},
       "quality_threshold": {
-        "status": "USER_DECISION_REQUIRED",
+        "status": "FROZEN",
+        "accepted_level": "target",
+        "acceptance": {"operator": ">=", "value": 0.80},
+        "stretch_goal": {"operator": ">=", "value": 0.90},
         "candidates": [
-          {"level": "minimum_acceptable", "operator": ">=", "value": 0.70},
-          {"level": "target", "operator": ">=", "value": 0.80},
-          {"level": "stretch", "operator": ">=", "value": 0.90}
+          {"level": "minimum_acceptable", "operator": ">=", "value": 0.70, "role": "intermediate_milestone_not_pass"},
+          {"level": "target", "operator": ">=", "value": 0.80, "role": "formal_acceptance"},
+          {"level": "stretch", "operator": ">=", "value": 0.90, "role": "stretch_goal_not_blocking"}
         ]
       },
-      "source": "original V3 plan suggested target (90%)"
+      "source": "explicit user authorization (Target tier); original plan 90% kept as stretch"
     },
     {
       "name": "high_confidence_unsupported_rate",
@@ -93,14 +101,17 @@
       "gate_type": "quality",
       "regression_threshold": {"operator": "<=", "value": 0.10, "kind": "regression"},
       "quality_threshold": {
-        "status": "USER_DECISION_REQUIRED",
+        "status": "FROZEN",
+        "accepted_level": "target",
+        "acceptance": {"operator": "<=", "value": 0.05},
+        "stretch_goal": {"operator": "<=", "value": 0.02},
         "candidates": [
-          {"level": "minimum_acceptable", "operator": "<=", "value": 0.10},
-          {"level": "target", "operator": "<=", "value": 0.05},
-          {"level": "stretch", "operator": "<=", "value": 0.02}
+          {"level": "minimum_acceptable", "operator": "<=", "value": 0.10, "role": "intermediate_milestone_not_pass"},
+          {"level": "target", "operator": "<=", "value": 0.05, "role": "formal_acceptance"},
+          {"level": "stretch", "operator": "<=", "value": 0.02, "role": "stretch_goal_not_blocking"}
         ]
       },
-      "source": "quality risk level"
+      "source": "explicit user authorization (Target tier)"
     },
     {
       "name": "invalid_citation_count",
@@ -138,5 +149,5 @@
     "document-level metadata query",
     "L2 semantic verifier (NLI / LLM Judge)"
   ],
-  "l2_trigger_condition": "If the frozen Product Quality Gate cannot be reached by deterministic L1 alone, reopen L2 evaluation. This is a trigger condition, NOT implementation authorization."
+  "l2_trigger_condition": "If the frozen Product Quality Gate (v1.0) cannot be reached by deterministic L1 alone, reopen L2 evaluation. This is a trigger condition, NOT implementation authorization."
 }

@@ -818,3 +818,51 @@ V3 Release Readiness      = CONDITIONALLY_READY
 ### Gate decision
 
 **Final Truthfulness Remediation = PASS。** 产品状态保持：Engineering Closure = PASS / Evaluation Infrastructure = PASS / Quality Baseline = FROZEN / Product Quality DoD = NOT_YET_PASS / V3 Release Readiness = CONDITIONALLY_READY。按合同 STOP：不开始质量优化代码、不重跑 144-case、不修改 Prompt/Retriever/Citation、不实施 L2、不进入 Phase G。等待用户明确冻结 Product Quality Acceptance Contract。
+
+## Product Quality Acceptance Contract Frozen（2026-09-09）
+
+- Status: **Quality Acceptance Contract = FROZEN v1.0**（`frozen_by = explicit user authorization`，非 Agent 自主决定）
+- 性质：用户明确冻结 Target 档为 V3 Product Quality DoD 的正式质量接受标准。**非质量优化授权**，未修改 production code，未重跑 144-case，未调参。
+
+### 正式冻结的 PRODUCT_QUALITY_ACCEPTANCE_THRESHOLD（Target 档）
+
+| Metric | 正式阈值（Target） | Stretch（非 blocking） | Minimum（milestone，非 PASS） |
+|---|---|---|---|
+| case_exact_fact_match_rate | **≥ 0.80** | ≥ 0.90 | ≥ 0.70 |
+| fact_recall | **≥ 0.90** | ≥ 0.95 | ≥ 0.85 |
+| false_refusal_rate | **≤ 0.03** | ≤ 0.01 | ≤ 0.05 |
+| citation_coverage | **≥ 0.80** | ≥ 0.90（原始计划目标，保留） | ≥ 0.70 |
+| high_confidence_unsupported_rate | **≤ 0.05** | ≤ 0.02 | ≤ 0.10 |
+
+### 当前 baseline 对正式质量合同的静态比较（不改变结果）
+
+| Metric | Baseline | Target | 静态结果 |
+|---|---:|---:|---|
+| case_exact_fact_match_rate | 0.6111 | ≥ 0.80 | FAIL |
+| fact_recall | 0.8248 | ≥ 0.90 | FAIL |
+| false_refusal_rate | 0.0278 | ≤ 0.03 | PASS |
+| citation_coverage | 0.5534 | ≥ 0.80 | FAIL |
+| high_confidence_unsupported_rate | 0.0812 | ≤ 0.05 | FAIL |
+
+### 最终独立状态
+
+```text
+Engineering Closure       = PASS
+Evaluation Infrastructure = PASS
+Quality Contract          = FROZEN（v1.0）
+Product Quality DoD       = NOT_YET_PASS
+V3 Release Readiness      = CONDITIONALLY_READY
+
+READY_FOR_QUALITY_REMEDIATION_AUTHORIZATION
+```
+
+### 交付
+
+- 更新 `docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md`：draft → **FROZEN v1.0**，记录 frozen_by / frozen_date / accepted_level=target / §11 Gate Evaluation 静态比较。
+- 更新 `eval/v3_quality_acceptance.json`：version `quality-contract-v1.0`，frozen=true，status=FROZEN，frozen_by=explicit user authorization，每个 quality metric 增加 acceptance（Target）+ stretch_goal，candidates 增加 role 标记。
+- 更新 `tests/test_quality_acceptance.py`：14 → **19 项**，新增 frozen 状态校验、acceptance==target 校验、stretch 校验、minimum=非 PASS 校验、用户授权 Target 硬编码校验、Gate Evaluation 静态结果校验。
+- 更新 `README.md`（Quality Contract = FROZEN + 正式阈值 + 静态比较）、本文件。
+
+### Gate decision
+
+**Quality Acceptance Contract = FROZEN v1.0。** 产品状态：Product Quality DoD = NOT_YET_PASS（4/5 指标未达 Target 档）。**READY_FOR_QUALITY_REMEDIATION_AUTHORIZATION。** 按合同 STOP：不得自动开始 Quality Remediation，等待下一次单独授权。

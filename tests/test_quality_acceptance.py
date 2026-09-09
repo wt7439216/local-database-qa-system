@@ -1,16 +1,19 @@
-"""Quality Acceptance Contract validator tests (truthfulness remediation).
+"""Quality Acceptance Contract validator tests (frozen v1.0).
 
 These tests enforce the semantic contract established in
 ``docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md`` against the machine-readable
 ``eval/v3_quality_acceptance.json``.  They are pure-offline and must never
 depend on Ollama / Qdrant / embedding.
 
-The contract's core invariant: **regression baseline and product quality
-acceptance standard are two different things**.  A quality metric must not be
-silently "frozen" using its regression threshold; it must carry
-``USER_DECISION_REQUIRED`` until the user explicitly freezes it.  Hard safety
-gates (invalid citation / scope violation) must be absolute zero and must
-already be satisfied by the current baseline.
+Two permanent invariants:
+
+1. **regression baseline != product quality acceptance standard**.  A quality
+   metric's regression threshold is a degradation guard (kind "regression"),
+   never a quality acceptance value.
+2. **The contract is frozen by explicit user authorization** (Target tier),
+   not by the agent.  The frozen acceptance thresholds must exactly match the
+   user-authorized Target tier.  Hard safety gates (invalid citation / scope
+   violation) must be absolute zero and already satisfied.
 """
 
 from __future__ import annotations
@@ -40,6 +43,17 @@ _DEFERRED_CAPABILITIES = {
     "L2 semantic verifier (NLI / LLM Judge)",
 }
 
+# The user-authorized frozen Target tier.  This is the single source of truth
+# for "what does Product Quality DoD = PASS require".  It must never be derived
+# from the current baseline.
+_USER_AUTHORIZED_TARGETS = {
+    "case_exact_fact_match_rate": (">=", 0.80),
+    "fact_recall": (">=", 0.90),
+    "false_refusal_rate": ("<=", 0.03),
+    "citation_coverage": (">=", 0.80),
+    "high_confidence_unsupported_rate": ("<=", 0.05),
+}
+
 
 class QualityAcceptanceContractFixture(unittest.TestCase):
     def setUp(self) -> None:
@@ -50,19 +64,20 @@ class QualityAcceptanceContractFixture(unittest.TestCase):
         raw = _CONTRACT_PATH.read_text(encoding="utf-8")
         self.contract = json.loads(raw)
         self.metrics = {m["name"]: m for m in self.contract["metrics"]}
-        self.decision_required = set(self.contract.get("decision_required", []))
 
 
 class TestContractSchema(QualityAcceptanceContractFixture):
-    def test_version_is_draft(self):
-        self.assertEqual(self.contract["version"], "quality-contract-v1-draft")
+    def test_version_is_frozen_v1_0(self):
+        self.assertEqual(self.contract["version"], "quality-contract-v1.0")
 
-    def test_not_frozen(self):
-        # The contract must remain UNFROZEN until the user decides the product
-        # quality thresholds.  A frozen contract here would mean the agent
-        # silently promoted regression thresholds into quality standards.
-        self.assertFalse(self.contract["frozen"])
-        self.assertEqual(self.contract["status"], "DRAFT")
+    def test_frozen_by_explicit_user_authorization(self):
+        # The freeze must be attributed to the user, never to the agent.
+        self.assertTrue(self.contract["frozen"])
+        self.assertEqual(self.contract["status"], "FROZEN")
+        self.assertEqual(
+            self.contract["frozen_by"], "explicit user authorization"
+        )
+        self.assertEqual(self.contract["accepted_level"], "target")
 
     def test_metrics_have_required_fields(self):
         self.assertGreater(len(self.metrics), 0)
@@ -80,52 +95,79 @@ class TestContractSchema(QualityAcceptanceContractFixture):
 
 
 class TestThresholdSeparation(QualityAcceptanceContractFixture):
-    """The core truthfulness invariant: regression != quality acceptance."""
+    """Invariant: regression baseline != quality acceptance standard."""
 
-    def test_quality_metrics_require_user_decision(self):
+    def test_quality_metrics_are_frozen(self):
         for name, metric in self.metrics.items():
             if metric["gate_type"] != "quality":
                 continue
-            self.assertIn(
-                name,
-                self.decision_required,
-                f"quality metric {name} must be in decision_required",
-            )
             qt = metric["quality_threshold"]
-            self.assertEqual(
-                qt.get("status"),
-                "USER_DECISION_REQUIRED",
-                f"quality metric {name} must not be pre-frozen",
-            )
-
-    def test_quality_metrics_offer_candidates(self):
-        for name, metric in self.metrics.items():
-            if metric["gate_type"] != "quality":
-                continue
-            candidates = metric["quality_threshold"].get("candidates", [])
-            self.assertGreaterEqual(
-                len(candidates), 3,
-                f"quality metric {name} needs minimum/target/stretch candidates",
-            )
-            levels = {c["level"] for c in candidates}
-            self.assertIn("minimum_acceptable", levels, name)
-            self.assertIn("target", levels, name)
-            self.assertIn("stretch", levels, name)
+            self.assertEqual(qt["status"], "FROZEN", name)
+            self.assertEqual(qt["accepted_level"], "target", name)
+            self.assertIn("acceptance", qt, name)
 
     def test_regression_threshold_kind_not_promoted(self):
-        # A quality metric's regression threshold must be labelled "regression"
-        # (anti-degradation guard), never "hard" (quality acceptance).  The
-        # hard gate is reserved for the product quality threshold, which is
-        # separately enforced as USER_DECISION_REQUIRED (see
-        # test_quality_metrics_require_user_decision).  Values may coincidentally
-        # overlap for UX thresholds like false_refusal <= 0.05; the semantic
-        # separation is carried by the "kind" tag and the unfrozen status.
         for name, metric in self.metrics.items():
             if metric["gate_type"] != "quality":
                 continue
             rt = metric["regression_threshold"]
             self.assertEqual(rt["kind"], "regression", name)
             self.assertNotEqual(rt["kind"], "hard", name)
+
+    def test_acceptance_matches_target_candidate(self):
+        # The frozen acceptance value must equal the "target" candidate value
+        # (no silent drift between the candidate table and the frozen gate).
+        for name, metric in self.metrics.items():
+            if metric["gate_type"] != "quality":
+                continue
+            qt = metric["quality_threshold"]
+            target = next(
+                c for c in qt["candidates"] if c["level"] == "target"
+            )
+            self.assertEqual(qt["acceptance"]["operator"], target["operator"], name)
+            self.assertEqual(qt["acceptance"]["value"], target["value"], name)
+
+    def test_stretch_matches_stretch_candidate(self):
+        for name, metric in self.metrics.items():
+            if metric["gate_type"] != "quality":
+                continue
+            qt = metric["quality_threshold"]
+            stretch = next(
+                c for c in qt["candidates"] if c["level"] == "stretch"
+            )
+            self.assertEqual(qt["stretch_goal"]["operator"], stretch["operator"], name)
+            self.assertEqual(qt["stretch_goal"]["value"], stretch["value"], name)
+
+    def test_minimum_is_milestone_not_pass(self):
+        # Minimum tier must never be mistaken for a PASS standard.
+        for name, metric in self.metrics.items():
+            if metric["gate_type"] != "quality":
+                continue
+            qt = metric["quality_threshold"]
+            minimum = next(
+                c for c in qt["candidates"] if c["level"] == "minimum_acceptable"
+            )
+            self.assertIn("milestone", minimum["role"], name)
+            self.assertIn("not_pass", minimum["role"], name)
+
+
+class TestFrozenTargetsMatchUserAuthorization(QualityAcceptanceContractFixture):
+    """The frozen gate must exactly equal what the user authorized."""
+
+    def test_target_thresholds_match_user_authorization(self):
+        for name, (op, value) in _USER_AUTHORIZED_TARGETS.items():
+            self.assertIn(name, self.metrics, f"missing metric {name}")
+            qt = self.metrics[name]["quality_threshold"]
+            self.assertEqual(qt["acceptance"]["operator"], op, name)
+            self.assertAlmostEqual(qt["acceptance"]["value"], value, places=6, msg=name)
+
+    def test_no_extra_quality_metrics(self):
+        quality_names = {
+            name
+            for name, m in self.metrics.items()
+            if m["gate_type"] == "quality"
+        }
+        self.assertEqual(quality_names, set(_USER_AUTHORIZED_TARGETS))
 
 
 class TestHardGates(QualityAcceptanceContractFixture):
@@ -174,6 +216,27 @@ class TestContractContent(QualityAcceptanceContractFixture):
         self.assertAlmostEqual(
             self.metrics["high_confidence_unsupported_rate"]["current_baseline"], 0.0812, places=4
         )
+
+    def test_gate_evaluation_matches_user_spec(self):
+        # The user froze the Target tier and documented the static gate
+        # evaluation: 4 metrics FAIL, 1 (false_refusal_rate) PASS.  This test
+        # pins that evaluation so the current baseline cannot be silently
+        # restated to look like it meets the gate.  If a future remediation
+        # raises the baseline, this test must be updated by the user, not
+        # silently by an agent.
+        expected_pass = {
+            "case_exact_fact_match_rate": False,      # 0.6111 < 0.80
+            "fact_recall": False,                     # 0.8248 < 0.90
+            "false_refusal_rate": True,               # 0.0278 <= 0.03
+            "citation_coverage": False,               # 0.5534 < 0.80
+            "high_confidence_unsupported_rate": False,  # 0.0812 > 0.05
+        }
+        self.assertEqual(set(expected_pass), set(_USER_AUTHORIZED_TARGETS))
+        for name, expected in expected_pass.items():
+            baseline = self.metrics[name]["current_baseline"]
+            op, value = _USER_AUTHORIZED_TARGETS[name]
+            actual = (baseline >= value) if op == ">=" else (baseline <= value)
+            self.assertEqual(actual, expected, name)
 
 
 if __name__ == "__main__":

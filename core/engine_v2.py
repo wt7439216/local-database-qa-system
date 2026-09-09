@@ -478,18 +478,27 @@ class StructuredQAEngine:
             if sent_contexts or prepared.chapters
             else None
         )
-        # Phase F.4.1 (Workstream B): deterministic unsupported / invalid
-        # citations must not be silently presented as "verified".  The answer
-        # text is preserved (no sentence deletion — L1 UNSUPPORTED is not a
-        # reliable deletion signal); the user-facing flag is downgraded so the
-        # existing UI warning fires.  High-confidence failures (invalid
-        # citation / scope violation) are already surfaced separately.
-        if citation_report and (
-            citation_report.get("unsupported_claim_count", 0) > 0
-            or citation_report.get("invalid_citation_count", 0) > 0
-            or citation_report.get("citation_scope_violation", 0) > 0
-        ):
-            citation_verified = False
+        # Phase F.4.1 (Workstream B): high-confidence deterministic citation
+        # failures (explicit number/unit conflict, missing core key term,
+        # invalid citation, scope violation) must not be silently presented as
+        # "verified".  The answer text is preserved (no sentence deletion — L1
+        # is not a reliable deletion signal); the user-facing flag is
+        # downgraded so the existing UI warning fires.  Uncited claims
+        # (no_evidence) are a coverage concern already reported via
+        # citation_coverage, and do NOT downgrade citation_verified — its
+        # frozen meaning is "citations are valid + entities match".
+        if citation_report:
+            high_conf_unsupported = any(
+                reason in tuple(v.get("reason_codes", ()))
+                for v in citation_report.get("verifications", [])
+                for reason in ("unsupported_number_mismatch", "unsupported_missing_key_term")
+            )
+            if (
+                citation_report.get("invalid_citation_count", 0) > 0
+                or citation_report.get("citation_scope_violation", 0) > 0
+                or high_conf_unsupported
+            ):
+                citation_verified = False
         write_telemetry(
             {
                 "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),

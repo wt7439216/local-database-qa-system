@@ -1040,3 +1040,43 @@ coverage 0.5524 → 0.5558（噪声级），Q3 不改变 citation marker 数量�
 
 ### Gate decision
 **Q3.1 = PASS。** `DETERMINISTIC_CITATION_COMPLETION_READINESS = SAFE_CANDIDATE`（9 个 known edge 中 6 个关闭，剩余 3 个为 TRUE/SEMANTIC，不存在"明显错误 Evidence 会被判 SUPPORTED"的系统性模式）。按合同 STOP：不实现 citation completion、不重启 Q2、不改 Prompt/Retriever、不实施 L2。等待下一次单独授权。
+
+## Quality Remediation Q2.2 — Conservative Deterministic Citation Completion（2026-09-10）
+
+- Status: **Q2.2 = INSUFFICIENT**（离线 replay 证明 unique-supported-only selector 能解决的 Coverage 不够）
+- 性质：PRODUCTION QUALITY REMEDIATION。实现 conservative deterministic citation completion，但离线 replay 未达 GO，**未接入 production**（engine 已 rollback）。
+
+### 实现（已交付，未接入 production）
+- 新增 `core/citation_completion.py`：`complete_citations()` + `_select_unique_supported()` + `CompletionStats`，version `citation-completion-v1`。
+  - selector 契约：unique-supported-only（恰好一个 evidence SUPPORTED 才 MAY_AUTOFILL；多 SUPPORTED=AMBIGUOUS、UNCERTAIN、UNSUPPORTED、invalid/scope 一律 NO_AUTOFILL）。
+  - claim-to-text 用 positional span mapping（句边界 offset），非 `str.replace`。
+  - 只增加 citation marker，不改事实文本（`strip_citations` 不变式）。
+- 新增 `tests/test_citation_completion.py`：15 项（selector basics + answer mapping + safety）。
+- engine 接入已实现并验证，后因离线 replay 未达 GO 而 **rollback**（`core/engine_v2.py` 无残留引用）。
+
+### 离线 Replay（不跑 LLM，用 answer-eval-v4 cache + evidence 重建）
+| 指标 | 原始 | Projected | Gain |
+|---|---:|---:|---:|
+| case-level citation coverage | 0.5558 | 0.5972 | +0.0414 |
+| claim-level citation coverage | 0.4615 | 0.5134 | +0.0519 |
+| uncited claims | 301 | 272（剩） | autofill=29 |
+
+skip 分布：unique_supported=29 / ambiguous=70 / **uncertain=216** / unsupported=16 / invalid=0。
+
+### 根因（为何不足）
+301 个 uncited factual claim 中，**216 个（72%）是 UNCERTAIN**（纯 CJK 同义、无 deterministic Latin key term/数字匹配），70 个是 AMBIGUOUS（2+ SUPPORTED）。unique-supported-only 的保守 selector 只能安全补 29 个。这是 deterministic L1 的边界：CJK 同义需语义理解（L2），L1 只能判 UNCERTAIN，不能自动补。
+
+### Offline GO 判定
+- GO 条件：projected case-level coverage ≥ 0.75 或 gain ≥ +0.15。
+- 实测：0.5972（< 0.75）+ gain +0.0414（< +0.15）→ **均不满足 → NO-GO**。
+
+### Gate decision
+**Q2.2 = INSUFFICIENT；PRODUCT_CITATION_GATE = FAIL（0.5972 < 0.80）。** 按合同 STOP，未接入 production，未跑 canary/full 144，未降低 verifier 要求，未允许 UNCERTAIN 自动补。
+
+### 剩余路径（供用户决策，本轮不实现）
+1. 多证据 completion contract（允许 unique + 确定集合 auto-fill，非 exactly-one）；
+2. L2-assisted citation（对 UNCERTAIN 的 CJK claim 做语义判断，需重新开启 F.3）；
+3. 更强模型（LLM 自觉补 citation，但 Q2 已证明 prompt-only 不足）；
+4. sentence-level citation post-processing 的更强 deterministic 规则。
+
+按合同 STOP：不自动开始 Answer Completeness / Retriever / Prompt retry / L2 / Product Quality final closure / Phase G。等待下一次单独授权。

@@ -31,7 +31,9 @@ Phase F（F.1–F.4.1）的实现与评估基础设施已闭环。需严格区�
 - **Product Quality DoD = NOT_YET_PASS**（当前 baseline 未达 Target 档：5 项质量指标中 4 项 FAIL、1 项 PASS）；
 - **V3 Release Readiness = CONDITIONALLY_READY**（非 FAILED）。
 
-正式质量接受阈值（Target 档，用户冻结）：case_exact_fact_match_rate ≥ 0.80 / fact_recall ≥ 0.90 / false_refusal_rate ≤ 0.03 / citation_coverage ≥ 0.80 / high_confidence_unsupported_rate ≤ 0.05。当前 baseline 分别为 0.6111 / 0.8248 / 0.0278 / 0.5534 / 0.0812。deferred 非阻断项：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier（见 docs/V3_DOD_SCOPE_AMENDMENT.md）。
+正式质量接受阈值（Target 档，用户冻结）：case_exact_fact_match_rate ≥ 0.80 / fact_recall ≥ 0.90 / false_refusal_rate ≤ 0.03 / citation_coverage ≥ 0.80 / high_confidence_unsupported_rate ≤ 0.05。当前 baseline（q1-corrected-v1）分别为 0.7014 / 0.8248 / 0.0278 / 0.5524 / 0.0161。deferred 非阻断项：KB Summary / Multi-document Summary / 文档级元数据查询 / L2 semantic verifier（见 docs/V3_DOD_SCOPE_AMENDMENT.md）。
+
+> **KB-V3 开发基线已冻结**。详见 [docs/V3_FINAL_BASELINE.md](docs/V3_FINAL_BASELINE.md)（冻结锚点）与 [docs/V3_MASTER_REQUIREMENTS_AND_STATUS.md](docs/V3_MASTER_REQUIREMENTS_AND_STATUS.md)（需求/实现/待办总清单）。未完成项（Q4.3a/b/c、Evaluator Matcher Review、Golden Contract Review、Citation Coverage）保留供后续版本继承。
 
 ## 核心特性
 

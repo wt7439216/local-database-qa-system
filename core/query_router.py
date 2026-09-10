@@ -36,9 +36,13 @@ from core.text_rules import (
 
 HISTORY_MAX_TURNS = 3
 
-LOCATION_WORDS = ("哪页", "第几页", "哪里", "在哪里", "位置", "出处", "来源", "在哪", "找一下", "找到", "找找", "什么地方", "哪些地方")
+LOCATION_WORDS = ("哪页", "第几页", "哪里", "在哪里", "位置", "出处", "来源", "在哪", "找一下", "找到", "找找", "什么地方", "哪些地方", "第几节", "哪一节", "哪些节")
 CHAPTER_LOCATION_WORDS = ("在哪一章", "在哪个章节", "在哪章", "哪一章", "哪个章节", "哪章", "第几章", "哪几章")
 COMPARE_WORDS = ("区别", "比较", "对比", "异同", "相比")
+# Q4.2: consistency questions ("A 与 B 描述一致吗") are comparisons, not qa.
+# Kept separate from COMPARE_WORDS so a bare "一致" (e.g. "一致性原理") is NOT
+# misrouted to compare.
+CONSISTENCY_COMPARE_WORDS = ("一致吗", "是否一致", "一致否", "一致不", "一不一致")
 CHAPTER_OVERVIEW_WORDS = ("讲什么", "讲了什么", "介绍", "概括", "总结", "主要内容", "内容", "概要", "概览")
 
 FOLLOW_UP_PREFIXES = (
@@ -238,10 +242,11 @@ def classify_route(question: str) -> str:
         # response, never qa + RAG (Phase E contract: metadata query must not
         # force RAG when RAG is unnecessary).
         return "unsupported"
-    if any(word in normalized for word in COMPARE_WORDS):
+    if any(word in normalized for word in COMPARE_WORDS) or any(word in normalized for word in CONSISTENCY_COMPARE_WORDS):
         # Compare must outrank chapter/book overview: "第一章和第二章内容有
         # 什么区别" contains both a chapter number and the overview word
-        # "内容", but it is a comparison question.
+        # "内容", but it is a comparison question.  "一致吗/是否一致" is also
+        # a comparison ("A 与 B 描述一致吗" -> compare), not a qa.
         return "compare"
     if extract_chapter_number(normalized) is not None and any(word in normalized for word in CHAPTER_OVERVIEW_WORDS):
         return "chapter_overview"

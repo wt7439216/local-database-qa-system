@@ -181,5 +181,45 @@ class HistoryToleranceTests(unittest.TestCase):
         self.assertEqual(decision.route, "qa")
 
 
+class Q42RoutePrecisionTests(unittest.TestCase):
+    """Q4.2: compare/locate precision plus the new consistency-compare and
+    section-locate patterns.  Guards against route over/under-resolution."""
+
+    def setUp(self) -> None:
+        self.router = QueryRouter()
+
+    def route(self, question: str) -> RouteDecision:
+        return self.router.route(question)
+
+    def test_consistency_comparison_is_compare(self):
+        for question in (
+            "教材里的 RAKE 和测试文档里的 RAKE 描述一致吗？",
+            "GSM 和 WCDMA 的频段是否一致",
+        ):
+            decision = self.route(question)
+            self.assertEqual(decision.route, "compare", question)
+
+    def test_bare_consistency_word_is_not_compare(self):
+        decision = self.route("一致性的原理是什么")
+        self.assertEqual(decision.route, "qa")
+
+    def test_section_locate_is_locate(self):
+        for question in (
+            "在测试文档里，多径传播是第几节？",
+            "抗衰落技术是测试文档的第几节？",
+            "RAKE 接收机在哪一节？",
+        ):
+            decision = self.route(question)
+            self.assertEqual(decision.route, "locate", question)
+
+    def test_why_use_is_qa_not_compare(self):
+        decision = self.route("GSM 中为什么使用 GMSK？")
+        self.assertEqual(decision.route, "qa")
+
+    def test_single_object_multi_attribute_is_qa(self):
+        decision = self.route("OFDM 的特点有哪些")
+        self.assertEqual(decision.route, "qa")
+
+
 if __name__ == "__main__":
     unittest.main()

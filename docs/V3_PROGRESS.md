@@ -1080,3 +1080,40 @@ skip 分布：unique_supported=29 / ambiguous=70 / **uncertain=216** / unsupport
 4. sentence-level citation post-processing 的更强 deterministic 规则。
 
 按合同 STOP：不自动开始 Answer Completeness / Retriever / Prompt retry / L2 / Product Quality final closure / Phase G。等待下一次单独授权。
+
+## Quality Remediation Q4.2 — Deterministic Route Fix（2026-09-10）
+
+- Status: **Q4.2 = PASS**（3/3 真实 route defect 修复；Phase E 108/108 保持；F.2 37/37 保持；full suite 511 OK）
+
+### Route Defect Manifest（重新验证后冻结）
+| Case | current_route | expected_route | 分类 |
+|---|---|---|---|
+| cmp-015 | qa | compare | TRUE_ROUTE_DEFECT（「一致吗」比较） |
+| loc-016 | qa | locate | TRUE_ROUTE_DEFECT（「第几节」定位） |
+| loc-017 | qa | locate | TRUE_ROUTE_DEFECT（「第几节」定位） |
+| md-014 | qa | qa | **NOT_A_ROUTER_DEFECT**（expected_route 本就是 qa；failure 是 retrieval/scope，留 Q4.3） |
+
+### 根因
+- `COMPARE_WORDS` 缺「一致吗/是否一致」这类一致性比较词 → cmp-015 误入 qa。
+- `LOCATION_WORDS` 缺「第几节/哪一节」这类节级定位词 → loc-016/017 误入 qa。
+
+### 修复（泛化规则，非 case-specific）
+- `core/query_router.py`：新增 `CONSISTENCY_COMPARE_WORDS = ("一致吗", "是否一致", "一致否", "一致不", "一不一致")`，compare 判定加一致性比较；`LOCATION_WORDS` 增加 `"第几节"/"哪一节"/"哪些节"`。
+- 刻意把「一致吗」与裸「一致」分离：裸「一致」（如「一致性原理」）仍归 qa，不误判 compare。
+
+### Targeted Answer Validation（route 改变的 3 个 case 重跑 LLM）
+| Case | Before | After | 结果 |
+|---|---|---|---|
+| cmp-015 | qa（wrong refusal） | compare | **3/3 facts 恢复**（RAKE/多径/合并） |
+| loc-016 | qa（无法确定） | locate | wrong refusal 关闭；「第1」未恢复（Golden term：模板输出 `1.` 非 `第1`，D 类） |
+| loc-017 | qa（无法确定） | locate | wrong refusal 关闭；「第2」未恢复（同上 D 类） |
+
+- `facts_recovered = 3`（cmp-015 全部）；loc-016/017 的「第1/第2」属 Golden contract mismatch，非 route 缺陷。
+- `TRUE_ROUTE_DEFECTS_FIXED = 3/3`。
+
+### Regression
+- Phase E 108/108 PASS；F.2 37/37 PASS；full unit suite **511 OK**；router tests 20→25（新增 Q42RoutePrecisionTests 5 项）；ruff/compileall clean。
+- metadata guard（11 条 deferred）与 scope safety 未改，保持。
+
+### Gate decision
+**Q4.2 = PASS。** `PRODUCT_CASE_EXACT_GATE = FAIL`（0.7014，未变），`PRODUCT_FACT_RECALL_GATE = FAIL`（0.8248，未变）。按合同 STOP：不进入 Q4.3、不改 evaluator/Golden、不重开 Citation、不实施 L2、不进 Phase G。等待下一次单独授权。

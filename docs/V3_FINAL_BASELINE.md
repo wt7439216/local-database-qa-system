@@ -13,11 +13,10 @@ V3 的 active development cycle 已结束。本 baseline 之后，**不再修改
 
 ## V3 Final Source Baseline
 
-- V3 FINAL SOURCE COMMIT：见本节（GitHub `main` 分支，freeze commit，由本次 publication 产生）
+- V3 FINAL SOURCE COMMIT：`e7d5d9bd0d5875ff2e75afdfcb1fe536cf755b08`（GitHub `main` 分支）
 - Git publish workspace：`Local Database Q&A System上传版`
 - GitHub：`https://github.com/wt7439216/local-database-qa-system`（分支 `main`）
-
-> 具体 commit SHA 由 freeze commit 确定后回填；远程 closure 后此处记录完整 SHA。
+- CI：`34438491420` = success
 
 ## Final Tests
 

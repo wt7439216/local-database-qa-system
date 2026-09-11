@@ -1,9 +1,15 @@
 # V4 Release Snapshot — Development Snapshot
 
-> 本文只描述**本次准备发布的 checkpoint 是什么**。
+> 本文描述当前**已经正式发布并接受**的 KB-V4 Development Snapshot。
 > 它**不是** V4 Final，也**不代表**产品已完成。
 >
-> 本阶段仅撰写发布说明；**未创建 git tag、未创建 GitHub release**。
+> ```text
+> CURRENT_RELEASE            = v4.0.0-alpha.2
+> RELEASE_TYPE               = GitHub Pre-release
+> ALPHA_2_RELEASE_ACCEPTANCE = PASS
+> REMOTE_CI                  = PASS
+> V4_FINAL                   = NO
+> ```
 
 ---
 
@@ -108,7 +114,7 @@ V4 Final              PENDING
 Next product phase：
 
 ```text
-V4.7 — Document Identity Remediation
+V4.7 — Document Identity Root-Cause Confirmation（先诊断后修复）
 ```
 
 ## 8. Pre-release & CI Status

@@ -11,9 +11,11 @@
 | 项 | 值 |
 |---|---|
 | 版本线 | **V4**（Development Active） |
-| 产品定位 | Development Snapshot / Pre-release（**NOT V4 Final**） |
-| 当前产品基线 | `V4_6_1_EMBEDDING_IDENTITY_BASELINE` |
-| 下一产品阶段 | `V4.7 — Document Identity Remediation` |
+| 当前发布 | `v4.0.0-alpha.2`（Development Snapshot / GitHub Pre-release，**NOT V4 Final**） |
+| 当前治理 / 状态基线 | `V4_6_2_HASH_PORTABILITY_BASELINE` |
+| 产品指标来源 | `V4_6_1_EMBEDDING_IDENTITY_BASELINE`（`metrics_recomputed_in_v4_6_2 = false`） |
+| REMOTE_CI | **PASS**（fresh LF GitHub Actions checkout） |
+| 下一产品阶段 | `V4.7 — Document Identity Root-Cause Confirmation` |
 | Product Quality DoD | **NOT_YET_PASS** |
 
 V4 仍在积极开发中。本快照可用于试用与评测复现，但**尚未达到 V4 最终产品质量目标**，不应被视为最终稳定版本。
@@ -138,7 +140,7 @@ powershell -ExecutionPolicy Bypass -File .\build_windows.ps1 -SkipIndex
 
 ## 已知限制 / 未完成项
 
-- **Document Identity** — NEXT（`V4.7`）
+- **Document Identity** — NEXT（`V4.7 — Document Identity Root-Cause Confirmation`，先诊断后修复）
 - **History**（多轮改写） — PENDING
 - **Retrieval**（RRF ranking miss） — PENDING
 - **Generation**（证据送达但答案省略/拒答） — PENDING

@@ -10,18 +10,7 @@
 
 ## [Unreleased]
 
-### V4.6.2 — Hash Portability & CI Reproducibility Formalization（governance / measurement）
-
-- 新增 versioned canonical content-hash contract `sha256-path-content-v2-canonical-lf`：仅对已识别
-  text 后缀规范化行尾（CRLF / bare CR → LF），binary / 未知类型保持 raw bytes（绝不 decode / normalize）。
-- 修复：原 content-hash / byte-identity guard 对 raw 字节敏感，导致同一文本在 Windows CRLF 工作树
-  （`7216c885…`）与 Git LF blob / CI checkout（`108fb167…`）得到不同身份，使 `v4.0.0-alpha.1` 的远端
-  CI byte-identity guard 失败。
-- 新 stage baseline：`V4_6_2_HASH_PORTABILITY_BASELINE`（parent `V4_6_1_EMBEDDING_IDENTITY_BASELINE`）。
-- `production_behavior_changed_in_stage = false`；`measurement_hash_contract_changed_in_stage = true`；
-  产品指标未重算（`metrics_recomputed_in_stage = false`，源自 `V4_6_1_EMBEDDING_IDENTITY_BASELINE`）。
-- 历史 baseline artifact 与 raw hashes 作为 provenance 保留，未被改写。
-- Live production drift guard 改为校验 **canonical** production hash（跨 CRLF / LF 一致）。
+（暂无尚未发布的变更。）
 
 ## [v4.0.0-alpha.2] - 2026-09-12
 
@@ -29,22 +18,35 @@
 > **REMOTE_CI = PASS**（fresh LF GitHub Actions checkout；699 tests OK）。
 > 日期取自 release commit / tag metadata（commit `4a75919`，`2026-09-12T01:14:55+08:00`）。
 
+### Added
+
+- **V4.6.2 — Hash Portability & CI Reproducibility Formalization**（governance / measurement）：
+  versioned canonical content-hash contract `sha256-path-content-v2-canonical-lf`（仅对已识别 text 后缀
+  规范化行尾；binary / 未知类型保持 raw bytes，绝不 decode / normalize）。
+- 新 stage baseline：`V4_6_2_HASH_PORTABILITY_BASELINE`（parent `V4_6_1_EMBEDDING_IDENTITY_BASELINE`）。
+
 ### Fixed
 
 - CRLF/LF hash portability：canonical text identity **仅规范化行尾**，使 Windows CRLF 工作树与
-  LF checkout 得到一致身份（`sha256-path-content-v2-canonical-lf`）；binary 保持 raw byte hashing。
-- 历史 raw hashes 作为 provenance 保留；product behavior unchanged。
-- 由 fresh LF GitHub CI 验证通过（alpha.1 的 5 个 byte-identity 失败全部消除）。
+  Git-normalized LF checkout 得到一致身份；binary 保持 raw byte hashing；历史 raw hashes 作为
+  provenance 保留；product behavior unchanged。由 fresh LF GitHub CI 验证通过（alpha.1 的 5 个
+  byte-identity 失败全部消除）。
+- Live production drift guard 改为校验 **canonical** production hash（跨 CRLF / LF 一致）。
 
 ### Notes
 
+- `production_behavior_changed_in_stage = false`；`measurement_hash_contract_changed_in_stage = true`；
+  产品指标未重算（`metrics_recomputed_in_v4_6_2 = false`，源自 `V4_6_1_EMBEDDING_IDENTITY_BASELINE`）。
 - 本条目为 governance / hash-portability release correction，**不**代表产品质量提升。
 - Supersedes `v4.0.0-alpha.1`（其 tag/commit 不变；release notes 已标注 superseded）。
 
-## [v4.0.0-alpha.1] - Unreleased
+## [v4.0.0-alpha.1] - 2026-09-12
 
-> V4 Development Snapshot（GitHub Pre-release，**NOT V4 Final**）。
-> 基线 `V4_6_1_EMBEDDING_IDENTITY_BASELINE`。尚未创建 tag / release。
+> GitHub Pre-release（Development Snapshot，**NOT V4 Final**）。**已发布**。
+> 基线 `V4_6_1_EMBEDDING_IDENTITY_BASELINE`。
+> **CI postcheck FAILED**：CRLF/LF raw-byte hash portability defect（product behavior unaffected），
+> 随后被 `v4.0.0-alpha.2` **superseded**；tag/commit **retained immutable**（`86c9479`）。
+> 日期取自 tag/commit metadata（`2026-09-12T00:47:29+08:00`）。
 
 ### Added
 

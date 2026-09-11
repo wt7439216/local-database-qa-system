@@ -10,6 +10,24 @@
 
 ## [Unreleased]
 
+### V4.6.2 — Hash Portability & CI Reproducibility Formalization（governance / measurement）
+
+- 新增 versioned canonical content-hash contract `sha256-path-content-v2-canonical-lf`：仅对已识别
+  text 后缀规范化行尾（CRLF / bare CR → LF），binary / 未知类型保持 raw bytes（绝不 decode / normalize）。
+- 修复：原 content-hash / byte-identity guard 对 raw 字节敏感，导致同一文本在 Windows CRLF 工作树
+  （`7216c885…`）与 Git LF blob / CI checkout（`108fb167…`）得到不同身份，使 `v4.0.0-alpha.1` 的远端
+  CI byte-identity guard 失败。
+- 新 stage baseline：`V4_6_2_HASH_PORTABILITY_BASELINE`（parent `V4_6_1_EMBEDDING_IDENTITY_BASELINE`）。
+- `production_behavior_changed_in_stage = false`；`measurement_hash_contract_changed_in_stage = true`；
+  产品指标未重算（`metrics_recomputed_in_stage = false`，源自 `V4_6_1_EMBEDDING_IDENTITY_BASELINE`）。
+- 历史 baseline artifact 与 raw hashes 作为 provenance 保留，未被改写。
+- Live production drift guard 改为校验 **canonical** production hash（跨 CRLF / LF 一致）。
+
+### Known issue
+
+- `v4.0.0-alpha.1` = published pre-release with failed CI portability postcheck；修复需通过
+  `v4.0.0-alpha.2` 验证（不移动 alpha.1）。
+
 ## [v4.0.0-alpha.1] - Unreleased
 
 > V4 Development Snapshot（GitHub Pre-release，**NOT V4 Final**）。

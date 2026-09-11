@@ -10,7 +10,7 @@ Outputs ``eval/v4_baseline_lineage.json`` and annotates each *stage* baseline
 with a ``stage_identity`` governance block (metrics / hashes untouched).  The
 immutable initial baseline is deliberately never annotated.
 
-Stage chain (extended by V4.5, then V4.6.1):
+Stage chain (extended by V4.5, V4.6.1, then V4.6.2):
 
     V4_INITIAL_BASELINE                  (IMMUTABLE_HISTORICAL)
             |
@@ -18,14 +18,20 @@ Stage chain (extended by V4.5, then V4.6.1):
             |
     V4_5_ROUTING_BASELINE                 (IMMUTABLE, historical stage)
             |
-    V4_6_1_EMBEDDING_IDENTITY_BASELINE    (CURRENT_PRODUCT_STATE)
+    V4_6_1_EMBEDDING_IDENTITY_BASELINE    (IMMUTABLE, historical stage)
+            |
+    V4_6_2_HASH_PORTABILITY_BASELINE      (CURRENT_PRODUCT_STATE)
 
 V4.6.1 formalizes the already-audited bge-m3 / embedding-identity production
-change-set (config default + fail-closed startup validation).  The pointer
-advances by flipping the superseded stage's ``status`` from
-``CURRENT_PRODUCT_STATE`` to ``IMMUTABLE_STAGE``; every recorded measurement
-field (metrics / hashes / parent / metric_artifact / timestamp) of the earlier
-entries is left untouched.
+change-set (config default + fail-closed startup validation).
+
+V4.6.2 formalizes a line-ending-portable canonical content hash
+(``sha256-path-content-v2-canonical-lf``): production behaviour is unchanged,
+only the measurement hash contract changed, so the pointer advances without a
+new product state.  The pointer advances by flipping the superseded stage's
+``status`` from ``CURRENT_PRODUCT_STATE`` to ``IMMUTABLE_STAGE``; every recorded
+measurement field (metrics / hashes / parent / metric_artifact / timestamp) of
+the earlier entries is left untouched.
 
 This script never touches production behaviour.
 """
@@ -45,6 +51,7 @@ INITIAL_BASELINE = EVAL / "v4_initial_baseline.json"
 V4_4_BASELINE = EVAL / "v4_4_scope_remediation_baseline.json"
 V4_5_BASELINE = EVAL / "v4_5_routing_baseline.json"
 V4_6_1_BASELINE = EVAL / "v4_6_1_embedding_identity_baseline.json"
+V4_6_2_BASELINE = EVAL / "v4_6_2_hash_portability_baseline.json"
 OUT = EVAL / "v4_baseline_lineage.json"
 
 IMMUTABILITY_RULE = (
@@ -96,6 +103,21 @@ V4_6_1_STAGE_IDENTITY = {
     "does_not_supersede_as_history": "V4_5_ROUTING_BASELINE",
 }
 
+V4_6_2_STAGE_IDENTITY = {
+    "baseline_id": "V4_6_2_HASH_PORTABILITY_BASELINE",
+    "stage": "V4.6.2",
+    "role": "HASH_PORTABILITY_FORMALIZATION",
+    "parent_baseline": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+    "annotation": (
+        "Governance/measurement-only block. V4.6.2 formalizes a line-ending-portable "
+        "canonical content hash (sha256-path-content-v2-canonical-lf). Production "
+        "behaviour is unchanged; the product metrics are carried over verbatim from "
+        "V4_6_1_EMBEDDING_IDENTITY_BASELINE (metrics_recomputed_in_stage=false)."
+    ),
+    "supersedes_as_current_state": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+    "does_not_supersede_as_history": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+}
+
 # (baseline_id, stage, role, artifact, parent, status, immutable, stage_identity)
 STAGES = [
     ("V4_INITIAL_BASELINE", "V4.2", "PRE_REMEDIATION_INITIAL_STATE",
@@ -105,7 +127,10 @@ STAGES = [
     ("V4_5_ROUTING_BASELINE", "V4.5", "POST_V4_5_ROUTING_BASELINE",
      V4_5_BASELINE, "V4_4_SCOPE_REMEDIATION_BASELINE", "IMMUTABLE_STAGE", True, V4_5_STAGE_IDENTITY),
     ("V4_6_1_EMBEDDING_IDENTITY_BASELINE", "V4.6.1", "POST_V4_6_1_EMBEDDING_IDENTITY_ALIGNMENT",
-     V4_6_1_BASELINE, "V4_5_ROUTING_BASELINE", "CURRENT_PRODUCT_STATE", True, V4_6_1_STAGE_IDENTITY),
+     V4_6_1_BASELINE, "V4_5_ROUTING_BASELINE", "IMMUTABLE_STAGE", True, V4_6_1_STAGE_IDENTITY),
+    ("V4_6_2_HASH_PORTABILITY_BASELINE", "V4.6.2", "HASH_PORTABILITY_FORMALIZATION",
+     V4_6_2_BASELINE, "V4_6_1_EMBEDDING_IDENTITY_BASELINE", "CURRENT_PRODUCT_STATE", True,
+     V4_6_2_STAGE_IDENTITY),
 ]
 
 
@@ -195,7 +220,7 @@ def main() -> int:
 
     payload = {
         "producer": "scripts/build_v4_baseline_lineage.py",
-        "produced_in": "V4.6.1 Embedding Identity & Model Alignment",
+        "produced_in": "V4.6.2 Hash Portability & CI Reproducibility Formalization",
         "immutability_rule": IMMUTABILITY_RULE,
         "current_baseline_id": STAGES[-1][0],
         "baselines": [

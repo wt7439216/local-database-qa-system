@@ -25,8 +25,8 @@ Fully offline: no model, no library, no network.
 
 from __future__ import annotations
 
-import hashlib
 import json
+import sys
 import unittest
 from pathlib import Path
 
@@ -40,6 +40,12 @@ from core.query_router import (
 _ROOT = Path(__file__).resolve().parent.parent
 _EVAL = _ROOT / "eval"
 _GOLDEN = _EVAL / "v3_final_golden.json"
+
+_SCRIPTS = _ROOT / "scripts"
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+
+import eval_v4_baseline as baseline  # noqa: E402
 
 # The four proven V4.5 routing targets (frozen golden `expected_route` = qa).
 TARGETS = {
@@ -208,20 +214,29 @@ class TestPositionIntentClassification(unittest.TestCase):
 class TestV45BaselineGovernance(unittest.TestCase):
     """G14-G17: new child baseline, immutable history, untouched golden."""
 
-    # Byte-identity anchors recorded by V4.4.1 / V4.2 (must never move).
-    INITIAL_BASELINE_FILE_SHA256 = "371506a99ec7094cad486acb108f33fb66e6a357f31e9ed9e23fcd6ac1f5870f"
-    GOLDEN_FILE_SHA256 = "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb"
+    # V4.6.2 identity anchors are CANONICAL (line-ending portable).  The raw
+    # Windows-CRLF byte anchors recorded by V4.4.1 / V4.2 are preserved below as
+    # historical provenance only (platform-specific; no longer the cross-platform
+    # acceptance contract).
+    INITIAL_BASELINE_CANONICAL_SHA256 = "43907c9844594f2820c60d527cbf6c3a7732be8936a224c6258632ac5e8ae73a"
+    GOLDEN_CANONICAL_SHA256 = "872cf0604d0e31dce02ee8d9f7be02a6c63f671a443496194d9b5f056f9e1171"
+    INITIAL_BASELINE_RAW_CRLF_SHA256 = "371506a99ec7094cad486acb108f33fb66e6a357f31e9ed9e23fcd6ac1f5870f"
+    GOLDEN_RAW_CRLF_SHA256 = "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb"
 
     def _load(self, name: str) -> dict:
         return json.loads((_EVAL / name).read_text(encoding="utf-8"))
 
-    def test_initial_baseline_is_byte_identical(self):
-        digest = hashlib.sha256((_EVAL / "v4_initial_baseline.json").read_bytes()).hexdigest()
-        self.assertEqual(digest, self.INITIAL_BASELINE_FILE_SHA256)
+    def test_initial_baseline_is_canonically_identical(self):
+        digest = baseline.canonical_sha256_file(_EVAL / "v4_initial_baseline.json")
+        self.assertEqual(digest, self.INITIAL_BASELINE_CANONICAL_SHA256)
 
-    def test_golden_is_byte_identical(self):
-        digest = hashlib.sha256(_GOLDEN.read_bytes()).hexdigest()
-        self.assertEqual(digest, self.GOLDEN_FILE_SHA256)
+    def test_golden_is_canonically_identical(self):
+        digest = baseline.canonical_sha256_file(_GOLDEN)
+        self.assertEqual(digest, self.GOLDEN_CANONICAL_SHA256)
+
+    def test_historical_raw_anchors_are_documented_provenance(self):
+        self.assertNotEqual(self.INITIAL_BASELINE_RAW_CRLF_SHA256, self.INITIAL_BASELINE_CANONICAL_SHA256)
+        self.assertNotEqual(self.GOLDEN_RAW_CRLF_SHA256, self.GOLDEN_CANONICAL_SHA256)
 
     def test_v4_5_stage_baseline_identity(self):
         stage = self._load("v4_5_routing_baseline.json")
@@ -234,8 +249,9 @@ class TestV45BaselineGovernance(unittest.TestCase):
     def test_lineage_chain(self):
         lineage = self._load("v4_baseline_lineage.json")
         by_id = {b["baseline_id"]: b for b in lineage["baselines"]}
-        # V4.5 remains an immutable historical stage; V4.6.1 later appended its child
-        # and advanced the current pointer (see test_live_production_hash_guard.py).
+        # V4.5 remains an immutable historical stage; V4.6.1 / V4.6.2 later appended
+        # their children and advanced the current pointer
+        # (see test_live_production_hash_guard.py).
         self.assertEqual(
             [b["baseline_id"] for b in lineage["baselines"]],
             [
@@ -243,9 +259,10 @@ class TestV45BaselineGovernance(unittest.TestCase):
                 "V4_4_SCOPE_REMEDIATION_BASELINE",
                 "V4_5_ROUTING_BASELINE",
                 "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+                "V4_6_2_HASH_PORTABILITY_BASELINE",
             ],
         )
-        self.assertEqual(lineage["current_baseline_id"], "V4_6_1_EMBEDDING_IDENTITY_BASELINE")
+        self.assertEqual(lineage["current_baseline_id"], "V4_6_2_HASH_PORTABILITY_BASELINE")
         self.assertEqual(
             by_id["V4_5_ROUTING_BASELINE"]["parent_baseline"], "V4_4_SCOPE_REMEDIATION_BASELINE"
         )

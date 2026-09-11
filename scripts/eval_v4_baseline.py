@@ -85,14 +85,62 @@ ANSWER_MODEL = config.ANSWER_MODEL  # qwen2.5:7b by default
 
 
 # --------------------------------------------------------------------------- #
+# Canonical content hashing (V4.6.2 hash portability)
+# --------------------------------------------------------------------------- #
+# A content hash must identify the same *text* whether Git materialized it as a
+# Windows CRLF worktree or an LF blob/CI checkout.  ONLY line endings are
+# canonicalized; every other byte stays significant (whitespace, indentation,
+# trailing spaces, JSON formatting/key order, Unicode form and case are NOT
+# touched), so a real content change still changes the hash.
+CANONICAL_HASH_ALGORITHM = "sha256-path-content-v2-canonical-lf"
+CANONICAL_LINE_ENDING_POLICY = (
+    "For recognized text suffixes, CRLF (\\r\\n) and bare CR (\\r) are normalized "
+    "to LF (\\n) before hashing; every other file is hashed as raw bytes. No other "
+    "canonicalization is applied."
+)
+# Explicit text/binary classification (suffix allowlist).  Anything not listed
+# is treated as binary and hashed raw — never decoded/normalized.
+TEXT_SUFFIXES = frozenset({
+    ".py", ".js", ".html", ".css", ".md", ".json", ".toml",
+    ".yaml", ".yml", ".txt", ".ps1", ".bat", ".cmd", ".cfg", ".ini", ".csv",
+})
+
+# --------------------------------------------------------------------------- #
 # Provenance helpers
 # --------------------------------------------------------------------------- #
-def _sha256_file(path: Path) -> str:
+def is_text_path(path: Path) -> bool:
+    """Whether ``path`` is a recognized text file (line-ending canonicalized)."""
+    return path.suffix.lower() in TEXT_SUFFIXES
+
+
+def canonicalize_text_bytes(data: bytes) -> bytes:
+    """Normalize line endings only: CRLF and bare CR -> LF."""
+    return data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+
+
+def canonical_sha256_bytes(data: bytes, *, text: bool) -> str:
+    if text:
+        data = canonicalize_text_bytes(data)
+    return hashlib.sha256(data).hexdigest()
+
+
+def raw_sha256_file(path: Path) -> str:
+    """Byte-exact sha256 (no line-ending canonicalization)."""
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def canonical_sha256_file(path: Path) -> str:
+    """sha256 with line-ending canonicalization for text files (raw otherwise)."""
+    return canonical_sha256_bytes(path.read_bytes(), text=is_text_path(path))
+
+
+def _sha256_file(path: Path) -> str:
+    # Canonical for text, raw for binary (binary suffixes are never text).
+    return canonical_sha256_file(path)
+
+
 def _golden_hash() -> str:
-    """Whole-file sha256 (recorded for provenance)."""
+    """Canonical whole-file sha256 of the golden (line-ending portable)."""
     return _sha256_file(GOLDEN)
 
 
@@ -114,10 +162,12 @@ def _library_identity(path: Path) -> str:
 
 
 def production_source_hash(root: Path | None = None) -> str:
-    """Deterministic sha256 of the production source tree (core/desktop/web).
+    """Canonical sha256 of the production source tree (core/desktop/web).
 
     Proves "production behaviour unchanged" without git: any edit to a
-    production source file changes this hash.
+    production source file changes this hash.  V4.6.2: text files are hashed
+    with line-ending canonicalization (CRLF/CR -> LF) so the identity is the
+    same on a CRLF worktree and an LF CI checkout; binary files stay raw.
     """
     root = root or ROOT_DIR
     entries: list[str] = []
@@ -535,6 +585,13 @@ def build_artifact(
             "golden_sha256": golden_hash,
             "answer_artifact_sha256": answers_hash,
             "production_source_sha256": production_source_hash(),
+        },
+        "hash_contract": {
+            "algorithm": CANONICAL_HASH_ALGORITHM,
+            "line_ending_policy": CANONICAL_LINE_ENDING_POLICY,
+            "text_suffixes": sorted(TEXT_SUFFIXES),
+            "production_source_sha256_is_canonical": True,
+            "golden_sha256_is_canonical": True,
         },
         "superseded_baselines": superseded_baselines(),
         "reproducibility": {

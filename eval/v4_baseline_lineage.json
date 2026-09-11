@@ -1,8 +1,8 @@
 {
   "producer": "scripts/build_v4_baseline_lineage.py",
-  "produced_in": "V4.6.1 Embedding Identity & Model Alignment",
+  "produced_in": "V4.6.2 Hash Portability & CI Reproducibility Formalization",
   "immutability_rule": "Historical stage baselines are immutable. A later remediation creates a new baseline artifact; it never rewrites an earlier stage baseline. eval/v4_initial_baseline.json is permanently the pre-remediation V4 initial state and must never be used as a rolling 'current' baseline. The current pointer lives only in eval/v4_baseline_lineage.json.",
-  "current_baseline_id": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+  "current_baseline_id": "V4_6_2_HASH_PORTABILITY_BASELINE",
   "baselines": [
     {
       "baseline_id": "V4_INITIAL_BASELINE",
@@ -99,7 +99,7 @@
       "evaluator_version": "v4-baseline-v1",
       "citation_verifier_version": "f2-v4",
       "parent_baseline": "V4_5_ROUTING_BASELINE",
-      "status": "CURRENT_PRODUCT_STATE",
+      "status": "IMMUTABLE_STAGE",
       "immutable": true,
       "metrics": {
         "case_exact_fact_match_rate": 0.7292,
@@ -111,6 +111,33 @@
         "citation_scope_violation": 0
       },
       "timestamp": "2026-09-11T23:17:22"
+    },
+    {
+      "baseline_id": "V4_6_2_HASH_PORTABILITY_BASELINE",
+      "stage": "V4.6.2",
+      "role": "HASH_PORTABILITY_FORMALIZATION",
+      "metric_artifact": "eval/v4_6_2_hash_portability_baseline.json",
+      "production_source_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+      "answer_artifact_sha256": "52d7fb08e64d89e5ddf8f550abdce4583695ea4d99c94a85b87476637cff7f0c",
+      "golden_identity": {
+        "file_sha256": "872cf0604d0e31dce02ee8d9f7be02a6c63f671a443496194d9b5f056f9e1171",
+        "cases_sha256": "0837e83333c858c6fe0229a06f9e0a3efb25505b03bab5acc3148a6b0af2ad5e"
+      },
+      "evaluator_version": "v4-baseline-v1",
+      "citation_verifier_version": "f2-v4",
+      "parent_baseline": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+      "status": "CURRENT_PRODUCT_STATE",
+      "immutable": true,
+      "metrics": {
+        "case_exact_fact_match_rate": 0.7292,
+        "fact_recall": 0.8535,
+        "false_refusal_rate": 0.0,
+        "citation_coverage": 0.4657,
+        "high_confidence_unsupported_rate": 0.0132,
+        "invalid_citation_count": 0,
+        "citation_scope_violation": 0
+      },
+      "timestamp": "2026-09-12T01:01:48"
     }
   ],
   "clobbered_in_v4_4": {
@@ -122,5 +149,5 @@
     "next_phase_advice": "scripts/eval_v4_baseline.py accepts --baseline-id / --baseline-role / --out so future stages write a NEW artifact instead of overwriting",
     "restore_source_sha256": "371506a99ec7094cad486acb108f33fb66e6a357f31e9ed9e23fcd6ac1f5870f"
   },
-  "timestamp": "2026-09-11T23:18:05"
+  "timestamp": "2026-09-12T01:02:05"
 }

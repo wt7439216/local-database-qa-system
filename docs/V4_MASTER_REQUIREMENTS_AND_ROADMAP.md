@@ -3,8 +3,9 @@
 > **文档角色**：KB-V4 当前开发总控文档（authoritative prose-level master）。
 > **适用范围**：本地数据库问答系统 / KB-V4。
 > **当前状态**：V4 Development Active；尚未达到 V4 Final Product Quality DoD。
-> **当前产品基线**：`V4_6_1_EMBEDDING_IDENTITY_BASELINE`。
-> **当前 production_source_hash**：`7216c885d9ab315333973b9af6d9e0406da2a316f0f7abdcf89bef686d70a22a`。
+> **当前产品基线**：`V4_6_2_HASH_PORTABILITY_BASELINE`。
+> **当前 canonical production_source_hash**：`108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c`。
+> **历史 raw (CRLF) production hash（V4.6.1 provenance）**：`7216c885d9ab315333973b9af6d9e0406da2a316f0f7abdcf89bef686d70a22a`。
 > **当前下一产品阶段**：`V4.7 — Document Identity Remediation`。
 >
 > Source-of-truth 优先级：
@@ -300,19 +301,27 @@ V4_4_SCOPE_REMEDIATION_BASELINE
 V4_5_ROUTING_BASELINE
         ↓
 V4_6_1_EMBEDDING_IDENTITY_BASELINE
+        ↓
+V4_6_2_HASH_PORTABILITY_BASELINE
 ```
 
 当前：
 
 ```text
 current_baseline_id =
-V4_6_1_EMBEDDING_IDENTITY_BASELINE
+V4_6_2_HASH_PORTABILITY_BASELINE
 ```
 
-当前 production hash：
+当前 canonical production hash（line-ending portable）：
 
 ```text
-7216c885d9ab315333973b9af6d9e0406da2a316f0f7abdcf89bef686d70a22a
+108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c
+```
+
+历史 raw (CRLF) production hash provenance：
+
+```text
+V4_6_1 = 7216c885d9ab315333973b9af6d9e0406da2a316f0f7abdcf89bef686d70a22a
 ```
 
 已有 live production drift guard（`tests/test_live_production_hash_guard.py`）：
@@ -320,12 +329,13 @@ V4_6_1_EMBEDDING_IDENTITY_BASELINE
 ```text
 lineage current pointer
 → current baseline artifact
-→ recorded production hash
+→ recorded canonical production hash
 ==
-recomputed live production hash
+recomputed live canonical production hash
 ```
 
-任何未登记 production drift 必须立即导致测试失败。
+任何未登记 production drift 必须立即导致测试失败。该身份为 canonical
+（`sha256-path-content-v2-canonical-lf`），跨 Windows CRLF 工作树与 LF checkout 一致。
 
 ---
 
@@ -556,6 +566,41 @@ V4_6_1_EMBEDDING_IDENTITY_BASELINE
 ```
 
 以及 live production drift detection。
+
+## V4.6.2 — Hash Portability & CI Reproducibility Formalization
+
+```text
+COMPLETE  ·  GOVERNANCE / MEASUREMENT PORTABILITY
+```
+
+正式确立 versioned canonical content-hash contract：
+
+```text
+algorithm        = sha256-path-content-v2-canonical-lf
+canonicalization = line endings only（CRLF / bare CR → LF；仅限已识别 text 后缀）
+binary / unknown = raw bytes（绝不 decode / normalize）
+```
+
+修复：V4.0–V4.6.1 的 content-hash / byte-identity guard 直接对 raw 字节取哈希，导致
+Windows CRLF 工作树与 Git LF blob / CI checkout 对**同一文本**得到不同身份
+（`7216c885…` vs `108fb167…`），使 `v4.0.0-alpha.1` 的远端 CI byte-identity guard 失败。
+
+本阶段**不是** product remediation：
+
+```text
+production_behavior_changed_in_stage        = false
+measurement_hash_contract_changed_in_stage  = true
+metrics_recomputed_in_stage                 = false
+metrics_source                             = V4_6_1_EMBEDDING_IDENTITY_BASELINE
+```
+
+建立：
+
+```text
+V4_6_2_HASH_PORTABILITY_BASELINE
+```
+
+历史 raw hashes 继续作为 provenance 保留（旧 artifact 不被覆盖、不被改写）。
 
 ---
 

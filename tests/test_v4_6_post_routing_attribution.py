@@ -10,18 +10,28 @@ Pins the V4.6 diagnosis outcome and the governance invariants it must hold:
 
 from __future__ import annotations
 
-import hashlib
 import json
+import sys
 import unittest
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parent.parent
 _EVAL = _ROOT / "eval"
 
-# Frozen V4.5 production state (must be byte-identical — V4.6 is read-only).
+_SCRIPTS = _ROOT / "scripts"
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+
+import eval_v4_baseline as baseline  # noqa: E402
+
+# Frozen V4.5 production state (historical; raw CRLF provenance preserved).
 _V4_5_PRODUCTION_HASH = "c36d61a1c4691201cb72c4bbed7932ba1f89dae26cb202ae5a5cf3483f824561"
-_INITIAL_BASELINE_FILE_SHA256 = "371506a99ec7094cad486acb108f33fb66e6a357f31e9ed9e23fcd6ac1f5870f"
-_GOLDEN_FILE_SHA256 = "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb"
+# V4.6.2 canonical (line-ending portable) identity anchors; the raw CRLF anchors
+# are kept below as historical provenance only.
+_INITIAL_BASELINE_CANONICAL_SHA256 = "43907c9844594f2820c60d527cbf6c3a7732be8936a224c6258632ac5e8ae73a"
+_GOLDEN_CANONICAL_SHA256 = "872cf0604d0e31dce02ee8d9f7be02a6c63f671a443496194d9b5f056f9e1171"
+_INITIAL_BASELINE_RAW_CRLF_SHA256 = "371506a99ec7094cad486acb108f33fb66e6a357f31e9ed9e23fcd6ac1f5870f"
+_GOLDEN_RAW_CRLF_SHA256 = "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb"
 
 
 def _load(name: str) -> dict:
@@ -118,13 +128,17 @@ class TestReadOnlyInvariants(unittest.TestCase):
         stage = _load("v4_5_routing_baseline.json")
         self.assertEqual(stage["artifact_hashes"]["production_source_sha256"], _V4_5_PRODUCTION_HASH)
 
-    def test_initial_baseline_byte_identical(self):
-        digest = hashlib.sha256((_EVAL / "v4_initial_baseline.json").read_bytes()).hexdigest()
-        self.assertEqual(digest, _INITIAL_BASELINE_FILE_SHA256)
+    def test_initial_baseline_canonically_identical(self):
+        digest = baseline.canonical_sha256_file(_EVAL / "v4_initial_baseline.json")
+        self.assertEqual(digest, _INITIAL_BASELINE_CANONICAL_SHA256)
 
-    def test_golden_byte_identical(self):
-        digest = hashlib.sha256((_EVAL / "v3_final_golden.json").read_bytes()).hexdigest()
-        self.assertEqual(digest, _GOLDEN_FILE_SHA256)
+    def test_golden_canonically_identical(self):
+        digest = baseline.canonical_sha256_file(_EVAL / "v3_final_golden.json")
+        self.assertEqual(digest, _GOLDEN_CANONICAL_SHA256)
+
+    def test_historical_raw_anchors_are_documented_provenance(self):
+        self.assertNotEqual(_INITIAL_BASELINE_RAW_CRLF_SHA256, _INITIAL_BASELINE_CANONICAL_SHA256)
+        self.assertNotEqual(_GOLDEN_RAW_CRLF_SHA256, _GOLDEN_CANONICAL_SHA256)
 
     def test_v4_5_stage_stays_in_history_after_pointer_advance(self):
         # V4.6 itself did not move the pointer; V4.6.1 later advanced it to the
@@ -138,7 +152,7 @@ class TestReadOnlyInvariants(unittest.TestCase):
             by_id["V4_5_ROUTING_BASELINE"]["production_source_hash"], _V4_5_PRODUCTION_HASH
         )
         self.assertEqual(
-            lineage["current_baseline_id"], "V4_6_1_EMBEDDING_IDENTITY_BASELINE"
+            lineage["current_baseline_id"], "V4_6_2_HASH_PORTABILITY_BASELINE"
         )
 
     def test_attribution_parent_is_v4_5(self):

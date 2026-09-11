@@ -26,16 +26,22 @@ v4.0.0-alpha.1
 ## 3. Current Baseline
 
 ```text
-V4_6_1_EMBEDDING_IDENTITY_BASELINE
+V4_6_2_HASH_PORTABILITY_BASELINE
 ```
 
-Production hash：
+Canonical production hash（line-ending portable，`sha256-path-content-v2-canonical-lf`）：
+
+```text
+108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c
+```
+
+历史 raw (CRLF) production hash provenance（V4.6.1）：
 
 ```text
 7216c885d9ab315333973b9af6d9e0406da2a316f0f7abdcf89bef686d70a22a
 ```
 
-（机器事实源：`eval/v4_6_1_embedding_identity_baseline.json`；lineage current pointer：`eval/v4_baseline_lineage.json`。）
+（机器事实源：`eval/v4_6_2_hash_portability_baseline.json`；lineage current pointer：`eval/v4_baseline_lineage.json`。）
 
 ## 4. Current Models
 
@@ -50,7 +56,8 @@ Reranker           disabled by default
 
 ## 5. Current Metrics（canonical Full-144）
 
-> 直接读取 `eval/v4_6_1_embedding_identity_baseline.json`，未手工猜测。
+> 产品指标自 V4.6.1 原样沿用（V4.6.2 为 measurement portability 阶段，`metrics_recomputed_in_stage = false`）；
+> 机器事实源：`eval/v4_6_2_hash_portability_baseline.json`（其 `metrics` 逐字复制自 `V4_6_1_EMBEDDING_IDENTITY_BASELINE`）。
 
 | 指标 | 当前值 | 最终 Target | 状态 |
 |---|---:|---:|:--:|
@@ -98,7 +105,22 @@ Next product phase：
 V4.7 — Document Identity Remediation
 ```
 
-## 8. Positioning
+## 8. Pre-release & CI Status（alpha.1）
+
+```text
+v4.0.0-alpha.1 = PUBLISHED PRE-RELEASE WITH FAILED CI POSTCHECK
+```
+
+原因：内容哈希 / byte-identity guard 对 raw 字节敏感（Windows CRLF 工作树 vs Git LF checkout）。
+修复：**V4.6.2** canonical hash contract（`sha256-path-content-v2-canonical-lf`，仅规范化行尾）。
+
+```text
+后续：修复必须通过 v4.0.0-alpha.2 发布验证；
+       不移动 v4.0.0-alpha.1（可标记 superseded）；
+       本阶段未创建 alpha.2、未 push、未修改远端 release。
+```
+
+## 9. Positioning
 
 本快照可用于**试用与评测复现**，并可作为发布到 GitHub 的 **Pre-release**。
 

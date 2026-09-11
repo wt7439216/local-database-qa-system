@@ -1,0 +1,2351 @@
+{
+  "producer": "scripts/diagnose_v4_scope.py",
+  "library_embedding_model": "bge-m3",
+  "dense_gates": {
+    "strong": 0.48,
+    "accept": 0.55,
+    "dense_only": 0.5
+  },
+  "rows": [
+    {
+      "id": "loc-018",
+      "category": "locate",
+      "query": "参数表在测试文档的哪个位置？",
+      "routing_question": "参数表在测试文档的哪个位置？",
+      "retrieval_query": "参数表在测试文档哪个",
+      "route": "locate",
+      "extract_terms": [
+        "测试文档",
+        "参数表"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-6ea6bf5e2889e0972f40fae5b36c10719d877895f544b5bd28569922ead2b173",
+        "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+        "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+        "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+        "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+        "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+        "chk-9e3fbcec26824cd1a497890b7dc9cb44c0b5aec31c158b1bae9ea683c0af9bec",
+        "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b"
+      ],
+      "lexical_strength": 0,
+      "longest_match": 0,
+      "concentrated": 0,
+      "top_dense": 0.5596701532730474,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 3. 参数表",
+          "lexical_rank": 1,
+          "dense": 0.5455964199451112
+        },
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 3. 参数表",
+          "lexical_rank": 2,
+          "dense": 0.5499396365599757
+        },
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 1. 多径传播",
+          "lexical_rank": 3,
+          "dense": 0.4634637758348483
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.3.2 LTE物理信道和物理信号",
+          "lexical_rank": 12,
+          "dense": 0.46123994044156313
+        },
+        {
+          "chapter": "3. 参数表",
+          "section": "3. 参数表",
+          "lexical_rank": 13,
+          "dense": 0.5348814370744208
+        }
+      ]
+    },
+    {
+      "id": "mt-006",
+      "category": "multi_turn",
+      "query": "那它呢？",
+      "routing_question": "OFDM",
+      "retrieval_query": "OFDM",
+      "route": "qa",
+      "extract_terms": [
+        "OFDM"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-53743d589ada69a9",
+        "chk-69942813705f143d",
+        "chk-784fb456936fd9be",
+        "chk-2d2328c7df43eed3",
+        "chk-be993070511d13af",
+        "chk-8318e8e58aca2e3d",
+        "chk-3396eda2c287d704",
+        "chk-e52a66df7fd1ee15"
+      ],
+      "lexical_strength": 1,
+      "longest_match": 4,
+      "concentrated": 8,
+      "top_dense": 0.5492571165337666,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+          "lexical_rank": 13,
+          "dense": 0.5439078130507035
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+          "lexical_rank": 2,
+          "dense": 0.49844387394587075
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.3.2 LTE物理信道和物理信号",
+          "lexical_rank": 8,
+          "dense": 0.4608868544671481
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "",
+          "lexical_rank": 4,
+          "dense": 0.4236106785490025
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 24,
+          "dense": 0.533703678731641
+        }
+      ]
+    },
+    {
+      "id": "md-014",
+      "category": "multi_document",
+      "query": "教材和测试文档都涉及的系统有哪些？",
+      "routing_question": "教材和测试文档都涉及的系统有哪些？",
+      "retrieval_query": "教材和测试文档都涉及的系统有哪些？",
+      "route": "qa",
+      "extract_terms": [
+        "测试文档都涉及",
+        "文档都涉",
+        "档都涉及",
+        "测试文档",
+        "试文档都",
+        "文档都",
+        "档都涉",
+        "测试文",
+        "系统有",
+        "试文档",
+        "都涉及",
+        "教材",
+        "文档",
+        "档都",
+        "测试",
+        "涉及",
+        "试文",
+        "都涉"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+        "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+        "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+        "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+        "chk-6ea6bf5e2889e0972f40fae5b36c10719d877895f544b5bd28569922ead2b173",
+        "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+        "chk-9e3fbcec26824cd1a497890b7dc9cb44c0b5aec31c158b1bae9ea683c0af9bec",
+        "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b"
+      ],
+      "lexical_strength": 1,
+      "longest_match": 2,
+      "concentrated": 2,
+      "top_dense": 0.5275658198373678,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 1. 多径传播",
+          "lexical_rank": 1,
+          "dense": 0.5156539625411696
+        },
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 1. 多径传播",
+          "lexical_rank": 2,
+          "dense": 0.49144876757879147
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "",
+          "lexical_rank": 20,
+          "dense": 0.48509173792716936
+        },
+        {
+          "chapter": "第4章 GSM移动通信系统",
+          "section": "4.4.1 地址标识在移动性管理以及呼叫接续过程中，需要使用各种",
+          "lexical_rank": 24,
+          "dense": 0.4876281478101913
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.4 网络结构",
+          "lexical_rank": 29,
+          "dense": 0.4828290981927822
+        }
+      ]
+    },
+    {
+      "id": "oos-001",
+      "category": "oos_hard_negative",
+      "query": "今天天气怎么样？",
+      "routing_question": "今天天气怎么样？",
+      "retrieval_query": "今天天气怎么样？",
+      "route": "qa",
+      "extract_terms": [
+        "今天天气"
+      ],
+      "lexical_candidates": 4,
+      "lexical_top8": [
+        "chk-2eb65712f4633ced",
+        "chk-002fccc5f7d8ab94",
+        "chk-b5cd37366e7715e1",
+        "chk-3ae7d8cf2da34aff"
+      ],
+      "lexical_strength": 1,
+      "longest_match": 2,
+      "concentrated": 2,
+      "top_dense": 0.43674045513006404,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": true,
+      "confidence": "low",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 4,
+          "dense": 0.4000729298961107
+        },
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.3.1 室外传播模型在实际的传播环境中，从覆盖区域来分，室外",
+          "lexical_rank": null,
+          "dense": 0.43269847995450733
+        },
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.3.1 室外传播模型在实际的传播环境中，从覆盖区域来分，室外",
+          "lexical_rank": null,
+          "dense": 0.42867774430930994
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.5.4 移动通信电波传播特性的研究",
+          "lexical_rank": null,
+          "dense": 0.4186144071428106
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "",
+          "lexical_rank": null,
+          "dense": 0.4170582892519176
+        }
+      ]
+    },
+    {
+      "id": "oos-002",
+      "category": "oos_hard_negative",
+      "query": "番茄炒蛋怎么做？",
+      "routing_question": "番茄炒蛋怎么做？",
+      "retrieval_query": "番茄炒蛋怎么做？",
+      "route": "qa",
+      "extract_terms": [
+        "番茄炒蛋"
+      ],
+      "lexical_candidates": 0,
+      "lexical_top8": [],
+      "lexical_strength": 0,
+      "longest_match": 0,
+      "concentrated": 0,
+      "top_dense": 0.36261687532281806,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": true,
+      "confidence": "low",
+      "retrieval_mode": "vector",
+      "top5": [
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.3.4 HARQ",
+          "lexical_rank": null,
+          "dense": 0.36261687532281806
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.5.1 WCDMA的同步过程 WCDMA的物理层过程，也称为",
+          "lexical_rank": null,
+          "dense": 0.36239607464335083
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.4.1 TD-LTE的小区搜索过程小区搜索过程是指终端搜索潜",
+          "lexical_rank": null,
+          "dense": 0.3557185092043284
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.3.1 LTE顿结构帧结构是指无线顿的结构，通过顿结构的定义",
+          "lexical_rank": null,
+          "dense": 0.353926781211217
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.3.1 LTE顿结构帧结构是指无线顿的结构，通过顿结构的定义",
+          "lexical_rank": null,
+          "dense": 0.3503950804156294
+        }
+      ]
+    },
+    {
+      "id": "oos-003",
+      "category": "oos_hard_negative",
+      "query": "最近的股票行情怎么样？",
+      "routing_question": "最近的股票行情怎么样？",
+      "retrieval_query": "最近的股票行情怎么样？",
+      "route": "qa",
+      "extract_terms": [
+        "股票行情",
+        "最近"
+      ],
+      "lexical_candidates": 4,
+      "lexical_top8": [
+        "chk-63cb278d2c511314",
+        "chk-b9aa13878ac04543",
+        "chk-56e7cd38f3a9dc4c",
+        "chk-762fae4211601ef2"
+      ],
+      "lexical_strength": 1,
+      "longest_match": 2,
+      "concentrated": 4,
+      "top_dense": 0.4267813859853696,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": true,
+      "confidence": "low",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "1.5 G标准化进展标准化，是确保全球连接和互操作，使各制造",
+          "lexical_rank": 3,
+          "dense": 0.4059115898560542
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "1.5 G标准化进展标准化，是确保全球连接和互操作，使各制造",
+          "lexical_rank": null,
+          "dense": 0.4267813859853696
+        },
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.2.3 慢衰落特性和衰落储备在移动信道中，由大量统计测试表明",
+          "lexical_rank": null,
+          "dense": 0.42420877497204185
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.1.2 合并技术",
+          "lexical_rank": null,
+          "dense": 0.4208427914697767
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.1 扩频技术概述",
+          "lexical_rank": null,
+          "dense": 0.4170037157853519
+        }
+      ]
+    },
+    {
+      "id": "oos-004",
+      "category": "oos_hard_negative",
+      "query": "帮我写一首诗。",
+      "routing_question": "帮我写一首诗。",
+      "retrieval_query": "帮我写一首诗。",
+      "route": "qa",
+      "extract_terms": [
+        "帮我写一首诗",
+        "写一首诗",
+        "帮我写一",
+        "我写一首",
+        "一首诗",
+        "写一首",
+        "帮我写",
+        "我写一",
+        "一首",
+        "写一",
+        "帮我",
+        "我写",
+        "首诗"
+      ],
+      "lexical_candidates": 0,
+      "lexical_top8": [],
+      "lexical_strength": 0,
+      "longest_match": 0,
+      "concentrated": 0,
+      "top_dense": 0.35726107297424575,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": true,
+      "confidence": "low",
+      "retrieval_mode": "vector",
+      "top5": [
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.2.1 基本概念与分类信道编码是为了保证通信系统的传输可靠性",
+          "lexical_rank": null,
+          "dense": 0.35726107297424575
+        },
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.2.1 传播路径与信号衰落",
+          "lexical_rank": null,
+          "dense": 0.34035189573119173
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.1 扩频技术概述",
+          "lexical_rank": null,
+          "dense": 0.33241639552293695
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.2.5 Turbo码",
+          "lexical_rank": null,
+          "dense": 0.3367862582456696
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.2.1 基本概念与分类信道编码是为了保证通信系统的传输可靠性",
+          "lexical_rank": null,
+          "dense": 0.3304272829186083
+        }
+      ]
+    },
+    {
+      "id": "oos-005",
+      "category": "oos_hard_negative",
+      "query": "帮我写一份求职简历。",
+      "routing_question": "帮我写一份求职简历。",
+      "retrieval_query": "帮我写一份求职简历。",
+      "route": "qa",
+      "extract_terms": [
+        "帮我写一份求职简历",
+        "一份求职",
+        "份求职简",
+        "写一份求",
+        "帮我写一",
+        "我写一份",
+        "求职简历",
+        "一份求",
+        "份求职",
+        "写一份",
+        "帮我写",
+        "我写一",
+        "求职简",
+        "职简历",
+        "一份",
+        "份求",
+        "写一",
+        "帮我",
+        "我写",
+        "求职",
+        "简历",
+        "职简"
+      ],
+      "lexical_candidates": 1,
+      "lexical_top8": [
+        "chk-d276b1ca3e833ad2"
+      ],
+      "lexical_strength": 1,
+      "longest_match": 2,
+      "concentrated": 1,
+      "top_dense": 0.42776497394246205,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": true,
+      "confidence": "low",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.4 网络结构",
+          "lexical_rank": null,
+          "dense": 0.4171735675764594
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.3.2 LTE物理信道和物理信号",
+          "lexical_rank": null,
+          "dense": 0.41699162898615333
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.3 多信道共用技术移动通信的频率资源十分紧缺，一个基站不",
+          "lexical_rank": null,
+          "dense": 0.4151313131897792
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.3 多信道共用技术移动通信的频率资源十分紧缺，一个基站不",
+          "lexical_rank": null,
+          "dense": 0.4146126145678411
+        },
+        {
+          "chapter": "第4章 GSM移动通信系统",
+          "section": "4.4.3 空中接口信令流程",
+          "lexical_rank": null,
+          "dense": 0.41343025348706763
+        }
+      ]
+    },
+    {
+      "id": "oos-006",
+      "category": "oos_hard_negative",
+      "query": "NBA 昨天的比赛比分是多少？",
+      "routing_question": "NBA 昨天的比赛比分是多少？",
+      "retrieval_query": "NBA 昨天的比赛比分是多少？",
+      "route": "qa",
+      "extract_terms": [
+        "比赛比分",
+        "NBA",
+        "昨天"
+      ],
+      "lexical_candidates": 3,
+      "lexical_top8": [
+        "chk-4e5ec2f5e5d5a562",
+        "chk-0b92edffcfd9cc3a",
+        "chk-20078f59f4b64f80"
+      ],
+      "lexical_strength": 1,
+      "longest_match": 2,
+      "concentrated": 2,
+      "top_dense": 0.37133446300731837,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": true,
+      "confidence": "low",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.5 网络的控制和管理无论何时，当某一移动用户在接入信道向",
+          "lexical_rank": 3,
+          "dense": 0.35171071125544384
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.4.5 传输信道到物理信道映射的实例",
+          "lexical_rank": null,
+          "dense": 0.37133446300731837
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": null,
+          "dense": 0.3616678667850995
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.2.5 Turbo码",
+          "lexical_rank": null,
+          "dense": 0.3600672097462652
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.4.5 传输信道到物理信道映射的实例",
+          "lexical_rank": null,
+          "dense": 0.3584066075549157
+        }
+      ]
+    },
+    {
+      "id": "oos-007",
+      "category": "oos_hard_negative",
+      "query": "什么是量子纠缠？",
+      "routing_question": "什么是量子纠缠？",
+      "retrieval_query": "什么是量子纠缠？",
+      "route": "qa",
+      "extract_terms": [
+        "量子纠缠"
+      ],
+      "lexical_candidates": 0,
+      "lexical_top8": [],
+      "lexical_strength": 0,
+      "longest_match": 0,
+      "concentrated": 0,
+      "top_dense": 0.4623047811257507,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": true,
+      "confidence": "low",
+      "retrieval_mode": "vector",
+      "top5": [
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.5 网络的控制和管理无论何时，当某一移动用户在接入信道向",
+          "lexical_rank": null,
+          "dense": 0.4623047811257507
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.5 网络的控制和管理无论何时，当某一移动用户在接入信道向",
+          "lexical_rank": null,
+          "dense": 0.44436959273239124
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.2.1 基本概念与分类信道编码是为了保证通信系统的传输可靠性",
+          "lexical_rank": null,
+          "dense": 0.4377506697948484
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.2.3 功率控制技术蜂窝通信系统无论采用何种多址接入技术，除",
+          "lexical_rank": null,
+          "dense": 0.4299897076098557
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.2.1 基本概念与分类信道编码是为了保证通信系统的传输可靠性",
+          "lexical_rank": null,
+          "dense": 0.4283619253828869
+        }
+      ]
+    },
+    {
+      "id": "oos-008",
+      "category": "oos_hard_negative",
+      "query": "什么是区块链共识算法？",
+      "routing_question": "什么是区块链共识算法？",
+      "retrieval_query": "什么是区块链共识算法？",
+      "route": "qa",
+      "extract_terms": [
+        "区块链共识算法",
+        "共识算法",
+        "区块链共",
+        "块链共识",
+        "链共识算",
+        "共识算",
+        "区块链",
+        "块链共",
+        "识算法",
+        "链共识",
+        "共识",
+        "区块",
+        "块链",
+        "算法",
+        "识算",
+        "链共"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-8bad37c57d3982d3",
+        "chk-6cf5aa61c0e49212",
+        "chk-cc5a47d77339b5d1",
+        "chk-f267a0ed054a8b43",
+        "chk-42192b2f223d8b09",
+        "chk-567cac338d6d7326",
+        "chk-2196b55cac8cd607",
+        "chk-15d87bc47e00d295"
+      ],
+      "lexical_strength": 1,
+      "longest_match": 2,
+      "concentrated": 6,
+      "top_dense": 0.495997988689672,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "1.5 G标准化进展标准化，是确保全球连接和互操作，使各制造",
+          "lexical_rank": 2,
+          "dense": 0.4814866875075096
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 14,
+          "dense": 0.4895984622473336
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.2.5 Turbo码",
+          "lexical_rank": 7,
+          "dense": 0.4701324798262894
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 16,
+          "dense": 0.47909421277766123
+        },
+        {
+          "chapter": "第4章 GSM移动通信系统",
+          "section": "4.4.1 地址标识在移动性管理以及呼叫接续过程中，需要使用各种",
+          "lexical_rank": 28,
+          "dense": 0.46067580059544977
+        }
+      ]
+    },
+    {
+      "id": "oos-009",
+      "category": "oos_hard_negative",
+      "query": "多普勒效应在雷达中如何应用？",
+      "routing_question": "多普勒效应在雷达中如何应用？",
+      "retrieval_query": "多普勒效应在雷达中如何应用？",
+      "route": "qa",
+      "extract_terms": [
+        "多普勒效应",
+        "多普勒效",
+        "普勒效应",
+        "勒效应",
+        "多普勒",
+        "普勒效",
+        "勒效",
+        "多普",
+        "应用",
+        "效应",
+        "普勒",
+        "雷达"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-a6a96a1eb64a904e",
+        "chk-58d8d41e2d0801cc",
+        "chk-15f41d6d43236122",
+        "chk-fd1995d88f9bd6fc",
+        "chk-7683eab1d2cd20c4",
+        "chk-99a73c7a395fd9cf",
+        "chk-8dbddb70895e1a1e",
+        "chk-9e53b84a1588a76b"
+      ],
+      "lexical_strength": 11,
+      "longest_match": 5,
+      "concentrated": 8,
+      "top_dense": 0.5959133983542161,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.2.1 传播路径与信号衰落",
+          "lexical_rank": 2,
+          "dense": 0.5577223995714292
+        },
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.2.1 传播路径与信号衰落",
+          "lexical_rank": 5,
+          "dense": 0.5959133983542161
+        },
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.2 移动信道的特征",
+          "lexical_rank": 1,
+          "dense": 0.4961513373776981
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.1 移动通信特点",
+          "lexical_rank": 8,
+          "dense": 0.5087250879822411
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.1.1 基本概念与分类",
+          "lexical_rank": 4,
+          "dense": 0.4939790182364894
+        }
+      ]
+    },
+    {
+      "id": "oos-010",
+      "category": "oos_hard_negative",
+      "query": "码分多址在量子通信中的应用？",
+      "routing_question": "码分多址在量子通信中的应用？",
+      "retrieval_query": "码分多址在量子通信中的应用？",
+      "route": "qa",
+      "extract_terms": [
+        "码分多址",
+        "量子通信",
+        "应用"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-31effca15f5005a8",
+        "chk-3ccf98d210fbbf1a",
+        "chk-cce4c938abccf835",
+        "chk-42749e9eb55e0ea4",
+        "chk-a1ec4e25cbde23b9",
+        "chk-356fe36ed11100c5",
+        "chk-b5dc6b636744a63b",
+        "chk-ed6ad151e09cbdc3"
+      ],
+      "lexical_strength": 8,
+      "longest_match": 4,
+      "concentrated": 7,
+      "top_dense": 0.6626033579112146,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 1,
+          "dense": 0.6626033579112146
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 5,
+          "dense": 0.6542060699759039
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.1 扩频技术概述",
+          "lexical_rank": 7,
+          "dense": 0.593300188973582
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 10,
+          "dense": 0.5833084804458504
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.5.3 调制技术调制技术是把基带信号变换成传输信号的技术，模",
+          "lexical_rank": 11,
+          "dense": 0.5879118160110484
+        }
+      ]
+    },
+    {
+      "id": "oos-011",
+      "category": "oos_hard_negative",
+      "query": "5G 的毫米波频段具体是多少 GHz？",
+      "routing_question": "5G 的毫米波频段具体是多少 GHz？",
+      "retrieval_query": "5G 的毫米波频段具体是多少 GHz？",
+      "route": "qa",
+      "extract_terms": [
+        "毫米波频段具体",
+        "毫米波频",
+        "波频段具",
+        "米波频段",
+        "频段具体",
+        "GHz",
+        "段具体",
+        "毫米波",
+        "波频段",
+        "米波频",
+        "频段具",
+        "5G",
+        "具体",
+        "段具",
+        "毫米",
+        "波频",
+        "米波",
+        "频段"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-769b17da6b1f9bb8",
+        "chk-f7b33800ccb6a8f3",
+        "chk-abf7d55ab3bffd98",
+        "chk-8664aa4f0f580474",
+        "chk-b5a1717a527495ff",
+        "chk-6cf5aa61c0e49212",
+        "chk-9373ab885946dc30",
+        "chk-46eeb360f9923f68"
+      ],
+      "lexical_strength": 6,
+      "longest_match": 3,
+      "concentrated": 7,
+      "top_dense": 0.6980071560148828,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.4 移动通信系统频段的使用",
+          "lexical_rank": 2,
+          "dense": 0.6366767898273061
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 3,
+          "dense": 0.6980071560148828
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 7,
+          "dense": 0.6255240443654223
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "1.5 G标准化进展标准化，是确保全球连接和互操作，使各制造",
+          "lexical_rank": 6,
+          "dense": 0.6084388072956813
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "1.5 G标准化进展标准化，是确保全球连接和互操作，使各制造",
+          "lexical_rank": 4,
+          "dense": 0.6047116798726772
+        }
+      ]
+    },
+    {
+      "id": "oos-012",
+      "category": "oos_hard_negative",
+      "query": "6G 网络的目标速率是多少？",
+      "routing_question": "6G 网络的目标速率是多少？",
+      "retrieval_query": "6G 网络的目标速率是多少？",
+      "route": "qa",
+      "extract_terms": [
+        "目标速率",
+        "6G",
+        "网络"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-96975881680d77f2",
+        "chk-31651bf0ee950208",
+        "chk-a31665a6f8a0de03",
+        "chk-3a1008d356ccd0d6",
+        "chk-cd05480fa58fe550",
+        "chk-6e01489b04a01181",
+        "chk-8fbf5951985f9ec2",
+        "chk-bf27f3ac9a8aae79"
+      ],
+      "lexical_strength": 3,
+      "longest_match": 2,
+      "concentrated": 8,
+      "top_dense": 0.6471429591933306,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "2.5 G",
+          "lexical_rank": 1,
+          "dense": 0.6152572253444708
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 4,
+          "dense": 0.5882410214784343
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "1.5 G标准化进展标准化，是确保全球连接和互操作，使各制造",
+          "lexical_rank": 13,
+          "dense": 0.5712177332214141
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.1 概述",
+          "lexical_rank": 30,
+          "dense": 0.5989677794575273
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "1.5 G标准化进展标准化，是确保全球连接和互操作，使各制造",
+          "lexical_rank": 20,
+          "dense": 0.5606612385121996
+        }
+      ]
+    },
+    {
+      "id": "oos-013",
+      "category": "oos_hard_negative",
+      "query": "LTE-A 相比 LTE 新增了哪些特性？",
+      "routing_question": "LTE-A 相比 LTE 新增了哪些特性？",
+      "retrieval_query": "LTE-A 相比 LTE 新增了哪些特性？",
+      "route": "compare",
+      "extract_terms": [
+        "LTE",
+        "新增",
+        "特性",
+        "相比"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-df4314d23c2a73f6",
+        "chk-be993070511d13af",
+        "chk-9373ab885946dc30",
+        "chk-da4158eae1a55c17",
+        "chk-482b444323eafaa0",
+        "chk-8913e2d79c408331",
+        "chk-81a51aa052d6d641",
+        "chk-7626cf3aeb632f42"
+      ],
+      "lexical_strength": 3,
+      "longest_match": 3,
+      "concentrated": 7,
+      "top_dense": 0.661230872776212,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.2.1 LTE系统结构 3GPP在2004年底经过认真讨论后",
+          "lexical_rank": 8,
+          "dense": 0.6160888473333812
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.1 LTE启动背景随着GSM、CDMA等移动网络在过去二",
+          "lexical_rank": 17,
+          "dense": 0.6406104057662929
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+          "lexical_rank": 2,
+          "dense": 0.5915994626270503
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.2.1 LTE系统结构 3GPP在2004年底经过认真讨论后",
+          "lexical_rank": 5,
+          "dense": 0.5852569254425488
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.1 LTE启动背景随着GSM、CDMA等移动网络在过去二",
+          "lexical_rank": 18,
+          "dense": 0.5986672546709403
+        }
+      ]
+    },
+    {
+      "id": "oos-014",
+      "category": "oos_hard_negative",
+      "query": "今天最新的通信标准是什么？",
+      "routing_question": "今天最新的通信标准是什么？",
+      "retrieval_query": "今天最新的通信标准是什么？",
+      "route": "qa",
+      "extract_terms": [
+        "今天最新",
+        "通信标准"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-a31665a6f8a0de03",
+        "chk-ada77cafa90cfe74",
+        "chk-d276b1ca3e833ad2",
+        "chk-2eb65712f4633ced",
+        "chk-96975881680d77f2",
+        "chk-6cf5aa61c0e49212",
+        "chk-831676397c2f5c6b",
+        "chk-002fccc5f7d8ab94"
+      ],
+      "lexical_strength": 6,
+      "longest_match": 4,
+      "concentrated": 8,
+      "top_dense": 0.6340323112947226,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "2.5 G",
+          "lexical_rank": 5,
+          "dense": 0.6217706504607232
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "1.5 G标准化进展标准化，是确保全球连接和互操作，使各制造",
+          "lexical_rank": 6,
+          "dense": 0.6182470418278303
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "2.5 G",
+          "lexical_rank": 1,
+          "dense": 0.6063148947942819
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "1.5 G标准化进展标准化，是确保全球连接和互操作，使各制造",
+          "lexical_rank": 2,
+          "dense": 0.6092094042500171
+        },
+        {
+          "chapter": "第4章 GSM移动通信系统",
+          "section": "4.1 概述",
+          "lexical_rank": 3,
+          "dense": 0.5885676523536324
+        }
+      ]
+    },
+    {
+      "id": "oos-015",
+      "category": "oos_hard_negative",
+      "query": "最近 5G 基站建设进展如何？",
+      "routing_question": "最近 5G 基站建设进展如何？",
+      "retrieval_query": "最近 5G 基站建设进展如何？",
+      "route": "qa",
+      "extract_terms": [
+        "基站建设进展",
+        "基站建设",
+        "建设进展",
+        "站建设进",
+        "基站建",
+        "建设进",
+        "站建设",
+        "设进展",
+        "5G",
+        "基站",
+        "建设",
+        "最近",
+        "站建",
+        "设进",
+        "进展"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-56e7cd38f3a9dc4c",
+        "chk-8664aa4f0f580474",
+        "chk-a895f3d3b50dd1e4",
+        "chk-62f9e6205c7c50b5",
+        "chk-8a7718cc54391cdb",
+        "chk-ed6ad151e09cbdc3",
+        "chk-762fae4211601ef2",
+        "chk-63cb278d2c511314"
+      ],
+      "lexical_strength": 3,
+      "longest_match": 2,
+      "concentrated": 6,
+      "top_dense": 0.6384475078277189,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "1.5 G标准化进展标准化，是确保全球连接和互操作，使各制造",
+          "lexical_rank": 2,
+          "dense": 0.6327375274386611
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "1.5 G标准化进展标准化，是确保全球连接和互操作，使各制造",
+          "lexical_rank": 3,
+          "dense": 0.6261512320694598
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.1 概述",
+          "lexical_rank": 26,
+          "dense": 0.6247303661868974
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 23,
+          "dense": 0.6129212362268086
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 18,
+          "dense": 0.6017796001019153
+        }
+      ]
+    },
+    {
+      "id": "oos-016",
+      "category": "oos_hard_negative",
+      "query": "香农公式在股票预测中如何应用？",
+      "routing_question": "香农公式在股票预测中如何应用？",
+      "retrieval_query": "香农公式在股票预测中如何应用？",
+      "route": "qa",
+      "extract_terms": [
+        "股票预测",
+        "香农公式",
+        "应用"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-8ef9ebae0c3f5944",
+        "chk-b52420dd5a5c0398",
+        "chk-5e75f62925166031",
+        "chk-2c33362193c9dad3",
+        "chk-b1cf4275584df53c",
+        "chk-e23befff85a8b198",
+        "chk-335aba1df93a011e",
+        "chk-42d82a39d35cb6a0"
+      ],
+      "lexical_strength": 6,
+      "longest_match": 4,
+      "concentrated": 6,
+      "top_dense": 0.46294818504220064,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.1 扩频技术概述",
+          "lexical_rank": 1,
+          "dense": 0.46294818504220064
+        },
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.3.1 室外传播模型在实际的传播环境中，从覆盖区域来分，室外",
+          "lexical_rank": 2,
+          "dense": 0.4280960532983278
+        },
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.3.1 室外传播模型在实际的传播环境中，从覆盖区域来分，室外",
+          "lexical_rank": 6,
+          "dense": 0.43059749979672396
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.1 扩频技术概述",
+          "lexical_rank": 10,
+          "dense": 0.42643032306949136
+        },
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.2.3 慢衰落特性和衰落储备在移动信道中，由大量统计测试表明",
+          "lexical_rank": 12,
+          "dense": 0.4166295314134991
+        }
+      ]
+    },
+    {
+      "id": "oos-017",
+      "category": "oos_hard_negative",
+      "query": "OFDM 在自动驾驶中如何应用？",
+      "routing_question": "OFDM 在自动驾驶中如何应用？",
+      "retrieval_query": "OFDM 在自动驾驶中如何应用？",
+      "route": "qa",
+      "extract_terms": [
+        "OFDM",
+        "自动驾驶",
+        "应用"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-efd22ee5d60a938b",
+        "chk-2d2328c7df43eed3",
+        "chk-356fe36ed11100c5",
+        "chk-784fb456936fd9be",
+        "chk-8dbddb70895e1a1e",
+        "chk-3b7cddc5e462c6c1",
+        "chk-799036f3c34cc2af",
+        "chk-3ae7d8cf2da34aff"
+      ],
+      "lexical_strength": 7,
+      "longest_match": 4,
+      "concentrated": 6,
+      "top_dense": 0.6039394335320546,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+          "lexical_rank": 6,
+          "dense": 0.594187164117646
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 3,
+          "dense": 0.5732744858282961
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+          "lexical_rank": 10,
+          "dense": 0.572119525441883
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 1,
+          "dense": 0.5044483905437066
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "",
+          "lexical_rank": 2,
+          "dense": 0.5018645336922093
+        }
+      ]
+    },
+    {
+      "id": "oos-018",
+      "category": "oos_hard_negative",
+      "query": "RAKE 接收机在生物医学信号处理中的应用？",
+      "routing_question": "RAKE 接收机在生物医学信号处理中的应用？",
+      "retrieval_query": "RAKE 接收机在生物医学信号处理中的应用？",
+      "route": "qa",
+      "extract_terms": [
+        "生物医学信号处理",
+        "RAKE",
+        "信号处理",
+        "医学信号",
+        "学信号处",
+        "物医学信",
+        "生物医学",
+        "信号处",
+        "医学信",
+        "号处理",
+        "学信号",
+        "接收机",
+        "物医学",
+        "生物医",
+        "信号",
+        "医学",
+        "号处",
+        "处理",
+        "学信",
+        "应用",
+        "物医",
+        "生物"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-5c8465271c2ee3d6",
+        "chk-43224041198d5446",
+        "chk-8dbddb70895e1a1e",
+        "chk-3b7cddc5e462c6c1",
+        "chk-2f04176cc5a4dcdc",
+        "chk-043f519cce6346d2",
+        "chk-9521642664e2b9d9",
+        "chk-19e6c8fda67487a8"
+      ],
+      "lexical_strength": 11,
+      "longest_match": 4,
+      "concentrated": 8,
+      "top_dense": 0.6528870406503177,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+          "lexical_rank": 20,
+          "dense": 0.6528870406503177
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+          "lexical_rank": 12,
+          "dense": 0.618979305765583
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.2.2 RAKE接收",
+          "lexical_rank": 22,
+          "dense": 0.6392306530589604
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.2.2 RAKE接收",
+          "lexical_rank": 15,
+          "dense": 0.6100387264382504
+        },
+        {
+          "chapter": "1. 多径传播",
+          "section": "1. 多径传播",
+          "lexical_rank": 17,
+          "dense": 0.6232115386068382
+        }
+      ]
+    },
+    {
+      "id": "oos-019",
+      "category": "oos_hard_negative",
+      "query": "信道编码在图像压缩中的作用是什么？",
+      "routing_question": "信道编码在图像压缩中的作用是什么？",
+      "retrieval_query": "信道编码在图像压缩中的作用是什么？",
+      "route": "qa",
+      "extract_terms": [
+        "信道编码",
+        "图像压缩"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-8e6cd6cc69889631",
+        "chk-70ff35575c03e831",
+        "chk-bdd326e703656d87",
+        "chk-066215323cf83cff",
+        "chk-a1dd8e069a4ca302",
+        "chk-85694b48efb6270e",
+        "chk-520f137da9dabb44",
+        "chk-caf1c2a6b4644074"
+      ],
+      "lexical_strength": 7,
+      "longest_match": 4,
+      "concentrated": 8,
+      "top_dense": 0.631035816915297,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.2.1 基本概念与分类信道编码是为了保证通信系统的传输可靠性",
+          "lexical_rank": 25,
+          "dense": 0.6223452766788939
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.2.1 基本概念与分类信道编码是为了保证通信系统的传输可靠性",
+          "lexical_rank": 13,
+          "dense": 0.6086596981562256
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.5.2 信道编码技术数字信号在信道传输时，由于噪声、衰落以及",
+          "lexical_rank": null,
+          "dense": 0.6143505627784716
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.4.4 扩频调制子层正交扩频与加扰物理层将数据进行信道编码、",
+          "lexical_rank": null,
+          "dense": 0.600083898516002
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.4.4 扩频调制子层正交扩频与加扰物理层将数据进行信道编码、",
+          "lexical_rank": null,
+          "dense": 0.5908959942395042
+        }
+      ]
+    },
+    {
+      "id": "oos-020",
+      "category": "oos_hard_negative",
+      "query": "CDMA 在加密货币中的应用？",
+      "routing_question": "CDMA 在加密货币中的应用？",
+      "retrieval_query": "CDMA 在加密货币中的应用？",
+      "route": "qa",
+      "extract_terms": [
+        "CDMA",
+        "加密货币",
+        "应用"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-05d426576c2a0cc9",
+        "chk-a3e15af7cf43eb85",
+        "chk-1eece354c5109055",
+        "chk-42749e9eb55e0ea4",
+        "chk-31effca15f5005a8",
+        "chk-08cb72978e2932e3",
+        "chk-542edecd1965d73f",
+        "chk-cc5bf4f7f6b05f37"
+      ],
+      "lexical_strength": 2,
+      "longest_match": 4,
+      "concentrated": 7,
+      "top_dense": 0.5495603484881978,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.1 WCDMA系统概述第三代移动通信系统最早由国际电信联",
+          "lexical_rank": 3,
+          "dense": 0.5191854931123407
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.5.1 WCDMA的同步过程 WCDMA的物理层过程，也称为",
+          "lexical_rank": 23,
+          "dense": 0.5293156678488675
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 5,
+          "dense": 0.5477595570518285
+        },
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 1. 多径传播",
+          "lexical_rank": 29,
+          "dense": 0.5199208879649425
+        },
+        {
+          "chapter": "1. 多径传播",
+          "section": "1. 多径传播",
+          "lexical_rank": 28,
+          "dense": 0.5196130875670687
+        }
+      ]
+    },
+    {
+      "id": "oos-021",
+      "category": "oos_hard_negative",
+      "query": "系统不支持多用户并行传输，对吗？",
+      "routing_question": "系统不支持多用户并行传输，对吗？",
+      "retrieval_query": "系统不支持多用户并行传输，对吗？",
+      "route": "qa",
+      "extract_terms": [
+        "系统不支持多用户并行传输",
+        "不支持多",
+        "多用户并",
+        "并行传输",
+        "户并行传",
+        "持多用户",
+        "支持多用",
+        "用户并行",
+        "系统不支",
+        "统不支持",
+        "不支持",
+        "多用户",
+        "并行传",
+        "户并行",
+        "持多用",
+        "支持多",
+        "用户并",
+        "系统不",
+        "统不支",
+        "行传输",
+        "不支",
+        "传输",
+        "多用",
+        "并行",
+        "户并",
+        "持多",
+        "支持",
+        "用户",
+        "系统",
+        "统不"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-bc453206d6a2999a",
+        "chk-b5e416a99e428ba7",
+        "chk-c9892309085f871d",
+        "chk-2874de307680ff6c",
+        "chk-2a55f67a81578998",
+        "chk-e52a66df7fd1ee15",
+        "chk-95c860b65ab36a22",
+        "chk-ee7e32195d734df9"
+      ],
+      "lexical_strength": 11,
+      "longest_match": 4,
+      "concentrated": 8,
+      "top_dense": 0.6130962361659169,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 19,
+          "dense": 0.6130962361659169
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 13,
+          "dense": 0.6007304712739764
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+          "lexical_rank": 1,
+          "dense": 0.5722840327715234
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.3.3 LTE系统中的多天线传输无线通信系统可以利用的资源包",
+          "lexical_rank": 9,
+          "dense": 0.5843612105619723
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.3 WCDMA的空中接口",
+          "lexical_rank": 4,
+          "dense": 0.5671195197749058
+        }
+      ]
+    },
+    {
+      "id": "oos-022",
+      "category": "oos_hard_negative",
+      "query": "多径传播不会导致衰落，对吗？",
+      "routing_question": "多径传播不会导致衰落，对吗？",
+      "retrieval_query": "多径传播不会导致衰落，对吗？",
+      "route": "qa",
+      "extract_terms": [
+        "多径传播不会导致衰落",
+        "不会导致",
+        "会导致衰",
+        "传播不会",
+        "多径传播",
+        "导致衰落",
+        "径传播不",
+        "播不会导",
+        "不会导",
+        "会导致",
+        "传播不",
+        "多径传",
+        "导致衰",
+        "径传播",
+        "播不会",
+        "致衰落",
+        "不会",
+        "会导",
+        "传播",
+        "多径",
+        "导致",
+        "径传",
+        "播不",
+        "致衰",
+        "衰落"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-e25a3cbf00992963857d294d1ad318717ca52060907a7d476751af02433196ea",
+        "chk-9e3fbcec26824cd1a497890b7dc9cb44c0b5aec31c158b1bae9ea683c0af9bec",
+        "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b",
+        "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+        "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+        "chk-967178de4960d626",
+        "chk-fa19cd5d1c94ec25d1dfdbc05dfe635e5cd5c94a1a5dcf37e0bfdd87e683c2a9",
+        "chk-07357a6aa0e0d82c"
+      ],
+      "lexical_strength": 15,
+      "longest_match": 4,
+      "concentrated": 8,
+      "top_dense": 0.660161324565737,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "1. 多径传播",
+          "section": "1. 多径传播",
+          "lexical_rank": 1,
+          "dense": 0.660161324565737
+        },
+        {
+          "chapter": "1. 多径传播",
+          "section": "1. 多径传播",
+          "lexical_rank": 3,
+          "dense": 0.6561632937226448
+        },
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 1. 多径传播",
+          "lexical_rank": 2,
+          "dense": 0.6421981339280294
+        },
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 1. 多径传播",
+          "lexical_rank": 4,
+          "dense": 0.6402708151408618
+        },
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档",
+          "lexical_rank": 5,
+          "dense": 0.6331279730145152
+        }
+      ]
+    },
+    {
+      "id": "oos-023",
+      "category": "oos_hard_negative",
+      "query": "信号衰落导致多径传播，对吗？",
+      "routing_question": "信号衰落导致多径传播，对吗？",
+      "retrieval_query": "信号衰落导致多径传播，对吗？",
+      "route": "qa",
+      "extract_terms": [
+        "信号衰落导致多径传播",
+        "信号衰落",
+        "号衰落导",
+        "多径传播",
+        "导致多径",
+        "致多径传",
+        "落导致多",
+        "衰落导致",
+        "信号衰",
+        "号衰落",
+        "多径传",
+        "导致多",
+        "径传播",
+        "致多径",
+        "落导致",
+        "衰落导",
+        "传播",
+        "信号",
+        "号衰",
+        "多径",
+        "导致",
+        "径传",
+        "致多",
+        "落导",
+        "衰落"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-0d64b07922befe77",
+        "chk-c05127f9fe95cb15",
+        "chk-b5cd37366e7715e1",
+        "chk-ddfe3a1052c6a9ee",
+        "chk-e25a3cbf00992963857d294d1ad318717ca52060907a7d476751af02433196ea",
+        "chk-9e3fbcec26824cd1a497890b7dc9cb44c0b5aec31c158b1bae9ea683c0af9bec",
+        "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b",
+        "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989"
+      ],
+      "lexical_strength": 12,
+      "longest_match": 4,
+      "concentrated": 8,
+      "top_dense": 0.7812906680933145,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.2.1 传播路径与信号衰落",
+          "lexical_rank": 9,
+          "dense": 0.7529026944310994
+        },
+        {
+          "chapter": "第2章 移动信道的传播特性与模型",
+          "section": "2.2.1 传播路径与信号衰落",
+          "lexical_rank": 2,
+          "dense": 0.6633236333452183
+        },
+        {
+          "chapter": "1. 多径传播",
+          "section": "1. 多径传播",
+          "lexical_rank": 5,
+          "dense": 0.7812906680933145
+        },
+        {
+          "chapter": "1. 多径传播",
+          "section": "1. 多径传播",
+          "lexical_rank": 7,
+          "dense": 0.7792846442985959
+        },
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 1. 多径传播",
+          "lexical_rank": 6,
+          "dense": 0.772426504444956
+        }
+      ]
+    },
+    {
+      "id": "oos-024",
+      "category": "oos_hard_negative",
+      "query": "均衡器导致码间串扰，对吗？",
+      "routing_question": "均衡器导致码间串扰，对吗？",
+      "retrieval_query": "均衡器导致码间串扰，对吗？",
+      "route": "qa",
+      "extract_terms": [
+        "均衡器导致码间串扰",
+        "器导致码",
+        "均衡器导",
+        "导致码间",
+        "码间串扰",
+        "致码间串",
+        "衡器导致",
+        "器导致",
+        "均衡器",
+        "导致码",
+        "码间串",
+        "致码间",
+        "衡器导",
+        "间串扰",
+        "串扰",
+        "器导",
+        "均衡",
+        "导致",
+        "码间",
+        "致码",
+        "衡器",
+        "间串"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-d6c1890d11053176",
+        "chk-fa2d36f4a7fcb3ce",
+        "chk-a1ec4e25cbde23b9",
+        "chk-bee0aeaff4ce518d",
+        "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+        "chk-28ac1c35520e83e6",
+        "chk-e154b63288d1e3b5",
+        "chk-c7e2aebb1634fc6a"
+      ],
+      "lexical_strength": 4,
+      "longest_match": 3,
+      "concentrated": 7,
+      "top_dense": 0.560919385569799,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "",
+          "lexical_rank": 4,
+          "dense": 0.5348136324475037
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 3,
+          "dense": 0.5315336228688828
+        },
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 3. 参数表",
+          "lexical_rank": 15,
+          "dense": 0.5370072676387343
+        },
+        {
+          "chapter": "第4章 GSM移动通信系统",
+          "section": "8.25 个比特保护期时间",
+          "lexical_rank": 2,
+          "dense": 0.5284153479098035
+        },
+        {
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 2. 抗衰落技术",
+          "lexical_rank": 14,
+          "dense": 0.533274102650892
+        }
+      ]
+    },
+    {
+      "id": "oos-025",
+      "category": "oos_hard_negative",
+      "query": "GSM 的带宽大于 LTE 的带宽，对吗？",
+      "routing_question": "GSM 的带宽大于 LTE 的带宽，对吗？",
+      "retrieval_query": "GSM 的带宽大于 LTE 的带宽，对吗？",
+      "route": "qa",
+      "extract_terms": [
+        "带宽大于",
+        "GSM",
+        "LTE",
+        "带宽"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-c05127f9fe95cb15",
+        "chk-28ac1c35520e83e6",
+        "chk-631e44a46d5cbe43",
+        "chk-2a55f67a81578998",
+        "chk-fd1995d88f9bd6fc",
+        "chk-df74428a51789345",
+        "chk-189cd3d2b48d85ac",
+        "chk-3b05c230364bebb7"
+      ],
+      "lexical_strength": 6,
+      "longest_match": 4,
+      "concentrated": 8,
+      "top_dense": 0.6510220841998651,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.1 LTE启动背景随着GSM、CDMA等移动网络在过去二",
+          "lexical_rank": 9,
+          "dense": 0.6510220841998651
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.1 LTE启动背景随着GSM、CDMA等移动网络在过去二",
+          "lexical_rank": 15,
+          "dense": 0.6332678882303459
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+          "lexical_rank": 20,
+          "dense": 0.6048136835075305
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.2.2 LTE接口协议 LTE/SAE总体的协议结构及信令流",
+          "lexical_rank": 29,
+          "dense": 0.6112066987824688
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.3.1 LTE顿结构帧结构是指无线顿的结构，通过顿结构的定义",
+          "lexical_rank": 27,
+          "dense": 0.598266253793146
+        }
+      ]
+    },
+    {
+      "id": "oos-026",
+      "category": "oos_hard_negative",
+      "query": "4G 的速率高于 5G 的速率，对吗？",
+      "routing_question": "4G 的速率高于 5G 的速率，对吗？",
+      "retrieval_query": "4G 的速率高于 5G 的速率，对吗？",
+      "route": "qa",
+      "extract_terms": [
+        "速率高于",
+        "4G",
+        "5G",
+        "速率"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-75297e0d7c653947",
+        "chk-02faa4f108559ade",
+        "chk-95edd0d31ad513f3",
+        "chk-8fbf5951985f9ec2",
+        "chk-8bad37c57d3982d3",
+        "chk-fef727fdb6200f59",
+        "chk-9373ab885946dc30",
+        "chk-abf7d55ab3bffd98"
+      ],
+      "lexical_strength": 6,
+      "longest_match": 4,
+      "concentrated": 7,
+      "top_dense": 0.6259790292189396,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.1 概述",
+          "lexical_rank": 5,
+          "dense": 0.6259790292189396
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 8,
+          "dense": 0.6006515046447288
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 10,
+          "dense": 0.585191559554156
+        },
+        {
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.1 LTE启动背景随着GSM、CDMA等移动网络在过去二",
+          "lexical_rank": 23,
+          "dense": 0.6049601485157001
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 9,
+          "dense": 0.5773035506400577
+        }
+      ]
+    },
+    {
+      "id": "oos-027",
+      "category": "oos_hard_negative",
+      "query": "什么是正交分频复用？",
+      "routing_question": "什么是正交分频复用？",
+      "retrieval_query": "什么是正交分频复用？",
+      "route": "qa",
+      "extract_terms": [
+        "正交分频复用",
+        "交分频复",
+        "分频复用",
+        "正交分频",
+        "交分频",
+        "分频复",
+        "正交分",
+        "频复用",
+        "交分",
+        "分频",
+        "复用",
+        "正交",
+        "频复"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-bb1b41fd8a3fb05d",
+        "chk-99a73c7a395fd9cf",
+        "chk-31effca15f5005a8",
+        "chk-4be1787971d1a0e9",
+        "chk-9e53b84a1588a76b",
+        "chk-002fccc5f7d8ab94",
+        "chk-96975881680d77f2",
+        "chk-0ef6fe384d8ad809"
+      ],
+      "lexical_strength": 3,
+      "longest_match": 3,
+      "concentrated": 5,
+      "top_dense": 0.588735031364289,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 11,
+          "dense": 0.5224333408416434
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.4 跳频系统跳频扩频系统就是用二进制伪随机码序列去控制射",
+          "lexical_rank": 26,
+          "dense": 0.588735031364289
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 17,
+          "dense": 0.5140992064869204
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.4.4 扩频调制子层正交扩频与加扰物理层将数据进行信道编码、",
+          "lexical_rank": 30,
+          "dense": 0.48444650669774797
+        },
+        {
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.1 扩频技术概述",
+          "lexical_rank": null,
+          "dense": 0.5364567076444022
+        }
+      ]
+    },
+    {
+      "id": "oos-028",
+      "category": "oos_hard_negative",
+      "query": "什么是频分多码接入？",
+      "routing_question": "什么是频分多码接入？",
+      "retrieval_query": "什么是频分多码接入？",
+      "route": "qa",
+      "extract_terms": [
+        "频分多码接入",
+        "分多码接",
+        "多码接入",
+        "频分多码",
+        "分多码",
+        "多码接",
+        "码接入",
+        "频分多",
+        "分多",
+        "多码",
+        "接入",
+        "码接",
+        "频分"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-49a31894112242b1",
+        "chk-31effca15f5005a8",
+        "chk-a114378c5784da11",
+        "chk-cbec5017fb06450a",
+        "chk-cd05480fa58fe550",
+        "chk-a74b2f873d453bc2",
+        "chk-356fe36ed11100c5",
+        "chk-e53cb1de95f33387"
+      ],
+      "lexical_strength": 4,
+      "longest_match": 3,
+      "concentrated": 7,
+      "top_dense": 0.6752815394289189,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 2,
+          "dense": 0.6752815394289189
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.1 多址接入技术通信系统是以信道来区分通信对象的，每个信",
+          "lexical_rank": 9,
+          "dense": 0.6621575693877619
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.5.3 调制技术调制技术是把基带信号变换成传输信号的技术，模",
+          "lexical_rank": 6,
+          "dense": 0.6027894718814362
+        },
+        {
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.2.1 WCDMA系统的基本技术基于图1-7数字通信系统模型",
+          "lexical_rank": 13,
+          "dense": 0.59484097075136
+        },
+        {
+          "chapter": "第7章 新一代宽带移动通信",
+          "section": "7.2.25 G的关键技术有限的网络传送能力和日益增长的业务流量预",
+          "lexical_rank": 24,
+          "dense": 0.6113672680151836
+        }
+      ]
+    },
+    {
+      "id": "oos-029",
+      "category": "oos_hard_negative",
+      "query": "什么是移动通？",
+      "routing_question": "什么是移动通？",
+      "retrieval_query": "什么是移动通？",
+      "route": "qa",
+      "extract_terms": [
+        "移动通"
+      ],
+      "lexical_candidates": 30,
+      "lexical_top8": [
+        "chk-55ade74808fd1424",
+        "chk-e95e44d936b18851",
+        "chk-d3ba9e61592dacba",
+        "chk-27d95a396c1a2fca",
+        "chk-4ae1a29d2f7c22ba",
+        "chk-ee9ced44fea2b37a",
+        "chk-a318a5ada26d19a9",
+        "chk-2da64543ae8b8f08"
+      ],
+      "lexical_strength": 3,
+      "longest_match": 3,
+      "concentrated": 8,
+      "top_dense": 0.6140081619075075,
+      "dense_gates": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "oos_decision": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "top5": [
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.6.5 网络的控制和管理无论何时，当某一移动用户在接入信道向",
+          "lexical_rank": null,
+          "dense": 0.6140081619075075
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.1 移动通信特点",
+          "lexical_rank": null,
+          "dense": 0.6111272504197655
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.1 移动通信特点",
+          "lexical_rank": null,
+          "dense": 0.6098150892755729
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.2 常常用移动通信系统",
+          "lexical_rank": null,
+          "dense": 0.5990897823854962
+        },
+        {
+          "chapter": "第1章 移动通信概述",
+          "section": "1.2 常常用移动通信系统",
+          "lexical_rank": null,
+          "dense": 0.596048105771197
+        }
+      ]
+    }
+  ]
+}

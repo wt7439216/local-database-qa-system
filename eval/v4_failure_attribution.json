@@ -1,0 +1,3439 @@
+{
+  "baseline_identity": {
+    "canonical_baseline_version": "v4-initial-baseline-v1",
+    "case_exact_fact_match_rate": 0.7083,
+    "fact_recall": 0.8312,
+    "false_refusal_rate": 0.0208,
+    "citation_coverage": 0.4893,
+    "high_confidence_unsupported_rate": 0.0095,
+    "answer_artifact_hash": "7da8547cd08c6144cdfc1ac5300ed44ca446971dfc4ae075711c9b9aef0a9f80"
+  },
+  "canonical_artifact": "eval/v4_initial_baseline.json",
+  "producer": "scripts/build_v4_attribution.py",
+  "mode": "READ_ONLY_DIAGNOSIS",
+  "cases": [
+    {
+      "case_id": "qa-002",
+      "category": "single_fact_qa",
+      "query": "LTE 为什么采用 OFDMA？",
+      "exact_pass": false,
+      "expected_facts": [
+        "OFDMA",
+        "多址"
+      ],
+      "failed_facts": [
+        "多址"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 3,
+        "cited_claim_count": 2,
+        "citation_coverage": 0.6667,
+        "total_claim_count": 3,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "EVALUATOR_ISSUE",
+      "secondary_causes": [],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "high",
+      "evidence": "answer explains OFDMA advantages but never uses '多址' (documented V3 paraphrase boundary)"
+    },
+    {
+      "case_id": "qa-006",
+      "category": "single_fact_qa",
+      "query": "什么是分集接收？",
+      "exact_pass": false,
+      "expected_facts": [
+        "分集",
+        "衰落",
+        "合并"
+      ],
+      "failed_facts": [
+        "合并"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": false,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 1,
+        "citation_coverage": 0.5,
+        "total_claim_count": 2,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "EVALUATOR_ISSUE",
+      "secondary_causes": [
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "medium",
+      "evidence": "answer says '综合利用各信号分量' but not '合并'"
+    },
+    {
+      "case_id": "qa-020",
+      "category": "single_fact_qa",
+      "query": "什么是正交频分复用？",
+      "exact_pass": false,
+      "expected_facts": [
+        "正交",
+        "频分",
+        "子载波"
+      ],
+      "failed_facts": [
+        "子载波"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "RRF_RANKING_MISS"
+        ]
+      },
+      "generation_status": "n/a",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 0,
+        "citation_coverage": 0.0,
+        "total_claim_count": 2,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "RETRIEVAL_FAILURE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE"
+      ],
+      "classification": "MULTI_CAUSE",
+      "confidence": "medium",
+      "evidence": "子载波 evidence exists but was a RRF ranking miss; the answer substituted 子信道"
+    },
+    {
+      "case_id": "qa-029",
+      "category": "single_fact_qa",
+      "query": "香农公式中 S/N 代表什么？",
+      "exact_pass": false,
+      "expected_facts": [
+        "信噪比",
+        "S/N"
+      ],
+      "failed_facts": [
+        "信噪比"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "medium"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 1,
+        "cited_claim_count": 1,
+        "citation_coverage": 1.0,
+        "total_claim_count": 1,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "EVALUATOR_ISSUE",
+      "secondary_causes": [],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "high",
+      "evidence": "answer says '信号功率与噪声功率谱密度之比' instead of '信噪比' (documented V3 paraphrase FN)"
+    },
+    {
+      "case_id": "qa-030",
+      "category": "single_fact_qa",
+      "query": "多径信号叠加会导致什么现象？",
+      "exact_pass": false,
+      "expected_facts": [
+        "幅度",
+        "起伏",
+        "衰落"
+      ],
+      "failed_facts": [
+        "幅度",
+        "起伏",
+        "衰落"
+      ],
+      "answer_state": "ANSWER_WITH_LIMITATION",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": false,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED",
+          "RRF_RANKING_MISS"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 1,
+        "citation_coverage": 0.5,
+        "total_claim_count": 2,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "RETRIEVAL_FAILURE",
+      "secondary_causes": [
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "classification": "MULTI_CAUSE",
+      "confidence": "high",
+      "evidence": "幅度/起伏 are RRF ranking misses; 衰落 was delivered yet the model still answered '材料未直接回答'"
+    },
+    {
+      "case_id": "qa-031",
+      "category": "single_fact_qa",
+      "query": "什么是扩频通信？",
+      "exact_pass": false,
+      "expected_facts": [
+        "扩频",
+        "频带",
+        "展宽"
+      ],
+      "failed_facts": [
+        "展宽"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 4,
+        "cited_claim_count": 3,
+        "citation_coverage": 0.75,
+        "total_claim_count": 4,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "EVALUATOR_ISSUE",
+      "secondary_causes": [],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "medium",
+      "evidence": "answer says '扩展信号频谱' instead of '展宽'"
+    },
+    {
+      "case_id": "qa-032",
+      "category": "single_fact_qa",
+      "query": "CDMA 使用什么区分用户？",
+      "exact_pass": false,
+      "expected_facts": [
+        "码",
+        "正交",
+        "CDMA"
+      ],
+      "failed_facts": [
+        "正交"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 1,
+        "cited_claim_count": 0,
+        "citation_coverage": 0.0,
+        "total_claim_count": 2,
+        "not_applicable_count": 1
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "GENERATION_SYNTHESIS_FAILURE",
+      "secondary_causes": [
+        "GOLDEN_CONTRACT_ISSUE"
+      ],
+      "classification": "MULTI_CAUSE",
+      "confidence": "medium",
+      "evidence": "answer covers code-division but never states '正交'"
+    },
+    {
+      "case_id": "qa-035",
+      "category": "single_fact_qa",
+      "query": "交织技术主要用于对抗什么？",
+      "exact_pass": false,
+      "expected_facts": [
+        "交织",
+        "突发",
+        "错误"
+      ],
+      "failed_facts": [
+        "错误"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 3,
+        "cited_claim_count": 2,
+        "citation_coverage": 0.6667,
+        "total_claim_count": 3,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "EVALUATOR_ISSUE",
+      "secondary_causes": [],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "high",
+      "evidence": "answer uses '差错' exclusively; golden requires '错误' (documented V3 paraphrase FN)"
+    },
+    {
+      "case_id": "qa-036",
+      "category": "single_fact_qa",
+      "query": "什么是小区？",
+      "exact_pass": false,
+      "expected_facts": [
+        "小区",
+        "覆盖"
+      ],
+      "failed_facts": [
+        "覆盖"
+      ],
+      "answer_state": "ANSWER_WITH_LIMITATION",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "medium"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 1,
+        "citation_coverage": 0.5,
+        "total_claim_count": 2,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "GOLDEN_CONTRACT_ISSUE",
+      "secondary_causes": [
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "medium",
+      "evidence": "golden expects '覆盖' for a 小区-definition question; answer is a limitation answer"
+    },
+    {
+      "case_id": "qa-039",
+      "category": "single_fact_qa",
+      "query": "什么是分集增益？",
+      "exact_pass": false,
+      "expected_facts": [
+        "分集",
+        "增益",
+        "衰落"
+      ],
+      "failed_facts": [
+        "衰落"
+      ],
+      "answer_state": "ANSWER_WITH_LIMITATION",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 1,
+        "cited_claim_count": 0,
+        "citation_coverage": 0.0,
+        "total_claim_count": 2,
+        "not_applicable_count": 1
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "GENERATION_SYNTHESIS_FAILURE",
+      "secondary_causes": [
+        "GOLDEN_CONTRACT_ISSUE"
+      ],
+      "classification": "MULTI_CAUSE",
+      "confidence": "medium",
+      "evidence": "answer declines to define 分集增益 although 衰落 evidence was delivered"
+    },
+    {
+      "case_id": "qa-040",
+      "category": "single_fact_qa",
+      "query": "多址接入有哪几种主要方式？",
+      "exact_pass": false,
+      "expected_facts": [
+        "FDMA",
+        "TDMA",
+        "CDMA",
+        "OFDMA"
+      ],
+      "failed_facts": [
+        "OFDMA"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 6,
+        "cited_claim_count": 4,
+        "citation_coverage": 0.6667,
+        "total_claim_count": 6,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "GENERATION_SYNTHESIS_FAILURE",
+      "secondary_causes": [],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "high",
+      "evidence": "answer enumerates FDMA/TDMA/CDMA/SDMA/NOMA but omits OFDMA though its evidence was delivered"
+    },
+    {
+      "case_id": "loc-003",
+      "category": "locate",
+      "query": "分集技术在哪一章？",
+      "exact_pass": false,
+      "expected_facts": [
+        "分集"
+      ],
+      "failed_facts": [
+        "分集"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate_chapter",
+        "expected": "locate_chapter",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 2,
+        "term_verdicts": [
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 3,
+        "cited_claim_count": 2,
+        "citation_coverage": 0.6667,
+        "total_claim_count": 3,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "GOLDEN_CONTRACT_ISSUE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "high",
+      "evidence": "deterministic locate template emits locations only; golden fact '分集' is the query concept; correct chapter 3 delivered"
+    },
+    {
+      "case_id": "loc-004",
+      "category": "locate",
+      "query": "漫游在哪一章？",
+      "exact_pass": false,
+      "expected_facts": [
+        "漫游"
+      ],
+      "failed_facts": [
+        "漫游"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate_chapter",
+        "expected": "locate_chapter",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "medium"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 2,
+        "term_verdicts": [
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 3,
+        "cited_claim_count": 2,
+        "citation_coverage": 0.6667,
+        "total_claim_count": 3,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "GOLDEN_CONTRACT_ISSUE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "medium",
+      "evidence": "golden fact '漫游' never emitted by the locate template; chapter 4 delivered"
+    },
+    {
+      "case_id": "loc-005",
+      "category": "locate",
+      "query": "频率复用在哪一章？",
+      "exact_pass": false,
+      "expected_facts": [
+        "频率复用"
+      ],
+      "failed_facts": [
+        "频率复用"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate_chapter",
+        "expected": "locate_chapter",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 2,
+        "term_verdicts": [
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 3,
+        "cited_claim_count": 2,
+        "citation_coverage": 0.6667,
+        "total_claim_count": 3,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "GOLDEN_CONTRACT_ISSUE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE",
+        "RETRIEVAL_FAILURE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "medium",
+      "evidence": "golden fact '频率复用' never emitted; delivered sections (4.4.1/4.3.1) are only plausibly the intended location"
+    },
+    {
+      "case_id": "loc-008",
+      "category": "locate",
+      "query": "RAKE 接收机在哪一章？",
+      "exact_pass": false,
+      "expected_facts": [
+        "RAKE"
+      ],
+      "failed_facts": [
+        "RAKE"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate_chapter",
+        "expected": "locate_chapter",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": false,
+        "context_count": 1,
+        "term_verdicts": [
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 1,
+        "citation_coverage": 0.5,
+        "total_claim_count": 2,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "RETRIEVAL_FAILURE",
+      "secondary_causes": [
+        "GOLDEN_CONTRACT_ISSUE"
+      ],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "medium",
+      "evidence": "expected chapter 3 not in top-3 contexts; the test document ranked first, so the locate answer lists wrong locations"
+    },
+    {
+      "case_id": "loc-011",
+      "category": "locate",
+      "query": "哪里讲到了循环前缀？",
+      "exact_pass": false,
+      "expected_facts": [
+        "循环前缀"
+      ],
+      "failed_facts": [
+        "循环前缀"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate",
+        "expected": "locate_chapter",
+        "matches": false
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 6,
+        "cited_claim_count": 5,
+        "citation_coverage": 0.8333,
+        "total_claim_count": 6,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "GOLDEN_CONTRACT_ISSUE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "high",
+      "evidence": "golden fact '循环前缀' never emitted by the locate template; chapter 6 delivered"
+    },
+    {
+      "case_id": "loc-012",
+      "category": "locate",
+      "query": "交织技术在哪一章？",
+      "exact_pass": false,
+      "expected_facts": [
+        "交织"
+      ],
+      "failed_facts": [
+        "交织"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate_chapter",
+        "expected": "locate_chapter",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 1,
+        "term_verdicts": [
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 1,
+        "citation_coverage": 0.5,
+        "total_claim_count": 2,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "GOLDEN_CONTRACT_ISSUE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "high",
+      "evidence": "golden fact '交织' never emitted; chapter 5 delivered"
+    },
+    {
+      "case_id": "loc-013",
+      "category": "locate",
+      "query": "OFDM 在哪一章介绍？",
+      "exact_pass": false,
+      "expected_facts": [
+        "OFDM"
+      ],
+      "failed_facts": [
+        "OFDM"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate_chapter",
+        "expected": "locate_chapter",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "medium"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": false,
+        "context_count": 1,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 1,
+        "citation_coverage": 0.5,
+        "total_claim_count": 2,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "RETRIEVAL_FAILURE",
+      "secondary_causes": [
+        "GOLDEN_CONTRACT_ISSUE"
+      ],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "medium",
+      "evidence": "query 'OFDM 介绍' -> locate_chapter ranked chapter 3 though expected 1/6"
+    },
+    {
+      "case_id": "loc-015",
+      "category": "locate",
+      "query": "GSM 调制方式在哪一章？",
+      "exact_pass": false,
+      "expected_facts": [
+        "GSM",
+        "GMSK"
+      ],
+      "failed_facts": [
+        "GSM",
+        "GMSK"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate_chapter",
+        "expected": "locate_chapter",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": false,
+        "context_count": 1,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 1,
+        "citation_coverage": 0.5,
+        "total_claim_count": 2,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "RETRIEVAL_FAILURE",
+      "secondary_causes": [
+        "GOLDEN_CONTRACT_ISSUE"
+      ],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "medium",
+      "evidence": "query 'GSM 调制方式' ranked chapter 1 though expected 4/5"
+    },
+    {
+      "case_id": "loc-016",
+      "category": "locate",
+      "query": "在测试文档里，多径传播是第几节？",
+      "exact_pass": false,
+      "expected_facts": [
+        "多径",
+        "第1"
+      ],
+      "failed_facts": [
+        "第1"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate",
+        "expected": "locate",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "RRF_RANKING_MISS"
+        ]
+      },
+      "generation_status": "n/a",
+      "citation_status": {
+        "factual_claim_count": 6,
+        "cited_claim_count": 5,
+        "citation_coverage": 0.8333,
+        "total_claim_count": 6,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "GOLDEN_CONTRACT_ISSUE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "high",
+      "evidence": "golden expects '第1'; the deterministic locate template emits '1. 多径传播' -> ordinal representation mismatch (proven)"
+    },
+    {
+      "case_id": "loc-017",
+      "category": "locate",
+      "query": "抗衰落技术是测试文档的第几节？",
+      "exact_pass": false,
+      "expected_facts": [
+        "抗衰落",
+        "第2"
+      ],
+      "failed_facts": [
+        "第2"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate",
+        "expected": "locate",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "RRF_RANKING_MISS"
+        ]
+      },
+      "generation_status": "n/a",
+      "citation_status": {
+        "factual_claim_count": 6,
+        "cited_claim_count": 5,
+        "citation_coverage": 0.8333,
+        "total_claim_count": 6,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "GOLDEN_CONTRACT_ISSUE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "high",
+      "evidence": "golden expects '第2'; template emits '2. 抗衰落技术' -> ordinal representation mismatch (proven)"
+    },
+    {
+      "case_id": "loc-018",
+      "category": "locate",
+      "query": "参数表在测试文档的哪个位置？",
+      "exact_pass": false,
+      "expected_facts": [
+        "参数",
+        "第3"
+      ],
+      "failed_facts": [
+        "参数",
+        "第3"
+      ],
+      "answer_state": "REFUSED",
+      "route": {
+        "actual": "locate",
+        "expected": "locate",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": true,
+        "scope_conflict": false,
+        "confidence": "low"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED",
+          "RRF_RANKING_MISS"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 0,
+        "citation_coverage": 0.0,
+        "total_claim_count": 2,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "SCOPE_FAILURE",
+      "secondary_causes": [],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "high",
+      "evidence": "out_of_scope=True although 参数 evidence delivered; OOS gate rejected an in-scope locate question"
+    },
+    {
+      "case_id": "loc-019",
+      "category": "locate",
+      "query": "切换相关的内容在教材哪一章？",
+      "exact_pass": false,
+      "expected_facts": [
+        "切换"
+      ],
+      "failed_facts": [
+        "切换"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate_chapter",
+        "expected": "locate_chapter",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "medium"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 2,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 3,
+        "cited_claim_count": 2,
+        "citation_coverage": 0.6667,
+        "total_claim_count": 3,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "GOLDEN_CONTRACT_ISSUE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "medium",
+      "evidence": "golden fact '切换' never emitted; chapter 4 delivered"
+    },
+    {
+      "case_id": "cmp-001",
+      "category": "compare",
+      "query": "GSM 和 WCDMA 有什么区别？",
+      "exact_pass": false,
+      "expected_facts": [
+        "GSM",
+        "WCDMA",
+        "GMSK",
+        "QPSK"
+      ],
+      "failed_facts": [
+        "GMSK",
+        "QPSK"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "compare",
+        "expected": "compare",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "medium"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 6,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED",
+          "RRF_RANKING_MISS"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 14,
+        "cited_claim_count": 6,
+        "citation_coverage": 0.4286,
+        "total_claim_count": 14,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "RETRIEVAL_FAILURE",
+      "secondary_causes": [
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "classification": "MULTI_CAUSE",
+      "confidence": "medium",
+      "evidence": "GMSK evidence exists but is an RRF ranking miss; QPSK was delivered; answer compares structure/band/power but not modulation"
+    },
+    {
+      "case_id": "cmp-004",
+      "category": "compare",
+      "query": "FDMA 和 TDMA 有什么区别？",
+      "exact_pass": false,
+      "expected_facts": [
+        "FDMA",
+        "TDMA",
+        "频分",
+        "时分"
+      ],
+      "failed_facts": [
+        "时分"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "compare",
+        "expected": "compare",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "medium"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 10,
+        "cited_claim_count": 1,
+        "citation_coverage": 0.1,
+        "total_claim_count": 12,
+        "not_applicable_count": 2
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "EVALUATOR_ISSUE",
+      "secondary_causes": [],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "medium",
+      "evidence": "answer says '时域里划分时隙'; golden requires '时分'"
+    },
+    {
+      "case_id": "cmp-014",
+      "category": "compare",
+      "query": "频分复用和码分复用有什么区别？",
+      "exact_pass": false,
+      "expected_facts": [
+        "频分",
+        "码分",
+        "频率",
+        "码"
+      ],
+      "failed_facts": [
+        "频率"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "compare",
+        "expected": "compare",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 7,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 5,
+        "cited_claim_count": 1,
+        "citation_coverage": 0.2,
+        "total_claim_count": 5,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "GENERATION_SYNTHESIS_FAILURE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE"
+      ],
+      "classification": "MULTI_CAUSE",
+      "confidence": "medium",
+      "evidence": "evidence delivered yet the answer declines to compare; also '频率' vs '频分' wording"
+    },
+    {
+      "case_id": "cmp-019",
+      "category": "compare",
+      "query": "软切换相比硬切换有什么优点？",
+      "exact_pass": false,
+      "expected_facts": [
+        "软切换",
+        "硬切换",
+        "中断"
+      ],
+      "failed_facts": [
+        "中断"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "compare",
+        "expected": "compare",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 4,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 7,
+        "cited_claim_count": 1,
+        "citation_coverage": 0.1429,
+        "total_claim_count": 7,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "GENERATION_SYNTHESIS_FAILURE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE"
+      ],
+      "classification": "MULTI_CAUSE",
+      "confidence": "medium",
+      "evidence": "evidence delivered; answer lists other soft-handover benefits but not '中断'"
+    },
+    {
+      "case_id": "cmp-020",
+      "category": "compare",
+      "query": "OFDMA 相比 CDMA 有什么特点？",
+      "exact_pass": false,
+      "expected_facts": [
+        "OFDMA",
+        "CDMA",
+        "子载波",
+        "码"
+      ],
+      "failed_facts": [
+        "码"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "compare",
+        "expected": "compare",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": true,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 6,
+        "cited_claim_count": 1,
+        "citation_coverage": 0.1667,
+        "total_claim_count": 6,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "GOLDEN_CONTRACT_ISSUE",
+      "secondary_causes": [
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "medium",
+      "evidence": "golden requires the bare token '码' for an OFDMA-vs-CDMA characteristics question"
+    },
+    {
+      "case_id": "mt-003",
+      "category": "multi_turn",
+      "query": "那第二章呢？",
+      "exact_pass": false,
+      "expected_facts": [
+        "第二章"
+      ],
+      "failed_facts": [
+        "第二章"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "chapter_overview",
+        "expected": "chapter_overview",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 1,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE"
+        ]
+      },
+      "generation_status": "n/a",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 0,
+        "citation_coverage": 0.0,
+        "total_claim_count": 3,
+        "not_applicable_count": 1
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "HISTORY_CONTEXT_FAILURE",
+      "secondary_causes": [
+        "GOLDEN_CONTRACT_ISSUE",
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "classification": "MULTI_CAUSE",
+      "confidence": "high",
+      "evidence": "referent resolved to 第2章 correctly, but the answer discusses OFDM (history topic leakage) and never states the chapter number"
+    },
+    {
+      "case_id": "mt-006",
+      "category": "multi_turn",
+      "query": "那它呢？",
+      "exact_pass": false,
+      "expected_facts": [
+        "OFDM"
+      ],
+      "failed_facts": [
+        "OFDM"
+      ],
+      "answer_state": "REFUSED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": true,
+        "scope_conflict": false,
+        "confidence": "low"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 0,
+        "citation_coverage": 0.0,
+        "total_claim_count": 2,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "SCOPE_FAILURE",
+      "secondary_causes": [
+        "HISTORY_CONTEXT_FAILURE"
+      ],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "high",
+      "evidence": "referent correctly resolved to OFDM but the rewrite left a bare term 'OFDM' (conf=low) -> OOS gate refused a valid follow-up"
+    },
+    {
+      "case_id": "mt-007",
+      "category": "multi_turn",
+      "query": "它有什么缺点？",
+      "exact_pass": false,
+      "expected_facts": [
+        "衰落"
+      ],
+      "failed_facts": [
+        "衰落"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 3,
+        "cited_claim_count": 2,
+        "citation_coverage": 0.6667,
+        "total_claim_count": 3,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "EVALUATOR_ISSUE",
+      "secondary_causes": [
+        "HISTORY_CONTEXT_FAILURE"
+      ],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "medium",
+      "evidence": "answer discusses 时间/频率分集 drawbacks but never restates the subject term '衰落'"
+    },
+    {
+      "case_id": "mt-009",
+      "category": "multi_turn",
+      "query": "它有哪些类型？",
+      "exact_pass": false,
+      "expected_facts": [
+        "分集",
+        "类型"
+      ],
+      "failed_facts": [
+        "类型"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "RRF_RANKING_MISS"
+        ]
+      },
+      "generation_status": "n/a",
+      "citation_status": {
+        "factual_claim_count": 3,
+        "cited_claim_count": 2,
+        "citation_coverage": 0.6667,
+        "total_claim_count": 3,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "EVALUATOR_ISSUE",
+      "secondary_causes": [],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "high",
+      "evidence": "answer lists 宏观分集/微观分集 but never uses the generic golden word '类型'"
+    },
+    {
+      "case_id": "mt-011",
+      "category": "multi_turn",
+      "query": "那后者呢？",
+      "exact_pass": false,
+      "expected_facts": [
+        "CDMA"
+      ],
+      "failed_facts": [
+        "CDMA"
+      ],
+      "answer_state": "ANSWER_WITH_LIMITATION",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "medium"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 0,
+        "citation_coverage": 0.0,
+        "total_claim_count": 3,
+        "not_applicable_count": 1
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "HISTORY_CONTEXT_FAILURE",
+      "secondary_causes": [],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "high",
+      "evidence": "rewrite produced the malformed query 'CDMA的那' (proven); answer refused for lack of a referent"
+    },
+    {
+      "case_id": "md-004",
+      "category": "multi_document",
+      "query": "分集接收在哪些文档中被提到？",
+      "exact_pass": false,
+      "expected_facts": [
+        "分集",
+        "教材",
+        "测试文档"
+      ],
+      "failed_facts": [
+        "分集",
+        "教材"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate",
+        "expected": "qa",
+        "matches": false
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED",
+          "RRF_RANKING_MISS"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 6,
+        "cited_claim_count": 5,
+        "citation_coverage": 0.8333,
+        "total_claim_count": 6,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "ROUTING_FAILURE",
+      "secondary_causes": [
+        "GOLDEN_CONTRACT_ISSUE"
+      ],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "high",
+      "evidence": "'在哪些文档' contains '在哪' -> localize; question is a document-coverage QA"
+    },
+    {
+      "case_id": "md-009",
+      "category": "multi_document",
+      "query": "哪些文档提到了 RAKE 接收机？",
+      "exact_pass": false,
+      "expected_facts": [
+        "RAKE",
+        "教材",
+        "测试文档"
+      ],
+      "failed_facts": [
+        "教材",
+        "测试文档"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED",
+          "RRF_RANKING_MISS"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 1,
+        "cited_claim_count": 0,
+        "citation_coverage": 0.0,
+        "total_claim_count": 2,
+        "not_applicable_count": 1
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "DOCUMENT_IDENTITY_FAILURE",
+      "secondary_causes": [
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "high",
+      "evidence": "answer cites '材料1、材料2和材料5' instead of naming documents; golden requires 教材/测试文档"
+    },
+    {
+      "case_id": "md-014",
+      "category": "multi_document",
+      "query": "教材和测试文档都涉及的系统有哪些？",
+      "exact_pass": false,
+      "expected_facts": [
+        "GSM",
+        "WCDMA",
+        "CDMA",
+        "LTE"
+      ],
+      "failed_facts": [
+        "GSM",
+        "WCDMA",
+        "CDMA",
+        "LTE"
+      ],
+      "answer_state": "REFUSED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": true,
+        "scope_conflict": false,
+        "confidence": "low"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 2,
+        "cited_claim_count": 0,
+        "citation_coverage": 0.0,
+        "total_claim_count": 2,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "SCOPE_FAILURE",
+      "secondary_causes": [
+        "DOCUMENT_IDENTITY_FAILURE"
+      ],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "high",
+      "evidence": "out_of_scope=True although GSM/WCDMA/CDMA/LTE evidence delivered; informal document names (教材/测试文档) also unresolved"
+    },
+    {
+      "case_id": "md-015",
+      "category": "multi_document",
+      "query": "哪份文档明确把 OFDMA 与 LTE 关联？",
+      "exact_pass": false,
+      "expected_facts": [
+        "OFDMA",
+        "LTE",
+        "测试文档"
+      ],
+      "failed_facts": [
+        "测试文档"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 3,
+        "cited_claim_count": 2,
+        "citation_coverage": 0.6667,
+        "total_claim_count": 3,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "DOCUMENT_IDENTITY_FAILURE",
+      "secondary_causes": [
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "high",
+      "evidence": "answer cites '材料1、2' instead of the document that links OFDMA and LTE"
+    },
+    {
+      "case_id": "md-019",
+      "category": "multi_document",
+      "query": "GSM 和 WCDMA 需要对抗多径衰落，这一结论在哪个文档中？",
+      "exact_pass": false,
+      "expected_facts": [
+        "GSM",
+        "WCDMA",
+        "多径"
+      ],
+      "failed_facts": [
+        "GSM",
+        "WCDMA"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate",
+        "expected": "qa",
+        "matches": false
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 6,
+        "cited_claim_count": 5,
+        "citation_coverage": 0.8333,
+        "total_claim_count": 6,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "ROUTING_FAILURE",
+      "secondary_causes": [
+        "DOCUMENT_IDENTITY_FAILURE"
+      ],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "high",
+      "evidence": "'在哪个文档中' contains '在哪' -> locate; question is a cross-document QA; retrieved only the test document"
+    },
+    {
+      "case_id": "meta-013",
+      "category": "metadata_library",
+      "query": "这本书有哪些章节？",
+      "exact_pass": false,
+      "expected_facts": [
+        "章节"
+      ],
+      "failed_facts": [
+        "章节"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "book_toc",
+        "expected": "book_toc",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 0,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE"
+        ]
+      },
+      "generation_status": "n/a",
+      "citation_status": {
+        "factual_claim_count": 18,
+        "cited_claim_count": 17,
+        "citation_coverage": 0.9444,
+        "total_claim_count": 18,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "wording_or_ordinal_risk",
+      "primary_root_cause": "EVALUATOR_ISSUE",
+      "secondary_causes": [],
+      "classification": "MEASUREMENT_FAILURE",
+      "confidence": "high",
+      "evidence": "book_toc answer says '17 章'; golden requires '章节'"
+    },
+    {
+      "case_id": "cit-001",
+      "category": "citation_negative",
+      "query": "GSM 使用 GMSK 调制，请指出出处。",
+      "exact_pass": false,
+      "expected_facts": [
+        "GMSK"
+      ],
+      "failed_facts": [
+        "GMSK"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate",
+        "expected": "qa",
+        "matches": false
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 6,
+        "cited_claim_count": 5,
+        "citation_coverage": 0.8333,
+        "total_claim_count": 6,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "ROUTING_FAILURE",
+      "secondary_causes": [],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "high",
+      "evidence": "query contains '出处' -> LOCATION_WORDS routes to locate; deterministic locate template cannot answer a citation request; expected evidence GMSK delivered"
+    },
+    {
+      "case_id": "cit-007",
+      "category": "citation_negative",
+      "query": "循环前缀的作用？请引用出处。",
+      "exact_pass": false,
+      "expected_facts": [
+        "循环前缀"
+      ],
+      "failed_facts": [
+        "循环前缀"
+      ],
+      "answer_state": "ANSWERED",
+      "route": {
+        "actual": "locate",
+        "expected": "qa",
+        "matches": false
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "EVIDENCE_DELIVERED"
+        ]
+      },
+      "generation_status": "fact_missing_after_delivered_evidence",
+      "citation_status": {
+        "factual_claim_count": 6,
+        "cited_claim_count": 5,
+        "citation_coverage": 0.8333,
+        "total_claim_count": 6,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "ROUTING_FAILURE",
+      "secondary_causes": [],
+      "classification": "PRODUCT_FAILURE",
+      "confidence": "high",
+      "evidence": "query contains '出处' -> routed to locate; locate template returns locations only; 循环前缀 evidence delivered"
+    },
+    {
+      "case_id": "cit-013",
+      "category": "citation_negative",
+      "query": "载波间隔是多少？请引用。",
+      "exact_pass": false,
+      "expected_facts": [
+        "载波间隔",
+        "200"
+      ],
+      "failed_facts": [
+        "200"
+      ],
+      "answer_state": "ANSWER_WITH_LIMITATION",
+      "route": {
+        "actual": "qa",
+        "expected": "qa",
+        "matches": true
+      },
+      "scope": {
+        "out_of_scope": false,
+        "scope_conflict": false,
+        "confidence": "high"
+      },
+      "retrieval_status": {
+        "chapter_hit_top3": null,
+        "context_count": 5,
+        "term_verdicts": [
+          "EVIDENCE_ABSENT_FROM_SOURCE",
+          "RRF_RANKING_MISS"
+        ]
+      },
+      "generation_status": "n/a",
+      "citation_status": {
+        "factual_claim_count": 7,
+        "cited_claim_count": 2,
+        "citation_coverage": 0.2857,
+        "total_claim_count": 7,
+        "not_applicable_count": 0
+      },
+      "evaluator_status": "exact_substring_matcher",
+      "golden_status": "ok",
+      "primary_root_cause": "RETRIEVAL_FAILURE",
+      "secondary_causes": [
+        "EVALUATOR_ISSUE"
+      ],
+      "classification": "MULTI_CAUSE",
+      "confidence": "medium",
+      "evidence": "expected value 200 exists in source but not in the final context (weak numeric term)"
+    }
+  ],
+  "aggregate": {
+    "eligible_cases": 144,
+    "non_exact_cases": 42,
+    "by_primary_cause": {
+      "EVALUATOR_ISSUE": 9,
+      "RETRIEVAL_FAILURE": 7,
+      "GENERATION_SYNTHESIS_FAILURE": 5,
+      "GOLDEN_CONTRACT_ISSUE": 10,
+      "SCOPE_FAILURE": 3,
+      "HISTORY_CONTEXT_FAILURE": 2,
+      "ROUTING_FAILURE": 4,
+      "DOCUMENT_IDENTITY_FAILURE": 2
+    },
+    "by_classification": {
+      "MEASUREMENT_FAILURE": 19,
+      "MULTI_CAUSE": 9,
+      "PRODUCT_FAILURE": 14
+    },
+    "failed_facts_total": 53,
+    "proven_product_failures": 14,
+    "measurement_failures": 19,
+    "multi_cause": 9
+  },
+  "citation_decomposition": {
+    "producer": "scripts/decompose_v4_citation.py",
+    "name": "THREE_CELL_PAIRED_PATH_DECOMPOSITION",
+    "case_set": "INTERSECTION",
+    "cases": 116,
+    "cells": {
+      "A_old_answers_f2v3": {
+        "value": 0.5582,
+        "cases": 116,
+        "source": "stored f2-v3 reports"
+      },
+      "B_old_answers_f2v4": {
+        "value": 0.4863,
+        "cases": 116,
+        "source": "recomputed f2-v4"
+      },
+      "C_new_answers_f2v4": {
+        "value": 0.4911,
+        "cases": 116,
+        "source": "recomputed f2-v4"
+      },
+      "D_new_answers_f2v3": {
+        "computable": false,
+        "reason": "f2-v3 verifier retired; restoring it would mean restoring retired verifier semantics"
+      }
+    },
+    "effects": {
+      "VERIFIER_EFFECT_ON_OLD_ANSWERS": -0.0719,
+      "GENERATION_BATCH_EFFECT_UNDER_F2_V4": 0.0048,
+      "PAIRED_PATH_TOTAL": -0.0671,
+      "VERIFIER_x_GENERATION_INTERACTION": "NOT_IDENTIFIED"
+    },
+    "limitation": "Not a full factorial decomposition (cell D unavailable); interaction is not identified.",
+    "superseded_values": [
+      {
+        "value": 0.4969,
+        "was": "C recomputed on a 118-case set (old coverage set, not the intersection)",
+        "status": "SUPERSEDED_BY_CASE_SET_CORRECTION"
+      },
+      {
+        "value": 0.5086,
+        "was": "B recomputed on a 144-case set",
+        "status": "SUPERSEDED_BY_CASE_SET_CORRECTION"
+      },
+      {
+        "value": 0.5558,
+        "was": "A stored on the 117/118-case sets",
+        "status": "SUPERSEDED_BY_CASE_SET_CORRECTION"
+      }
+    ],
+    "canonical_reference": {
+      "canonical_gate_coverage": 0.4893,
+      "canonical_case_set": "NEW_F2_V4_COVERAGE_CASES (117)",
+      "note": "canonical (0.4893, n=117) and paired C (value above, n=116) differ only by case set"
+    },
+    "authoritative_artifact": "eval/v4_attribution_closure.json"
+  },
+  "dependency_graph": {
+    "nodes": [
+      "document_identity",
+      "scope_resolution",
+      "routing",
+      "query_rewrite",
+      "retrieval_ranking",
+      "generation_synthesis",
+      "citation_alignment",
+      "golden_contract",
+      "evaluator_matcher"
+    ],
+    "edges": [
+      [
+        "document_identity",
+        "scope_resolution"
+      ],
+      [
+        "document_identity",
+        "retrieval_ranking"
+      ],
+      [
+        "scope_resolution",
+        "retrieval_ranking"
+      ],
+      [
+        "routing",
+        "retrieval_ranking"
+      ],
+      [
+        "routing",
+        "generation_synthesis"
+      ],
+      [
+        "query_rewrite",
+        "retrieval_ranking"
+      ],
+      [
+        "retrieval_ranking",
+        "generation_synthesis"
+      ],
+      [
+        "generation_synthesis",
+        "citation_alignment"
+      ],
+      [
+        "golden_contract",
+        "evaluator_matcher"
+      ]
+    ],
+    "notes": {
+      "fixing": "document_identity -> scope_resolution -> routing -> retrieval_ranking -> generation_synthesis",
+      "cross_cutting": "golden_contract / evaluator_matcher sit beside the product chain and change the RULER, not the product"
+    }
+  },
+  "priority": {
+    "Priority 1": {
+      "cause": "D SCOPE_FAILURE - OOS gate false refusals",
+      "cases": [
+        "loc-018",
+        "md-014",
+        "mt-006"
+      ],
+      "facts_blocked": 7,
+      "why": "upstream gate; provably blocks in-scope questions while their evidence was delivered; closest to the false_refusal safety floor (0.0208 <= 0.03)",
+      "risk": "medium - the gate is multi-conditional; must keep OOS hard-negative protection"
+    },
+    "Priority 2": {
+      "cause": "C ROUTING_FAILURE - LOCATION_WORDS over-trigger ('在哪' / '出处')",
+      "cases": [
+        "cit-001",
+        "cit-007",
+        "md-004",
+        "md-019"
+      ],
+      "facts_blocked": 7,
+      "why": "fully deterministic substring trigger; the locate template structurally cannot answer these QA/document questions",
+      "risk": "low-medium - needs negative cases so genuine locate questions still route to locate"
+    },
+    "Priority 3": {
+      "cause": "F DOCUMENT_IDENTITY_FAILURE",
+      "cases": [
+        "md-009",
+        "md-015"
+      ],
+      "facts_blocked": 3,
+      "why": "upstream of md-004/md-014; answers refer to materials by index instead of document identity",
+      "risk": "medium - touches evidence/prompt framing and must not fabricate document names"
+    },
+    "Separate track (not product)": {
+      "cause": "A/B GOLDEN + EVALUATOR ruler remediation",
+      "cases": 19,
+      "why": "largest single bucket but it changes the measurement ruler; V4.1 already deferred it to V4.4 and it must never be used to inflate scores"
+    },
+    "Subsequent": {
+      "cause": "E RETRIEVAL_RANKING (7) -> G HISTORY/REWRITE (2) -> H GENERATION (5)",
+      "why": "downstream of the priority-1..3 fixes; re-measure after the upstream fixes so deltas stay attributable"
+    },
+    "Deferred": {
+      "cause": "I CITATION_ALIGNMENT scale-up",
+      "why": "coverage 0.4893 is dominated by VERIFIER_EFFECT (-0.0707); the regression floor question must be resolved before any citation push"
+    },
+    "Rejected / Not justified": {
+      "cause": [
+        "prompt-only completeness patch (Q4.1 already proved 1/21)",
+        "lowering any frozen Target",
+        "unsafe fuzzy matcher",
+        "production L2 without a new explicit authorization",
+        "re-opening the reranker"
+      ],
+      "why": "no evidence of net benefit, or explicitly out of the authorized scope"
+    }
+  },
+  "citation_case_sets": {
+    "OLD_F2_V3_REPORT_CASES": {
+      "count": 144,
+      "ids": [
+        "cit-001",
+        "cit-002",
+        "cit-003",
+        "cit-004",
+        "cit-005",
+        "cit-006",
+        "cit-007",
+        "cit-008",
+        "cit-009",
+        "cit-010",
+        "cit-011",
+        "cit-012",
+        "cit-013",
+        "cit-014",
+        "cit-015",
+        "cit-016",
+        "cit-017",
+        "cit-018",
+        "cit-019",
+        "cit-020",
+        "cmp-001",
+        "cmp-002",
+        "cmp-003",
+        "cmp-004",
+        "cmp-005",
+        "cmp-006",
+        "cmp-007",
+        "cmp-008",
+        "cmp-009",
+        "cmp-010",
+        "cmp-011",
+        "cmp-012",
+        "cmp-013",
+        "cmp-014",
+        "cmp-015",
+        "cmp-016",
+        "cmp-017",
+        "cmp-018",
+        "cmp-019",
+        "cmp-020",
+        "loc-001",
+        "loc-002",
+        "loc-003",
+        "loc-004",
+        "loc-005",
+        "loc-006",
+        "loc-007",
+        "loc-008",
+        "loc-009",
+        "loc-010",
+        "loc-011",
+        "loc-012",
+        "loc-013",
+        "loc-014",
+        "loc-015",
+        "loc-016",
+        "loc-017",
+        "loc-018",
+        "loc-019",
+        "loc-020",
+        "md-001",
+        "md-002",
+        "md-003",
+        "md-004",
+        "md-005",
+        "md-006",
+        "md-007",
+        "md-008",
+        "md-009",
+        "md-010",
+        "md-011",
+        "md-012",
+        "md-013",
+        "md-014",
+        "md-015",
+        "md-016",
+        "md-017",
+        "md-018",
+        "md-019",
+        "md-020",
+        "meta-010",
+        "meta-013",
+        "meta-014",
+        "meta-015",
+        "mt-001",
+        "mt-002",
+        "mt-003",
+        "mt-004",
+        "mt-005",
+        "mt-006",
+        "mt-007",
+        "mt-008",
+        "mt-009",
+        "mt-010",
+        "mt-011",
+        "mt-012",
+        "mt-013",
+        "mt-014",
+        "mt-015",
+        "mt-016",
+        "mt-018",
+        "mt-019",
+        "mt-020",
+        "qa-001",
+        "qa-002",
+        "qa-003",
+        "qa-004",
+        "qa-005",
+        "qa-006",
+        "qa-007",
+        "qa-008",
+        "qa-009",
+        "qa-010",
+        "qa-011",
+        "qa-012",
+        "qa-013",
+        "qa-014",
+        "qa-015",
+        "qa-016",
+        "qa-017",
+        "qa-018",
+        "qa-019",
+        "qa-020",
+        "qa-021",
+        "qa-022",
+        "qa-023",
+        "qa-024",
+        "qa-025",
+        "qa-026",
+        "qa-027",
+        "qa-028",
+        "qa-029",
+        "qa-030",
+        "qa-031",
+        "qa-032",
+        "qa-033",
+        "qa-034",
+        "qa-035",
+        "qa-036",
+        "qa-037",
+        "qa-038",
+        "qa-039",
+        "qa-040",
+        "qa-041"
+      ],
+      "producer": "scripts/eval_v3_answer_full.py",
+      "source_cache": "answer_10698752_6e18ee4ee9669bef.json",
+      "eligibility": "legacy cache rows with evaluator_version=answer-eval-v4 (verifier f2-v3) and citation_report != null"
+    },
+    "NEW_F2_V4_REPORT_CASES": {
+      "count": 117,
+      "ids": [
+        "cit-002",
+        "cit-003",
+        "cit-004",
+        "cit-005",
+        "cit-006",
+        "cit-008",
+        "cit-009",
+        "cit-010",
+        "cit-011",
+        "cit-012",
+        "cit-013",
+        "cit-014",
+        "cit-015",
+        "cit-016",
+        "cit-017",
+        "cit-018",
+        "cit-019",
+        "cit-020",
+        "cmp-001",
+        "cmp-002",
+        "cmp-003",
+        "cmp-004",
+        "cmp-005",
+        "cmp-006",
+        "cmp-007",
+        "cmp-008",
+        "cmp-009",
+        "cmp-010",
+        "cmp-011",
+        "cmp-012",
+        "cmp-013",
+        "cmp-014",
+        "cmp-015",
+        "cmp-016",
+        "cmp-017",
+        "cmp-018",
+        "cmp-019",
+        "cmp-020",
+        "loc-009",
+        "loc-010",
+        "md-001",
+        "md-002",
+        "md-003",
+        "md-005",
+        "md-006",
+        "md-007",
+        "md-008",
+        "md-009",
+        "md-010",
+        "md-011",
+        "md-012",
+        "md-013",
+        "md-015",
+        "md-016",
+        "md-017",
+        "md-018",
+        "md-020",
+        "meta-015",
+        "mt-001",
+        "mt-002",
+        "mt-003",
+        "mt-004",
+        "mt-005",
+        "mt-007",
+        "mt-008",
+        "mt-009",
+        "mt-010",
+        "mt-011",
+        "mt-012",
+        "mt-013",
+        "mt-014",
+        "mt-015",
+        "mt-016",
+        "mt-018",
+        "mt-019",
+        "mt-020",
+        "qa-001",
+        "qa-002",
+        "qa-003",
+        "qa-004",
+        "qa-005",
+        "qa-006",
+        "qa-007",
+        "qa-008",
+        "qa-009",
+        "qa-010",
+        "qa-011",
+        "qa-012",
+        "qa-013",
+        "qa-014",
+        "qa-015",
+        "qa-016",
+        "qa-017",
+        "qa-018",
+        "qa-019",
+        "qa-020",
+        "qa-021",
+        "qa-022",
+        "qa-023",
+        "qa-024",
+        "qa-025",
+        "qa-026",
+        "qa-027",
+        "qa-028",
+        "qa-029",
+        "qa-030",
+        "qa-031",
+        "qa-032",
+        "qa-033",
+        "qa-034",
+        "qa-035",
+        "qa-036",
+        "qa-037",
+        "qa-038",
+        "qa-039",
+        "qa-040",
+        "qa-041"
+      ],
+      "producer": "scripts/eval_v4_baseline.py",
+      "source_cache": "v4_baseline_10698752_0837e83333c858c6_qwen2.5-7b_v4-baseline-v1_f2-v4.json",
+      "eligibility": "canonical cache rows with citation_report != null (deterministic locate/book_toc routes emit none)"
+    },
+    "OLD_F2_V3_COVERAGE_CASES": {
+      "count": 118,
+      "ids": [
+        "cit-002",
+        "cit-003",
+        "cit-004",
+        "cit-005",
+        "cit-006",
+        "cit-008",
+        "cit-009",
+        "cit-010",
+        "cit-011",
+        "cit-012",
+        "cit-013",
+        "cit-014",
+        "cit-015",
+        "cit-016",
+        "cit-017",
+        "cit-018",
+        "cit-019",
+        "cit-020",
+        "cmp-001",
+        "cmp-002",
+        "cmp-003",
+        "cmp-004",
+        "cmp-005",
+        "cmp-006",
+        "cmp-007",
+        "cmp-008",
+        "cmp-009",
+        "cmp-010",
+        "cmp-011",
+        "cmp-012",
+        "cmp-013",
+        "cmp-014",
+        "cmp-016",
+        "cmp-017",
+        "cmp-018",
+        "cmp-019",
+        "cmp-020",
+        "loc-009",
+        "loc-010",
+        "loc-016",
+        "loc-017",
+        "md-001",
+        "md-002",
+        "md-003",
+        "md-005",
+        "md-006",
+        "md-007",
+        "md-008",
+        "md-009",
+        "md-010",
+        "md-011",
+        "md-012",
+        "md-013",
+        "md-015",
+        "md-016",
+        "md-017",
+        "md-018",
+        "md-020",
+        "meta-015",
+        "mt-001",
+        "mt-002",
+        "mt-003",
+        "mt-004",
+        "mt-005",
+        "mt-007",
+        "mt-008",
+        "mt-009",
+        "mt-010",
+        "mt-011",
+        "mt-012",
+        "mt-013",
+        "mt-014",
+        "mt-015",
+        "mt-016",
+        "mt-018",
+        "mt-019",
+        "mt-020",
+        "qa-001",
+        "qa-002",
+        "qa-003",
+        "qa-004",
+        "qa-005",
+        "qa-006",
+        "qa-007",
+        "qa-008",
+        "qa-009",
+        "qa-010",
+        "qa-011",
+        "qa-012",
+        "qa-013",
+        "qa-014",
+        "qa-015",
+        "qa-016",
+        "qa-017",
+        "qa-018",
+        "qa-019",
+        "qa-020",
+        "qa-021",
+        "qa-022",
+        "qa-023",
+        "qa-024",
+        "qa-025",
+        "qa-026",
+        "qa-027",
+        "qa-028",
+        "qa-029",
+        "qa-030",
+        "qa-031",
+        "qa-032",
+        "qa-033",
+        "qa-034",
+        "qa-035",
+        "qa-036",
+        "qa-037",
+        "qa-038",
+        "qa-039",
+        "qa-040",
+        "qa-041"
+      ],
+      "producer": "stored f2-v3 reports",
+      "source_cache": "answer_10698752_6e18ee4ee9669bef.json",
+      "eligibility": "old rows with citation_coverage != null (factual_claim_count > 0)"
+    },
+    "NEW_F2_V4_COVERAGE_CASES": {
+      "count": 117,
+      "ids": [
+        "cit-002",
+        "cit-003",
+        "cit-004",
+        "cit-005",
+        "cit-006",
+        "cit-008",
+        "cit-009",
+        "cit-010",
+        "cit-011",
+        "cit-012",
+        "cit-013",
+        "cit-014",
+        "cit-015",
+        "cit-016",
+        "cit-017",
+        "cit-018",
+        "cit-019",
+        "cit-020",
+        "cmp-001",
+        "cmp-002",
+        "cmp-003",
+        "cmp-004",
+        "cmp-005",
+        "cmp-006",
+        "cmp-007",
+        "cmp-008",
+        "cmp-009",
+        "cmp-010",
+        "cmp-011",
+        "cmp-012",
+        "cmp-013",
+        "cmp-014",
+        "cmp-015",
+        "cmp-016",
+        "cmp-017",
+        "cmp-018",
+        "cmp-019",
+        "cmp-020",
+        "loc-009",
+        "loc-010",
+        "md-001",
+        "md-002",
+        "md-003",
+        "md-005",
+        "md-006",
+        "md-007",
+        "md-008",
+        "md-009",
+        "md-010",
+        "md-011",
+        "md-012",
+        "md-013",
+        "md-015",
+        "md-016",
+        "md-017",
+        "md-018",
+        "md-020",
+        "meta-015",
+        "mt-001",
+        "mt-002",
+        "mt-003",
+        "mt-004",
+        "mt-005",
+        "mt-007",
+        "mt-008",
+        "mt-009",
+        "mt-010",
+        "mt-011",
+        "mt-012",
+        "mt-013",
+        "mt-014",
+        "mt-015",
+        "mt-016",
+        "mt-018",
+        "mt-019",
+        "mt-020",
+        "qa-001",
+        "qa-002",
+        "qa-003",
+        "qa-004",
+        "qa-005",
+        "qa-006",
+        "qa-007",
+        "qa-008",
+        "qa-009",
+        "qa-010",
+        "qa-011",
+        "qa-012",
+        "qa-013",
+        "qa-014",
+        "qa-015",
+        "qa-016",
+        "qa-017",
+        "qa-018",
+        "qa-019",
+        "qa-020",
+        "qa-021",
+        "qa-022",
+        "qa-023",
+        "qa-024",
+        "qa-025",
+        "qa-026",
+        "qa-027",
+        "qa-028",
+        "qa-029",
+        "qa-030",
+        "qa-031",
+        "qa-032",
+        "qa-033",
+        "qa-034",
+        "qa-035",
+        "qa-036",
+        "qa-037",
+        "qa-038",
+        "qa-039",
+        "qa-040",
+        "qa-041"
+      ],
+      "producer": "stored f2-v4 reports",
+      "source_cache": "v4_baseline_10698752_0837e83333c858c6_qwen2.5-7b_v4-baseline-v1_f2-v4.json",
+      "eligibility": "new rows with citation_coverage != null"
+    },
+    "INTERSECTION": {
+      "count": 116,
+      "ids": [
+        "cit-002",
+        "cit-003",
+        "cit-004",
+        "cit-005",
+        "cit-006",
+        "cit-008",
+        "cit-009",
+        "cit-010",
+        "cit-011",
+        "cit-012",
+        "cit-013",
+        "cit-014",
+        "cit-015",
+        "cit-016",
+        "cit-017",
+        "cit-018",
+        "cit-019",
+        "cit-020",
+        "cmp-001",
+        "cmp-002",
+        "cmp-003",
+        "cmp-004",
+        "cmp-005",
+        "cmp-006",
+        "cmp-007",
+        "cmp-008",
+        "cmp-009",
+        "cmp-010",
+        "cmp-011",
+        "cmp-012",
+        "cmp-013",
+        "cmp-014",
+        "cmp-016",
+        "cmp-017",
+        "cmp-018",
+        "cmp-019",
+        "cmp-020",
+        "loc-009",
+        "loc-010",
+        "md-001",
+        "md-002",
+        "md-003",
+        "md-005",
+        "md-006",
+        "md-007",
+        "md-008",
+        "md-009",
+        "md-010",
+        "md-011",
+        "md-012",
+        "md-013",
+        "md-015",
+        "md-016",
+        "md-017",
+        "md-018",
+        "md-020",
+        "meta-015",
+        "mt-001",
+        "mt-002",
+        "mt-003",
+        "mt-004",
+        "mt-005",
+        "mt-007",
+        "mt-008",
+        "mt-009",
+        "mt-010",
+        "mt-011",
+        "mt-012",
+        "mt-013",
+        "mt-014",
+        "mt-015",
+        "mt-016",
+        "mt-018",
+        "mt-019",
+        "mt-020",
+        "qa-001",
+        "qa-002",
+        "qa-003",
+        "qa-004",
+        "qa-005",
+        "qa-006",
+        "qa-007",
+        "qa-008",
+        "qa-009",
+        "qa-010",
+        "qa-011",
+        "qa-012",
+        "qa-013",
+        "qa-014",
+        "qa-015",
+        "qa-016",
+        "qa-017",
+        "qa-018",
+        "qa-019",
+        "qa-020",
+        "qa-021",
+        "qa-022",
+        "qa-023",
+        "qa-024",
+        "qa-025",
+        "qa-026",
+        "qa-027",
+        "qa-028",
+        "qa-029",
+        "qa-030",
+        "qa-031",
+        "qa-032",
+        "qa-033",
+        "qa-034",
+        "qa-035",
+        "qa-036",
+        "qa-037",
+        "qa-038",
+        "qa-039",
+        "qa-040",
+        "qa-041"
+      ],
+      "producer": "set intersection",
+      "source_cache": "both",
+      "eligibility": "cases with a non-null coverage in BOTH answer batches (frozen paired set)"
+    },
+    "OLD_ONLY": {
+      "count": 2,
+      "ids": [
+        "loc-016",
+        "loc-017"
+      ]
+    },
+    "NEW_ONLY": {
+      "count": 1,
+      "ids": [
+        "cmp-015"
+      ]
+    },
+    "UNION": {
+      "count": 119,
+      "ids": [
+        "cit-002",
+        "cit-003",
+        "cit-004",
+        "cit-005",
+        "cit-006",
+        "cit-008",
+        "cit-009",
+        "cit-010",
+        "cit-011",
+        "cit-012",
+        "cit-013",
+        "cit-014",
+        "cit-015",
+        "cit-016",
+        "cit-017",
+        "cit-018",
+        "cit-019",
+        "cit-020",
+        "cmp-001",
+        "cmp-002",
+        "cmp-003",
+        "cmp-004",
+        "cmp-005",
+        "cmp-006",
+        "cmp-007",
+        "cmp-008",
+        "cmp-009",
+        "cmp-010",
+        "cmp-011",
+        "cmp-012",
+        "cmp-013",
+        "cmp-014",
+        "cmp-015",
+        "cmp-016",
+        "cmp-017",
+        "cmp-018",
+        "cmp-019",
+        "cmp-020",
+        "loc-009",
+        "loc-010",
+        "loc-016",
+        "loc-017",
+        "md-001",
+        "md-002",
+        "md-003",
+        "md-005",
+        "md-006",
+        "md-007",
+        "md-008",
+        "md-009",
+        "md-010",
+        "md-011",
+        "md-012",
+        "md-013",
+        "md-015",
+        "md-016",
+        "md-017",
+        "md-018",
+        "md-020",
+        "meta-015",
+        "mt-001",
+        "mt-002",
+        "mt-003",
+        "mt-004",
+        "mt-005",
+        "mt-007",
+        "mt-008",
+        "mt-009",
+        "mt-010",
+        "mt-011",
+        "mt-012",
+        "mt-013",
+        "mt-014",
+        "mt-015",
+        "mt-016",
+        "mt-018",
+        "mt-019",
+        "mt-020",
+        "qa-001",
+        "qa-002",
+        "qa-003",
+        "qa-004",
+        "qa-005",
+        "qa-006",
+        "qa-007",
+        "qa-008",
+        "qa-009",
+        "qa-010",
+        "qa-011",
+        "qa-012",
+        "qa-013",
+        "qa-014",
+        "qa-015",
+        "qa-016",
+        "qa-017",
+        "qa-018",
+        "qa-019",
+        "qa-020",
+        "qa-021",
+        "qa-022",
+        "qa-023",
+        "qa-024",
+        "qa-025",
+        "qa-026",
+        "qa-027",
+        "qa-028",
+        "qa-029",
+        "qa-030",
+        "qa-031",
+        "qa-032",
+        "qa-033",
+        "qa-034",
+        "qa-035",
+        "qa-036",
+        "qa-037",
+        "qa-038",
+        "qa-039",
+        "qa-040",
+        "qa-041"
+      ]
+    },
+    "NO_REPORT_NEW": {
+      "count": 27,
+      "ids": [
+        "cit-001",
+        "cit-007",
+        "loc-001",
+        "loc-002",
+        "loc-003",
+        "loc-004",
+        "loc-005",
+        "loc-006",
+        "loc-007",
+        "loc-008",
+        "loc-011",
+        "loc-012",
+        "loc-013",
+        "loc-014",
+        "loc-015",
+        "loc-016",
+        "loc-017",
+        "loc-018",
+        "loc-019",
+        "loc-020",
+        "md-004",
+        "md-014",
+        "md-019",
+        "meta-010",
+        "meta-013",
+        "meta-014",
+        "mt-006"
+      ],
+      "eligibility": "new eligible cases whose engine result carries citation_report=null (deterministic routes)"
+    },
+    "NO_REPORT_OLD": {
+      "count": 0,
+      "ids": []
+    }
+  },
+  "canonical_vs_paired_aggregation": {
+    "CANONICAL_FULL_ELIGIBLE_REPORT_SET": {
+      "case_set": "NEW_F2_V4_COVERAGE_CASES",
+      "cases": 117,
+      "value": 0.4893,
+      "aggregation": "mean of per-case citation_coverage over cases whose engine report carries a non-null coverage",
+      "excluded_cases": 27,
+      "source": "eval/v4_initial_baseline.json"
+    },
+    "PAIRED_COMMON_SET": {
+      "case_set": "INTERSECTION",
+      "cases": 116,
+      "value": 0.4911,
+      "aggregation": "recomputed coverage on the frozen intersection set",
+      "source": "eval/v4_attribution_closure.json"
+    },
+    "ALL_ELIGIBLE_RECOMPUTED_ALTERNATE": {
+      "case_set": "NEW_UNIVERSE (144)",
+      "cases": 144,
+      "value": 0.5203,
+      "definition": "ALTERNATE_SEMANTIC_B: offline re-run of the f2-v4 verifier on the deterministic answers that carry no engine report",
+      "status": "DIAGNOSTIC_ALTERNATE_SEMANTIC_NOT_THE_CONTRACT_METRIC"
+    },
+    "why_0_4893_vs_0_4969": {
+      "explanation": "Both are means of the SAME metric; they differ only by case set (117 vs 118). 0.4893 is the canonical gate mean over the 117 new coverage cases; 0.4969 is the paired-set mean over the frozen intersection (118 cases). It is a case-set difference, not an aggregation-method difference.",
+      "method_invariance_check": {
+        "paired_stored_mean": 0.4911,
+        "paired_recomputed_mean": 0.4911,
+        "delta": 0.0,
+        "conclusion": "stored (pre-renumber engine) == recomputed (post-renumber answer) on the intersection => method has no effect"
+      }
+    }
+  },
+  "three_cell_paired_path_decomposition": {
+    "name": "THREE_CELL_PAIRED_PATH_DECOMPOSITION",
+    "case_set": "INTERSECTION",
+    "cases": 116,
+    "cells": {
+      "A_old_answers_f2v3": {
+        "value": 0.5582,
+        "cases": 116,
+        "source": "stored f2-v3 reports"
+      },
+      "B_old_answers_f2v4": {
+        "value": 0.4863,
+        "cases": 116,
+        "source": "recomputed f2-v4"
+      },
+      "C_new_answers_f2v4": {
+        "value": 0.4911,
+        "cases": 116,
+        "source": "recomputed f2-v4"
+      },
+      "D_new_answers_f2v3": {
+        "computable": false,
+        "reason": "f2-v3 verifier retired; reconstructing it would require restoring retired verifier semantics"
+      }
+    },
+    "effects": {
+      "VERIFIER_EFFECT_ON_OLD_ANSWERS": -0.0719,
+      "GENERATION_BATCH_EFFECT_UNDER_F2_V4": 0.0048,
+      "PAIRED_PATH_TOTAL": -0.0671,
+      "VERIFIER_x_GENERATION_INTERACTION": "NOT_IDENTIFIED"
+    },
+    "limitation": "Not a full factorial decomposition: cell D is unavailable, so the interaction term cannot be separated; no effect is claimed beyond the paired path."
+  },
+  "backlog_cardinality": {
+    "PURE_PRODUCT_CASES": {
+      "count": 14,
+      "ids": [
+        "qa-040",
+        "loc-008",
+        "loc-013",
+        "loc-015",
+        "loc-018",
+        "mt-006",
+        "mt-011",
+        "md-004",
+        "md-009",
+        "md-014",
+        "md-015",
+        "md-019",
+        "cit-001",
+        "cit-007"
+      ]
+    },
+    "PURE_MEASUREMENT_CASES": {
+      "count": 19,
+      "ids": [
+        "qa-002",
+        "qa-006",
+        "qa-029",
+        "qa-031",
+        "qa-035",
+        "qa-036",
+        "loc-003",
+        "loc-004",
+        "loc-005",
+        "loc-011",
+        "loc-012",
+        "loc-016",
+        "loc-017",
+        "loc-019",
+        "cmp-004",
+        "cmp-020",
+        "mt-007",
+        "mt-009",
+        "meta-013"
+      ]
+    },
+    "MULTI_CAUSE_WITH_PRODUCT_COMPONENT": {
+      "count": 9,
+      "ids": [
+        "qa-020",
+        "qa-030",
+        "qa-032",
+        "qa-039",
+        "cmp-001",
+        "cmp-014",
+        "cmp-019",
+        "mt-003",
+        "cit-013"
+      ]
+    },
+    "MULTI_CAUSE_WITHOUT_PRODUCT_COMPONENT": {
+      "count": 0,
+      "ids": []
+    },
+    "TOTAL_CASES_REQUIRING_EVENTUAL_PRODUCT_WORK": 23,
+    "note": "V4.3's 'only 14 enter the product backlog' was incomplete: multi-cause cases with a product component also require product work."
+  },
+  "multi_cause_product_component_map": [
+    {
+      "case_id": "qa-020",
+      "primary_root_cause": "RETRIEVAL_FAILURE",
+      "has_product_component": true,
+      "has_measurement_component": true,
+      "product_component": [
+        "RETRIEVAL_FAILURE"
+      ],
+      "measurement_component": [
+        "EVALUATOR_ISSUE"
+      ],
+      "blocking_dependency": "upstream product fix must land before the measurement component can be re-scored",
+      "remediation_track": "PRODUCT_BACKLOG"
+    },
+    {
+      "case_id": "qa-030",
+      "primary_root_cause": "RETRIEVAL_FAILURE",
+      "has_product_component": true,
+      "has_measurement_component": false,
+      "product_component": [
+        "RETRIEVAL_FAILURE",
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "measurement_component": [],
+      "blocking_dependency": "upstream product fix must land before the measurement component can be re-scored",
+      "remediation_track": "PRODUCT_BACKLOG"
+    },
+    {
+      "case_id": "qa-032",
+      "primary_root_cause": "GENERATION_SYNTHESIS_FAILURE",
+      "has_product_component": true,
+      "has_measurement_component": true,
+      "product_component": [
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "measurement_component": [
+        "GOLDEN_CONTRACT_ISSUE"
+      ],
+      "blocking_dependency": "upstream product fix must land before the measurement component can be re-scored",
+      "remediation_track": "PRODUCT_BACKLOG"
+    },
+    {
+      "case_id": "qa-039",
+      "primary_root_cause": "GENERATION_SYNTHESIS_FAILURE",
+      "has_product_component": true,
+      "has_measurement_component": true,
+      "product_component": [
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "measurement_component": [
+        "GOLDEN_CONTRACT_ISSUE"
+      ],
+      "blocking_dependency": "upstream product fix must land before the measurement component can be re-scored",
+      "remediation_track": "PRODUCT_BACKLOG"
+    },
+    {
+      "case_id": "cmp-001",
+      "primary_root_cause": "RETRIEVAL_FAILURE",
+      "has_product_component": true,
+      "has_measurement_component": false,
+      "product_component": [
+        "RETRIEVAL_FAILURE",
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "measurement_component": [],
+      "blocking_dependency": "upstream product fix must land before the measurement component can be re-scored",
+      "remediation_track": "PRODUCT_BACKLOG"
+    },
+    {
+      "case_id": "cmp-014",
+      "primary_root_cause": "GENERATION_SYNTHESIS_FAILURE",
+      "has_product_component": true,
+      "has_measurement_component": true,
+      "product_component": [
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "measurement_component": [
+        "EVALUATOR_ISSUE"
+      ],
+      "blocking_dependency": "upstream product fix must land before the measurement component can be re-scored",
+      "remediation_track": "PRODUCT_BACKLOG"
+    },
+    {
+      "case_id": "cmp-019",
+      "primary_root_cause": "GENERATION_SYNTHESIS_FAILURE",
+      "has_product_component": true,
+      "has_measurement_component": true,
+      "product_component": [
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "measurement_component": [
+        "EVALUATOR_ISSUE"
+      ],
+      "blocking_dependency": "upstream product fix must land before the measurement component can be re-scored",
+      "remediation_track": "PRODUCT_BACKLOG"
+    },
+    {
+      "case_id": "mt-003",
+      "primary_root_cause": "HISTORY_CONTEXT_FAILURE",
+      "has_product_component": true,
+      "has_measurement_component": true,
+      "product_component": [
+        "HISTORY_CONTEXT_FAILURE",
+        "GENERATION_SYNTHESIS_FAILURE"
+      ],
+      "measurement_component": [
+        "GOLDEN_CONTRACT_ISSUE"
+      ],
+      "blocking_dependency": "upstream product fix must land before the measurement component can be re-scored",
+      "remediation_track": "PRODUCT_BACKLOG"
+    },
+    {
+      "case_id": "cit-013",
+      "primary_root_cause": "RETRIEVAL_FAILURE",
+      "has_product_component": true,
+      "has_measurement_component": true,
+      "product_component": [
+        "RETRIEVAL_FAILURE"
+      ],
+      "measurement_component": [
+        "EVALUATOR_ISSUE"
+      ],
+      "blocking_dependency": "upstream product fix must land before the measurement component can be re-scored",
+      "remediation_track": "PRODUCT_BACKLOG"
+    }
+  ],
+  "scope_three_case_residual_map": {
+    "cases": [
+      {
+        "case_id": "loc-018",
+        "failed_facts": [
+          "参数",
+          "第3"
+        ],
+        "failed_fact_count": 2,
+        "primary_current_blocker": "SCOPE_FAILURE",
+        "secondary_cause": []
+      },
+      {
+        "case_id": "mt-006",
+        "failed_facts": [
+          "OFDM"
+        ],
+        "failed_fact_count": 1,
+        "primary_current_blocker": "SCOPE_FAILURE",
+        "secondary_cause": [
+          "HISTORY_CONTEXT_FAILURE"
+        ]
+      },
+      {
+        "case_id": "md-014",
+        "failed_facts": [
+          "GSM",
+          "WCDMA",
+          "CDMA",
+          "LTE"
+        ],
+        "failed_fact_count": 4,
+        "primary_current_blocker": "SCOPE_FAILURE",
+        "secondary_cause": [
+          "DOCUMENT_IDENTITY_FAILURE"
+        ]
+      }
+    ],
+    "facts_blocked_total": 7,
+    "v4_3_claimed_facts_blocked": 8,
+    "cardinality_correction": "V4.3 recorded 8 facts blocked for Priority 1; the mechanically derived total is 7.",
+    "scope_only_fix_can": "remove the proven false OOS refusals so the three questions reach the normal pipeline",
+    "scope_only_fix_cannot": "guarantee that the previously missing facts are produced (secondary causes remain)",
+    "expected_residuals": {
+      "loc-018": "ordinal/representation fact '第3' and possibly '参数' (locate ranking) survive a scope-only fix",
+      "mt-006": "the rewrite stays the bare term 'OFDM' (low confidence); answer completeness at risk",
+      "md-014": "cross-document synthesis over GSM/WCDMA/CDMA/LTE remains a generation task; document naming not required by the golden"
+    },
+    "v4_4_objective": "remove proven false OOS refusals without weakening legitimate OOS protection",
+    "v4_4_objective_not": "recover all failed facts in the three cases"
+  },
+  "revalidated_priority": {
+    "question": "Is Scope/OOS still Priority 1 after the closure corrections?",
+    "answer": "YES",
+    "why": [
+      "dependency-first: a false refusal preempts retrieval, generation and citation entirely",
+      "severity: it is the only bucket that produces an outright WRONG REFUSAL on an in-scope question",
+      "safety margin: false_refusal_rate 0.0208 sits close to the frozen <= 0.03 gate",
+      "confidence: proven mechanically (out_of_scope=True while the required evidence was delivered)",
+      "MULTI_CAUSE correction does not displace it: the corrected backlog raises the total work, not the ordering"
+    ],
+    "caveats": [
+      "the phase must not be scored only on the 3 target cases",
+      "secondary causes (rewrite quality, ranking, document identity, generation) remain after the scope fix"
+    ],
+    "proposed_v4_4_gate": {
+      "targeted_false_oos": "loc-018 / mt-006 / md-014 no longer out_of_scope",
+      "hard_negative_protection": "oos_hard_negative false_accept_rate == 0 (29 cases)",
+      "router_regression": "Phase E 108/108",
+      "false_refusal_rate": "<= 0.03 maintained (no new false refusals)",
+      "scope_leakage": "== 0",
+      "security_library_scope": "existing scope/security tests PASS",
+      "not_sufficient": "3 target cases passing alone is NOT a gate"
+    }
+  },
+  "regression_floor_verdict": {
+    "question": "Is the contract citation_coverage regression floor (>=0.55) directly comparable to the canonical 0.4893?",
+    "answer": "PARTIALLY - comparable in denominator definition (both exclude the deterministic routes that carry no citation report), NOT comparable in verifier semantics (f2-v3 vs f2-v4)",
+    "status": "LEGACY_REGRESSION_FLOOR_NOT_DIRECTLY_COMPARABLE",
+    "statement": "NO_EVIDENCE_OF_A_NEGATIVE_GENERATION_REGRESSION | VERIFIER_EFFECT_DOMINATES_OBSERVED_PAIRED_DELTA | INTERACTION_NOT_IDENTIFIED",
+    "explicitly_not_claimed": "NOT A PRODUCT REGRESSION (a full factorial attribution is unavailable: cell D does not exist)",
+    "evidence": {
+      "VERIFIER_EFFECT_ON_OLD_ANSWERS": -0.0719,
+      "GENERATION_BATCH_EFFECT_UNDER_F2_V4": 0.0048,
+      "PAIRED_PATH_TOTAL": -0.0671,
+      "VERIFIER_x_GENERATION_INTERACTION": "NOT_IDENTIFIED"
+    },
+    "cases_without_citation_report": 27
+  },
+  "closure_artifact": "eval/v4_attribution_closure.json",
+  "timestamp": "2026-09-10T22:58:10"
+}

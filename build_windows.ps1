@@ -55,6 +55,8 @@ try {
     if (-not $SkipIndex) {
         # The pre-build library rebuild must use the same embedding model as the
         # runtime, otherwise it silently overwrites the tuned library with defaults.
+        # V4 production default is bge-m3 (config.EMBEDDING_MODEL); this explicit
+        # fallback keeps the build pinned even if the config default drifts.
         $EmbedModel = if ($env:QA_EMBEDDING_MODEL) { $env:QA_EMBEDDING_MODEL } else { "bge-m3" }
         Invoke-Checked -Description "Building the structured textbook library (model: $EmbedModel)" -Command {
             & $Python -X utf8 (Join-Path $ProjectRoot "scripts\build_library.py") --model $EmbedModel --llm-summaries

@@ -1,0 +1,57 @@
+{
+  "producer": "scripts/decompose_v4_citation.py",
+  "name": "THREE_CELL_PAIRED_PATH_DECOMPOSITION",
+  "case_set": "INTERSECTION",
+  "cases": 116,
+  "cells": {
+    "A_old_answers_f2v3": {
+      "value": 0.5582,
+      "cases": 116,
+      "source": "stored f2-v3 reports"
+    },
+    "B_old_answers_f2v4": {
+      "value": 0.4863,
+      "cases": 116,
+      "source": "recomputed f2-v4"
+    },
+    "C_new_answers_f2v4": {
+      "value": 0.4911,
+      "cases": 116,
+      "source": "recomputed f2-v4"
+    },
+    "D_new_answers_f2v3": {
+      "computable": false,
+      "reason": "f2-v3 verifier retired; restoring it would mean restoring retired verifier semantics"
+    }
+  },
+  "effects": {
+    "VERIFIER_EFFECT_ON_OLD_ANSWERS": -0.0719,
+    "GENERATION_BATCH_EFFECT_UNDER_F2_V4": 0.0048,
+    "PAIRED_PATH_TOTAL": -0.0671,
+    "VERIFIER_x_GENERATION_INTERACTION": "NOT_IDENTIFIED"
+  },
+  "limitation": "Not a full factorial decomposition (cell D unavailable); interaction is not identified.",
+  "superseded_values": [
+    {
+      "value": 0.4969,
+      "was": "C recomputed on a 118-case set (old coverage set, not the intersection)",
+      "status": "SUPERSEDED_BY_CASE_SET_CORRECTION"
+    },
+    {
+      "value": 0.5086,
+      "was": "B recomputed on a 144-case set",
+      "status": "SUPERSEDED_BY_CASE_SET_CORRECTION"
+    },
+    {
+      "value": 0.5558,
+      "was": "A stored on the 117/118-case sets",
+      "status": "SUPERSEDED_BY_CASE_SET_CORRECTION"
+    }
+  ],
+  "canonical_reference": {
+    "canonical_gate_coverage": 0.4893,
+    "canonical_case_set": "NEW_F2_V4_COVERAGE_CASES (117)",
+    "note": "canonical (0.4893, n=117) and paired C (value above, n=116) differ only by case set"
+  },
+  "authoritative_artifact": "eval/v4_attribution_closure.json"
+}

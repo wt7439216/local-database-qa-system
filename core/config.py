@@ -21,7 +21,13 @@ LIBRARY_DB = LIBRARY_DIR / "textbooks.sqlite3"
 BOOK_TEXT_PATH = RAW_DIR / "book.txt"
 OLLAMA_URL = os.getenv("QA_OLLAMA_URL", "http://localhost:11434")
 
-EMBEDDING_MODEL = os.getenv("QA_EMBEDDING_MODEL", "nomic-embed-text")
+# --- V4 production model architecture ----------------------------------------
+# 生产目标固定为：embedding = bge-m3（1024 维），answer = qwen2.5:7b。
+# 默认值必须与库中已存向量（SQLite embeddings / Qdrant payload / manifest）
+# 保持一致，否则“配置模型 ≠ 已存向量模型”会在检索时产生无意义近邻。
+# 维度注册表见 core.library_store.EMBEDDING_PROFILES；
+# 启动时的三方一致性校验见 core.library_store.validate_embedding_identity。
+EMBEDDING_MODEL = os.getenv("QA_EMBEDDING_MODEL", "bge-m3")
 ANSWER_MODEL = os.getenv("QA_ANSWER_MODEL", "qwen2.5:7b")
 
 ANSWER_NUM_PREDICT = int(os.getenv("QA_ANSWER_NUM_PREDICT", "800"))

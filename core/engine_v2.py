@@ -18,6 +18,7 @@ from core.library_store import (
     SearchHit,
     near_duplicate,
     normalize_for_similarity,
+    validate_embedding_identity,
 )
 from core.ollama_http import OllamaClient, OllamaError
 from core.citation_verifier import DeterministicCitationVerifier
@@ -115,6 +116,16 @@ class StructuredQAEngine:
         answer_model: str | None = None,
     ) -> None:
         self.library = LibraryStore(library_path or config.LIBRARY_DB)
+        # Startup fail-closed (V4 model architecture): configured embedding
+        # model, stored collection model and vector dimension must agree.  A
+        # mismatch aborts startup instead of silently retrieving meaningless
+        # neighbours from an index built by a different model.
+        validate_embedding_identity(
+            self.library.embedding_model,
+            self.library.dimension,
+            configured_model=config.EMBEDDING_MODEL,
+            has_vectors=self.library.has_vectors,
+        )
         self.ollama = ollama or OllamaClient()
         self.answer_model = answer_model or config.ANSWER_MODEL
         self.router = QueryRouter()

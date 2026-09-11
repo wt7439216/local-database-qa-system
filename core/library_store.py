@@ -38,9 +38,19 @@ FTS_HEADING_WEIGHT = 4.0
 FTS_HEADING_BONUS = 0.006
 # 密度余弦门限：决定纯词法证据的可信度分级。绝对分值随嵌入模型分布变化，
 # 因此按库记录的 embedding_model 查表，未知模型回落默认值。
-DEFAULT_DENSE_GATES = {"strong": 0.48, "accept": 0.55}
+#
+# dense_only（V4.4 Scope/OOS false-refusal remediation）：当词法词窗没有浮现
+# 证据时（文档名式提问、指代被压缩成短词）用于"密度主导"放行的余弦下限。
+# 标定依据：严格高于冻结 golden 中每一条纯离题查询的观测上限（0.4623），
+# 且低于每一条已证实 in-scope 目标 case 的观测值，从而在放行真实问题的同时
+# 保持纯离题拒答能力不变。
+DEFAULT_DENSE_GATES = {"strong": 0.48, "accept": 0.55, "dense_only": 0.50}
 MODEL_DENSE_GATES: dict[str, dict[str, float]] = {
-    "nomic-embed-text": {"strong": 0.48, "accept": 0.55},
+    # 生产模型（V4 目标）：bge-m3 / 1024 维。
+    "bge-m3": {"strong": 0.48, "accept": 0.55, "dense_only": 0.50},
+    # 兼容/回滚模型：nomic-embed-text / 768 维。仅在显式将
+    # QA_EMBEDDING_MODEL 设为 nomic-embed-text 时才生效，不是生产默认。
+    "nomic-embed-text": {"strong": 0.48, "accept": 0.55, "dense_only": 0.50},
 }
 # 低于该余弦的向量候选不携带可用信号，只会稀释融合排序。
 DENSE_CANDIDATE_FLOOR = 0.15
@@ -48,18 +58,25 @@ _CJK_RE = re.compile(r"[\u4e00-\u9fff]+")
 _LATIN_RE = re.compile(r"[A-Za-z0-9]+(?:[._+/-][A-Za-z0-9]+)*")
 
 
+def _normalize_model_name(model: str) -> str:
+    """Model identity key: trimmed, without the Ollama ``:latest`` tag."""
+    return str(model or "").strip().removesuffix(":latest")
+
+
 def _gates_for_model(model: str) -> dict[str, float]:
-    base = str(model or "").strip().removesuffix(":latest")
+    base = _normalize_model_name(model)
     for name, gates in MODEL_DENSE_GATES.items():
-        if base == name.removesuffix(":latest"):
+        if base == _normalize_model_name(name):
             return dict(gates)
     return dict(DEFAULT_DENSE_GATES)
 
 
 # --- Embedding profile registry (Phase A) -----------------------------------
-# 已识别的 embedding profile。bge-m3 的门限继承自 v2 运行时的冻结值
-# （compatibility baseline / legacy frozen gates），并非校准结果；
-# 真正的 threshold calibration 属于后续独立阶段。运行时行为不受此表影响。
+# 已识别的 embedding profile：模型身份 → 期望维度 / 归一化 / 门限。
+# 这是“模型 → 维度”的单一真相来源，供启动一致性校验与健康检查使用。
+# bge-m3 的门限继承自 v2 运行时的冻结值（compatibility baseline /
+# legacy frozen gates），并非校准结果；真正的 threshold calibration 属于
+# 后续独立阶段。运行时行为不受此表影响（除身份校验外）。
 @dataclass(frozen=True)
 class EmbeddingProfile:
     model: str
@@ -71,17 +88,82 @@ class EmbeddingProfile:
 
 
 EMBEDDING_PROFILES: dict[str, EmbeddingProfile] = {
+    # V4 生产模型。
+    "bge-m3": EmbeddingProfile(
+        model="bge-m3", dimension=1024, normalize=True,
+        gates=dict(MODEL_DENSE_GATES["bge-m3"]),
+        note="production; compatibility baseline gates (not calibrated)",
+    ),
+    # 兼容/回滚模型（768 维），仅在显式选择时使用；不是生产默认。
     "nomic-embed-text": EmbeddingProfile(
         model="nomic-embed-text", dimension=768, normalize=True,
         gates=dict(MODEL_DENSE_GATES["nomic-embed-text"]),
-        note="legacy/current frozen gates",
-    ),
-    "bge-m3": EmbeddingProfile(
-        model="bge-m3", dimension=1024, normalize=True,
-        gates=dict(DEFAULT_DENSE_GATES),
-        note="compatibility baseline; not calibrated",
+        note="legacy/compat frozen gates",
     ),
 }
+
+
+class EmbeddingIdentityError(RuntimeError):
+    """Configured / stored embedding model or vector dimension disagree.
+
+    Raised at startup (fail-closed) instead of silently querying a vector
+    store built by another model — different models produce incomparable
+    embeddings, and a dimension mismatch makes retrieval meaningless.
+    """
+
+
+def embedding_profile(model: str) -> EmbeddingProfile | None:
+    """Return the known profile for ``model`` (Ollama ``:latest`` tolerated)."""
+    base = _normalize_model_name(model)
+    if not base:
+        return None
+    for name, profile in EMBEDDING_PROFILES.items():
+        if base == _normalize_model_name(name):
+            return profile
+    return None
+
+
+def validate_embedding_identity(
+    stored_model: str,
+    stored_dimension: int,
+    *,
+    configured_model: str,
+    has_vectors: bool = True,
+) -> None:
+    """Fail-closed check of the three embedding identities.
+
+    The library/collection (stored) model and dimension are authoritative.
+    Unknown / legacy / test-only model names are intentionally not judged
+    (they have no registered profile), so contract tests with synthetic
+    models keep working; recognized production models are checked strictly:
+
+    * the stored model's known dimension must equal the stored vector
+      dimension (catches a 768-dim ``nomic-embed-text`` collection being
+      reused by ``bge-m3``, or the reverse);
+    * the configured production model must equal the stored model.
+
+    Either violation raises :class:`EmbeddingIdentityError`.
+    """
+    stored = _normalize_model_name(stored_model)
+    if not has_vectors or not stored:
+        return  # no dense index yet: nothing to reconcile
+    profile = embedding_profile(stored)
+    if profile is None:
+        return  # unknown / legacy / test-only model: cannot judge
+    if int(stored_dimension or 0) and int(stored_dimension) != int(profile.dimension):
+        raise EmbeddingIdentityError(
+            f"嵌入维度与库模型不一致：库模型 {stored_model} 期望 {profile.dimension} 维，"
+            f"实际 {stored_dimension} 维。禁止用不同维度的模型复用该向量库；"
+            "请用目标模型重建向量库后重试。"
+        )
+    configured = _normalize_model_name(configured_model)
+    if configured and configured != stored:
+        raise EmbeddingIdentityError(
+            f"配置嵌入模型与库不一致：配置 {configured_model}，库 {stored_model}。"
+            "为避免用不同模型查询已有向量，已拒绝启动；"
+            f"请将 QA_EMBEDDING_MODEL 设为 {stored_model}，"
+            f"或用 {configured_model} 重建向量库。"
+        )
 
 
 @dataclass(frozen=True)

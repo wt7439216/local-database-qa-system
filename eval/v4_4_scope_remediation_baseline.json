@@ -1,0 +1,262 @@
+{
+  "baseline_identity": {
+    "baseline_version": "v4-initial-baseline-v1",
+    "evaluation_type": "product_quality_acceptance_target",
+    "workspace": "V4_ACTIVE_DEVELOPMENT",
+    "note": "Canonical V4 initial baseline. Gate = measurement integrity, not product targets."
+  },
+  "production_provenance": {
+    "v4_initial_baseline_commit": "117ebfa044ee3905322b3f7a932defd8a373ec66",
+    "inheritance": "COPY_OF_V3_FINAL_BASELINE",
+    "production_source_hash": "dc35c6eb961d99955e34a62695c2659e14710dd334166dc8481a57436b72a84a",
+    "production_trees_hashed": [
+      "core",
+      "desktop",
+      "web"
+    ],
+    "production_behavior_changed_in_v4_2": false
+  },
+  "golden_identity": {
+    "path": "eval/v3_final_golden.json",
+    "version": "f4-v1",
+    "file_sha256": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+    "file_sha256_16": "31a68507456714c9",
+    "cases_sha256": "0837e83333c858c6fe0229a06f9e0a3efb25505b03bab5acc3148a6b0af2ad5e",
+    "cases_sha256_16": "0837e83333c858c6",
+    "historical_file_sha256_16_pre_metadata_correction": "6e18ee4ee9669bef",
+    "total_cases": 185,
+    "answer_eligible": 144,
+    "expected_refusal_non_answer": 41,
+    "metadata_corrected_in_v4_2": true,
+    "case_semantics_changed_in_v4_2": false
+  },
+  "evaluator_identity": {
+    "evaluator_version": "v4-baseline-v1",
+    "citation_verifier_version": "f2-v4",
+    "answer_model": "qwen2.5:7b",
+    "library_path": "data\\library\\documents.sqlite3",
+    "library_identity": "10698752:c6bc9b3eb63ae4e6",
+    "answer_artifact_hash": "e88c412f8a5cb40f66bd45b2c81cc632d3f7587ecd4e306e39e4d38290b94e6b"
+  },
+  "metric_definitions": {
+    "case_exact_fact_match_rate": {
+      "definition": "An answer case passes only when all expected facts are hit AND it is not refused/empty.",
+      "numerator": "count(case: is_answered(state) AND fact_present == fact_total AND fact_total > 0)",
+      "denominator": "count(case: fact_total > 0)",
+      "eligible_cases": "answer-eligible golden cases (expected_refusal == false)",
+      "exclusions": "cases with fact_total == 0",
+      "target": ">= 0.80"
+    },
+    "fact_recall": {
+      "definition": "Proportion of individual expected facts hit.",
+      "numerator": "sum(fact_present)",
+      "denominator": "sum(fact_total)",
+      "eligible_cases": "answer-eligible golden cases",
+      "exclusions": "cases with fact_total == 0 (contribute nothing)",
+      "target": ">= 0.90"
+    },
+    "false_refusal_rate": {
+      "definition": "Proportion of answerable cases wrongly refused (answer_state == REFUSED).",
+      "numerator": "count(case: answer_state == REFUSED)",
+      "denominator": "answer-eligible golden cases",
+      "eligible_cases": "answer-eligible golden cases (expected_refusal == false)",
+      "exclusions": "ANSWER_WITH_LIMITATION counts as answered, not refused",
+      "target": "<= 0.03"
+    },
+    "citation_coverage": {
+      "definition": "Case-level average of per-answer citation_coverage (cited factual claims / factual claims).",
+      "numerator": "sum(per-case citation_coverage)",
+      "denominator": "count(case with factual_claim_count > 0)",
+      "eligible_cases": "answer-eligible golden cases",
+      "exclusions": "cases with no factual claims (citation_coverage is None) are excluded from the mean",
+      "target": ">= 0.80",
+      "note": "claim-level coverage is recorded separately as citation_coverage_claim_level (diagnostic, NOT the gate)"
+    },
+    "high_confidence_unsupported_rate": {
+      "definition": "Proportion of factual claims with a deterministic high-confidence conflict.",
+      "numerator": "count(claim: support == UNSUPPORTED AND reason in {unsupported_number_mismatch, unsupported_missing_key_term})",
+      "denominator": "sum(factual_claim_count)  (= supported + unsupported + uncertain)",
+      "eligible_cases": "answer-eligible golden cases",
+      "exclusions": "unsupported_no_evidence (coverage gap) and NOT_APPLICABLE (non-factual) are excluded",
+      "target": "<= 0.05"
+    },
+    "invalid_citation_count": {
+      "definition": "Number of citations that do not map to a real evidence chunk (hard gate).",
+      "numerator": "sum(invalid_citation_count)",
+      "denominator": "n/a",
+      "target": "== 0"
+    },
+    "citation_scope_violation": {
+      "definition": "Number of citations outside the current QueryScope (hard gate).",
+      "numerator": "sum(citation_scope_violation)",
+      "denominator": "n/a",
+      "target": "== 0"
+    }
+  },
+  "metrics": {
+    "eligible_cases": 144,
+    "fact_cases": 144,
+    "case_exact_fact_match_rate": 0.7222,
+    "case_exact_ok": 104,
+    "fact_recall": 0.8535,
+    "fact_present": 268,
+    "fact_total": 314,
+    "false_refusal_rate": 0.0,
+    "refused": 0,
+    "citation_coverage": 0.469,
+    "citation_coverage_claim_level": 0.4107,
+    "citation_supported": 68,
+    "citation_unsupported": 314,
+    "citation_uncertain": 139,
+    "citation_factual_total": 521,
+    "citation_cited_total": 214,
+    "high_confidence_unsupported_rate": 0.0134,
+    "high_confidence_claims": 7,
+    "invalid_citation_count": 0,
+    "citation_scope_violation": 0
+  },
+  "hard_gates": {
+    "invalid_citation_count": 0,
+    "citation_scope_violation": 0,
+    "invalid_citation_status": "PASS",
+    "scope_violation_status": "PASS"
+  },
+  "product_gate_status": {
+    "case_exact_fact_match_rate": "FAIL",
+    "fact_recall": "FAIL",
+    "false_refusal_rate": "PASS",
+    "citation_coverage": "FAIL",
+    "high_confidence_unsupported_rate": "PASS"
+  },
+  "frozen_targets": {
+    "case_exact_fact_match_rate": {
+      "operator": ">=",
+      "value": 0.8
+    },
+    "fact_recall": {
+      "operator": ">=",
+      "value": 0.9
+    },
+    "false_refusal_rate": {
+      "operator": "<=",
+      "value": 0.03
+    },
+    "citation_coverage": {
+      "operator": ">=",
+      "value": 0.8
+    },
+    "high_confidence_unsupported_rate": {
+      "operator": "<=",
+      "value": 0.05
+    }
+  },
+  "commands": {
+    "full_run": "python scripts/eval_v4_baseline.py --library data/library/documents.sqlite3",
+    "report_only": "python scripts/eval_v4_baseline.py --report-only",
+    "determinism_check": "python scripts/eval_v4_baseline.py --report-only  (run twice; identical output)",
+    "resume_chunks": "python scripts/eval_v4_baseline.py --limit N --max-seconds S"
+  },
+  "artifact_hashes": {
+    "golden_sha256": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+    "answer_artifact_sha256": "e88c412f8a5cb40f66bd45b2c81cc632d3f7587ecd4e306e39e4d38290b94e6b",
+    "production_source_sha256": "dc35c6eb961d99955e34a62695c2659e14710dd334166dc8481a57436b72a84a"
+  },
+  "superseded_baselines": [
+    {
+      "metric": "case_exact_fact_match_rate",
+      "value": 0.6111,
+      "source": "eval/v3_quality_acceptance.json; docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md",
+      "evaluator": "f4.1-v1",
+      "status": "SUPERSEDED",
+      "reason": "pre-Q1 refusal heuristic (bare-substring) mis-counted answers as refused; superseded by q1-corrected 0.7014"
+    },
+    {
+      "metric": "case_exact_fact_match_rate",
+      "value": 0.7014,
+      "source": "eval/v3_corrected_baseline.json (corrected_baseline); docs/V3_FINAL_BASELINE.md",
+      "evaluator": "answer-eval-v2",
+      "status": "LEGACY",
+      "reason": "q1-corrected baseline; verifier f2-v2, superseded by a single f2-v4 canonical run"
+    },
+    {
+      "metric": "citation_coverage",
+      "value": 0.5534,
+      "source": "eval/v3_quality_acceptance.json; docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md",
+      "evaluator": "f4.1-v1",
+      "status": "SUPERSEDED",
+      "reason": "pre-Q1 claim/coverage aggregation; verifier f2-v2"
+    },
+    {
+      "metric": "citation_coverage",
+      "value": 0.5524,
+      "source": "eval/v3_corrected_baseline.json (case-level); docs/V3_FINAL_BASELINE.md",
+      "evaluator": "answer-eval-v2",
+      "status": "LEGACY",
+      "reason": "case-level coverage, verifier f2-v2"
+    },
+    {
+      "metric": "citation_coverage",
+      "value": 0.5558,
+      "source": "eval/v3_final_answer_report.json avg_coverage",
+      "evaluator": "answer-eval-v4",
+      "status": "superseded_by_canonical (see artifact)",
+      "reason": "Q3 rerun average; verifier f2-v3, LLM-run dependent"
+    },
+    {
+      "metric": "citation_coverage",
+      "value": 0.4577,
+      "source": "eval/v3_corrected_baseline.json (claim_level)",
+      "evaluator": "answer-eval-v2",
+      "status": "DIFFERENT_DENOMINATOR",
+      "reason": "claim-level, not case-level; the gate uses case-level"
+    },
+    {
+      "metric": "high_confidence_unsupported_rate",
+      "value": 0.0812,
+      "source": "eval/v3_quality_acceptance.json; docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md",
+      "evaluator": "f4.1-v1",
+      "status": "SUPERSEDED",
+      "reason": "35+10 over 554 claims, verifier f2-v2 (many structural-number false positives)"
+    },
+    {
+      "metric": "high_confidence_unsupported_rate",
+      "value": 0.0829,
+      "source": "eval/v3_corrected_baseline.json (corrected_baseline)",
+      "evaluator": "answer-eval-v2",
+      "status": "LEGACY",
+      "reason": "36+10 over 555 claims, verifier f2-v2"
+    },
+    {
+      "metric": "high_confidence_unsupported_rate",
+      "value": 0.0161,
+      "source": "docs/V3_PROGRESS.md; README.md; docs/V3_MASTER_REQUIREMENTS_AND_STATUS.md",
+      "evaluator": "f2-v3 (Q3 run)",
+      "status": "UNREPRODUCIBLE_BEFORE_V4.2",
+      "reason": "Q3 reported this value but no script produced it; now reproducible via this canonical evaluator"
+    },
+    {
+      "metric": "fact_recall",
+      "value": 0.8248,
+      "source": "eval/v3_corrected_baseline.json; docs/V3_FINAL_BASELINE.md",
+      "evaluator": "answer-eval-v2",
+      "status": "LEGACY",
+      "reason": "259/314 facts; LLM-run dependent (0.8217 rerun noise)"
+    }
+  ],
+  "reproducibility": {
+    "generation_layer": "STOCHASTIC (local Ollama qwen2.5:7b; no fixed seed exposed by the chat API)",
+    "measurement_layer": "DETERMINISTIC (compute_metrics over the frozen answer artifact; Run1 == Run2)",
+    "determinism_proof": "python scripts/eval_v4_baseline.py --report-only executed twice produced identical metrics",
+    "answer_artifact_location": "data/eval_cache (runtime, gitignored)"
+  },
+  "timestamp": "2026-09-11T00:22:10",
+  "stage_identity": {
+    "baseline_id": "V4_4_SCOPE_REMEDIATION_BASELINE",
+    "stage": "V4.4",
+    "role": "POST_V4_4_SCOPE_REMEDIATION_BASELINE",
+    "parent_baseline": "V4_INITIAL_BASELINE",
+    "annotation": "Governance-only block added by scripts/build_v4_baseline_lineage.py. metrics / artifact_hashes / metric_definitions / evaluator_identity / golden_identity are the verbatim full-run output of scripts/eval_v4_baseline.py.",
+    "supersedes_as_current_state": "V4_INITIAL_BASELINE",
+    "does_not_supersede_as_history": "V4_INITIAL_BASELINE"
+  }
+}

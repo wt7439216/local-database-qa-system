@@ -29,7 +29,7 @@ if UPLOAD == DEV or not (UPLOAD / ".git").is_dir():
 SYNC_TREES = ("core", "desktop", "scripts", "tests", "web", "docs", "eval")
 RERANKER_FILES = ("server.py", "requirements.txt", "README.md")
 TOP_FILES = (
-    "README.md", "requirements.txt", "requirements-ingest.txt", "requirements-build.txt",
+    "README.md", "CHANGELOG.md", "requirements.txt", "requirements-ingest.txt", "requirements-build.txt",
     ".env.example", ".gitignore", ".gitattributes", "build_windows.ps1",
     "windows_desktop.spec", "启动本地版.bat", "本地使用说明.md", "rebuild_all.py", "ruff.toml",
 )

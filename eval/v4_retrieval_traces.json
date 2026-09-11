@@ -1,0 +1,2917 @@
+{
+  "producer": "scripts/trace_v4_retrieval.py",
+  "traces": [
+    {
+      "id": "qa-002",
+      "category": "single_fact_qa",
+      "query": "LTE 为什么采用 OFDMA？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "LTE 为什么采用 OFDMA",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "多址",
+          "source_chunk_count": 67,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "2. 抗衰落技术",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-06d2ccb7283a3318",
+            "chk-6db55d33304d94c7",
+            "chk-542abc0edaab2e76",
+            "chk-a36b41a4cbf7b9de",
+            "chk-f8fcbdd8fcb915c87eab5ff6b8157fd57664473bf64ffe9f9d1872d154b0a9ec",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-3ccf98d210fbbf1a"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "LTE 为什么采用 OFDMA",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-be993070511d13af",
+            "chk-8913e2d79c408331",
+            "chk-9373ab885946dc30",
+            "chk-784fb456936fd9be",
+            "chk-002fccc5f7d8ab94",
+            "chk-685b74acda49688b",
+            "chk-a114378c5784da11",
+            "chk-32e407b6099efdd5",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "qa-006",
+      "category": "single_fact_qa",
+      "query": "什么是分集接收？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "什么是分集接收",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "合并",
+          "source_chunk_count": 53,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "2. 抗衰落技术",
+            "3. 参数表",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-0362beebee243274",
+            "chk-a377e3e8cc4fc47d",
+            "chk-52f3c7e41a5af4f64babd17658b627bed1c5df48543aa7fd2fcd8305a5a6188a",
+            "chk-3306ed43e7a4246a0aa5b2c73c4d85b212e8e9ab5d4ac29d42ec015685dded42",
+            "chk-a7f9cfd8d413403f630d85c17f78c5b2b0726eec8c05f69512dfdc69a2db3448",
+            "chk-f895c788dd1f0fdbe4341d1400318dcac7c382c2d8da5a53690791f8580fd516",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+            "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "什么是分集接收",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-f895c788dd1f0fdbe4341d1400318dcac7c382c2d8da5a53690791f8580fd516",
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-2d2328c7df43eed3",
+            "chk-cd184b42860b80ef",
+            "chk-00a687020c91fcb2",
+            "chk-5e3f39f1472e33bf",
+            "chk-baf7dbbc21d2ad33",
+            "chk-e154b63288d1e3b5",
+            "chk-ea92954a3e6857f2",
+            "chk-b1d3b5425ee25b0a"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "qa-020",
+      "category": "single_fact_qa",
+      "query": "什么是正交频分复用？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "什么是正交频分复用",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "子载波",
+          "source_chunk_count": 24,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-0b9b828ec7cc0409",
+            "chk-45bcbeb70df659a6",
+            "chk-f6018f48404ac226",
+            "chk-986e3f72be7d9b0d",
+            "chk-5079586d3b7e745c",
+            "chk-12eb8ead2caf6e7c",
+            "chk-26886b8631de2fd6",
+            "chk-009df139835b3554",
+            "chk-002fccc5f7d8ab94",
+            "chk-9c0b74f7bc269e60"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": false,
+          "verdict": "RRF_RANKING_MISS"
+        },
+        {
+          "term": "什么是正交频分复用",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-96975881680d77f2",
+            "chk-a114378c5784da11",
+            "chk-3396eda2c287d704",
+            "chk-002fccc5f7d8ab94",
+            "chk-3b7cddc5e462c6c1",
+            "chk-a74b2f873d453bc2",
+            "chk-0ef6fe384d8ad809",
+            "chk-baf4a3d78159b3b3",
+            "chk-8913e2d79c408331",
+            "chk-9532860dbc1a7530"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "qa-029",
+      "category": "single_fact_qa",
+      "query": "香农公式中 S/N 代表什么？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "concept": "香农公式中 S/N 代表什么",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "信噪比",
+          "source_chunk_count": 27,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-0362beebee243274",
+            "chk-cc5a47d77339b5d1",
+            "chk-4e5ec2f5e5d5a562",
+            "chk-446c28d92535517a",
+            "chk-2b0319c32881f0b0",
+            "chk-77538b2e56c435e1",
+            "chk-b9feafe1cefcb9a2",
+            "chk-2629a12532018ec8",
+            "chk-6147e36b693b8b26",
+            "chk-80f650acf68ede1c"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "香农公式中 S/N 代表什么",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-8ef9ebae0c3f5944",
+            "chk-824e190ce2e9316a",
+            "chk-ca851f4c8b6fc582",
+            "chk-26886b8631de2fd6",
+            "chk-2c33362193c9dad3",
+            "chk-6873062ffe5f110a",
+            "chk-b1cf4275584df53c",
+            "chk-0b92edffcfd9cc3a",
+            "chk-0eb8d601c9a54947",
+            "chk-0ddce37325dd9693"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "qa-030",
+      "category": "single_fact_qa",
+      "query": "多径信号叠加会导致什么现象？",
+      "answer_state": "ANSWER_WITH_LIMITATION",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "多径信号叠加会导致什么现象",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "幅度",
+          "source_chunk_count": 26,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-77538b2e56c435e1",
+            "chk-21ef66dfaa86039d",
+            "chk-b13fd8678f76f254",
+            "chk-e6f85dab7621f4b9",
+            "chk-641172da2f4aec76",
+            "chk-f4fa0b23168d8b9a",
+            "chk-95edd0d31ad513f3",
+            "chk-0d64b07922befe77",
+            "chk-c05127f9fe95cb15",
+            "chk-269c49e817a4572e"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": false,
+          "verdict": "RRF_RANKING_MISS"
+        },
+        {
+          "term": "起伏",
+          "source_chunk_count": 13,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术"
+          ],
+          "lexical_top10_ids": [
+            "chk-dc7b76b75fdbb6b0",
+            "chk-c05127f9fe95cb15",
+            "chk-2732185e72ca957b",
+            "chk-58d8d41e2d0801cc",
+            "chk-269c49e817a4572e",
+            "chk-8dbddb70895e1a1e",
+            "chk-a05dc5111ff56ad8",
+            "chk-ea92954a3e6857f2",
+            "chk-9e53b84a1588a76b",
+            "chk-bac2e3b0e090f1da"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": false,
+          "verdict": "RRF_RANKING_MISS"
+        },
+        {
+          "term": "衰落",
+          "source_chunk_count": 157,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "2. 抗衰落技术",
+            "3. 参数表",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-bdd326e703656d87",
+            "chk-2da64543ae8b8f08",
+            "chk-446c28d92535517a",
+            "chk-ddfe3a1052c6a9ee",
+            "chk-e6f85dab7621f4b9",
+            "chk-d7f2f74cde8af77a0676cc81d6b96a0ca39780393d25e8afdb2b45fff560f790",
+            "chk-3306ed43e7a4246a0aa5b2c73c4d85b212e8e9ab5d4ac29d42ec015685dded42"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "多径信号叠加会导致什么现象",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-e25a3cbf00992963857d294d1ad318717ca52060907a7d476751af02433196ea",
+            "chk-07357a6aa0e0d82c",
+            "chk-9e3fbcec26824cd1a497890b7dc9cb44c0b5aec31c158b1bae9ea683c0af9bec",
+            "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-53743d589ada69a9",
+            "chk-190f836c0625d57d",
+            "chk-40f25a66c1dafed5",
+            "chk-04bc6c596a7cc880"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "qa-031",
+      "category": "single_fact_qa",
+      "query": "什么是扩频通信？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "什么是扩频通信",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "展宽",
+          "source_chunk_count": 4,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术"
+          ],
+          "lexical_top10_ids": [
+            "chk-347a0216673cadb6",
+            "chk-5ebdf264983620d2",
+            "chk-eabadc81e5e353db"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "什么是扩频通信",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-3c6c101c62f808a6",
+            "chk-4e5ec2f5e5d5a562",
+            "chk-df74428a51789345",
+            "chk-784fb456936fd9be",
+            "chk-b43e1f4efc7a68de",
+            "chk-631e44a46d5cbe43",
+            "chk-baf7dbbc21d2ad33",
+            "chk-8dbddb70895e1a1e",
+            "chk-f4fa0b23168d8b9a",
+            "chk-b5a1717a527495ff"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "qa-032",
+      "category": "single_fact_qa",
+      "query": "CDMA 使用什么区分用户？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "CDMA 使用什么区分用户",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "正交",
+          "source_chunk_count": 47,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-ab701d9ace2b7a56",
+            "chk-05f113df260133c0",
+            "chk-986e3f72be7d9b0d",
+            "chk-aa5fabe2724d6920",
+            "chk-6db55d33304d94c7",
+            "chk-cce4c938abccf835",
+            "chk-12aa271d8a20f8d4",
+            "chk-009df139835b3554",
+            "chk-31effca15f5005a8",
+            "chk-189cd3d2b48d85ac"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "CDMA 使用什么区分用户",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-6d13605d64a5d66d",
+            "chk-043f519cce6346d2",
+            "chk-1eece354c5109055",
+            "chk-dc7d5b777eb913fe",
+            "chk-7c99d7b4739f265e",
+            "chk-3396eda2c287d704",
+            "chk-05f113df260133c0",
+            "chk-0ef6fe384d8ad809",
+            "chk-b5dc6b636744a63b",
+            "chk-08cb72978e2932e3"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "qa-035",
+      "category": "single_fact_qa",
+      "query": "交织技术主要用于对抗什么？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "交织技术主要用于对抗什么",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "错误",
+          "source_chunk_count": 22,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-54ec747638e9e737",
+            "chk-2196b55cac8cd607",
+            "chk-5079586d3b7e745c",
+            "chk-cccc119a3d292516",
+            "chk-11e4fd6acc09b06d",
+            "chk-542edecd1965d73f",
+            "chk-b13fd8678f76f254",
+            "chk-a114378c5784da11",
+            "chk-4398a89042b9db5c",
+            "chk-a1bbaa48341ab048"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "交织技术主要用于对抗什么",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-b5cd37366e7715e1",
+            "chk-9e53b84a1588a76b",
+            "chk-732a3096b7e860f4",
+            "chk-9cbb5fcf2a39c799",
+            "chk-2c33362193c9dad3",
+            "chk-fa2d36f4a7fcb3ce",
+            "chk-4398a89042b9db5c",
+            "chk-f895c788dd1f0fdbe4341d1400318dcac7c382c2d8da5a53690791f8580fd516",
+            "chk-24fc476f3f6c8f25",
+            "chk-002fccc5f7d8ab94"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "qa-036",
+      "category": "single_fact_qa",
+      "query": "什么是小区？",
+      "answer_state": "ANSWER_WITH_LIMITATION",
+      "out_of_scope": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "concept": "什么是小区",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "覆盖",
+          "source_chunk_count": 81,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-5cda1a9543df831b",
+            "chk-5e75f62925166031",
+            "chk-98e1d2532c461d71",
+            "chk-e9db88f17b36c05b",
+            "chk-c6c455e73d30ea8e",
+            "chk-446c28d92535517a",
+            "chk-8e62772fa3fb0a00",
+            "chk-cb3c25e89e40e527",
+            "chk-7f108dbd01afcf2b",
+            "chk-3a1008d356ccd0d6"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "什么是小区",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-ec3a22dec885f2e0",
+            "chk-45bcbeb70df659a6",
+            "chk-b9feafe1cefcb9a2",
+            "chk-dfc8fc3cc34f1b6f",
+            "chk-fca76ab7d23c25fb",
+            "chk-8a1ab714998df011",
+            "chk-e9db88f17b36c05b",
+            "chk-f7b57e546155cf59",
+            "chk-722b2f7dd4203027",
+            "chk-18ab2e1f2d27b65a"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "qa-039",
+      "category": "single_fact_qa",
+      "query": "什么是分集增益？",
+      "answer_state": "ANSWER_WITH_LIMITATION",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "什么是分集增益",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "衰落",
+          "source_chunk_count": 157,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "2. 抗衰落技术",
+            "3. 参数表",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-bdd326e703656d87",
+            "chk-2da64543ae8b8f08",
+            "chk-446c28d92535517a",
+            "chk-ddfe3a1052c6a9ee",
+            "chk-e6f85dab7621f4b9",
+            "chk-d7f2f74cde8af77a0676cc81d6b96a0ca39780393d25e8afdb2b45fff560f790",
+            "chk-3306ed43e7a4246a0aa5b2c73c4d85b212e8e9ab5d4ac29d42ec015685dded42"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "什么是分集增益",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-5541201533da14fa",
+            "chk-873efa71564fad5e",
+            "chk-002fccc5f7d8ab94",
+            "chk-0362beebee243274",
+            "chk-2ca9c353e1e0a8c1",
+            "chk-cce4c938abccf835",
+            "chk-f95645208706e69d",
+            "chk-b43e1f4efc7a68de",
+            "chk-5e3f39f1472e33bf",
+            "chk-baf7dbbc21d2ad33"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "qa-040",
+      "category": "single_fact_qa",
+      "query": "多址接入有哪几种主要方式？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "多址接入有哪几种主要方式",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "OFDMA",
+          "source_chunk_count": 19,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "2. 抗衰落技术",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-8913e2d79c408331",
+            "chk-be993070511d13af",
+            "chk-002fccc5f7d8ab94",
+            "chk-685b74acda49688b",
+            "chk-9373ab885946dc30",
+            "chk-784fb456936fd9be",
+            "chk-abf7d55ab3bffd98",
+            "chk-32e407b6099efdd5",
+            "chk-a114378c5784da11",
+            "chk-3396eda2c287d704"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "多址接入有哪几种主要方式",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-34ce1ca62ba4f2b8",
+            "chk-c72b90918eca0961",
+            "chk-b9feafe1cefcb9a2",
+            "chk-06d2ccb7283a3318",
+            "chk-31effca15f5005a8",
+            "chk-542abc0edaab2e76",
+            "chk-520f137da9dabb44",
+            "chk-f058c7bf6007f382",
+            "chk-8913e2d79c408331",
+            "chk-a36b41a4cbf7b9de"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "loc-003",
+      "category": "locate",
+      "query": "分集技术在哪一章？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "分集技术",
+      "context_count": 2,
+      "terms": [
+        {
+          "term": "分集",
+          "source_chunk_count": 58,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "2. 抗衰落技术",
+            "3. 参数表",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-3306ed43e7a4246a0aa5b2c73c4d85b212e8e9ab5d4ac29d42ec015685dded42",
+            "chk-a7f9cfd8d413403f630d85c17f78c5b2b0726eec8c05f69512dfdc69a2db3448",
+            "chk-f895c788dd1f0fdbe4341d1400318dcac7c382c2d8da5a53690791f8580fd516",
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+            "chk-0362beebee243274",
+            "chk-53ee04be3036219a",
+            "chk-2d2328c7df43eed3",
+            "chk-a377e3e8cc4fc47d",
+            "chk-76f7a9950b33f3a0"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "分集技术",
+          "source_chunk_count": 7,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术"
+          ],
+          "lexical_top10_ids": [
+            "chk-c881fce09281af66",
+            "chk-1b0bb061c4d2d2ce",
+            "chk-bee0aeaff4ce518d",
+            "chk-96975881680d77f2",
+            "chk-8dbddb70895e1a1e",
+            "chk-f895c788dd1f0fdbe4341d1400318dcac7c382c2d8da5a53690791f8580fd516",
+            "chk-ea92954a3e6857f2",
+            "chk-9e53b84a1588a76b",
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-2d2328c7df43eed3"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        }
+      ]
+    },
+    {
+      "id": "loc-004",
+      "category": "locate",
+      "query": "漫游在哪一章？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "concept": "漫游",
+      "context_count": 2,
+      "terms": [
+        {
+          "term": "漫游",
+          "source_chunk_count": 18,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-da32a347d0ef6c66",
+            "chk-14bd3aa47213f8b0",
+            "chk-82efa04a39687576",
+            "chk-71c588b95e5509a0",
+            "chk-ec4399f40af9eec1",
+            "chk-386b8d1aee9397a6",
+            "chk-d2aebf4e2a887808",
+            "chk-359982e6138ac9ba",
+            "chk-ab384421fe77baa0",
+            "chk-bf27f3ac9a8aae79"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        }
+      ]
+    },
+    {
+      "id": "loc-005",
+      "category": "locate",
+      "query": "频率复用在哪一章？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "频率复用",
+      "context_count": 2,
+      "terms": [
+        {
+          "term": "频率复用",
+          "source_chunk_count": 24,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-dfc8fc3cc34f1b6f",
+            "chk-b8d2fc48e1f116e9",
+            "chk-09d1b35eb2e202b9",
+            "chk-520f137da9dabb44",
+            "chk-2ca9c353e1e0a8c1",
+            "chk-7d1e4767f016882c",
+            "chk-d82282c5e350ecdf",
+            "chk-aa7ed3909c7c3560",
+            "chk-ab384421fe77baa0",
+            "chk-a36b41a4cbf7b9de"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        }
+      ]
+    },
+    {
+      "id": "loc-008",
+      "category": "locate",
+      "query": "RAKE 接收机在哪一章？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "RAKE 接收机",
+      "context_count": 1,
+      "terms": [
+        {
+          "term": "RAKE",
+          "source_chunk_count": 23,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-04bc6c596a7cc880",
+            "chk-f439463f20b5d4b9",
+            "chk-12aa271d8a20f8d4",
+            "chk-00a687020c91fcb2",
+            "chk-52f3c7e41a5af4f64babd17658b627bed1c5df48543aa7fd2fcd8305a5a6188a",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-9e37fe01c8c1190b"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "RAKE 接收机",
+          "source_chunk_count": 7,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "移动通信测试文档",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-04bc6c596a7cc880",
+            "chk-f439463f20b5d4b9",
+            "chk-12aa271d8a20f8d4",
+            "chk-00a687020c91fcb2",
+            "chk-52f3c7e41a5af4f64babd17658b627bed1c5df48543aa7fd2fcd8305a5a6188a",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-83a88ccad263c628"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        }
+      ]
+    },
+    {
+      "id": "loc-011",
+      "category": "locate",
+      "query": "哪里讲到了循环前缀？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "讲到了循环前缀",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "循环前缀",
+          "source_chunk_count": 9,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-54faa7621194b3a5",
+            "chk-009df139835b3554",
+            "chk-63cb278d2c511314",
+            "chk-c71fbb67781f9113",
+            "chk-a114378c5784da11",
+            "chk-53743d589ada69a9",
+            "chk-3b7cddc5e462c6c1",
+            "chk-32e407b6099efdd5",
+            "chk-936c7009b11dec0a",
+            "chk-627dde397f305dc3"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "讲到了循环前缀",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-54faa7621194b3a5",
+            "chk-009df139835b3554",
+            "chk-63cb278d2c511314",
+            "chk-c71fbb67781f9113",
+            "chk-a114378c5784da11",
+            "chk-53743d589ada69a9",
+            "chk-3b7cddc5e462c6c1",
+            "chk-32e407b6099efdd5",
+            "chk-936c7009b11dec0a",
+            "chk-627dde397f305dc3"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "loc-012",
+      "category": "locate",
+      "query": "交织技术在哪一章？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "交织技术",
+      "context_count": 1,
+      "terms": [
+        {
+          "term": "交织",
+          "source_chunk_count": 40,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-27d95a396c1a2fca",
+            "chk-de1879abdcb1838d",
+            "chk-0b9b828ec7cc0409",
+            "chk-a1dd8e069a4ca302",
+            "chk-8e6cd6cc69889631",
+            "chk-fff5a7790741dae4",
+            "chk-26886b8631de2fd6",
+            "chk-12aa271d8a20f8d4",
+            "chk-6f0be8a45dbb5f37",
+            "chk-9521642664e2b9d9"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "交织技术",
+          "source_chunk_count": 3,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-732a3096b7e860f4",
+            "chk-b5cd37366e7715e1",
+            "chk-9e53b84a1588a76b",
+            "chk-a6a96a1eb64a904e",
+            "chk-27d95a396c1a2fca",
+            "chk-599ca42ea0531906",
+            "chk-de1879abdcb1838d",
+            "chk-4282a6b199ab2e84",
+            "chk-0b9b828ec7cc0409",
+            "chk-a1dd8e069a4ca302"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        }
+      ]
+    },
+    {
+      "id": "loc-013",
+      "category": "locate",
+      "query": "OFDM 在哪一章介绍？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "concept": "OFDM 介绍",
+      "context_count": 1,
+      "terms": [
+        {
+          "term": "OFDM",
+          "source_chunk_count": 51,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "2. 抗衰落技术",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-69942813705f143d",
+            "chk-784fb456936fd9be",
+            "chk-2d2328c7df43eed3",
+            "chk-53743d589ada69a9",
+            "chk-e52a66df7fd1ee15",
+            "chk-3396eda2c287d704",
+            "chk-279872174825af71",
+            "chk-0eb8d601c9a54947",
+            "chk-54faa7621194b3a5",
+            "chk-26886b8631de2fd6"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "OFDM 介绍",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-69942813705f143d",
+            "chk-784fb456936fd9be",
+            "chk-2d2328c7df43eed3",
+            "chk-53743d589ada69a9",
+            "chk-e52a66df7fd1ee15",
+            "chk-3396eda2c287d704",
+            "chk-279872174825af71",
+            "chk-0eb8d601c9a54947",
+            "chk-54faa7621194b3a5",
+            "chk-26886b8631de2fd6"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "loc-015",
+      "category": "locate",
+      "query": "GSM 调制方式在哪一章？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "GSM 调制方式",
+      "context_count": 1,
+      "terms": [
+        {
+          "term": "GSM",
+          "source_chunk_count": 141,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-61a7acce435461ad",
+            "chk-82efa04a39687576",
+            "chk-7d1e4767f016882c",
+            "chk-d7f2f74cde8af77a0676cc81d6b96a0ca39780393d25e8afdb2b45fff560f790",
+            "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+            "chk-102e9c12f93ce03d",
+            "chk-0f31657899a65870",
+            "chk-27d95a396c1a2fca",
+            "chk-1e75828ef0c37366",
+            "chk-71c588b95e5509a0"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "GMSK",
+          "source_chunk_count": 4,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第4章 GSM移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-9521642664e2b9d9",
+            "chk-eef9fec28eeb9787",
+            "chk-37ac40dd1b723d0c",
+            "chk-130b681ce8010b26"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "GSM 调制方式",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-130b681ce8010b26",
+            "chk-eef9fec28eeb9787",
+            "chk-8be1494a487dda8e",
+            "chk-5dd7a5fb85a29c3a",
+            "chk-347a0216673cadb6",
+            "chk-6d13605d64a5d66d",
+            "chk-92c6ceac85833983",
+            "chk-d276b1ca3e833ad2",
+            "chk-7582bb945d10cea2",
+            "chk-631e44a46d5cbe43"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "loc-016",
+      "category": "locate",
+      "query": "在测试文档里，多径传播是第几节？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "在测试文档里，多径传播是",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "第1",
+          "source_chunk_count": 113,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-3adaac0c1f62d3f6",
+            "chk-1c9f13811c8b7c92",
+            "chk-e75c99eb5b5b7a79",
+            "chk-a9ee3262a8ad71ae",
+            "chk-d18a33042f2b55d9",
+            "chk-7010754822190733",
+            "chk-1b0bb061c4d2d2ce",
+            "chk-b9feafe1cefcb9a2",
+            "chk-69942813705f143d",
+            "chk-769b17da6b1f9bb8"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": false,
+          "verdict": "RRF_RANKING_MISS"
+        },
+        {
+          "term": "在测试文档里，多径传播是",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-9e3fbcec26824cd1a497890b7dc9cb44c0b5aec31c158b1bae9ea683c0af9bec",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-6ea6bf5e2889e0972f40fae5b36c10719d877895f544b5bd28569922ead2b173",
+            "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-e25a3cbf00992963857d294d1ad318717ca52060907a7d476751af02433196ea"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "loc-017",
+      "category": "locate",
+      "query": "抗衰落技术是测试文档的第几节？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "抗衰落技术是测试文档",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "第2",
+          "source_chunk_count": 68,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-3adaac0c1f62d3f6",
+            "chk-e6f85dab7621f4b9",
+            "chk-6873062ffe5f110a",
+            "chk-ddfe3a1052c6a9ee",
+            "chk-81a51aa052d6d641",
+            "chk-2e45215624a1d82f",
+            "chk-95edd0d31ad513f3",
+            "chk-c72b90918eca0961",
+            "chk-0abf447e6a12a6dc",
+            "chk-3af300fd42e9cf62"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": false,
+          "verdict": "RRF_RANKING_MISS"
+        },
+        {
+          "term": "抗衰落技术是测试文档",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+            "chk-6ea6bf5e2889e0972f40fae5b36c10719d877895f544b5bd28569922ead2b173",
+            "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+            "chk-9e3fbcec26824cd1a497890b7dc9cb44c0b5aec31c158b1bae9ea683c0af9bec",
+            "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "loc-018",
+      "category": "locate",
+      "query": "参数表在测试文档的哪个位置？",
+      "answer_state": "REFUSED",
+      "out_of_scope": true,
+      "confidence": "low",
+      "retrieval_mode": "hybrid",
+      "concept": "参数表在测试文档哪个",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "参数",
+          "source_chunk_count": 93,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "3. 参数表",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-fa19cd5d1c94ec25d1dfdbc05dfe635e5cd5c94a1a5dcf37e0bfdd87e683c2a9",
+            "chk-1617272cf39309d8",
+            "chk-18ab2e1f2d27b65a",
+            "chk-90dfb43fc73b0232",
+            "chk-350ab197ef912f21",
+            "chk-ca10edd3309a8eb9",
+            "chk-ed90b4d9229f58a5",
+            "chk-242599972dd050f4",
+            "chk-250b9788a7830056",
+            "chk-f3ce762ec4852ffe"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "第3",
+          "source_chunk_count": 88,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-cd184b42860b80ef",
+            "chk-8e49f5d868c5ccd3",
+            "chk-fb1b1ccbab2bdeb1",
+            "chk-094ae26c58e34cdf",
+            "chk-3adaac0c1f62d3f6",
+            "chk-7c4f768a9ff6019c",
+            "chk-3466aee3aea3bb04",
+            "chk-0f31657899a65870",
+            "chk-c72b90918eca0961",
+            "chk-54ec747638e9e737"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": false,
+          "verdict": "RRF_RANKING_MISS"
+        },
+        {
+          "term": "参数表在测试文档哪个",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-6ea6bf5e2889e0972f40fae5b36c10719d877895f544b5bd28569922ead2b173",
+            "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+            "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-3306ed43e7a4246a0aa5b2c73c4d85b212e8e9ab5d4ac29d42ec015685dded42"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "loc-019",
+      "category": "locate",
+      "query": "切换相关的内容在教材哪一章？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "concept": "切换在教材",
+      "context_count": 2,
+      "terms": [
+        {
+          "term": "切换",
+          "source_chunk_count": 57,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-63086f4d2ede6764",
+            "chk-e2701be9653901d8",
+            "chk-55ade74808fd1424",
+            "chk-be8e01cd1c64bf1d",
+            "chk-f7b57e546155cf59",
+            "chk-90d0d08977484f83",
+            "chk-c6c455e73d30ea8e",
+            "chk-446c28d92535517a",
+            "chk-7f108dbd01afcf2b",
+            "chk-9e37fe01c8c1190b"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "切换在教材",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-63086f4d2ede6764",
+            "chk-55ade74808fd1424",
+            "chk-be8e01cd1c64bf1d",
+            "chk-f7b57e546155cf59",
+            "chk-90d0d08977484f83",
+            "chk-c6c455e73d30ea8e",
+            "chk-446c28d92535517a",
+            "chk-7f108dbd01afcf2b",
+            "chk-9e37fe01c8c1190b",
+            "chk-9fcd2f625edf5893"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "cmp-001",
+      "category": "compare",
+      "query": "GSM 和 WCDMA 有什么区别？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "concept": "GSM 和 WCDMA 有什么区别",
+      "context_count": 6,
+      "terms": [
+        {
+          "term": "GMSK",
+          "source_chunk_count": 4,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第4章 GSM移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-9521642664e2b9d9",
+            "chk-eef9fec28eeb9787",
+            "chk-37ac40dd1b723d0c",
+            "chk-130b681ce8010b26"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": false,
+          "verdict": "RRF_RANKING_MISS"
+        },
+        {
+          "term": "QPSK",
+          "source_chunk_count": 19,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-92c6ceac85833983",
+            "chk-eef9fec28eeb9787",
+            "chk-8be1494a487dda8e",
+            "chk-fff5a7790741dae4",
+            "chk-99a73c7a395fd9cf",
+            "chk-baf4a3d78159b3b3",
+            "chk-b5f55f603a89ca99",
+            "chk-7582bb945d10cea2",
+            "chk-3466aee3aea3bb04",
+            "chk-8318e8e58aca2e3d"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "GSM 和 WCDMA 有什么区别",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-6d13605d64a5d66d",
+            "chk-1eece354c5109055",
+            "chk-9e37fe01c8c1190b",
+            "chk-71791e3a7515f24c",
+            "chk-3b78463e6735a275",
+            "chk-27a4b014979a1491",
+            "chk-83a88ccad263c628",
+            "chk-66f1ed6a8fa1395b",
+            "chk-05d426576c2a0cc9",
+            "chk-685b74acda49688b"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "cmp-004",
+      "category": "compare",
+      "query": "FDMA 和 TDMA 有什么区别？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "concept": "FDMA 和 TDMA 有什么区别",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "时分",
+          "source_chunk_count": 20,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-4eb15c1a7fcab28a",
+            "chk-baf4a3d78159b3b3",
+            "chk-9532860dbc1a7530",
+            "chk-31effca15f5005a8",
+            "chk-d79821d6b521ac04",
+            "chk-e65f9b1ba54de534",
+            "chk-f058c7bf6007f382",
+            "chk-bee0aeaff4ce518d",
+            "chk-9a861154dd2a85e3",
+            "chk-641172da2f4aec76"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "FDMA 和 TDMA 有什么区别",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-31effca15f5005a8",
+            "chk-baf7dbbc21d2ad33",
+            "chk-7f7c2cfaea9cad0a",
+            "chk-1eece354c5109055",
+            "chk-1c2cedfc258b6c38",
+            "chk-b9feafe1cefcb9a2",
+            "chk-5a9d38a93266971f",
+            "chk-cbec5017fb06450a",
+            "chk-685b74acda49688b",
+            "chk-b74ffcc247e5b397"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "cmp-014",
+      "category": "compare",
+      "query": "频分复用和码分复用有什么区别？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "频分复用和码分复用有什么区别",
+      "context_count": 7,
+      "terms": [
+        {
+          "term": "频率",
+          "source_chunk_count": 147,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-e3d649959433fbb9",
+            "chk-dfc8fc3cc34f1b6f",
+            "chk-2da64543ae8b8f08",
+            "chk-3a41e4f38da3eb37",
+            "chk-ec3a22dec885f2e0",
+            "chk-503f9a4a6297267c",
+            "chk-4dae10ed869e38c6",
+            "chk-8e62772fa3fb0a00",
+            "chk-ed90b4d9229f58a5",
+            "chk-76f7a9950b33f3a0"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "频分复用和码分复用有什么区别",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-25e7f8da29b1d491",
+            "chk-0ef6fe384d8ad809",
+            "chk-96975881680d77f2",
+            "chk-002fccc5f7d8ab94",
+            "chk-a114378c5784da11",
+            "chk-3b7cddc5e462c6c1",
+            "chk-3396eda2c287d704",
+            "chk-9532860dbc1a7530",
+            "chk-9a861154dd2a85e3",
+            "chk-8913e2d79c408331"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "cmp-019",
+      "category": "compare",
+      "query": "软切换相比硬切换有什么优点？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "软切换相比硬切换有什么优点",
+      "context_count": 4,
+      "terms": [
+        {
+          "term": "中断",
+          "source_chunk_count": 14,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统"
+          ],
+          "lexical_top10_ids": [],
+          "lexical_reached_source": false,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "软切换相比硬切换有什么优点",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-e2701be9653901d8",
+            "chk-20078f59f4b64f80",
+            "chk-53d499bf587c884b",
+            "chk-baf7dbbc21d2ad33",
+            "chk-9fcd2f625edf5893",
+            "chk-1eece354c5109055",
+            "chk-9e37fe01c8c1190b",
+            "chk-71791e3a7515f24c",
+            "chk-370ce20992a3a5f4",
+            "chk-d2a303f7fe06b59e"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "cmp-020",
+      "category": "compare",
+      "query": "OFDMA 相比 CDMA 有什么特点？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "OFDMA 相比 CDMA 有什么特点",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "码",
+          "source_chunk_count": 264,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [],
+          "lexical_reached_source": false,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "OFDMA 相比 CDMA 有什么特点",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-6d13605d64a5d66d",
+            "chk-1eece354c5109055",
+            "chk-831676397c2f5c6b",
+            "chk-9373ab885946dc30",
+            "chk-8913e2d79c408331",
+            "chk-685b74acda49688b",
+            "chk-be993070511d13af",
+            "chk-abf7d55ab3bffd98",
+            "chk-631e44a46d5cbe43",
+            "chk-356fe36ed11100c5"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "mt-003",
+      "category": "multi_turn",
+      "query": "那第二章呢？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "chapter-summary",
+      "concept": "第2章主要讲了什么",
+      "context_count": 1,
+      "terms": [
+        {
+          "term": "第二章",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-a1dd8e069a4ca302",
+            "chk-51d4651e6b3ce419",
+            "chk-8e6cd6cc69889631",
+            "chk-06d2ccb7283a3318",
+            "chk-95fb4f0986e7ecd0",
+            "chk-26886b8631de2fd6",
+            "chk-182f2113c8eb1bed",
+            "chk-6f0be8a45dbb5f37",
+            "chk-cf2dbde1f778321d",
+            "chk-17c5c7e4cd6e8bc5"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        },
+        {
+          "term": "第2章主要讲了什么",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-3adaac0c1f62d3f6",
+            "chk-e6f85dab7621f4b9",
+            "chk-6873062ffe5f110a",
+            "chk-ddfe3a1052c6a9ee",
+            "chk-81a51aa052d6d641",
+            "chk-2e45215624a1d82f",
+            "chk-95edd0d31ad513f3",
+            "chk-c72b90918eca0961",
+            "chk-0abf447e6a12a6dc",
+            "chk-3af300fd42e9cf62"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "mt-006",
+      "category": "multi_turn",
+      "query": "那它呢？",
+      "answer_state": "REFUSED",
+      "out_of_scope": true,
+      "confidence": "low",
+      "retrieval_mode": "hybrid",
+      "concept": "OFDM",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "OFDM",
+          "source_chunk_count": 51,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "2. 抗衰落技术",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-69942813705f143d",
+            "chk-784fb456936fd9be",
+            "chk-2d2328c7df43eed3",
+            "chk-53743d589ada69a9",
+            "chk-e52a66df7fd1ee15",
+            "chk-3396eda2c287d704",
+            "chk-279872174825af71",
+            "chk-0eb8d601c9a54947",
+            "chk-54faa7621194b3a5",
+            "chk-26886b8631de2fd6"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        }
+      ]
+    },
+    {
+      "id": "mt-007",
+      "category": "multi_turn",
+      "query": "它有什么缺点？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "衰落有什么缺点",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "衰落",
+          "source_chunk_count": 157,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "2. 抗衰落技术",
+            "3. 参数表",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-bdd326e703656d87",
+            "chk-2da64543ae8b8f08",
+            "chk-446c28d92535517a",
+            "chk-ddfe3a1052c6a9ee",
+            "chk-e6f85dab7621f4b9",
+            "chk-d7f2f74cde8af77a0676cc81d6b96a0ca39780393d25e8afdb2b45fff560f790",
+            "chk-3306ed43e7a4246a0aa5b2c73c4d85b212e8e9ab5d4ac29d42ec015685dded42"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "衰落有什么缺点",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-fd1995d88f9bd6fc",
+            "chk-76f7a9950b33f3a0",
+            "chk-912b67ae6a0d0340",
+            "chk-c9892309085f871d",
+            "chk-41d1b728344f475a",
+            "chk-00a687020c91fcb2",
+            "chk-20078f59f4b64f80",
+            "chk-799036f3c34cc2af",
+            "chk-6a80776b334db327",
+            "chk-d276b1ca3e833ad2"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "mt-009",
+      "category": "multi_turn",
+      "query": "它有哪些类型？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "分集接收有哪些类型",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "类型",
+          "source_chunk_count": 67,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-ef191b01a52c0513",
+            "chk-09c9116b7b63fc32",
+            "chk-09bd2d7a0698d53f",
+            "chk-f267a0ed054a8b43",
+            "chk-51d4651e6b3ce419",
+            "chk-2806e176b75a2705",
+            "chk-f6018f48404ac226",
+            "chk-cb3c25e89e40e527",
+            "chk-e52a66df7fd1ee15",
+            "chk-279872174825af71"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": false,
+          "verdict": "RRF_RANKING_MISS"
+        },
+        {
+          "term": "分集接收有哪些类型",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-f895c788dd1f0fdbe4341d1400318dcac7c382c2d8da5a53690791f8580fd516",
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-2d2328c7df43eed3",
+            "chk-cd184b42860b80ef",
+            "chk-42d82a39d35cb6a0",
+            "chk-00a687020c91fcb2",
+            "chk-5e3f39f1472e33bf",
+            "chk-baf7dbbc21d2ad33",
+            "chk-e154b63288d1e3b5",
+            "chk-ea92954a3e6857f2"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "mt-011",
+      "category": "multi_turn",
+      "query": "那后者呢？",
+      "answer_state": "ANSWER_WITH_LIMITATION",
+      "out_of_scope": false,
+      "confidence": "medium",
+      "retrieval_mode": "hybrid",
+      "concept": "CDMA那",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "CDMA",
+          "source_chunk_count": 214,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-1eece354c5109055",
+            "chk-9e37fe01c8c1190b",
+            "chk-52f3c7e41a5af4f64babd17658b627bed1c5df48543aa7fd2fcd8305a5a6188a",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-31effca15f5005a8",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-baf7dbbc21d2ad33",
+            "chk-fef727fdb6200f59"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "CDMA那",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-83a88ccad263c628",
+            "chk-71791e3a7515f24c",
+            "chk-1eece354c5109055",
+            "chk-685b74acda49688b",
+            "chk-8d11a9d9fb8de265",
+            "chk-a3e15af7cf43eb85",
+            "chk-826f850fc51294cd",
+            "chk-627dde397f305dc3",
+            "chk-24f96c4fd8a2f478",
+            "chk-31effca15f5005a8"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "md-004",
+      "category": "multi_document",
+      "query": "分集接收在哪些文档中被提到？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "分集接收些文档中被提到",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "分集",
+          "source_chunk_count": 58,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "2. 抗衰落技术",
+            "3. 参数表",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-3306ed43e7a4246a0aa5b2c73c4d85b212e8e9ab5d4ac29d42ec015685dded42",
+            "chk-a7f9cfd8d413403f630d85c17f78c5b2b0726eec8c05f69512dfdc69a2db3448",
+            "chk-f895c788dd1f0fdbe4341d1400318dcac7c382c2d8da5a53690791f8580fd516",
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+            "chk-0362beebee243274",
+            "chk-53ee04be3036219a",
+            "chk-2d2328c7df43eed3",
+            "chk-a377e3e8cc4fc47d",
+            "chk-76f7a9950b33f3a0"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "教材",
+          "source_chunk_count": 6,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-d3ba9e61592dacba",
+            "chk-7cab7ae89f986485",
+            "chk-8a7718cc54391cdb",
+            "chk-da4158eae1a55c17"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": false,
+          "verdict": "RRF_RANKING_MISS"
+        },
+        {
+          "term": "分集接收些文档中被提到",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "chk-2d2328c7df43eed3",
+            "chk-cd184b42860b80ef",
+            "chk-00a687020c91fcb2",
+            "chk-5e3f39f1472e33bf",
+            "chk-baf7dbbc21d2ad33",
+            "chk-e154b63288d1e3b5"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "md-009",
+      "category": "multi_document",
+      "query": "哪些文档提到了 RAKE 接收机？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "哪些文档提到了 RAKE 接收机",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "教材",
+          "source_chunk_count": 6,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-d3ba9e61592dacba",
+            "chk-7cab7ae89f986485",
+            "chk-8a7718cc54391cdb",
+            "chk-da4158eae1a55c17"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": false,
+          "verdict": "RRF_RANKING_MISS"
+        },
+        {
+          "term": "测试文档",
+          "source_chunk_count": 10,
+          "source_documents": [
+            "移动通信测试文档"
+          ],
+          "source_chapters": [
+            "移动通信测试文档"
+          ],
+          "lexical_top10_ids": [
+            "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-6ea6bf5e2889e0972f40fae5b36c10719d877895f544b5bd28569922ead2b173",
+            "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-bbedeff78b70557a"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "哪些文档提到了 RAKE 接收机",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-04bc6c596a7cc880",
+            "chk-f439463f20b5d4b9",
+            "chk-12aa271d8a20f8d4",
+            "chk-00a687020c91fcb2",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-56e7cd38f3a9dc4c",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-52f3c7e41a5af4f64babd17658b627bed1c5df48543aa7fd2fcd8305a5a6188a",
+            "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "md-014",
+      "category": "multi_document",
+      "query": "教材和测试文档都涉及的系统有哪些？",
+      "answer_state": "REFUSED",
+      "out_of_scope": true,
+      "confidence": "low",
+      "retrieval_mode": "hybrid",
+      "concept": "教材和测试文档都涉及系统有哪些",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "GSM",
+          "source_chunk_count": 141,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-61a7acce435461ad",
+            "chk-82efa04a39687576",
+            "chk-7d1e4767f016882c",
+            "chk-d7f2f74cde8af77a0676cc81d6b96a0ca39780393d25e8afdb2b45fff560f790",
+            "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+            "chk-102e9c12f93ce03d",
+            "chk-0f31657899a65870",
+            "chk-27d95a396c1a2fca",
+            "chk-1e75828ef0c37366",
+            "chk-71c588b95e5509a0"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "WCDMA",
+          "source_chunk_count": 180,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-71791e3a7515f24c",
+            "chk-83a88ccad263c628",
+            "chk-1eece354c5109055",
+            "chk-9e37fe01c8c1190b",
+            "chk-6d13605d64a5d66d",
+            "chk-66f1ed6a8fa1395b",
+            "chk-685b74acda49688b",
+            "chk-8d11a9d9fb8de265",
+            "chk-627dde397f305dc3",
+            "chk-24f96c4fd8a2f478"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "CDMA",
+          "source_chunk_count": 214,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-1eece354c5109055",
+            "chk-9e37fe01c8c1190b",
+            "chk-52f3c7e41a5af4f64babd17658b627bed1c5df48543aa7fd2fcd8305a5a6188a",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-31effca15f5005a8",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-baf7dbbc21d2ad33",
+            "chk-fef727fdb6200f59"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "LTE",
+          "source_chunk_count": 124,
+          "source_documents": [
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "2. 抗衰落技术",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-722b2f7dd4203027",
+            "chk-32e407b6099efdd5",
+            "chk-ec3a22dec885f2e0",
+            "chk-8be1494a487dda8e",
+            "chk-a318a5ada26d19a9",
+            "chk-7626cf3aeb632f42",
+            "chk-482b444323eafaa0",
+            "chk-6417d0910048f3ac",
+            "chk-0eb8d601c9a54947",
+            "chk-6c60c58af9a3b2de"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "教材和测试文档都涉及系统有哪些",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-6ea6bf5e2889e0972f40fae5b36c10719d877895f544b5bd28569922ead2b173",
+            "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-ce020801e0afa730",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "md-015",
+      "category": "multi_document",
+      "query": "哪份文档明确把 OFDMA 与 LTE 关联？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "哪份文档明确把 OFDMA 与 LTE 关联",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "测试文档",
+          "source_chunk_count": 10,
+          "source_documents": [
+            "移动通信测试文档"
+          ],
+          "source_chapters": [
+            "移动通信测试文档"
+          ],
+          "lexical_top10_ids": [
+            "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-6ea6bf5e2889e0972f40fae5b36c10719d877895f544b5bd28569922ead2b173",
+            "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-bbedeff78b70557a"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "哪份文档明确把 OFDMA 与 LTE 关联",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-8913e2d79c408331",
+            "chk-be993070511d13af",
+            "chk-9373ab885946dc30",
+            "chk-002fccc5f7d8ab94",
+            "chk-784fb456936fd9be",
+            "chk-685b74acda49688b",
+            "chk-32e407b6099efdd5",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-a114378c5784da11",
+            "chk-abf7d55ab3bffd98"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "md-019",
+      "category": "multi_document",
+      "query": "GSM 和 WCDMA 需要对抗多径衰落，这一结论在哪个文档中？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "GSM 和 WCDMA 需要对抗多径衰落，这一结论个文档中",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "GSM",
+          "source_chunk_count": 141,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-61a7acce435461ad",
+            "chk-82efa04a39687576",
+            "chk-7d1e4767f016882c",
+            "chk-d7f2f74cde8af77a0676cc81d6b96a0ca39780393d25e8afdb2b45fff560f790",
+            "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+            "chk-102e9c12f93ce03d",
+            "chk-0f31657899a65870",
+            "chk-27d95a396c1a2fca",
+            "chk-1e75828ef0c37366",
+            "chk-71c588b95e5509a0"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "WCDMA",
+          "source_chunk_count": 180,
+          "source_documents": [
+            "1. 多径传播",
+            "移动通信 (李兆玉)",
+            "移动通信测试文档",
+            "第1章 移动通信测试文档"
+          ],
+          "source_chapters": [
+            "1. 多径传播",
+            "移动通信测试文档",
+            "第1章 移动通信概述",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-71791e3a7515f24c",
+            "chk-83a88ccad263c628",
+            "chk-1eece354c5109055",
+            "chk-9e37fe01c8c1190b",
+            "chk-6d13605d64a5d66d",
+            "chk-66f1ed6a8fa1395b",
+            "chk-685b74acda49688b",
+            "chk-8d11a9d9fb8de265",
+            "chk-627dde397f305dc3",
+            "chk-24f96c4fd8a2f478"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "GSM 和 WCDMA 需要对抗多径衰落，这一结论个文档中",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-1eece354c5109055",
+            "chk-9e37fe01c8c1190b",
+            "chk-b5cd37366e7715e1",
+            "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-d7f2f74cde8af77a0676cc81d6b96a0ca39780393d25e8afdb2b45fff560f790",
+            "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+            "chk-baf7dbbc21d2ad33",
+            "chk-bee0aeaff4ce518d"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "meta-013",
+      "category": "metadata_library",
+      "query": "这本书有哪些章节？",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "chapter-catalog",
+      "concept": "这本书有哪些章节",
+      "context_count": 0,
+      "terms": [
+        {
+          "term": "章节",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        },
+        {
+          "term": "这本书有哪些章节",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "cit-001",
+      "category": "citation_negative",
+      "query": "GSM 使用 GMSK 调制，请指出出处。",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "GSM 使用 GMSK 调制，请指出",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "GMSK",
+          "source_chunk_count": 4,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第4章 GSM移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-9521642664e2b9d9",
+            "chk-eef9fec28eeb9787",
+            "chk-37ac40dd1b723d0c",
+            "chk-130b681ce8010b26"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "GSM 使用 GMSK 调制，请指出",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-130b681ce8010b26",
+            "chk-61a7acce435461ad",
+            "chk-82efa04a39687576",
+            "chk-09d1b35eb2e202b9",
+            "chk-df4314d23c2a73f6",
+            "chk-eef9fec28eeb9787",
+            "chk-9521642664e2b9d9",
+            "chk-37ac40dd1b723d0c",
+            "chk-e010f2305d03f303",
+            "chk-42b0cc0e507ca59d"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "cit-007",
+      "category": "citation_negative",
+      "query": "循环前缀的作用？请引用出处。",
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "循环前缀作用请引用",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "循环前缀",
+          "source_chunk_count": 9,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第6章 LTE移动通信系统"
+          ],
+          "lexical_top10_ids": [
+            "chk-54faa7621194b3a5",
+            "chk-009df139835b3554",
+            "chk-63cb278d2c511314",
+            "chk-c71fbb67781f9113",
+            "chk-a114378c5784da11",
+            "chk-53743d589ada69a9",
+            "chk-3b7cddc5e462c6c1",
+            "chk-32e407b6099efdd5",
+            "chk-936c7009b11dec0a",
+            "chk-627dde397f305dc3"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": true,
+          "verdict": "EVIDENCE_DELIVERED"
+        },
+        {
+          "term": "循环前缀作用请引用",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-54faa7621194b3a5",
+            "chk-009df139835b3554",
+            "chk-63cb278d2c511314",
+            "chk-c71fbb67781f9113",
+            "chk-a114378c5784da11",
+            "chk-53743d589ada69a9",
+            "chk-3b7cddc5e462c6c1",
+            "chk-32e407b6099efdd5",
+            "chk-936c7009b11dec0a",
+            "chk-627dde397f305dc3"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    },
+    {
+      "id": "cit-013",
+      "category": "citation_negative",
+      "query": "载波间隔是多少？请引用。",
+      "answer_state": "ANSWER_WITH_LIMITATION",
+      "out_of_scope": false,
+      "confidence": "high",
+      "retrieval_mode": "hybrid",
+      "concept": "载波间隔是多少请引用",
+      "context_count": 5,
+      "terms": [
+        {
+          "term": "200",
+          "source_chunk_count": 67,
+          "source_documents": [
+            "移动通信 (李兆玉)"
+          ],
+          "source_chapters": [
+            "第1章 移动通信概述",
+            "第2章 移动信道的传播特性与模型",
+            "第3章 抗衰落技术",
+            "第4章 GSM移动通信系统",
+            "第5章 WCDMA移动通信系统",
+            "第6章 LTE移动通信系统",
+            "第7章 新一代宽带移动通信"
+          ],
+          "lexical_top10_ids": [
+            "chk-5cda1a9543df831b",
+            "chk-06d2ccb7283a3318",
+            "chk-ab586ac97f382daa",
+            "chk-b9feafe1cefcb9a2",
+            "chk-34ce1ca62ba4f2b8",
+            "chk-baf7dbbc21d2ad33",
+            "chk-a52824514331e6cf",
+            "chk-8299898483421181",
+            "chk-99a73c7a395fd9cf"
+          ],
+          "lexical_reached_source": true,
+          "in_final_context": false,
+          "verdict": "RRF_RANKING_MISS"
+        },
+        {
+          "term": "载波间隔是多少请引用",
+          "source_chunk_count": 0,
+          "source_documents": [],
+          "source_chapters": [],
+          "lexical_top10_ids": [
+            "chk-45bcbeb70df659a6",
+            "chk-12eb8ead2caf6e7c",
+            "chk-986e3f72be7d9b0d",
+            "chk-3b7cddc5e462c6c1",
+            "chk-0b9b828ec7cc0409",
+            "chk-31effca15f5005a8",
+            "chk-189cd3d2b48d85ac",
+            "chk-f058c7bf6007f382",
+            "chk-c05127f9fe95cb15",
+            "chk-58d8d41e2d0801cc"
+          ],
+          "lexical_reached_source": false,
+          "in_final_context": false,
+          "verdict": "EVIDENCE_ABSENT_FROM_SOURCE"
+        }
+      ]
+    }
+  ]
+}

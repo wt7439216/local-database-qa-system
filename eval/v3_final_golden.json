@@ -15,14 +15,21 @@
       "citation_negative": "H. 引用负例"
     },
     "expected_totals": {
-      "single_fact_qa": 40,
+      "single_fact_qa": 41,
       "locate": 20,
       "compare": 20,
       "multi_turn": 20,
       "multi_document": 20,
-      "oos_hard_negative": 30,
+      "oos_hard_negative": 29,
       "metadata_library": 15,
       "citation_negative": 20
+    },
+    "expected_totals_correction": {
+      "corrected_in": "V4.2 (Evaluation Integrity)",
+      "changes": ["single_fact_qa: 40 -> 41", "oos_hard_negative: 30 -> 29"],
+      "method": "mechanical len([c for c in cases if c['category']==cat])",
+      "reason": "metadata was stale after oos-030 was reclassified/renamed to qa-041; no case was changed",
+      "semantic_impact": "NONE"
     }
   },
   "cases": [

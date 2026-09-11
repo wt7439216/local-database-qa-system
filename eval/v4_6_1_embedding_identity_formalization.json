@@ -1,0 +1,256 @@
+{
+  "producer": "scripts/build_v4_6_1_embedding_identity_formalization.py",
+  "stage": "V4.6.1",
+  "mode": "BASELINE_GOVERNANCE_FORMALIZATION",
+  "parent_baseline": {
+    "baseline_id": "V4_5_ROUTING_BASELINE",
+    "artifact": "eval/v4_5_routing_baseline.json",
+    "production_source_hash": "c36d61a1c4691201cb72c4bbed7932ba1f89dae26cb202ae5a5cf3483f824561"
+  },
+  "live_production_hash": "7216c885d9ab315333973b9af6d9e0406da2a316f0f7abdcf89bef686d70a22a",
+  "changed_production_files": [
+    "core/config.py",
+    "core/library_store.py",
+    "core/engine_v2.py"
+  ],
+  "changed_non_production_files": [
+    ".env.example",
+    "README.md",
+    "本地使用说明.md",
+    "docs/ARCHITECTURE.md",
+    "build_windows.ps1",
+    "tests/test_embedding_identity.py"
+  ],
+  "model_architecture": {
+    "answer_model": "qwen2.5:7b",
+    "embedding_model": "bge-m3",
+    "vector_backend": "sqlite",
+    "reranker_enabled": false,
+    "embedding_dimensions": {
+      "bge-m3": 1024,
+      "nomic-embed-text": 768
+    }
+  },
+  "stored_embedding_identity": {
+    "documents.sqlite3": {
+      "model": "bge-m3",
+      "dimension": 1024,
+      "has_vectors": true,
+      "chunks": 637,
+      "library_identity": "10698752:c6bc9b3eb63ae4e6"
+    },
+    "textbooks.sqlite3": {
+      "model": "bge-m3",
+      "dimension": 1024,
+      "has_vectors": true,
+      "chunks": 617
+    }
+  },
+  "validation_semantics": {
+    "authority": "stored library model/dimension (SQLite metadata + embeddings table)",
+    "checks": [
+      "configured model must equal stored model",
+      "stored dimension must equal the stored model's registered dimension"
+    ],
+    "failure_policy": "fail-closed (EmbeddingIdentityError) at engine startup",
+    "skip_conditions": [
+      "has_vectors == false",
+      "stored model has no registered profile"
+    ],
+    "no_auto_reembed": true,
+    "no_silent_model_switching": true,
+    "no_db_or_qdrant_writes": true,
+    "mechanical_checks": {
+      "correct_config_correct_db_starts": true,
+      "wrong_configured_model_raises": true,
+      "wrong_registered_dimension_raises": true,
+      "empty_new_db_allowed": true,
+      "unknown_profile_not_judged": true
+    }
+  },
+  "scope_gate_invariance": {
+    "default_dense_gates": {
+      "strong": 0.48,
+      "accept": 0.55,
+      "dense_only": 0.5
+    },
+    "model_dense_gates": {
+      "bge-m3": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      },
+      "nomic-embed-text": {
+        "strong": 0.48,
+        "accept": 0.55,
+        "dense_only": 0.5
+      }
+    },
+    "v4_4_frozen_gates": {
+      "strong": 0.48,
+      "accept": 0.55,
+      "dense_only": 0.5
+    },
+    "SCOPE_SEMANTICS_CHANGED": "NO"
+  },
+  "routing_invariance": {
+    "v4_5_targets_route": {
+      "md-004": "qa",
+      "md-019": "qa",
+      "cit-001": "qa",
+      "cit-007": "qa"
+    },
+    "targets_still_locate": [],
+    "query_router_in_changed_files": false,
+    "phase_e_passed": true,
+    "V4_5_ROUTING_TOUCHED": "NO"
+  },
+  "hard_regression": {
+    "false_refusal_rate": 0.0,
+    "false_refusal_le_0_03": true,
+    "pure_OOS_false_accept": 0,
+    "pure_OOS_false_accept_zero": true,
+    "scope_leakage": 0,
+    "scope_leakage_zero": true,
+    "scope_regression": {
+      "PURE_OOS_TOTAL": 7,
+      "PURE_OOS_REFUSED": 7,
+      "PURE_OOS_FALSE_ACCEPT": 0,
+      "SEMANTIC_TRAP_TOTAL": 22,
+      "SEMANTIC_TRAP_NEWLY_REFUSED": [],
+      "v4_4_targets": {
+        "loc-018": {
+          "route": "locate",
+          "out_of_scope": false,
+          "contexts": 5,
+          "false_oos": false,
+          "leaked_contexts": 0
+        },
+        "mt-006": {
+          "route": "qa",
+          "out_of_scope": false,
+          "contexts": 5,
+          "false_oos": false,
+          "leaked_contexts": 0
+        },
+        "md-014": {
+          "route": "qa",
+          "out_of_scope": false,
+          "contexts": 5,
+          "false_oos": false,
+          "leaked_contexts": 0
+        }
+      },
+      "scope_leakage": 0
+    }
+  },
+  "existing_data_safety": {
+    "documents_sqlite3_sha256_before": "c6bc9b3eb63ae4e6d96caf859a2b0c5f2f1e5a5b6f438e81aa0bbc3cf4084c97",
+    "documents_sqlite3_sha256_after": "c6bc9b3eb63ae4e6d96caf859a2b0c5f2f1e5a5b6f438e81aa0bbc3cf4084c97",
+    "unchanged": true,
+    "wal_or_shm_present": false,
+    "EXISTING_VECTOR_DATA_SAFE": "YES"
+  },
+  "full_eval_metrics": {
+    "parent": {
+      "case_exact_fact_match_rate": 0.7292,
+      "fact_recall": 0.8535,
+      "false_refusal_rate": 0.0,
+      "citation_coverage": 0.4783,
+      "high_confidence_unsupported_rate": 0.0112,
+      "invalid_citation_count": 0,
+      "citation_scope_violation": 0
+    },
+    "stage": {
+      "case_exact_fact_match_rate": 0.7292,
+      "fact_recall": 0.8535,
+      "false_refusal_rate": 0.0,
+      "citation_coverage": 0.4657,
+      "high_confidence_unsupported_rate": 0.0132,
+      "invalid_citation_count": 0,
+      "citation_scope_violation": 0
+    },
+    "delta": {
+      "case_exact_fact_match_rate": 0.0,
+      "fact_recall": 0.0,
+      "false_refusal_rate": 0.0,
+      "citation_coverage": -0.0126,
+      "high_confidence_unsupported_rate": 0.002
+    },
+    "eligible_cases": 144,
+    "answer_artifact_sha256": "52d7fb08e64d89e5ddf8f550abdce4583695ea4d99c94a85b87476637cff7f0c"
+  },
+  "citation_coverage_delta_attribution": {
+    "metric": "citation_coverage",
+    "parent": 0.4783,
+    "stage": 0.4657,
+    "status": "NOT_RESOLVED_IN_V4_6_1",
+    "statement": "The citation-coverage delta comes from a new stochastic generation batch (new production-hash-bound answer cache) and is not causally attributed in this formalization stage. It is not a product-regression claim.",
+    "causally_conservative": true
+  },
+  "baseline_artifact": "eval/v4_6_1_embedding_identity_baseline.json",
+  "lineage_update": {
+    "artifact": "eval/v4_baseline_lineage.json",
+    "current_baseline_id": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+    "chain": [
+      "V4_INITIAL_BASELINE",
+      "V4_4_SCOPE_REMEDIATION_BASELINE",
+      "V4_5_ROUTING_BASELINE",
+      "V4_6_1_EMBEDDING_IDENTITY_BASELINE"
+    ],
+    "historical_entries_measurement_fields_untouched": true,
+    "superseded_stage_status": {
+      "V4_5_ROUTING_BASELINE": "IMMUTABLE_STAGE"
+    }
+  },
+  "live_hash_guard": {
+    "test": "tests/test_live_production_hash_guard.py",
+    "live_production_source_hash": "7216c885d9ab315333973b9af6d9e0406da2a316f0f7abdcf89bef686d70a22a",
+    "recorded_baseline_hash": "7216c885d9ab315333973b9af6d9e0406da2a316f0f7abdcf89bef686d70a22a",
+    "LIVE_PRODUCTION_DRIFT_DETECTION": "ENABLED"
+  },
+  "historical_baseline_byte_identity": {
+    "eval/v4_initial_baseline.json": {
+      "expected": "371506a99ec7094cad486acb108f33fb66e6a357f31e9ed9e23fcd6ac1f5870f",
+      "actual": "371506a99ec7094cad486acb108f33fb66e6a357f31e9ed9e23fcd6ac1f5870f",
+      "unchanged": true
+    },
+    "eval/v4_4_scope_remediation_baseline.json": {
+      "expected": "87ff7cffd3312178c355b03e630f5cf953038c597e5eb4398693210cb65031b5",
+      "actual": "87ff7cffd3312178c355b03e630f5cf953038c597e5eb4398693210cb65031b5",
+      "unchanged": true
+    },
+    "eval/v4_5_routing_baseline.json": {
+      "expected": "f69ffea27309f69b003827682767e11cba53b21c7d2412c103ea26a6ad2715f9",
+      "actual": "f69ffea27309f69b003827682767e11cba53b21c7d2412c103ea26a6ad2715f9",
+      "unchanged": true
+    },
+    "eval/v3_final_golden.json": {
+      "expected": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+      "actual": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+      "unchanged": true
+    }
+  },
+  "gate_results": {
+    "G1_audited_change_set_retained_unchanged": true,
+    "G2_bge_m3_1024_stored_identity_confirmed": true,
+    "G3_config_model_alignment_confirmed": true,
+    "G4_engine_startup_identity_validation_confirmed": true,
+    "G5_existing_vector_data_unchanged": true,
+    "G6_scope_semantics_unchanged": true,
+    "G7_v4_5_routing_regression_pass": true,
+    "G8_phase_e_pass": true,
+    "G9_f2_citation_safety_pass": true,
+    "G10_full_144_evaluation_on_new_hash": true,
+    "G11_new_independent_stage_baseline_created": true,
+    "G12_historical_baselines_unchanged": true,
+    "G13_lineage_parent_child_correct": true,
+    "G14_current_pointer_advanced": true,
+    "G15_live_production_hash_guard_passed": true,
+    "G16_golden_evaluator_contract_unchanged": true,
+    "G17_v3_publish_untouched": true,
+    "V4_6_1_GATE_PASS": true
+  },
+  "timestamp": "2026-09-11T23:20:25",
+  "started": "2026-09-11T23:19:12"
+}

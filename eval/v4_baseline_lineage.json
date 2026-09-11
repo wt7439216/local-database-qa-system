@@ -1,0 +1,126 @@
+{
+  "producer": "scripts/build_v4_baseline_lineage.py",
+  "produced_in": "V4.6.1 Embedding Identity & Model Alignment",
+  "immutability_rule": "Historical stage baselines are immutable. A later remediation creates a new baseline artifact; it never rewrites an earlier stage baseline. eval/v4_initial_baseline.json is permanently the pre-remediation V4 initial state and must never be used as a rolling 'current' baseline. The current pointer lives only in eval/v4_baseline_lineage.json.",
+  "current_baseline_id": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+  "baselines": [
+    {
+      "baseline_id": "V4_INITIAL_BASELINE",
+      "stage": "V4.2",
+      "role": "PRE_REMEDIATION_INITIAL_STATE",
+      "metric_artifact": "eval/v4_initial_baseline.json",
+      "production_source_hash": "ceb4e1244cf9f2653ba795d776b21d6e332dec8a42a9803634f592e0479b0cce",
+      "answer_artifact_sha256": "7da8547cd08c6144cdfc1ac5300ed44ca446971dfc4ae075711c9b9aef0a9f80",
+      "golden_identity": {
+        "file_sha256": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+        "cases_sha256": "0837e83333c858c6fe0229a06f9e0a3efb25505b03bab5acc3148a6b0af2ad5e"
+      },
+      "evaluator_version": "v4-baseline-v1",
+      "citation_verifier_version": "f2-v4",
+      "parent_baseline": null,
+      "status": "IMMUTABLE_HISTORICAL",
+      "immutable": true,
+      "metrics": {
+        "case_exact_fact_match_rate": 0.7083,
+        "fact_recall": 0.8312,
+        "false_refusal_rate": 0.0208,
+        "citation_coverage": 0.4893,
+        "high_confidence_unsupported_rate": 0.0095,
+        "invalid_citation_count": 0,
+        "citation_scope_violation": 0
+      },
+      "timestamp": "2026-09-10T21:34:09"
+    },
+    {
+      "baseline_id": "V4_4_SCOPE_REMEDIATION_BASELINE",
+      "stage": "V4.4",
+      "role": "POST_V4_4_SCOPE_REMEDIATION_BASELINE",
+      "metric_artifact": "eval/v4_4_scope_remediation_baseline.json",
+      "production_source_hash": "dc35c6eb961d99955e34a62695c2659e14710dd334166dc8481a57436b72a84a",
+      "answer_artifact_sha256": "e88c412f8a5cb40f66bd45b2c81cc632d3f7587ecd4e306e39e4d38290b94e6b",
+      "golden_identity": {
+        "file_sha256": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+        "cases_sha256": "0837e83333c858c6fe0229a06f9e0a3efb25505b03bab5acc3148a6b0af2ad5e"
+      },
+      "evaluator_version": "v4-baseline-v1",
+      "citation_verifier_version": "f2-v4",
+      "parent_baseline": "V4_INITIAL_BASELINE",
+      "status": "IMMUTABLE_STAGE",
+      "immutable": true,
+      "metrics": {
+        "case_exact_fact_match_rate": 0.7222,
+        "fact_recall": 0.8535,
+        "false_refusal_rate": 0.0,
+        "citation_coverage": 0.469,
+        "high_confidence_unsupported_rate": 0.0134,
+        "invalid_citation_count": 0,
+        "citation_scope_violation": 0
+      },
+      "timestamp": "2026-09-11T00:22:10"
+    },
+    {
+      "baseline_id": "V4_5_ROUTING_BASELINE",
+      "stage": "V4.5",
+      "role": "POST_V4_5_ROUTING_BASELINE",
+      "metric_artifact": "eval/v4_5_routing_baseline.json",
+      "production_source_hash": "c36d61a1c4691201cb72c4bbed7932ba1f89dae26cb202ae5a5cf3483f824561",
+      "answer_artifact_sha256": "5f856dc2066830e686d8da81a4a9c19aeb8081ca887f49143fd2e6444fbaf618",
+      "golden_identity": {
+        "file_sha256": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+        "cases_sha256": "0837e83333c858c6fe0229a06f9e0a3efb25505b03bab5acc3148a6b0af2ad5e"
+      },
+      "evaluator_version": "v4-baseline-v1",
+      "citation_verifier_version": "f2-v4",
+      "parent_baseline": "V4_4_SCOPE_REMEDIATION_BASELINE",
+      "status": "IMMUTABLE_STAGE",
+      "immutable": true,
+      "metrics": {
+        "case_exact_fact_match_rate": 0.7292,
+        "fact_recall": 0.8535,
+        "false_refusal_rate": 0.0,
+        "citation_coverage": 0.4783,
+        "high_confidence_unsupported_rate": 0.0112,
+        "invalid_citation_count": 0,
+        "citation_scope_violation": 0
+      },
+      "timestamp": "2026-09-11T01:49:43"
+    },
+    {
+      "baseline_id": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+      "stage": "V4.6.1",
+      "role": "POST_V4_6_1_EMBEDDING_IDENTITY_ALIGNMENT",
+      "metric_artifact": "eval/v4_6_1_embedding_identity_baseline.json",
+      "production_source_hash": "7216c885d9ab315333973b9af6d9e0406da2a316f0f7abdcf89bef686d70a22a",
+      "answer_artifact_sha256": "52d7fb08e64d89e5ddf8f550abdce4583695ea4d99c94a85b87476637cff7f0c",
+      "golden_identity": {
+        "file_sha256": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+        "cases_sha256": "0837e83333c858c6fe0229a06f9e0a3efb25505b03bab5acc3148a6b0af2ad5e"
+      },
+      "evaluator_version": "v4-baseline-v1",
+      "citation_verifier_version": "f2-v4",
+      "parent_baseline": "V4_5_ROUTING_BASELINE",
+      "status": "CURRENT_PRODUCT_STATE",
+      "immutable": true,
+      "metrics": {
+        "case_exact_fact_match_rate": 0.7292,
+        "fact_recall": 0.8535,
+        "false_refusal_rate": 0.0,
+        "citation_coverage": 0.4657,
+        "high_confidence_unsupported_rate": 0.0132,
+        "invalid_citation_count": 0,
+        "citation_scope_violation": 0
+      },
+      "timestamp": "2026-09-11T23:17:22"
+    }
+  ],
+  "clobbered_in_v4_4": {
+    "artifact": "eval/v4_initial_baseline.json",
+    "problem": "the V4.2 canonical evaluator writes to a single rolling path; the post-V4.4 full run overwrote the immutable initial baseline",
+    "resolution": "restored the V4.2 content from the V4.4 pre-patch snapshot and moved the post-V4.4 measurement into its own stage artifact",
+    "restore_source": "eval/v4_initial_baseline_prefix_v4.2.json (removed after restore; the restored file is byte-identical to it)",
+    "restored_sha256": "371506a99ec7094cad486acb108f33fb66e6a357f31e9ed9e23fcd6ac1f5870f",
+    "next_phase_advice": "scripts/eval_v4_baseline.py accepts --baseline-id / --baseline-role / --out so future stages write a NEW artifact instead of overwriting",
+    "restore_source_sha256": "371506a99ec7094cad486acb108f33fb66e6a357f31e9ed9e23fcd6ac1f5870f"
+  },
+  "timestamp": "2026-09-11T23:18:05"
+}

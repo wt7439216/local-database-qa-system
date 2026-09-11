@@ -149,5 +149,13 @@
     "document-level metadata query",
     "L2 semantic verifier (NLI / LLM Judge)"
   ],
-  "l2_trigger_condition": "If the frozen Product Quality Gate (v1.0) cannot be reached by deterministic L1 alone, reopen L2 evaluation. This is a trigger condition, NOT implementation authorization."
+  "l2_trigger_condition": "If the frozen Product Quality Gate (v1.0) cannot be reached by deterministic L1 alone, reopen L2 evaluation. This is a trigger condition, NOT implementation authorization.",
+  "canonical_baseline": {
+    "artifact": "eval/v4_initial_baseline.json",
+    "producer": "scripts/eval_v4_baseline.py",
+    "status": "SUPERSEDES_THE_V1_0_CURRENT_BASELINE",
+    "added_in": "V4.2 (Evaluation Integrity)",
+    "note": "The current_baseline values in this frozen v1.0 contract are the historical Final Truthfulness Audit / F.4.1 measurements (verifier f2-v2). They are retained for provenance only. The authoritative V4 baseline is produced by the canonical evaluator (verifier f2-v4). Quality thresholds (Target tier) above are unchanged and remain frozen.",
+    "regression_floor_caveat": "citation_coverage regression_threshold (>=0.55) was calibrated on the pre-V4 verification definition; the canonical V4 value is measured under verifier f2-v4 and is not directly comparable. Re-deriving regression floors requires explicit user authorization and was deliberately NOT done in V4.2."
+  }
 }

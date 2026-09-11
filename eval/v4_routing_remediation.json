@@ -1,0 +1,2477 @@
+{
+  "producer": "scripts/eval_v4_routing_remediation.py",
+  "stage": "V4.5",
+  "parent_baseline": {
+    "baseline_id": "V4_4_SCOPE_REMEDIATION_BASELINE",
+    "artifact": "eval/v4_4_scope_remediation_baseline.json",
+    "production_source_hash": "dc35c6eb961d99955e34a62695c2659e14710dd334166dc8481a57436b72a84a"
+  },
+  "implementation_files": [
+    {
+      "file": "core/query_router.py",
+      "symbol": "is_location_intent() / classify_route()",
+      "before_behavior": "classify_route() treated ANY LOCATION_WORDS substring as a locate intent (unconditional `any(word in normalized for word in LOCATION_WORDS)`)",
+      "after_behavior": "LOCATION_WORDS remain the lexical inventory (clean_location_query is untouched), but the routing decision now requires a *positional* reading: '在哪' + document/collection container is not positional, and '出处'/'来源' are provenance (citation), not positions",
+      "target_cases": [
+        "md-004",
+        "md-019",
+        "cit-001",
+        "cit-007"
+      ],
+      "why_required": "the frozen pre-patch evidence shows all four targets were routed to the deterministic locate template although their golden expected_route is qa; the template cannot answer them",
+      "risk": "a too-broad suppression would swallow genuine locate queries; guarded by the frozen Phase E locate cases, the 20 golden locate cases and the explicit adversarial direction tests"
+    }
+  ],
+  "root_cause": {
+    "common_mechanism": "classify_route() treated any LOCATION_WORDS substring hit as a locate intent, so questions whose primary intent is document identity (which document) or provenance (citation source) were pushed into the deterministic locate template",
+    "matched_keywords": [
+      "在哪",
+      "出处"
+    ],
+    "per_case": {
+      "md-004": "the bare substring '在哪' matched inside '在哪些文档' (LOCATION_WORDS)",
+      "md-019": "the bare substring '在哪' matched inside '在哪个文档' (LOCATION_WORDS)",
+      "cit-001": "the word '出处' matched (LOCATION_WORDS); a provenance/citation request is not a position request",
+      "cit-007": "the word '出处' matched (LOCATION_WORDS); a provenance/citation request is not a position request"
+    },
+    "attribution": "ROUTING (not scope / retrieval / document identity / generation / citation / golden)"
+  },
+  "target_cases": [
+    {
+      "case_id": "md-004",
+      "category": "multi_document",
+      "original_query": "分集接收在哪些文档中被提到？",
+      "history": null,
+      "normalized_query": "分集接收在哪些文档中被提到",
+      "matched_location_words": [
+        "在哪"
+      ],
+      "matched_chapter_words": [],
+      "matched_route_rule_before": "LOCATE_PATTERN",
+      "route_precedence": "book_toc > deferred_metadata > compare > chapter_overview > book_overview > locate_chapter > locate > qa",
+      "route_before": "locate",
+      "expected_route": "qa",
+      "route_after": "qa",
+      "is_location_intent_before": true,
+      "is_location_intent_after": false,
+      "reason_incorrect_locate_won": "the bare substring '在哪' matched inside '在哪些文档' (LOCATION_WORDS)"
+    },
+    {
+      "case_id": "md-019",
+      "category": "multi_document",
+      "original_query": "GSM 和 WCDMA 需要对抗多径衰落，这一结论在哪个文档中？",
+      "history": null,
+      "normalized_query": "GSM和WCDMA需要对抗多径衰落这一结论在哪个文档中",
+      "matched_location_words": [
+        "在哪"
+      ],
+      "matched_chapter_words": [],
+      "matched_route_rule_before": "LOCATE_PATTERN",
+      "route_precedence": "book_toc > deferred_metadata > compare > chapter_overview > book_overview > locate_chapter > locate > qa",
+      "route_before": "locate",
+      "expected_route": "qa",
+      "route_after": "qa",
+      "is_location_intent_before": true,
+      "is_location_intent_after": false,
+      "reason_incorrect_locate_won": "the bare substring '在哪' matched inside '在哪个文档' (LOCATION_WORDS)"
+    },
+    {
+      "case_id": "cit-001",
+      "category": "citation_negative",
+      "original_query": "GSM 使用 GMSK 调制，请指出出处。",
+      "history": null,
+      "normalized_query": "GSM使用GMSK调制请指出出处",
+      "matched_location_words": [
+        "出处"
+      ],
+      "matched_chapter_words": [],
+      "matched_route_rule_before": "LOCATE_PATTERN",
+      "route_precedence": "book_toc > deferred_metadata > compare > chapter_overview > book_overview > locate_chapter > locate > qa",
+      "route_before": "locate",
+      "expected_route": "qa",
+      "route_after": "qa",
+      "is_location_intent_before": true,
+      "is_location_intent_after": false,
+      "reason_incorrect_locate_won": "the word '出处' matched (LOCATION_WORDS); a provenance/citation request is not a position request"
+    },
+    {
+      "case_id": "cit-007",
+      "category": "citation_negative",
+      "original_query": "循环前缀的作用？请引用出处。",
+      "history": null,
+      "normalized_query": "循环前缀的作用请引用出处",
+      "matched_location_words": [
+        "出处"
+      ],
+      "matched_chapter_words": [],
+      "matched_route_rule_before": "LOCATE_PATTERN",
+      "route_precedence": "book_toc > deferred_metadata > compare > chapter_overview > book_overview > locate_chapter > locate > qa",
+      "route_before": "locate",
+      "expected_route": "qa",
+      "route_after": "qa",
+      "is_location_intent_before": true,
+      "is_location_intent_after": false,
+      "reason_incorrect_locate_won": "the word '出处' matched (LOCATION_WORDS); a provenance/citation request is not a position request"
+    }
+  ],
+  "before_after_route_traces": {
+    "source_of_before": "eval/v4_attribution_evidence.json (frozen pre-patch actual_route, 144 eligible cases)",
+    "total_golden_cases": 185,
+    "changed_cases": [
+      "md-004",
+      "md-019",
+      "cit-001",
+      "cit-007"
+    ],
+    "rows": [
+      {
+        "id": "qa-001",
+        "category": "single_fact_qa",
+        "query": "什么是 Um 接口？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-002",
+        "category": "single_fact_qa",
+        "query": "LTE 为什么采用 OFDMA？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-003",
+        "category": "single_fact_qa",
+        "query": "香农公式中的信道容量如何计算？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-004",
+        "category": "single_fact_qa",
+        "query": "什么是软切换？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-005",
+        "category": "single_fact_qa",
+        "query": "什么是多径效应？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-006",
+        "category": "single_fact_qa",
+        "query": "什么是分集接收？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-007",
+        "category": "single_fact_qa",
+        "query": "什么是频率复用？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-008",
+        "category": "single_fact_qa",
+        "query": "GSM 采用什么调制方式？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-009",
+        "category": "single_fact_qa",
+        "query": "什么是漫游？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-010",
+        "category": "single_fact_qa",
+        "query": "什么是切换？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-011",
+        "category": "single_fact_qa",
+        "query": "什么是交织？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-012",
+        "category": "single_fact_qa",
+        "query": "什么是均衡？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-013",
+        "category": "single_fact_qa",
+        "query": "扩频技术的优点有哪些？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-014",
+        "category": "single_fact_qa",
+        "query": "RAKE 接收机的原理是什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-015",
+        "category": "single_fact_qa",
+        "query": "快衰落和慢衰落有什么区别？",
+        "expected_route": "qa",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "qa-016",
+        "category": "single_fact_qa",
+        "query": "什么是多址接入？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-017",
+        "category": "single_fact_qa",
+        "query": "FDMA、TDMA、CDMA 分别是什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-018",
+        "category": "single_fact_qa",
+        "query": "什么是硬切换？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-019",
+        "category": "single_fact_qa",
+        "query": "循环前缀的作用是什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-020",
+        "category": "single_fact_qa",
+        "query": "什么是正交频分复用？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-021",
+        "category": "single_fact_qa",
+        "query": "Turbo 码有什么特点？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-022",
+        "category": "single_fact_qa",
+        "query": "多径传播会导致什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-023",
+        "category": "single_fact_qa",
+        "query": "RAKE 接收机是哪个系统的关键部件？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-024",
+        "category": "single_fact_qa",
+        "query": "OFDMA 是哪个系统采用的多址方式？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-025",
+        "category": "single_fact_qa",
+        "query": "分集接收通过什么方式对抗衰落？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-026",
+        "category": "single_fact_qa",
+        "query": "均衡技术的作用是什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-027",
+        "category": "single_fact_qa",
+        "query": "GSM 和 WCDMA 都需要对抗什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-028",
+        "category": "single_fact_qa",
+        "query": "香农公式中 B 代表什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-029",
+        "category": "single_fact_qa",
+        "query": "香农公式中 S/N 代表什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-030",
+        "category": "single_fact_qa",
+        "query": "多径信号叠加会导致什么现象？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-031",
+        "category": "single_fact_qa",
+        "query": "什么是扩频通信？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-032",
+        "category": "single_fact_qa",
+        "query": "CDMA 使用什么区分用户？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-033",
+        "category": "single_fact_qa",
+        "query": "移动信道的主要现象是什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-034",
+        "category": "single_fact_qa",
+        "query": "WCDMA 采用什么调制方式？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-035",
+        "category": "single_fact_qa",
+        "query": "交织技术主要用于对抗什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-036",
+        "category": "single_fact_qa",
+        "query": "什么是小区？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-037",
+        "category": "single_fact_qa",
+        "query": "移动通信系统为什么要切换？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-038",
+        "category": "single_fact_qa",
+        "query": "OFDM 如何利用频谱？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-039",
+        "category": "single_fact_qa",
+        "query": "什么是分集增益？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-040",
+        "category": "single_fact_qa",
+        "query": "多址接入有哪几种主要方式？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "loc-001",
+        "category": "locate",
+        "query": "多径衰落在哪一页？",
+        "expected_route": "locate",
+        "route_before": "locate",
+        "route_after": "locate",
+        "changed": false
+      },
+      {
+        "id": "loc-002",
+        "category": "locate",
+        "query": "软切换在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "changed": false
+      },
+      {
+        "id": "loc-003",
+        "category": "locate",
+        "query": "分集技术在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "changed": false
+      },
+      {
+        "id": "loc-004",
+        "category": "locate",
+        "query": "漫游在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "changed": false
+      },
+      {
+        "id": "loc-005",
+        "category": "locate",
+        "query": "频率复用在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "changed": false
+      },
+      {
+        "id": "loc-006",
+        "category": "locate",
+        "query": "多址接入技术在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "changed": false
+      },
+      {
+        "id": "loc-007",
+        "category": "locate",
+        "query": "扩频技术在哪里讲到？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate",
+        "route_after": "locate",
+        "changed": false
+      },
+      {
+        "id": "loc-008",
+        "category": "locate",
+        "query": "RAKE 接收机在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "changed": false
+      },
+      {
+        "id": "loc-009",
+        "category": "locate",
+        "query": "香农公式在书里的哪个部分？",
+        "expected_route": "locate",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "loc-010",
+        "category": "locate",
+        "query": "均衡技术的相关章节是哪些？",
+        "expected_route": "locate_chapter",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "loc-011",
+        "category": "locate",
+        "query": "哪里讲到了循环前缀？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate",
+        "route_after": "locate",
+        "changed": false
+      },
+      {
+        "id": "loc-012",
+        "category": "locate",
+        "query": "交织技术在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "changed": false
+      },
+      {
+        "id": "loc-013",
+        "category": "locate",
+        "query": "OFDM 在哪一章介绍？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "changed": false
+      },
+      {
+        "id": "loc-014",
+        "category": "locate",
+        "query": "多径传播在哪里有详细说明？",
+        "expected_route": "locate",
+        "route_before": "locate",
+        "route_after": "locate",
+        "changed": false
+      },
+      {
+        "id": "loc-015",
+        "category": "locate",
+        "query": "GSM 调制方式在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "changed": false
+      },
+      {
+        "id": "loc-016",
+        "category": "locate",
+        "query": "在测试文档里，多径传播是第几节？",
+        "expected_route": "locate",
+        "route_before": "locate",
+        "route_after": "locate",
+        "changed": false
+      },
+      {
+        "id": "loc-017",
+        "category": "locate",
+        "query": "抗衰落技术是测试文档的第几节？",
+        "expected_route": "locate",
+        "route_before": "locate",
+        "route_after": "locate",
+        "changed": false
+      },
+      {
+        "id": "loc-018",
+        "category": "locate",
+        "query": "参数表在测试文档的哪个位置？",
+        "expected_route": "locate",
+        "route_before": "locate",
+        "route_after": "locate",
+        "changed": false
+      },
+      {
+        "id": "loc-019",
+        "category": "locate",
+        "query": "切换相关的内容在教材哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "changed": false
+      },
+      {
+        "id": "loc-020",
+        "category": "locate",
+        "query": "Turbo 码在教材哪里？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate",
+        "route_after": "locate",
+        "changed": false
+      },
+      {
+        "id": "cmp-001",
+        "category": "compare",
+        "query": "GSM 和 WCDMA 有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-002",
+        "category": "compare",
+        "query": "硬切换和软切换的区别是什么？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-003",
+        "category": "compare",
+        "query": "快衰落和慢衰落有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-004",
+        "category": "compare",
+        "query": "FDMA 和 TDMA 有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-005",
+        "category": "compare",
+        "query": "CDMA 和 FDMA 有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-006",
+        "category": "compare",
+        "query": "TDMA 和 CDMA 有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-007",
+        "category": "compare",
+        "query": "OFDM 和 OFDMA 有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-008",
+        "category": "compare",
+        "query": "分集和均衡有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-009",
+        "category": "compare",
+        "query": "交织和分集有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-010",
+        "category": "compare",
+        "query": "RAKE 接收机和均衡器有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-011",
+        "category": "compare",
+        "query": "GMSK 和 QPSK 有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-012",
+        "category": "compare",
+        "query": "2G 和 3G 系统有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-013",
+        "category": "compare",
+        "query": "硬切换和软切换在连接顺序上有什么不同？",
+        "expected_route": "compare",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cmp-014",
+        "category": "compare",
+        "query": "频分复用和码分复用有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-015",
+        "category": "compare",
+        "query": "教材里的 RAKE 和测试文档里的 RAKE 描述一致吗？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-016",
+        "category": "compare",
+        "query": "教材和测试文档对多径传播的描述有什么异同？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-017",
+        "category": "compare",
+        "query": "多径衰落和阴影衰落有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-018",
+        "category": "compare",
+        "query": "交织和卷积码有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-019",
+        "category": "compare",
+        "query": "软切换相比硬切换有什么优点？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "cmp-020",
+        "category": "compare",
+        "query": "OFDMA 相比 CDMA 有什么特点？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "mt-001",
+        "category": "multi_turn",
+        "query": "它有什么优点？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-002",
+        "category": "multi_turn",
+        "query": "它的带宽是多少？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-003",
+        "category": "multi_turn",
+        "query": "那第二章呢？",
+        "expected_route": "chapter_overview",
+        "route_before": "chapter_overview",
+        "route_after": "chapter_overview",
+        "changed": false
+      },
+      {
+        "id": "mt-004",
+        "category": "multi_turn",
+        "query": "它为什么要加循环前缀？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-005",
+        "category": "multi_turn",
+        "query": "它们有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "mt-006",
+        "category": "multi_turn",
+        "query": "那它呢？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-007",
+        "category": "multi_turn",
+        "query": "它有什么缺点？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-008",
+        "category": "multi_turn",
+        "query": "那扩频呢？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-009",
+        "category": "multi_turn",
+        "query": "它有哪些类型？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-010",
+        "category": "multi_turn",
+        "query": "前者有什么优点？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-011",
+        "category": "multi_turn",
+        "query": "那后者呢？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-012",
+        "category": "multi_turn",
+        "query": "它的原理是什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-013",
+        "category": "multi_turn",
+        "query": "再详细讲讲？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-014",
+        "category": "multi_turn",
+        "query": "这和香农公式有什么关系？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-015",
+        "category": "multi_turn",
+        "query": "它怎么对抗多径？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-016",
+        "category": "multi_turn",
+        "query": "现在讲一下 CDMA 吧。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-017",
+        "category": "multi_turn",
+        "query": "今天天气怎么样？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-018",
+        "category": "multi_turn",
+        "query": "它和均衡有什么区别？",
+        "expected_route": "compare",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "mt-019",
+        "category": "multi_turn",
+        "query": "为什么它能抗干扰？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "mt-020",
+        "category": "multi_turn",
+        "query": "那它的缺点呢？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-001",
+        "category": "multi_document",
+        "query": "教材和测试文档都提到的抗衰落技术有哪些？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-002",
+        "category": "multi_document",
+        "query": "RAKE 接收机在教材和测试文档中分别如何描述？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-003",
+        "category": "multi_document",
+        "query": "测试文档里的多径传播定义和教材是否一致？",
+        "expected_route": "qa",
+        "route_before": "compare",
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "md-004",
+        "category": "multi_document",
+        "query": "分集接收在哪些文档中被提到？",
+        "expected_route": "qa",
+        "route_before": "locate",
+        "route_after": "qa",
+        "changed": true
+      },
+      {
+        "id": "md-005",
+        "category": "multi_document",
+        "query": "均衡技术在这两个文档中如何描述？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-006",
+        "category": "multi_document",
+        "query": "GSM 的调制方式在测试文档中有提到吗？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-007",
+        "category": "multi_document",
+        "query": "OFDMA 在教材和测试文档中分别怎么说的？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-008",
+        "category": "multi_document",
+        "query": "所有文档中关于抗衰落的共同结论是什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-009",
+        "category": "multi_document",
+        "query": "哪些文档提到了 RAKE 接收机？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-010",
+        "category": "multi_document",
+        "query": "教材里多径效应的描述和测试文档的多径传播有什么关系？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-011",
+        "category": "multi_document",
+        "query": "测试文档的参数表里有哪些术语？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-012",
+        "category": "multi_document",
+        "query": "分集和均衡在测试文档参数表中的含义分别是什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-013",
+        "category": "multi_document",
+        "query": "测试文档里多径的含义是什么？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-014",
+        "category": "multi_document",
+        "query": "教材和测试文档都涉及的系统有哪些？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-015",
+        "category": "multi_document",
+        "query": "哪份文档明确把 OFDMA 与 LTE 关联？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-016",
+        "category": "multi_document",
+        "query": "多径传播在多份文档中的定义是否都提到衰落？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-017",
+        "category": "multi_document",
+        "query": "测试文档中 RAKE 接收机属于哪个系统？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-018",
+        "category": "multi_document",
+        "query": "抗衰落技术中，教材和测试文档都强调的方法是哪些？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "md-019",
+        "category": "multi_document",
+        "query": "GSM 和 WCDMA 需要对抗多径衰落，这一结论在哪个文档中？",
+        "expected_route": "qa",
+        "route_before": "locate",
+        "route_after": "qa",
+        "changed": true
+      },
+      {
+        "id": "md-020",
+        "category": "multi_document",
+        "query": "把教材和测试文档关于分集接收的信息综合一下。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-001",
+        "category": "oos_hard_negative",
+        "query": "今天天气怎么样？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-002",
+        "category": "oos_hard_negative",
+        "query": "番茄炒蛋怎么做？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-003",
+        "category": "oos_hard_negative",
+        "query": "最近的股票行情怎么样？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-004",
+        "category": "oos_hard_negative",
+        "query": "帮我写一首诗。",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-005",
+        "category": "oos_hard_negative",
+        "query": "帮我写一份求职简历。",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-006",
+        "category": "oos_hard_negative",
+        "query": "NBA 昨天的比赛比分是多少？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-007",
+        "category": "oos_hard_negative",
+        "query": "什么是量子纠缠？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-008",
+        "category": "oos_hard_negative",
+        "query": "什么是区块链共识算法？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-009",
+        "category": "oos_hard_negative",
+        "query": "多普勒效应在雷达中如何应用？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-010",
+        "category": "oos_hard_negative",
+        "query": "码分多址在量子通信中的应用？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-011",
+        "category": "oos_hard_negative",
+        "query": "5G 的毫米波频段具体是多少 GHz？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-012",
+        "category": "oos_hard_negative",
+        "query": "6G 网络的目标速率是多少？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-013",
+        "category": "oos_hard_negative",
+        "query": "LTE-A 相比 LTE 新增了哪些特性？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "compare",
+        "changed": false
+      },
+      {
+        "id": "oos-014",
+        "category": "oos_hard_negative",
+        "query": "今天最新的通信标准是什么？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-015",
+        "category": "oos_hard_negative",
+        "query": "最近 5G 基站建设进展如何？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-016",
+        "category": "oos_hard_negative",
+        "query": "香农公式在股票预测中如何应用？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-017",
+        "category": "oos_hard_negative",
+        "query": "OFDM 在自动驾驶中如何应用？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-018",
+        "category": "oos_hard_negative",
+        "query": "RAKE 接收机在生物医学信号处理中的应用？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-019",
+        "category": "oos_hard_negative",
+        "query": "信道编码在图像压缩中的作用是什么？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-020",
+        "category": "oos_hard_negative",
+        "query": "CDMA 在加密货币中的应用？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-021",
+        "category": "oos_hard_negative",
+        "query": "系统不支持多用户并行传输，对吗？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-022",
+        "category": "oos_hard_negative",
+        "query": "多径传播不会导致衰落，对吗？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-023",
+        "category": "oos_hard_negative",
+        "query": "信号衰落导致多径传播，对吗？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-024",
+        "category": "oos_hard_negative",
+        "query": "均衡器导致码间串扰，对吗？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-025",
+        "category": "oos_hard_negative",
+        "query": "GSM 的带宽大于 LTE 的带宽，对吗？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-026",
+        "category": "oos_hard_negative",
+        "query": "4G 的速率高于 5G 的速率，对吗？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-027",
+        "category": "oos_hard_negative",
+        "query": "什么是正交分频复用？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-028",
+        "category": "oos_hard_negative",
+        "query": "什么是频分多码接入？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "oos-029",
+        "category": "oos_hard_negative",
+        "query": "什么是移动通？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "qa-041",
+        "category": "single_fact_qa",
+        "query": "什么是衰落？",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "meta-001",
+        "category": "metadata_library",
+        "query": "当前有哪些知识库？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "unsupported",
+        "changed": false
+      },
+      {
+        "id": "meta-002",
+        "category": "metadata_library",
+        "query": "当前有哪些文档？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "unsupported",
+        "changed": false
+      },
+      {
+        "id": "meta-003",
+        "category": "metadata_library",
+        "query": "有几个文档？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "unsupported",
+        "changed": false
+      },
+      {
+        "id": "meta-004",
+        "category": "metadata_library",
+        "query": "文档类型有哪些？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "unsupported",
+        "changed": false
+      },
+      {
+        "id": "meta-005",
+        "category": "metadata_library",
+        "query": "文档的状态是什么？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "unsupported",
+        "changed": false
+      },
+      {
+        "id": "meta-006",
+        "category": "metadata_library",
+        "query": "文档有哪些标签？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "unsupported",
+        "changed": false
+      },
+      {
+        "id": "meta-007",
+        "category": "metadata_library",
+        "query": "当前 scope 是什么？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "unsupported",
+        "changed": false
+      },
+      {
+        "id": "meta-008",
+        "category": "metadata_library",
+        "query": "是否存在名为移动通信测试文档的文档？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "unsupported",
+        "changed": false
+      },
+      {
+        "id": "meta-009",
+        "category": "metadata_library",
+        "query": "教材文档有多少页？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "unsupported",
+        "changed": false
+      },
+      {
+        "id": "meta-010",
+        "category": "metadata_library",
+        "query": "教材有多少章？",
+        "expected_route": "book_toc",
+        "route_before": "book_toc",
+        "route_after": "book_toc",
+        "changed": false
+      },
+      {
+        "id": "meta-011",
+        "category": "metadata_library",
+        "query": "知识库中有多少片段？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "unsupported",
+        "changed": false
+      },
+      {
+        "id": "meta-012",
+        "category": "metadata_library",
+        "query": "文档的导入状态如何？",
+        "expected_route": "qa",
+        "route_before": null,
+        "route_after": "unsupported",
+        "changed": false
+      },
+      {
+        "id": "meta-013",
+        "category": "metadata_library",
+        "query": "这本书有哪些章节？",
+        "expected_route": "book_toc",
+        "route_before": "book_toc",
+        "route_after": "book_toc",
+        "changed": false
+      },
+      {
+        "id": "meta-014",
+        "category": "metadata_library",
+        "query": "本书一共几章？",
+        "expected_route": "book_toc",
+        "route_before": "book_toc",
+        "route_after": "book_toc",
+        "changed": false
+      },
+      {
+        "id": "meta-015",
+        "category": "metadata_library",
+        "query": "介绍下这本书。",
+        "expected_route": "book_overview",
+        "route_before": "book_overview",
+        "route_after": "book_overview",
+        "changed": false
+      },
+      {
+        "id": "cit-001",
+        "category": "citation_negative",
+        "query": "GSM 使用 GMSK 调制，请指出出处。",
+        "expected_route": "qa",
+        "route_before": "locate",
+        "route_after": "qa",
+        "changed": true
+      },
+      {
+        "id": "cit-002",
+        "category": "citation_negative",
+        "query": "WCDMA 采用 QPSK 调制，请引用证据。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-003",
+        "category": "citation_negative",
+        "query": "LTE 使用 OFDMA 调制，请引用证据。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-004",
+        "category": "citation_negative",
+        "query": "香农公式中的容量如何计算？请给出引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-005",
+        "category": "citation_negative",
+        "query": "RAKE 接收机如何合并多径？请引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-006",
+        "category": "citation_negative",
+        "query": "分集接收如何对抗衰落？请引用证据。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-007",
+        "category": "citation_negative",
+        "query": "循环前缀的作用？请引用出处。",
+        "expected_route": "qa",
+        "route_before": "locate",
+        "route_after": "qa",
+        "changed": true
+      },
+      {
+        "id": "cit-008",
+        "category": "citation_negative",
+        "query": "均衡技术的作用？请引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-009",
+        "category": "citation_negative",
+        "query": "扩频技术的优点？请引用证据。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-010",
+        "category": "citation_negative",
+        "query": "交织的作用？请引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-011",
+        "category": "citation_negative",
+        "query": "GSM 的带宽是多少？请引用具体数字。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-012",
+        "category": "citation_negative",
+        "query": "WCDMA 的码片速率是多少？请引用数字。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-013",
+        "category": "citation_negative",
+        "query": "载波间隔是多少？请引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-014",
+        "category": "citation_negative",
+        "query": "多径传播的定义是什么？请引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-015",
+        "category": "citation_negative",
+        "query": "GSM 与 WCDMA 都必须对抗什么？请引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-016",
+        "category": "citation_negative",
+        "query": "OFDMA 是哪个系统的多址方式？请引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-017",
+        "category": "citation_negative",
+        "query": "分集接收通过什么对抗衰落？请引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-018",
+        "category": "citation_negative",
+        "query": "RAKE 是哪个系统的关键部件？请引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-019",
+        "category": "citation_negative",
+        "query": "多址接入有哪几种方式？请逐一引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      },
+      {
+        "id": "cit-020",
+        "category": "citation_negative",
+        "query": "Turbo 码有什么特点？请引用。",
+        "expected_route": "qa",
+        "route_before": "qa",
+        "route_after": "qa",
+        "changed": false
+      }
+    ]
+  },
+  "genuine_locate_controls": {
+    "expected_locate_total": 20,
+    "correct_route_before": 18,
+    "correct_route_after": 18,
+    "new_genuine_locate_misroutes": [],
+    "pre_patch_locate_routed_ids": [
+      "loc-001",
+      "loc-002",
+      "loc-003",
+      "loc-004",
+      "loc-005",
+      "loc-006",
+      "loc-007",
+      "loc-008",
+      "loc-011",
+      "loc-012",
+      "loc-013",
+      "loc-014",
+      "loc-015",
+      "loc-016",
+      "loc-017",
+      "loc-018",
+      "loc-019",
+      "loc-020"
+    ],
+    "phase_e_locate_controls": [
+      {
+        "query": "多径衰落在哪一页",
+        "route_after": "locate"
+      },
+      {
+        "query": "在哪里讲了多径衰落",
+        "route_after": "locate"
+      },
+      {
+        "query": "帮我找一下里面讲OFDM的地方",
+        "route_after": "locate"
+      },
+      {
+        "query": "在哪一页讲了OFDM",
+        "route_after": "locate"
+      },
+      {
+        "query": "扩频技术在哪个章节",
+        "route_after": "locate_chapter"
+      },
+      {
+        "query": "OFDM在哪一章",
+        "route_after": "locate_chapter"
+      },
+      {
+        "query": "哪里提到过多径",
+        "route_after": "locate"
+      },
+      {
+        "query": "它在哪里提到？",
+        "route_after": "locate"
+      },
+      {
+        "query": "扩频技术在哪个章节？",
+        "route_after": "locate_chapter"
+      },
+      {
+        "query": "OFDM在哪一节",
+        "route_after": "locate"
+      },
+      {
+        "query": "RAKE 接收机在哪一节？",
+        "route_after": "locate"
+      },
+      {
+        "query": "在测试文档里，多径传播是第几节？",
+        "route_after": "locate"
+      },
+      {
+        "query": "抗衰落技术是测试文档的第几节？",
+        "route_after": "locate"
+      },
+      {
+        "query": "参数表在测试文档的哪个位置？",
+        "route_after": "locate"
+      },
+      {
+        "query": "多径衰落在什么地方",
+        "route_after": "locate"
+      },
+      {
+        "query": "多径衰落在哪个章节",
+        "route_after": "locate_chapter"
+      }
+    ],
+    "rows": [
+      {
+        "case_id": "loc-001",
+        "query": "多径衰落在哪一页？",
+        "expected_route": "locate",
+        "route_before": "locate",
+        "route_after": "locate",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-002",
+        "query": "软切换在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-003",
+        "query": "分集技术在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-004",
+        "query": "漫游在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-005",
+        "query": "频率复用在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-006",
+        "query": "多址接入技术在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-007",
+        "query": "扩频技术在哪里讲到？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate",
+        "route_after": "locate",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-008",
+        "query": "RAKE 接收机在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-009",
+        "query": "香农公式在书里的哪个部分？",
+        "expected_route": "locate",
+        "route_before": "qa",
+        "route_after": "qa",
+        "correct_before": false,
+        "correct_after": false
+      },
+      {
+        "case_id": "loc-010",
+        "query": "均衡技术的相关章节是哪些？",
+        "expected_route": "locate_chapter",
+        "route_before": "qa",
+        "route_after": "qa",
+        "correct_before": false,
+        "correct_after": false
+      },
+      {
+        "case_id": "loc-011",
+        "query": "哪里讲到了循环前缀？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate",
+        "route_after": "locate",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-012",
+        "query": "交织技术在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-013",
+        "query": "OFDM 在哪一章介绍？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-014",
+        "query": "多径传播在哪里有详细说明？",
+        "expected_route": "locate",
+        "route_before": "locate",
+        "route_after": "locate",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-015",
+        "query": "GSM 调制方式在哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-016",
+        "query": "在测试文档里，多径传播是第几节？",
+        "expected_route": "locate",
+        "route_before": "locate",
+        "route_after": "locate",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-017",
+        "query": "抗衰落技术是测试文档的第几节？",
+        "expected_route": "locate",
+        "route_before": "locate",
+        "route_after": "locate",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-018",
+        "query": "参数表在测试文档的哪个位置？",
+        "expected_route": "locate",
+        "route_before": "locate",
+        "route_after": "locate",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-019",
+        "query": "切换相关的内容在教材哪一章？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate_chapter",
+        "route_after": "locate_chapter",
+        "correct_before": true,
+        "correct_after": true
+      },
+      {
+        "case_id": "loc-020",
+        "query": "Turbo 码在教材哪里？",
+        "expected_route": "locate_chapter",
+        "route_before": "locate",
+        "route_after": "locate",
+        "correct_before": true,
+        "correct_after": true
+      }
+    ]
+  },
+  "adversarial_cases": [
+    {
+      "query": "OFDM在哪本书里有介绍？",
+      "primary_intent_expected": "qa (which document introduces OFDM)",
+      "route_after": "book_overview",
+      "decided_upstream_of_the_locate_branch": "book_overview",
+      "route_invariant_before_after": true,
+      "note": "decided by an upstream branch -> byte-identical before/after V4.5"
+    },
+    {
+      "query": "这个结论的出处是什么？",
+      "primary_intent_expected": "qa (provenance/citation)",
+      "route_after": "qa",
+      "decided_upstream_of_the_locate_branch": null,
+      "route_invariant_before_after": false,
+      "note": "decided by/after the changed locate branch"
+    },
+    {
+      "query": "书中在哪解释了这个公式为什么成立？",
+      "primary_intent_expected": "locate (position of an explanation)",
+      "route_after": "locate",
+      "decided_upstream_of_the_locate_branch": null,
+      "route_invariant_before_after": true,
+      "note": "decided by/after the changed locate branch"
+    },
+    {
+      "query": "在哪里可以看到它的定义？",
+      "primary_intent_expected": "locate (position)",
+      "route_after": "locate",
+      "decided_upstream_of_the_locate_branch": null,
+      "route_invariant_before_after": true,
+      "note": "decided by/after the changed locate branch"
+    },
+    {
+      "query": "分集接收在哪些文档中被提到？",
+      "primary_intent_expected": "qa (document coverage)",
+      "route_after": "qa",
+      "decided_upstream_of_the_locate_branch": null,
+      "route_invariant_before_after": false,
+      "note": "decided by/after the changed locate branch"
+    },
+    {
+      "query": "GSM 和 WCDMA 需要对抗多径衰落，这一结论在哪个文档中？",
+      "primary_intent_expected": "qa (document identity)",
+      "route_after": "qa",
+      "decided_upstream_of_the_locate_branch": null,
+      "route_invariant_before_after": false,
+      "note": "decided by/after the changed locate branch"
+    },
+    {
+      "query": "GSM 使用 GMSK 调制，请指出出处。",
+      "primary_intent_expected": "qa (fact + citation)",
+      "route_after": "qa",
+      "decided_upstream_of_the_locate_branch": null,
+      "route_invariant_before_after": false,
+      "note": "decided by/after the changed locate branch"
+    },
+    {
+      "query": "循环前缀的作用？请引用出处。",
+      "primary_intent_expected": "qa (fact + citation)",
+      "route_after": "qa",
+      "decided_upstream_of_the_locate_branch": null,
+      "route_invariant_before_after": false,
+      "note": "decided by/after the changed locate branch"
+    }
+  ],
+  "phase_e_results": {
+    "script": "eval_phase_e_router.py",
+    "exit_code": 0,
+    "passed": true,
+    "tail": [
+      "",
+      "failure cases: 0",
+      "",
+      "router+eval wall time: 130.6 ms",
+      "",
+      "Phase E eval gate: PASS"
+    ]
+  },
+  "scope_v4_4_regression": {
+    "OOS_HARD_NEGATIVE_TOTAL": 29,
+    "PURE_OOS_TOTAL": 7,
+    "PURE_OOS_REFUSED": 7,
+    "PURE_OOS_FALSE_ACCEPT": 0,
+    "SEMANTIC_TRAP_TOTAL": 22,
+    "SEMANTIC_TRAP_REFUSED": 0,
+    "SEMANTIC_TRAP_ACCEPTED": 22,
+    "SEMANTIC_TRAP_NEWLY_REFUSED": [],
+    "v4_4_targets": {
+      "loc-018": {
+        "route": "locate",
+        "out_of_scope": false,
+        "contexts": 5,
+        "false_oos": false
+      },
+      "mt-006": {
+        "route": "qa",
+        "out_of_scope": false,
+        "contexts": 5,
+        "false_oos": false
+      },
+      "md-014": {
+        "route": "qa",
+        "out_of_scope": false,
+        "contexts": 5,
+        "false_oos": false
+      }
+    },
+    "scope_leakage": 0
+  },
+  "citation_safety_results": {
+    "script": "eval_phase_f_citation.py",
+    "exit_code": 0,
+    "passed": true,
+    "tail": [
+      "",
+      "failure cases: 0",
+      "",
+      "eval wall time: 3.6 ms",
+      "",
+      "Phase F.2 citation eval gate: PASS"
+    ]
+  },
+  "full_eval_metrics": {
+    "parent": {
+      "case_exact_fact_match_rate": 0.7222,
+      "fact_recall": 0.8535,
+      "false_refusal_rate": 0.0,
+      "citation_coverage": 0.469,
+      "high_confidence_unsupported_rate": 0.0134,
+      "invalid_citation_count": 0,
+      "citation_scope_violation": 0
+    },
+    "stage": {
+      "case_exact_fact_match_rate": 0.7292,
+      "fact_recall": 0.8535,
+      "false_refusal_rate": 0.0,
+      "citation_coverage": 0.4783,
+      "high_confidence_unsupported_rate": 0.0112,
+      "invalid_citation_count": 0,
+      "citation_scope_violation": 0
+    },
+    "delta": {
+      "case_exact_fact_match_rate": 0.007,
+      "fact_recall": 0.0,
+      "false_refusal_rate": 0.0,
+      "citation_coverage": 0.0093,
+      "high_confidence_unsupported_rate": -0.0022
+    },
+    "eligible_cases": 144
+  },
+  "answer_level_traces": [
+    {
+      "case_id": "md-004",
+      "answer_before": {
+        "route": "locate",
+        "answer_state": "ANSWERED",
+        "fact_present": 1,
+        "fact_total": 3,
+        "missing_facts": [
+          "分集",
+          "教材"
+        ],
+        "out_of_scope": false
+      },
+      "answer_after": {
+        "route": "qa",
+        "answer_state": "ANSWERED",
+        "fact_present": 1,
+        "fact_total": 3,
+        "missing_facts": [
+          "教材",
+          "测试文档"
+        ],
+        "out_of_scope": false
+      },
+      "routing_error_removed": true,
+      "residual_cause": "DOCUMENT_IDENTITY/COVERAGE residual: the answer does not name both documents"
+    },
+    {
+      "case_id": "md-019",
+      "answer_before": {
+        "route": "locate",
+        "answer_state": "ANSWERED",
+        "fact_present": 1,
+        "fact_total": 3,
+        "missing_facts": [
+          "GSM",
+          "WCDMA"
+        ],
+        "out_of_scope": false
+      },
+      "answer_after": {
+        "route": "qa",
+        "answer_state": "ANSWERED",
+        "fact_present": 0,
+        "fact_total": 3,
+        "missing_facts": [
+          "GSM",
+          "WCDMA",
+          "多径"
+        ],
+        "out_of_scope": false
+      },
+      "routing_error_removed": true,
+      "residual_cause": "RETRIEVAL/GENERATION residual: the expected facts are not restated"
+    },
+    {
+      "case_id": "cit-001",
+      "answer_before": {
+        "route": "locate",
+        "answer_state": "ANSWERED",
+        "fact_present": 0,
+        "fact_total": 1,
+        "missing_facts": [
+          "GMSK"
+        ],
+        "out_of_scope": false
+      },
+      "answer_after": {
+        "route": "qa",
+        "answer_state": "ANSWERED",
+        "fact_present": 0,
+        "fact_total": 1,
+        "missing_facts": [
+          "GMSK"
+        ],
+        "out_of_scope": false
+      },
+      "routing_error_removed": true,
+      "residual_cause": "GENERATION residual: the answer does not restate the asserted term"
+    },
+    {
+      "case_id": "cit-007",
+      "answer_before": {
+        "route": "locate",
+        "answer_state": "ANSWERED",
+        "fact_present": 0,
+        "fact_total": 1,
+        "missing_facts": [
+          "循环前缀"
+        ],
+        "out_of_scope": false
+      },
+      "answer_after": {
+        "route": "qa",
+        "answer_state": "ANSWERED",
+        "fact_present": 1,
+        "fact_total": 1,
+        "missing_facts": [],
+        "out_of_scope": false
+      },
+      "routing_error_removed": true,
+      "residual_cause": "none observed"
+    }
+  ],
+  "paired_fact_delta": {
+    "note": "informational only: the full run is a new stochastic generation batch, so a per-case fact delta is NOT a paired causal attribution for the non-target cases",
+    "cases": [
+      {
+        "case_id": "md-019",
+        "fact_present_before": 1,
+        "fact_present_after": 0,
+        "route_changed": true
+      },
+      {
+        "case_id": "cit-007",
+        "fact_present_before": 0,
+        "fact_present_after": 1,
+        "route_changed": true
+      }
+    ]
+  },
+  "residual_failures": {
+    "cases": [
+      {
+        "case_id": "md-004",
+        "answer_before": {
+          "route": "locate",
+          "answer_state": "ANSWERED",
+          "fact_present": 1,
+          "fact_total": 3,
+          "missing_facts": [
+            "分集",
+            "教材"
+          ],
+          "out_of_scope": false
+        },
+        "answer_after": {
+          "route": "qa",
+          "answer_state": "ANSWERED",
+          "fact_present": 1,
+          "fact_total": 3,
+          "missing_facts": [
+            "教材",
+            "测试文档"
+          ],
+          "out_of_scope": false
+        },
+        "routing_error_removed": true,
+        "residual_cause": "DOCUMENT_IDENTITY/COVERAGE residual: the answer does not name both documents"
+      },
+      {
+        "case_id": "md-019",
+        "answer_before": {
+          "route": "locate",
+          "answer_state": "ANSWERED",
+          "fact_present": 1,
+          "fact_total": 3,
+          "missing_facts": [
+            "GSM",
+            "WCDMA"
+          ],
+          "out_of_scope": false
+        },
+        "answer_after": {
+          "route": "qa",
+          "answer_state": "ANSWERED",
+          "fact_present": 0,
+          "fact_total": 3,
+          "missing_facts": [
+            "GSM",
+            "WCDMA",
+            "多径"
+          ],
+          "out_of_scope": false
+        },
+        "routing_error_removed": true,
+        "residual_cause": "RETRIEVAL/GENERATION residual: the expected facts are not restated"
+      },
+      {
+        "case_id": "cit-001",
+        "answer_before": {
+          "route": "locate",
+          "answer_state": "ANSWERED",
+          "fact_present": 0,
+          "fact_total": 1,
+          "missing_facts": [
+            "GMSK"
+          ],
+          "out_of_scope": false
+        },
+        "answer_after": {
+          "route": "qa",
+          "answer_state": "ANSWERED",
+          "fact_present": 0,
+          "fact_total": 1,
+          "missing_facts": [
+            "GMSK"
+          ],
+          "out_of_scope": false
+        },
+        "routing_error_removed": true,
+        "residual_cause": "GENERATION residual: the answer does not restate the asserted term"
+      }
+    ],
+    "out_of_scope_for_v4_5": [
+      {
+        "case_id": "loc-009",
+        "query": "香农公式在书里的哪个部分？",
+        "class": "PRE_EXISTING_LOCATE_UNDER_TRIGGER",
+        "note": "carries a locate intent but never carried a LOCATION_WORDS hit; unchanged by V4.5 (deliberately outside the proven over-trigger defect)"
+      },
+      {
+        "case_id": "loc-010",
+        "query": "均衡技术的相关章节是哪些？",
+        "class": "PRE_EXISTING_ROUTING_RESIDUAL",
+        "note": "unchanged by V4.5"
+      }
+    ]
+  },
+  "production_diff": {
+    "production_files_changed": [
+      "core/query_router.py"
+    ],
+    "production_source_sha256_before": "dc35c6eb961d99955e34a62695c2659e14710dd334166dc8481a57436b72a84a",
+    "production_source_sha256_after": "c36d61a1c4691201cb72c4bbed7932ba1f89dae26cb202ae5a5cf3483f824561",
+    "non_production_files_added": [
+      "scripts/eval_v4_routing_remediation.py",
+      "tests/test_v4_routing_remediation.py",
+      "docs/V4_ROUTING_REMEDIATION.md",
+      "eval/v4_5_routing_baseline.json",
+      "eval/v4_routing_remediation.json"
+    ],
+    "diff_scope": "ROUTING_ONLY",
+    "evidence_behaviour_is_unchanged_elsewhere": "the full golden route table changes for exactly 4 cases (md-004, md-019, cit-001, cit-007) and no other"
+  },
+  "timestamp": "2026-09-11T01:53:31",
+  "gate_results": {
+    "G1_root_cause_mechanically_demonstrated": true,
+    "G2_md_004_over_trigger_removed": true,
+    "G3_md_019_over_trigger_removed": true,
+    "G4_cit_001_over_trigger_removed": true,
+    "G5_cit_007_over_trigger_removed": true,
+    "G6_no_new_genuine_locate_misroutes": true,
+    "G7_phase_e_routing_regression_pass": true,
+    "G8_ambiguous_query_no_regression": true,
+    "G9_v4_4_scope_oos_regression_pass": true,
+    "G10_pure_oos_false_accept_zero": true,
+    "G11_scope_leakage_zero": true,
+    "G12_citation_safety_pass": true,
+    "G13_production_diff_limited_to_routing": true,
+    "G14_golden_evaluator_contract_schema_unchanged": true,
+    "G15_historical_baseline_artifacts_unchanged": true,
+    "G16_v4_5_creates_new_child_baseline": true,
+    "G17_v3_publish_untouched": true,
+    "targets_all_removed_from_locate": true,
+    "V4_5_GATE_PASS": true
+  }
+}

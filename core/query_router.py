@@ -38,6 +38,29 @@ HISTORY_MAX_TURNS = 3
 
 LOCATION_WORDS = ("哪页", "第几页", "哪里", "在哪里", "位置", "出处", "来源", "在哪", "找一下", "找到", "找找", "什么地方", "哪些地方", "第几节", "哪一节", "哪些节")
 CHAPTER_LOCATION_WORDS = ("在哪一章", "在哪个章节", "在哪章", "哪一章", "哪个章节", "哪章", "第几章", "哪几章")
+# V4.5 routing semantics: a LOCATION_WORDS hit is only a *positional* intent
+# when the user really asks for a position inside the material.  Two readings
+# of the same surface words are NOT positional and must stay on qa:
+#
+#   * a document/collection container — "分集接收在哪些文档中被提到？" and
+#     "…这一结论在哪个文档中？" ask *which document* (document identity),
+#     which qa answers; the deterministic locate template cannot.
+#   * provenance — "请指出出处" / "请引用出处" ask for a citation source,
+#     which the citation subsystem answers inside qa.
+#
+# An explicit position unit right after 哪 ("在哪一页" / "哪个位置" / "哪里")
+# or an unambiguous position word ("第几节" / "找一下" …) stays positional.
+# The unit set is deliberately limited to the position expressions the
+# authorization protects (page / chapter / section / position / place): it is
+# only needed to keep a *positional* hit from being suppressed, so a case such
+# as "香农公式在书里的哪个部分？" (a pre-existing locate-route UNDER-trigger,
+# outside this phase's proven over-trigger defect) is intentionally left on qa.
+_PROVENANCE_WORDS = ("出处", "来源")
+_LOCATION_NON_POSITION_WORDS = ("在哪",) + _PROVENANCE_WORDS
+# measure words that may sit between 哪 and the noun it modifies
+_QUANTIFIERS = "些个本几一份种册套"
+_POSITION_CONTEXT = re.compile(rf"哪[{_QUANTIFIERS}]{{0,3}}(?:页|章|节|位置|地方|里)")
+_CONTAINER_CONTEXT = re.compile(rf"在哪[{_QUANTIFIERS}]{{0,2}}(?:文档|文件|书|教材|资料|文献|知识库|图书|书籍)")
 COMPARE_WORDS = ("区别", "比较", "对比", "异同", "相比")
 # Q4.2: consistency questions ("A 与 B 描述一致吗") are comparisons, not qa.
 # Kept separate from COMPARE_WORDS so a bare "一致" (e.g. "一致性原理") is NOT
@@ -233,6 +256,30 @@ def looks_like_follow_up(question: str) -> bool:
     return False
 
 
+def is_location_intent(question: str) -> bool:
+    """True when the question asks for a *position*, not a container/source.
+
+    V4.5: separates a primary LOCATION intent from a qa question that merely
+    contains location/source wording (see ``_POSITION_CONTEXT`` /
+    ``_CONTAINER_CONTEXT`` above).
+    """
+    value = normalize_query(question)
+    # (1) explicit position unit after 哪 -> "在哪一页" / "哪个位置" / "哪里"
+    if _POSITION_CONTEXT.search(value):
+        return True
+    # (2) unambiguous position word -> "第几节" / "找一下" / "什么地方" …
+    if any(word in value for word in LOCATION_WORDS if word not in _LOCATION_NON_POSITION_WORDS):
+        return True
+    # (3) "在哪" + document/collection container -> "which document", not a position
+    if _CONTAINER_CONTEXT.search(value):
+        return False
+    # (4) "出处" / "来源" -> provenance (citation), not a position
+    if any(word in value for word in _PROVENANCE_WORDS):
+        return False
+    # (5) a bare "在哪" is still a positional request
+    return "在哪" in value
+
+
 def classify_route(question: str) -> str:
     normalized = normalize_query(question)
     if is_book_toc_query(normalized) or "有哪些章节" in normalized:
@@ -254,7 +301,7 @@ def classify_route(question: str) -> str:
         return "book_overview"
     if any(word in normalized for word in CHAPTER_LOCATION_WORDS):
         return "locate_chapter"
-    if any(word in normalized for word in LOCATION_WORDS):
+    if is_location_intent(normalized):
         return "locate"
     legacy = route_by_rules(normalized)
     return "book_overview" if legacy == "summary" else "qa"

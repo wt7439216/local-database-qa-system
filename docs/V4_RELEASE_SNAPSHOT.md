@@ -130,7 +130,7 @@ V4.6.2 引入 canonical hash contract（`sha256-path-content-v2-canonical-lf`，
 
 ## 9. Positioning
 
-本快照可用于**试用与评测复现**，并可作为发布到 GitHub 的 **Pre-release**。
+本快照当前**已作为 GitHub Pre-release 发布并接受**，可用于**试用与评测复现**。
 
 它**不表示**：
 

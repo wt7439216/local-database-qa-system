@@ -6,7 +6,7 @@
 > **当前产品基线**：`V4_6_2_HASH_PORTABILITY_BASELINE`。
 > **当前 canonical production_source_hash**：`108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c`。
 > **历史 raw (CRLF) production hash（V4.6.1 provenance）**：`7216c885d9ab315333973b9af6d9e0406da2a316f0f7abdcf89bef686d70a22a`。
-> **当前下一产品阶段**：`V4.7 — Document Identity Remediation`。
+> **当前下一产品阶段**：`V4.7 — Document Identity Root-Cause Confirmation`（诊断证明 A 后才条件授权最小 `Document Identity Remediation`）。
 >
 > Source-of-truth 优先级：
 >
@@ -685,7 +685,7 @@ v4.0.0-alpha.2  = current accepted snapshot（修复 hash portability）
 # 13. Next Product Phase — V4.7
 
 ```text
-V4.7 — Document Identity Remediation
+V4.7 — Document Identity Root-Cause Confirmation
 ```
 
 当前主要目标：
@@ -716,6 +716,8 @@ B. 已进入 final model-visible context，但 model 不输出
 
 - 若为 A → Document Identity（证据 framing 未给出真实标题）为正确 root cause；
 - 若为 B → 必须重新归因为 `Generation`，**不得为了维持 roadmap 强行修改错误层**。
+
+只有当 **A**（title 未进入 final model-visible context）被机械证明后，才条件授权最小 `Document Identity Remediation`（subsystem priority ≠ immediate product modification authorization）。
 
 ---
 
@@ -939,7 +941,7 @@ V4_6_1_EMBEDDING_IDENTITY_BASELINE
 开发主线继续：
 
 ```text
-V4.7 — Document Identity Remediation
+V4.7 — Document Identity Root-Cause Confirmation
 ```
 
 无需因为一次 GitHub publication 重新编号研发 phase。
@@ -983,7 +985,7 @@ CURRENT_RELEASE       = v4.0.0-alpha.2
 REMOTE_CI             = PASS
 CURRENT_BASELINE      = V4_6_2_HASH_PORTABILITY_BASELINE
 READY_TO_RESUME_V4_7  = YES
-NEXT PRODUCT PHASE    = V4.7 DOCUMENT IDENTITY
+NEXT PRODUCT PHASE    = V4.7 DOCUMENT IDENTITY ROOT-CAUSE CONFIRMATION
 ```
 
 ---

@@ -23,10 +23,23 @@
 - 历史 baseline artifact 与 raw hashes 作为 provenance 保留，未被改写。
 - Live production drift guard 改为校验 **canonical** production hash（跨 CRLF / LF 一致）。
 
-### Known issue
+## [v4.0.0-alpha.2] - 2026-09-12
 
-- `v4.0.0-alpha.1` = published pre-release with failed CI portability postcheck；修复需通过
-  `v4.0.0-alpha.2` 验证（不移动 alpha.1）。
+> GitHub Pre-release（Development Snapshot，**NOT V4 Final**）。已发布并接受；
+> **REMOTE_CI = PASS**（fresh LF GitHub Actions checkout；699 tests OK）。
+> 日期取自 release commit / tag metadata（commit `4a75919`，`2026-09-12T01:14:55+08:00`）。
+
+### Fixed
+
+- CRLF/LF hash portability：canonical text identity **仅规范化行尾**，使 Windows CRLF 工作树与
+  LF checkout 得到一致身份（`sha256-path-content-v2-canonical-lf`）；binary 保持 raw byte hashing。
+- 历史 raw hashes 作为 provenance 保留；product behavior unchanged。
+- 由 fresh LF GitHub CI 验证通过（alpha.1 的 5 个 byte-identity 失败全部消除）。
+
+### Notes
+
+- 本条目为 governance / hash-portability release correction，**不**代表产品质量提升。
+- Supersedes `v4.0.0-alpha.1`（其 tag/commit 不变；release notes 已标注 superseded）。
 
 ## [v4.0.0-alpha.1] - Unreleased
 

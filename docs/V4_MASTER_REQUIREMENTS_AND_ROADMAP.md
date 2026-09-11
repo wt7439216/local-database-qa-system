@@ -341,7 +341,9 @@ recomputed live canonical production hash
 
 # 9. Canonical Current Product Quality
 
-当前 V4.6.1 canonical Full-144（直接读取 `eval/v4_6_1_embedding_identity_baseline.json`）：
+当前 canonical Full-144（**product metrics source** = `V4_6_1_EMBEDDING_IDENTITY_BASELINE`，
+`metrics_recomputed_in_v4_6_2 = false`；current governance baseline = `V4_6_2_HASH_PORTABILITY_BASELINE`；
+现场直接读取 `eval/v4_6_1_embedding_identity_baseline.json`）：
 
 ```text
 case_exact        = 0.7292
@@ -641,28 +643,32 @@ active workspace；tooling fix 由 `tests/test_publication_scan.py` 校验。
 
 # 12. Current Release Checkpoint
 
-当前建议建立一次：
+已正式发布并接受：
 
 ```text
-V4 DEVELOPMENT SNAPSHOT
+CURRENT_RELEASE            = v4.0.0-alpha.2
+RELEASE_TYPE               = GitHub Pre-release（Development Snapshot）
+ALPHA_2_RELEASE_ACCEPTANCE = PASS
+REMOTE_CI                  = PASS（fresh LF GitHub Actions checkout；699 tests OK）
 ```
 
-推荐 release identity：
+发布历史：
 
 ```text
-v4.0.0-alpha.1
+v4.0.0-alpha.1  = published pre-release, CI postcheck FAILED（CRLF/LF hash portability）
+                  → SUPERSEDED（tag/commit 不变，release notes 已标注 superseded）
+v4.0.0-alpha.2  = current accepted snapshot（修复 hash portability）
 ```
-
-并使用 GitHub **Pre-release**。
 
 本次 release 表示：
 
-- 评测体系稳定；
-- Scope/OOS 已完成一轮 remediation；
-- Routing over-trigger 已完成一轮 remediation；
+- 评测体系稳定、可复现；
+- Scope/OOS 与 Routing over-trigger 各完成一轮 remediation；
 - Embedding Identity / Model Alignment 已正式收编；
+- V4.6.2 hash portability formalization 已建立，canonical hash 跨 CRLF/LF 一致；
 - baseline governance 与 live hash drift detection 已建立；
-- workspace relocation 与 publication tooling portability 已收口。
+- workspace relocation 与 publication tooling portability 已收口；
+- publication / release 支线 **CLOSED**。
 
 本次 release **不表示**：
 
@@ -953,9 +959,10 @@ Live Production Drift Detection      COMPLETE
 Workspace Relocation                 COMPLETE
 Publication Tooling Portability      COMPLETE
 
-Documentation Alignment              REQUIRED BEFORE RELEASE
-Publication Safety / Leak Triage     REQUIRED BEFORE RELEASE
-Publish Workspace Sync Verification  REQUIRED BEFORE RELEASE
+Documentation Alignment              COMPLETE
+Publication Safety / Leak Triage     COMPLETE（pre-publication + privacy closure）
+Publish Workspace Sync Verification  COMPLETE（alpha.2 published; remote CI PASS）
+Publication / Release Branch         CLOSED（alpha.2）
 
 Document Identity                    NEXT PRODUCT PHASE
 History                              PENDING
@@ -969,10 +976,14 @@ Unified Final Closure                PENDING
 当前：
 
 ```text
-V4 DEVELOPMENT = ACTIVE
-V4 FINAL       = NOT YET
-RELEASE TYPE   = DEVELOPMENT SNAPSHOT / PRE-RELEASE
-NEXT PRODUCT PHASE = V4.7 DOCUMENT IDENTITY
+V4 DEVELOPMENT        = ACTIVE
+V4 FINAL              = NOT YET
+RELEASE TYPE          = DEVELOPMENT SNAPSHOT / PRE-RELEASE
+CURRENT_RELEASE       = v4.0.0-alpha.2
+REMOTE_CI             = PASS
+CURRENT_BASELINE      = V4_6_2_HASH_PORTABILITY_BASELINE
+READY_TO_RESUME_V4_7  = YES
+NEXT PRODUCT PHASE    = V4.7 DOCUMENT IDENTITY
 ```
 
 ---
@@ -993,7 +1004,9 @@ NEXT PRODUCT PHASE = V4.7 DOCUMENT IDENTITY
 
 ---
 
-> 本 Master 于 `KB-V4 — Master Requirements & Roadmap Documentation Alignment`（DOCUMENTATION-ONLY）授权下
-> 机械核验后建立：live production hash 现场重算 = `7216c885…`，current baseline =
-> `V4_6_1_EMBEDDING_IDENTITY_BASELINE`，metrics 直接读取 `eval/v4_6_1_embedding_identity_baseline.json`。
+> 本 Master 的当前状态经 `KB-V4 — Pre-V4.7 Closure` 机械核验：canonical production hash =
+> `108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c`
+> （line-ending portable，`sha256-path-content-v2-canonical-lf`）；current governance baseline =
+> `V4_6_2_HASH_PORTABILITY_BASELINE`；product metrics source = `V4_6_1_EMBEDDING_IDENTITY_BASELINE`
+> （`metrics_recomputed_in_v4_6_2 = false`）；current release = `v4.0.0-alpha.2`（remote CI PASS）。
 > 本轮未修改任何 production / evaluator / Golden / Contract / baseline artifact。

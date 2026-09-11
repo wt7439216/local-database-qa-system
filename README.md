@@ -24,7 +24,15 @@ V4 仍在积极开发中。本快照可用于试用与评测复现，但**尚未
 
 ## V4 Development Snapshot
 
-本次准备发布的，是当前 V4 开发状态的一个 **Development Snapshot / Pre-release**（建议 release identity `v4.0.0-alpha.1`，尚未创建 tag / release）。
+已发布的，是当前 V4 开发状态的一个 **Development Snapshot / Pre-release**：
+
+```text
+CURRENT_RELEASE = v4.0.0-alpha.2
+RELEASE_TYPE    = GitHub Pre-release
+REMOTE_CI       = PASS（fresh LF GitHub Actions checkout）
+```
+
+> `v4.0.0-alpha.1` 因跨平台 CRLF/LF hash portability 问题被 supersede（tag/commit 保持不变）。
 
 它表示：
 
@@ -177,7 +185,7 @@ V4 governance 关键回归：`python -m unittest tests.test_live_production_hash
 
 ## Release / Changelog
 
-- 发布类型：**Development Snapshot / Pre-release**（建议 `v4.0.0-alpha.1`，**NOT V4 Final**）。
+- 当前接受版本：**`v4.0.0-alpha.2`**（Development Snapshot / GitHub Pre-release，**NOT V4 Final**；remote CI PASS）。
 - 变更记录见 [CHANGELOG.md](CHANGELOG.md)；发布说明见 [docs/V4_RELEASE_SNAPSHOT.md](docs/V4_RELEASE_SNAPSHOT.md)。
 
 ## 项目结构

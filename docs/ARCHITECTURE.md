@@ -127,6 +127,7 @@ stored_dimension == 该模型注册的期望维度（bge-m3 → 1024 / nomic-emb
 ## 14. Baseline / Production Hash Governance
 
 - `production_source_hash()`：对生产树 `core / desktop / web` 的**相对路径 + 内容哈希**取摘要，不依赖绝对工作区路径。`scripts/` 不在生产树内，修改脚本不改变该哈希。
+- **Canonical hash contract（V4.6.2）**：`sha256-path-content-v2-canonical-lf`。text 后缀仅规范化行尾（CRLF / bare CR → LF），使 Windows CRLF 工作树与 Git LF / CI checkout 得到**一致身份**；binary / 未知后缀保持 raw bytes。该 canonical 身份是跨平台验收合同（历史 raw CRLF hashes 仅作 provenance 保留）。
 - Baseline lineage 不可变：历史 stage baseline 一旦形成即 immutable；production remediation 只能**追加**新的 child baseline，绝不改写旧 stage baseline。current pointer 只存在于 `eval/v4_baseline_lineage.json → current_baseline_id`。
 - **Live production drift guard**（`tests/test_live_production_hash_guard.py`）：
 

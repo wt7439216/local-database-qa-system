@@ -31,7 +31,7 @@
 | 文档 | 角色 |
 |---|---|
 | [`V4_POST_ROUTING_ATTRIBUTION.md`](V4_POST_ROUTING_ATTRIBUTION.md) | V4.6 post-routing residual 归因证据快照（当前优先级排序的来源）。 |
-| [`V4_EMBEDDING_IDENTITY_ALIGNMENT.md`](V4_EMBEDDING_IDENTITY_ALIGNMENT.md) | V4.6.1 embedding identity 收编证据（当前 baseline 的来源）。 |
+| [`V4_EMBEDDING_IDENTITY_ALIGNMENT.md`](V4_EMBEDDING_IDENTITY_ALIGNMENT.md) | V4.6.1 embedding identity 收编证据（current governance baseline `V4_6_2` 的 parent provenance）。 |
 
 ## 4. Historical Phase Evidence（历史阶段证据）
 
@@ -77,7 +77,8 @@ reference/本地知识库问答系统_v3_详细改进方案.docx   历史参考�
 | Artifact | 角色 |
 |---|---|
 | [`../eval/v4_baseline_lineage.json`](../eval/v4_baseline_lineage.json) | baseline lineage 与 current pointer（唯一权威指针）。 |
-| [`../eval/v4_6_1_embedding_identity_baseline.json`](../eval/v4_6_1_embedding_identity_baseline.json) | 当前 canonical Full-144 指标 + production hash + frozen targets。 |
+| [`../eval/v4_6_2_hash_portability_baseline.json`](../eval/v4_6_2_hash_portability_baseline.json) | **current governance baseline**（hash portability formalization）+ canonical production hash。 |
+| [`../eval/v4_6_1_embedding_identity_baseline.json`](../eval/v4_6_1_embedding_identity_baseline.json) | **product metrics source**（canonical Full-144 指标；`metrics_recomputed_in_v4_6_2 = false`）+ frozen targets。 |
 | [`../eval/v4_6_post_routing_attribution.json`](../eval/v4_6_post_routing_attribution.json) | V4.6 归因与优先级排序（当前 next-phase 依据）。 |
 
 ---

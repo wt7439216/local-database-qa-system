@@ -15,13 +15,19 @@ GitHub Pre-release
 NOT V4 Final
 ```
 
-## 2. Suggested Release
+## 2. Accepted Release
 
 ```text
-v4.0.0-alpha.1
+v4.0.0-alpha.2
 ```
 
-> 仅为**建议的 release identity**。是否采用、何时打 tag / 建 release 由后续独立授权决定。
+```text
+RELEASE_TYPE               = GitHub Pre-release（Development Snapshot）
+ALPHA_2_RELEASE_ACCEPTANCE = PASS
+REMOTE_CI                  = PASS（fresh LF GitHub Actions checkout）
+```
+
+> 已发布并接受。`v4.0.0-alpha.1` 因跨平台 CRLF/LF hash portability 问题被 **supersede**（tag/commit 保持不变）。
 
 ## 3. Current Baseline
 
@@ -105,20 +111,16 @@ Next product phase：
 V4.7 — Document Identity Remediation
 ```
 
-## 8. Pre-release & CI Status（alpha.1）
+## 8. Pre-release & CI Status
 
 ```text
-v4.0.0-alpha.1 = PUBLISHED PRE-RELEASE WITH FAILED CI POSTCHECK
+v4.0.0-alpha.2 = PUBLISHED + ACCEPTED（REMOTE_CI = PASS）
+v4.0.0-alpha.1 = SUPERSEDED / IMMUTABLE（tag/commit 保持不变）
 ```
 
-原因：内容哈希 / byte-identity guard 对 raw 字节敏感（Windows CRLF 工作树 vs Git LF checkout）。
-修复：**V4.6.2** canonical hash contract（`sha256-path-content-v2-canonical-lf`，仅规范化行尾）。
-
-```text
-后续：修复必须通过 v4.0.0-alpha.2 发布验证；
-       不移动 v4.0.0-alpha.1（可标记 superseded）；
-       本阶段未创建 alpha.2、未 push、未修改远端 release。
-```
+alpha.1 的 CI 曾因内容哈希 / byte-identity guard 对 raw 字节敏感（Windows CRLF 工作树 vs Git LF checkout）失败；
+V4.6.2 引入 canonical hash contract（`sha256-path-content-v2-canonical-lf`，仅规范化行尾）修复，
+并由 alpha.2 的 **fresh LF GitHub Actions checkout** 验证通过。
 
 ## 9. Positioning
 

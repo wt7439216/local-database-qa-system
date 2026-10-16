@@ -1,0 +1,178 @@
+{
+  "artifact_status": "CANDIDATE_ONLY_PENDING_GOVERNANCE_REVIEWER_ACCEPTANCE",
+  "checkpoint": "WS13_CANONICAL_TELEMETRY_PERMISSION_RULE_001",
+  "cross_run_state_chaining": {
+    "ordinal_1_pre_state": "artifact-bound initial telemetry target identity",
+    "ordinal_n_gt_1": "exact previous VALID ordinal POST_STATE; requires previous GOVERNANCE_DELTA_VALIDATION PASS; file_id sha256 size line_count equal the previous POST_STATE; an invalid previous ordinal means STOP_BEFORE_NEXT_ORDINAL and NO_STATE_CHAIN_ADVANCEMENT"
+  },
+  "explicit_non_authorizations": {
+    "CACHE_WRITE_AUTHORIZED": "NO",
+    "DB_WRITE_AUTHORIZED": "NO",
+    "EVAL_ARTIFACT_WRITE_AUTHORIZED": "NO",
+    "G1_REOPEN_AUTHORIZED": "NO",
+    "G2_CODE_CORRECTION_AUTHORIZED": "NO",
+    "G3_EXECUTION_AUTHORIZED": "NO",
+    "G4_EXECUTION_AUTHORIZED": "NO",
+    "G4_EXECUTION_AUTHORIZED_BY_ARTIFACT_CREATION_ALONE": "NO",
+    "MEASUREMENT_CONTRACT_REVISION_AUTHORIZED": "NO",
+    "OBSERVER_MODIFICATION_AUTHORIZED": "NO",
+    "OTHER_LOG_WRITE_AUTHORIZED": "NO",
+    "PRODUCT_CODE_MODIFICATION_AUTHORIZED": "NO",
+    "TELEMETRY_PARENT_CREATION_AUTHORIZED": "NO",
+    "TELEMETRY_TARGET_CREATION_AUTHORIZED": "NO",
+    "TEMP_WRITE_AUTHORIZED": "NO",
+    "TEST_MODIFICATION_AUTHORIZED": "NO"
+  },
+  "filesystem_scope": {
+    "authorized_delta_classes": [
+      "NO_FILESYSTEM_DELTA",
+      "ONE_CANONICAL_JSONL_APPEND"
+    ],
+    "authorized_mutable_path": "data/logs/qa_log.jsonl",
+    "authorized_mutation_type": "APPEND_ONLY",
+    "denied_mutations": "parent_directory_creation NO; target_file_creation NO; target_truncation NO; target_rewrite NO; target_rotation NO; target_rename NO; target_replacement NO; other_filesystem_mutation NO",
+    "g4_immutable_surface_excluded_paths": [
+      "data/logs/qa_log.jsonl",
+      "eval/v4_ws13_canonical_telemetry_permission_rule.json"
+    ]
+  },
+  "immutable_surface_binding": {
+    "baseline_digest": "70cc19bda4ca0dace635e17330b786541725b5b6670f03608403a93dcd62f990",
+    "baseline_entry_count": 19669,
+    "excluded_paths": [
+      "data/logs/qa_log.jsonl",
+      "eval/v4_ws13_canonical_telemetry_permission_rule.json"
+    ],
+    "manifest_algorithm": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash sha256-path-content-v2-canonical-lf; digest sha256 over sorted relpath NUL filehash entries joined by LF, UTF-8",
+    "rule_artifact_integrity_rule": "the rule path is excluded from the G4 immutable-surface manifest, but every future governed G4 execution separately verifies the exact raw SHA256 accepted by the Governance Reviewer"
+  },
+  "measurement_contract": {
+    "canonical_elapsed_semantics": "PRESERVED",
+    "canonical_operation_order_changed": "NO",
+    "measurement_contract_change": "NO",
+    "telemetry_operation_remains_inside_measured_interval": "YES",
+    "telemetry_runtime_cost_excluded_from_elapsed": "NO"
+  },
+  "mutation_accounting": {
+    "initial_telemetry_target_identity": {
+      "canonical_physical_record_terminator": "CRLF",
+      "file_id": "9adeda50:0003000000061ff0",
+      "line_count": 1238,
+      "relative_path": "data/logs/qa_log.jsonl",
+      "resolves_inside_active_workspace": "YES",
+      "sha256": "bf3244752beabd76dc66fce7a1a91c39f7e773a5249f947e7d4f39c8c07c3fdf",
+      "size_bytes": 1064168,
+      "terminal_line_boundary_state": "ENDS_WITH_BOUND_CANONICAL_RECORD_TERMINATOR"
+    },
+    "machine_absolute_path_stored_in_artifact_semantics": "NO",
+    "no_filesystem_delta_invariant": "POST_LINE_COUNT equals PRE_LINE_COUNT",
+    "successful_append_invariant": "OLD_FILE_BYTES_ARE_EXACT_PREFIX; POST_RUN_FILE_ID equals PRE_RUN_FILE_ID; one complete bound-encoded JSONL record with the bound terminator; no trailing extra bytes; POST_LINE_COUNT equals PRE_LINE_COUNT plus 1"
+  },
+  "path_a_only": "YES",
+  "permission_rule": {
+    "authorized_pipeline": "canonical supported QA path",
+    "authorized_run_ordinals": [
+      1,
+      2,
+      3
+    ],
+    "authorized_stage": "future governed G4 observation only",
+    "authorized_successful_append_delta": "AT_MOST_ONE_CANONICAL_JSONL_RECORD_PER_AUTHORIZED_CANONICAL_ANSWER_EXECUTION",
+    "authorized_target_case_ids": [
+      "cit-001"
+    ],
+    "authorized_telemetry_operation_multiplicity": "EXACTLY_ONE_CANONICAL_WRITE_TELEMETRY_INVOCATION_PER_AUTHORIZED_CANONICAL_ANSWER_EXECUTION",
+    "canonical_telemetry_io_failure_propagates": "NO",
+    "canonical_write_telemetry_invocation_count": "EXACTLY_1",
+    "permission_id": "WS13_G4_CANONICAL_TELEMETRY_APPEND_PERMISSION_V1",
+    "permission_status": "INACTIVE_UNTIL_GOVERNANCE_REVIEWER_ACCEPTS_EXACT_ARTIFACT_SHA256",
+    "successful_filesystem_append_count": "0_OR_1",
+    "telemetry_append_success_required_for_run_acceptance": "NO"
+  },
+  "post_execution_delta_validation": {
+    "canonical_telemetry_record_content_validation": "REQUIRED",
+    "expected_payload_reconstruction": "reconstruct the expected write_telemetry payload semantic object from the same canonical answer() execution and select the conditional key by the accepted QA_DEBUG_SCOPE binding",
+    "fail_conditions": [
+      "invocation_count_not_exactly_1",
+      "file_id_change_or_replacement",
+      "truncate_rewrite_or_midfile_mutation",
+      "partial_malformed_or_unattributable_append",
+      "same_run_payload_mismatch",
+      "wrong_newline",
+      "more_than_one_record",
+      "line_count_inconsistency",
+      "unexpected_target_mutation",
+      "other_changed_workspace_path",
+      "immutable_surface_drift"
+    ],
+    "on_post_execution_failure": [
+      "MARK_G4_RUN_INVALID",
+      "DO_NOT_ACCEPT_OR_CONSUME_OBSERVATION",
+      "STOP_BEFORE_NEXT_ORDINAL",
+      "NO_STATE_CHAIN_ADVANCEMENT"
+    ]
+  },
+  "pre_execution_guards": {
+    "fail_closed_conditions": [
+      "rule_not_accepted_or_sha_mismatch",
+      "source_binding_drift",
+      "runtime_config_drift",
+      "qa_debug_scope_drift",
+      "target_or_ordinal_drift",
+      "target_missing_not_regular_or_reparse",
+      "resolved_outside_active_workspace",
+      "file_id_mismatch",
+      "append_boundary_failure",
+      "immutable_surface_drift",
+      "prior_ordinal_invalid",
+      "pre_state_mismatch",
+      "creation_required"
+    ],
+    "on_pre_execution_failure": "DO_NOT_EXECUTE_G4_RUN"
+  },
+  "runtime_configuration": {
+    "qa_debug_scope": {
+      "effective_boolean": false,
+      "payload_effect_rule": "scope_document_ids is included IFF the effective boolean is true; under this bound state it is EXCLUDED",
+      "raw_state_class": "UNSET"
+    },
+    "qa_telemetry_state": "UNSET",
+    "telemetry_enabled": "TRUE",
+    "telemetry_redirection": "NONE",
+    "telemetry_suppression": "NONE",
+    "telemetry_target_relative_path": "data/logs/qa_log.jsonl"
+  },
+  "schema_version": "1.0",
+  "semantic_digest": "4231856b8a66b7d31970fb3795e1cc8041c052e92e80a963b20c38ab1efa4f81",
+  "short_id": "WS13_TPR1",
+  "source_bindings": {
+    "canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "files": {
+      "config": "core/config.py|b5a01ed4db1e61df06752806141b12fc750fdd0804bcb9efdc703d18108f9826",
+      "engine_v2": "core/engine_v2.py|7ec177aeb1d64cfeabf67d538f310e7f94d46aaf407ebc5e3c089bf3aa5d4d8e",
+      "eval_v4_baseline": "scripts/eval_v4_baseline.py|c901a5c6f7d074296a3a6d7a9283e8315de217ca67561f41b367283112ad2daf",
+      "g2_test": "tests/test_v4_ws13_citation_fresh_attribution.py|34fd4471a99095f0b4894e67efa5e79412b1612c16679b4398898f371dc56984",
+      "observer": "scripts/observe_v4_ws13_citation_fresh_attribution.py|560274678f4577b7fbd703aac8084de6703ec7e69c170fe598868ab98578ad01"
+    },
+    "source_slice_digest_rule": "SHA256 over exact raw source-file bytes for the inclusive frozen physical-line span, preserving original line terminators and without newline normalization",
+    "write_telemetry_callsite": "core/engine_v2.py|lines 513-564|b4b4e1e49fa4bfa32cff4a47f867ffe454f5c8dea2f803d12dbe63f021173b05",
+    "write_telemetry_definition": "core/engine_v2.py|lines 63-73|cab3ca425a9750f52cd80db64173b706df7f43e0fc60c8b1fdb089c524dfd51d"
+  },
+  "telemetry_format_binding": {
+    "line_count_algorithm": "number of CRLF occurrences in exact raw bytes",
+    "logical_record_terminator": "LF",
+    "physical_newline_bytes": "CRLF",
+    "terminal_line_boundary_state": "ENDS_WITH_BOUND_CANONICAL_RECORD_TERMINATOR",
+    "text_encoding": "UTF-8",
+    "valid_future_pre_states": [
+      "EMPTY",
+      "ENDS_WITH_BOUND_CANONICAL_RECORD_TERMINATOR"
+    ]
+  },
+  "upstream_governance": {
+    "attempt_001": "BLOCKED_BUT_CLEAN / blocker AUTHORIZED_TELEMETRY_OPERATION_MULTIPLICITY_DRIFT / expected EXACTLY_ONE_CANONICAL_WRITE_TELEMETRY_INVOCATION / observed AT_MOST_ONE / corrections RESTORE_EXACTLY_ONE_CANONICAL_WRITE_TELEMETRY_INVOCATION and BIND_CURRENT_QA_DEBUG_SCOPE_STATE_AND_FAIL_CLOSED_ON_DRIFT",
+    "operative_effective_ws13_design_digest": "646d354284fe6a419e144ead01ffd879c7cd426a05346d523c350be178b2ea94",
+    "path_a": "TECHNICALLY_COMPATIBLE_BUT_REQUIRES_NEW_GOVERNANCE_AUTHORIZATION / new_rule YES / g1_contract_change NO / currently_authorized NO",
+    "tgr1": "FINAL_ACCEPTED / NEW_GOVERNANCE_PERMISSION_RULE_REQUIRED_WITHOUT_MEASUREMENT_CONTRACT_CHANGE"
+  }
+}

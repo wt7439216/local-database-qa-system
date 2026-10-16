@@ -160,7 +160,7 @@ class WebQAServer:
         self.logger = self._build_logger(log_file)
         # 相同问题缓存：键含教材指纹与回答模型，教材重建后自动失效。
         # 追问（带 history）依赖上下文，不参与缓存。
-        self._answer_cache: OrderedDict[tuple[str, str, str], dict[str, Any]] = OrderedDict()
+        self._answer_cache: OrderedDict[tuple[str, str, str, str], dict[str, Any]] = OrderedDict()
         self._cache_lock = threading.Lock()
         self._recompute_fingerprint()
         self._tokens: dict[str, float] = {}
@@ -213,14 +213,14 @@ class WebQAServer:
             with self._cache_lock:
                 self._answer_cache.clear()
 
-    def _cache_get(self, key: tuple[str, str, str]) -> dict[str, Any] | None:
+    def _cache_get(self, key: tuple[str, str, str, str]) -> dict[str, Any] | None:
         with self._cache_lock:
             cached = self._answer_cache.get(key)
             if cached is not None:
                 self._answer_cache.move_to_end(key)
             return cached
 
-    def _cache_put(self, key: tuple[str, str, str], result: dict[str, Any]) -> None:
+    def _cache_put(self, key: tuple[str, str, str, str], result: dict[str, Any]) -> None:
         with self._cache_lock:
             self._answer_cache[key] = result
             self._answer_cache.move_to_end(key)
@@ -411,19 +411,24 @@ class WebQAServer:
                 continue
             job.status = "running"
             job.emit("status", message="正在检索教材")
-            cache_key = (
-                job.question.strip(),
-                self._engine_fingerprint,
-                str(getattr(self.engine, "answer_model", "")),
-                scope_cache_key(job.scope),
-            )
             try:
-                cached = None if job.history else self._cache_get(cache_key)
-                if cached is not None:
-                    data = cached
-                    job.emit("status", message="命中缓存")
-                else:
-                    with self._engine_lock:
+                # A mutation refreshes the runtime and clears the cache under
+                # this same lock. Keep lookup, generation and publication in
+                # one interval so an old answer cannot be inserted after clear.
+                with self._engine_lock:
+                    if job.cancelled.is_set():
+                        raise InterruptedError("回答已取消。")
+                    cache_key = (
+                        job.question.strip(),
+                        self._engine_fingerprint,
+                        str(getattr(self.engine, "answer_model", "")),
+                        scope_cache_key(job.scope),
+                    )
+                    cached = None if job.history else self._cache_get(cache_key)
+                    if cached is not None:
+                        data = cached
+                        job.emit("status", message="命中缓存")
+                    else:
                         # Only pass scope when actually set: engines without a
                         # scope parameter (Phase C contract) keep working.
                         scope_kwargs = {} if job.scope is None else {"scope": job.scope}
@@ -434,10 +439,12 @@ class WebQAServer:
                             cancelled=job.cancelled.is_set,
                             **scope_kwargs,
                         )
+                        data = result.to_dict() if hasattr(result, "to_dict") else dict(result)
+                    # Cancellation may arrive during generation, serialization
+                    # or a cache lookup; none should publish a completed answer.
                     if job.cancelled.is_set():
                         raise InterruptedError("回答已取消。")
-                    data = result.to_dict() if hasattr(result, "to_dict") else dict(result)
-                    if not job.history:
+                    if cached is None and not job.history:
                         self._cache_put(cache_key, data)
                 self._log_answer(job.question, data)
                 job.status = "complete"
@@ -818,6 +825,8 @@ def scope_cache_key(scope: QueryScope | None) -> str:
     non-default scope so a scoped answer can never be served unscoped."""
     if scope is None:
         return "none"
+    if scope.matches_nothing:
+        return "nothing"
     return json.dumps(scope.to_dict(), ensure_ascii=False, sort_keys=True)
 
 

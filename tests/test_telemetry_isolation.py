@@ -1,7 +1,7 @@
 """Telemetry hermeticity regression test (closure audit requirement).
 
 Proves that running the full unit/integration test suite leaves the REAL
-project telemetry log (``data/logs/qa_log.jsonl``) byte-for-byte unchanged:
+project QA, import and library telemetry logs byte-for-byte unchanged:
 unit tests must never write project data.  The inner run lists every test
 module except this one (spawning the full discovery from inside a test would
 recurse); ``test_qdrant_integration`` skips itself automatically when no
@@ -17,7 +17,10 @@ import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-LOG_PATH = ROOT / "data" / "logs" / "qa_log.jsonl"
+LOG_PATHS = tuple(
+    ROOT / "data" / "logs" / name
+    for name in ("qa_log.jsonl", "import_log.jsonl", "library_log.jsonl")
+)
 
 INNER_MODULES = [
     "tests.test_rebuild_all",
@@ -33,19 +36,20 @@ INNER_MODULES = [
     "tests.test_document_model",
     "tests.test_parsers",
     "tests.test_importer",
+    "tests.test_embedding_identity",
 ]
 
 
-def _fingerprint() -> tuple[str, str]:
-    if not LOG_PATH.exists():
+def _fingerprint(path: Path) -> tuple[str, str]:
+    if not path.exists():
         return "missing", "missing"
-    data = LOG_PATH.read_bytes()
+    data = path.read_bytes()
     return str(len(data)), hashlib.sha256(data).hexdigest()
 
 
 class TelemetryIsolationTests(unittest.TestCase):
     def test_suite_run_leaves_project_telemetry_log_unchanged(self):
-        before = _fingerprint()
+        before = {str(path.name): _fingerprint(path) for path in LOG_PATHS}
         result = subprocess.run(
             [sys.executable, "-B", "-X", "utf8", "-m", "unittest", *INNER_MODULES],
             cwd=str(ROOT),
@@ -59,7 +63,7 @@ class TelemetryIsolationTests(unittest.TestCase):
             result.returncode, 0,
             f"inner test run failed:\n{result.stderr[-2000:]}",
         )
-        after = _fingerprint()
+        after = {str(path.name): _fingerprint(path) for path in LOG_PATHS}
         self.assertEqual(
             before, after,
             f"项目 telemetry 日志被测试修改：before={before} after={after}",

@@ -1,0 +1,892 @@
+{
+  "artifact_type": "WS13_CITATION_FRESH_ATTRIBUTION_DESIGN_AMENDMENT",
+  "amendment_id": "WS13_G1_DESIGN_AMENDMENT_001",
+  "checkpoint": "WS13_G1_DESIGN_AMENDMENT_001",
+  "artifact_stage": "AMENDMENT_FROZEN_PENDING_POST_WRITE_VALIDATION",
+  "artifact_stage_note": "the artifact is finalized before post-write validation and stores no final checkpoint status and no PASS / FAIL marker; the post-write console status is external to this artifact",
+  "parent_g1": {
+    "path": "eval/v4_ws13_citation_fresh_attribution_design.json",
+    "raw_sha256": "67a9ee245bc80520a7c02463215d1e00cdeb1e1b0b97c088ec7adb976e6c943d",
+    "raw_sha256_recomputed_live": "67a9ee245bc80520a7c02463215d1e00cdeb1e1b0b97c088ec7adb976e6c943d",
+    "raw_sha256_match": "YES",
+    "status": "PRESERVED_PROVISIONAL_BASE_NOT_FINAL_ACCEPTED",
+    "base_effective_ws13_design_digest": "fe69ea63cf67e571355da68a4d8f1490771bf90ca821354161eb4e4159771021",
+    "base_effective_ws13_design_digest_recomputed_live": "fe69ea63cf67e571355da68a4d8f1490771bf90ca821354161eb4e4159771021",
+    "base_effective_ws13_design_digest_match": "YES",
+    "base_digest_recomputation_rule": "sha256 over json.dumps(design_semantic_payload, sort_keys=True, ensure_ascii=False, separators=comma-colon) encoded as UTF-8",
+    "base_artifact_modified_by_this_checkpoint": "NO"
+  },
+  "parent_g0": {
+    "path": "eval/v4_ws13_citation_fresh_attribution_preflight.json",
+    "raw_sha256": "fc84f0205008f3b505722ab1a73fded1e6ebced123bc5bb69319fd5d744e1556",
+    "raw_sha256_recomputed_live": "fc84f0205008f3b505722ab1a73fded1e6ebced123bc5bb69319fd5d744e1556",
+    "raw_sha256_match": "YES",
+    "status": "FINAL_ACCEPTED"
+  },
+  "source_identities": {
+    "verification_method": "raw sha256 recomputed mechanically in the ACTIVE V4 workspace before the single governed write",
+    "current_master": {
+      "path": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+      "expected_raw_sha256": "f29d4df55cdabfd03eba02c5cb68ea086c990c45bb92f121cc08399b82d40702",
+      "observed_raw_sha256": "f29d4df55cdabfd03eba02c5cb68ea086c990c45bb92f121cc08399b82d40702",
+      "identity_match": "YES"
+    },
+    "priority_machine_artifact": {
+      "path": "eval/v4_post_v4_8_2_next_workstream_priority_review.json",
+      "expected_raw_sha256": "d80053040f4bbb55f48a95050528f5f3933e408a079888ee6d962e7113752670",
+      "observed_raw_sha256": "d80053040f4bbb55f48a95050528f5f3933e408a079888ee6d962e7113752670",
+      "identity_match": "YES"
+    },
+    "priority_human_report": {
+      "path": "docs/V4_POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW.md",
+      "expected_raw_sha256": "da463797e160210e507be3980207eb3a3f69a8a5f401e288b7bef7d91879fc6d",
+      "observed_raw_sha256": "da463797e160210e507be3980207eb3a3f69a8a5f401e288b7bef7d91879fc6d",
+      "identity_match": "YES"
+    },
+    "priority_harness": {
+      "path": "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+      "expected_raw_sha256": "2ec9219df3774251b3e7e0e4a292c7d7bc16524f4d65ae73eb4598d17cca7471",
+      "observed_raw_sha256": "2ec9219df3774251b3e7e0e4a292c7d7bc16524f4d65ae73eb4598d17cca7471",
+      "identity_match": "YES"
+    },
+    "priority_tests": {
+      "path": "tests/test_v4_post_v4_8_2_priority_review.py",
+      "expected_raw_sha256": "e235097900581710a0958cd8bc4292295568040f318aa1bb5367e6878293d173",
+      "observed_raw_sha256": "e235097900581710a0958cd8bc4292295568040f318aa1bb5367e6878293d173",
+      "identity_match": "YES"
+    },
+    "design_amendments_a001_to_a009": {
+      "001": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+        "accepted_raw_sha256": "11c7caa096637d13c62abefc1fce65b1e13978ab5a6850ed365368ffebe1ee8f",
+        "observed_raw_sha256": "11c7caa096637d13c62abefc1fce65b1e13978ab5a6850ed365368ffebe1ee8f",
+        "match": "YES"
+      },
+      "002": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json",
+        "accepted_raw_sha256": "48a6c8eca47ca969d536929f927fea7f684803c79a4b6945c51686b496a1325b",
+        "observed_raw_sha256": "48a6c8eca47ca969d536929f927fea7f684803c79a4b6945c51686b496a1325b",
+        "match": "YES"
+      },
+      "003": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json",
+        "accepted_raw_sha256": "2e8e20d411edd10bd071c0534553d2bec825a9ed3bfd684ad95d73b24607a88b",
+        "observed_raw_sha256": "2e8e20d411edd10bd071c0534553d2bec825a9ed3bfd684ad95d73b24607a88b",
+        "match": "YES"
+      },
+      "004": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_004.json",
+        "accepted_raw_sha256": "2e2da080775dc2a79b23e7b2abb80987d2f8650cf4b90eed0e5088d3d8cc6df2",
+        "observed_raw_sha256": "2e2da080775dc2a79b23e7b2abb80987d2f8650cf4b90eed0e5088d3d8cc6df2",
+        "match": "YES"
+      },
+      "005": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json",
+        "accepted_raw_sha256": "c036aba9e5f2a773c4c73219242ffc13d2fee756e4fa890769f13045377c573e",
+        "observed_raw_sha256": "c036aba9e5f2a773c4c73219242ffc13d2fee756e4fa890769f13045377c573e",
+        "match": "YES"
+      },
+      "006": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_006.json",
+        "accepted_raw_sha256": "94601281c3d02b2c07fd1e8ff7fd7d31360a14edca1de880d74be492212c7eef",
+        "observed_raw_sha256": "94601281c3d02b2c07fd1e8ff7fd7d31360a14edca1de880d74be492212c7eef",
+        "match": "YES"
+      },
+      "007": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_007.json",
+        "accepted_raw_sha256": "e9787de99ffba69e4ad4172bd65d8fecc7b4461fc740aaa24ccacc72020adae6",
+        "observed_raw_sha256": "e9787de99ffba69e4ad4172bd65d8fecc7b4461fc740aaa24ccacc72020adae6",
+        "match": "YES"
+      },
+      "008": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_008.json",
+        "accepted_raw_sha256": "4678036cbab70e2a18a97d814977fb3f02b7f9878fed18ced64c12c4b7d3fc3f",
+        "observed_raw_sha256": "4678036cbab70e2a18a97d814977fb3f02b7f9878fed18ced64c12c4b7d3fc3f",
+        "match": "YES"
+      },
+      "009": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_009.json",
+        "accepted_raw_sha256": "78a936b4922394071686137e4ed506bef33f8a1cae2b1e93b0aa166525a15410",
+        "observed_raw_sha256": "78a936b4922394071686137e4ed506bef33f8a1cae2b1e93b0aa166525a15410",
+        "match": "YES"
+      }
+    },
+    "a001_to_a009_identity_check": "ALL_MATCH_9_OF_9"
+  },
+  "product_runtime_identities": {
+    "current_release": "v4.0.0-alpha.2",
+    "current_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+    "product_metrics_source": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+    "canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "production_hash_recomputed_live": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "production_hash_live_match": "YES",
+    "answer_model": "qwen2.5:7b",
+    "embedding_model": "bge-m3",
+    "embedding_dimension": 1024,
+    "vector_backend": "sqlite",
+    "runtime_db_path": "data/library/documents.sqlite3",
+    "runtime_db_identity_before": "10698752:c6bc9b3eb63ae4e6",
+    "runtime_db_identity_before_matches_expected": "YES",
+    "runtime_db_full_sha256_before": "c6bc9b3eb63ae4e6d96caf859a2b0c5f2f1e5a5b6f438e81aa0bbc3cf4084c97",
+    "runtime_db_inspection_mode": "STRICT_READ_ONLY_BYTE_HASH_AND_STAT_ONLY (no sqlite connection, no VACUUM, no checkpoint, no migration, no insert/update/delete, no reindex, no journal write, no WAL write)",
+    "new_product_baseline": "NO",
+    "baseline_advancement": "NO",
+    "release_advancement": "NO",
+    "product_code_change": "NO"
+  },
+  "pre_write_workspace_provenance": {
+    "accepted_provisional_g1_reported_manifest_entry_count": 19666,
+    "accepted_provisional_g1_reported_manifest_digest": "45032ad16048c7afe8614b1d22b249cc8ebccf9db41da9ba151d52904f643287",
+    "evidence_level": "REVIEWER_ACCEPTED_AGENT_REPORTED_PROVISIONAL_G1_ATTEMPT_PROVENANCE",
+    "live_recomputed_pre_g1_a001_manifest_entry_count": 19666,
+    "live_recomputed_pre_g1_a001_manifest_digest": "45032ad16048c7afe8614b1d22b249cc8ebccf9db41da9ba151d52904f643287",
+    "matches_accepted_g1_reported_workspace_state": "YES",
+    "live_recomputation_count_before_write": 3,
+    "live_recomputation_deterministic": "YES",
+    "rule": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "role": "CHECKPOINT_START_DRIFT_GUARD_ONLY (not a future permanent workspace invariant)"
+  },
+  "defect_record": {
+    "required_fix_count": 5,
+    "defects": [
+      {
+        "fix": "FIX_1",
+        "fragment_id": "A",
+        "defect_class": "C1_R0_BLOCKER_NOT_MECHANICALLY_EQUIVALENT_TO_ACCEPTED_A005_R0_BLOCKER",
+        "base_payload_location": "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C1_R0_BLOCKER_CHECK"
+      },
+      {
+        "fix": "FIX_2",
+        "fragment_id": "B",
+        "defect_class": "C2_R1_NOT_ACTION_SCOPED",
+        "base_payload_locations": [
+          "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C2_R1_CHECK",
+          "g6_readiness_bridge_spec.PER_GATE_MAPPING.UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION"
+        ]
+      },
+      {
+        "fix": "FIX_3",
+        "fragment_id": "C",
+        "defect_class": "CLASSIFICATION_DIGEST_DID_NOT_BIND_CLASSIFIER_OUTPUTS",
+        "base_payload_location": "semantic_vs_provenance_field_contract.CLASSIFICATION_SEMANTIC_KEY_SET"
+      },
+      {
+        "fix": "FIX_4",
+        "fragment_id": "D",
+        "defect_class": "SENT_EVIDENCE_TEXT_VS_HASH_AMBIGUITY",
+        "base_payload_locations": [
+          "observation_schema.field_groups.retrieval.sent_evidence_text_or_governed_content_hash",
+          "semantic_vs_provenance_field_contract.OBSERVATION_SEMANTIC_KEY_SET entry retrieval.sent_evidence_text_or_governed_content_hash",
+          "classification_predicates.predicates.SUPPORTING_EVIDENCE_PRESENT",
+          "confound_rules.RETRIEVAL_CONFOUND_RULE"
+        ]
+      },
+      {
+        "fix": "FIX_5",
+        "fragment_id": "E",
+        "defect_class": "MISSING_G5_TO_ACCEPTED_A003_A005_CASE_STATE_PROJECTION",
+        "base_payload_locations": [
+          "g6_readiness_bridge_spec.PER_GATE_MAPPING.CURRENT_UNRESOLVED_ISSUE_ESTABLISHED",
+          "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C5_R3_CHECK",
+          "absence of a frozen G5 to A003 case-state projection rule"
+        ]
+      }
+    ],
+    "impact_scope": "the five superseded provisional G1 design fragments only; no target / control, run policy, truth table, aggregate rule, G5 vocabulary, dependency graph or authorization content is altered"
+  },
+  "amendment_semantic_payload": {
+    "fix_1_c1_r0_alignment": {
+      "fragment_id": "A",
+      "fix_name": "C1_R0_ACCEPTED_A005_ALIGNMENT",
+      "SUPERSEDES_BASE_RULE": {
+        "base_payload_location": "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C1_R0_BLOCKER_CHECK",
+        "base_superseded_text": "PARENT_GOVERNANCE_BLOCKER = YES, or CURRENT_UNRESOLVED_ISSUE_ESTABLISHED = NO (the admissible current evidence disproves the proposed citation defect), or no admissible evidence exists (RUN_COUNT_COMPLETED = 0 or every authorized run incomplete)",
+        "base_superseded_effect": "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED = NO directly establishes C1 / R0",
+        "defect_class": "C1_R0_BLOCKER_NOT_MECHANICALLY_EQUIVALENT_TO_ACCEPTED_A005_R0_BLOCKER",
+        "defect_impact": "a fresh negative or not-established current issue would be forced into R0 / NO_SUPPORTED_ACTION instead of being consumed by the accepted A003 bucket and A005 readiness mechanics"
+      },
+      "FROZEN_RULE": {
+        "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED_NO_ESTABLISHES_C1_R0": "NO",
+        "C1_R0_BLOCKER_YES_ONLY_IF_ANY_OF": {
+          "A": "an explicit parent governance blocker blocks all otherwise-permissible action",
+          "B": "no admissible workstream / domain-eligible evidence exists",
+          "C": "the entire eligible domain disproves the workstream primary family AND the CURRENT_CONFIRMED_CASES + HISTORICAL_OR_STALE_CASES + RESOLVED_CASES supporting sets are empty"
+        },
+        "MECHANICAL_EQUIVALENCE_TARGET": "accepted A005 _r0_blocker()",
+        "MECHANICAL_EQUIVALENCE_STEPS": [
+          "STEP_1 PARENT_GOVERNANCE_BLOCKER = YES -> C1_R0_BLOCKER = YES",
+          "STEP_2 else the workstream domain-eligible case set is empty -> C1_R0_BLOCKER = YES",
+          "STEP_3 else, when the workstream carries a primary root-cause family filter, every domain-eligible case carries that family in blocked_or_disproven_paths AND the union of CURRENT_CONFIRMED_CASES + HISTORICAL_OR_STALE_CASES + RESOLVED_CASES is empty -> C1_R0_BLOCKER = YES",
+          "STEP_4 else C1_R0_BLOCKER = NO"
+        ],
+        "STRUCTURAL_REACHABILITY_NOTE": "branch C engages only where a primary root-cause family filter exists; for WS-13 the primary axis is CITATION and the filter is NOT_APPLICABLE, so branch C is structurally not applicable and can never manufacture R0 for WS-13; only A and B can yield C1 for WS-13",
+        "FORBIDDEN_DERIVATIONS": [
+          "NO_CURRENT_CITATION_DEFECT_ESTABLISHED => R0",
+          "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED = NO => R0",
+          "RUN_COUNT_COMPLETED = 0 or every authorized run incomplete => R0 (the no-admissible-evidence condition is decided by the workstream domain-eligible evidence set, never by a case-level run-completion counter)",
+          "a fresh negative result, a NOT_ESTABLISHED status, a confound or a stale attribution treated as a parent governance blocker"
+        ],
+        "INTERNAL_HELPER_NOTE": "the A / B / C sub-conditions are internal helpers of the C1 derivation only; they are not new A005 readiness gate keys and must never be emitted into the frozen A005 REQUIRED_READINESS_GATE_SCHEMA",
+        "C1_PRECEDENCE": "C1 is evaluated before C2 and outranks it; a C1 blocker is assigned before any action-scoped interception is evaluated"
+      },
+      "UNCHANGED": [
+        "R4/R3/R2/R1/R0 vocabulary",
+        "C2..C6 evaluation order",
+        "NEXT_PERMISSIBLE_ACTION mapping",
+        "readiness priority order R4 > R3 > R2 > R1 > R0",
+        "G5 vocabulary",
+        "citation status truth table",
+        "aggregate rule",
+        "dependency graph",
+        "authorization boundary"
+      ]
+    },
+    "fix_2_c2_action_scoped_dependency_alignment": {
+      "fragment_id": "B",
+      "fix_name": "C2_R1_ACTION_SCOPED_UPSTREAM_DEPENDENCY_ALIGNMENT",
+      "SUPERSEDES_BASE_RULE": {
+        "base_payload_locations": [
+          "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C2_R1_CHECK",
+          "g6_readiness_bridge_spec.PER_GATE_MAPPING.UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION"
+        ],
+        "base_superseded_text": "C2_R1_CHECK = UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION = YES",
+        "base_superseded_effect": "C2 / R1 hard-wired to the FRESH_ATTRIBUTION-scoped dependency gate regardless of the otherwise-permissible action",
+        "defect_class": "C2_R1_NOT_ACTION_SCOPED",
+        "defect_impact": "an actually blocked SEPARATE_EXECUTION or EVIDENCE_RECONCILIATION candidate could be classified R0 instead of R1, and a workstream whose permissible action is EVIDENCE_RECONCILIATION could be deferred by a FRESH_ATTRIBUTION-scoped edge"
+      },
+      "FROZEN_RULE": {
+        "OTHERWISE_PERMISSIBLE_ACTION_DERIVATION": {
+          "order": "EVIDENCE_RECONCILIATION > SEPARATE_EXECUTION > FRESH_ATTRIBUTION",
+          "rule": [
+            "if C3_RECONCILIATION_CANDIDATE: EVIDENCE_RECONCILIATION",
+            "elif C4_SEPARATE_EXECUTION_CANDIDATE: SEPARATE_EXECUTION",
+            "elif C5_FRESH_ATTRIBUTION_CANDIDATE: FRESH_ATTRIBUTION",
+            "else: NONE"
+          ],
+          "CANDIDATE_SEMANTICS": "the C3 / C4 / C5 candidates are evaluated on their substantive gate conditions only; they do not consume the applicable upstream dependency early and they do not consume the parent governance blocker early (the parent blocker is handled by C1 precedence)"
+        },
+        "BLOCKED_ACTIONS": {
+          "construction": "BLOCKED_ACTIONS = the set of actions for which an unresolved applicable hard edge exists",
+          "hard_edge": "an unresolved MUST_PRECEDE or BLOCKED_BY edge whose APPLIES_TO_ACTION covers the action (APPLIES_TO_ACTION is the action, or ALL_ACTIONS)",
+          "non_blocking": [
+            "CAN_PRECEDE",
+            "INDEPENDENT",
+            "NOT_ESTABLISHED",
+            "an edge whose APPLIES_TO_ACTION does not cover the action"
+          ],
+          "unresolved": "an upstream workstream is unresolved while it still carries a CURRENT_CONFIRMED_CASES or HISTORICAL_OR_STALE_CASES set (accepted unresolved_upstream_dependencies semantics)",
+          "graph_source": "the accepted action-scoped graph is consumed read-only; this amendment does not edit the graph"
+        },
+        "INTERCEPTION_RULE": [
+          "if OTHERWISE_PERMISSIBLE_ACTION in BLOCKED_ACTIONS: R1 / C2 / DEFER_PENDING_UPSTREAM",
+          "elif EVIDENCE_RECONCILIATION: R2 / C3",
+          "elif SEPARATE_EXECUTION: R4 / C4",
+          "elif FRESH_ATTRIBUTION: R3 / C5",
+          "else NONE: R0 / C6 otherwise-R0 fallback"
+        ],
+        "C1_ALWAYS_OUTRANKS_C2": "YES",
+        "PARENT_GOVERNANCE_BLOCKER_ROLE": "handled by C1 precedence only; never re-consumed inside the C2 / C3 / C4 / C5 evaluations",
+        "NO_GRAPH_EDIT": "YES",
+        "CURRENT_GRAPH": [
+          "WS-11 -> WS-13 MUST_PRECEDE APPLIES_TO_ACTION = SEPARATE_EXECUTION",
+          "WS-12 -> WS-13 CAN_PRECEDE APPLIES_TO_ACTION = SEPARATE_EXECUTION"
+        ],
+        "CURRENT_GRAPH_CONSEQUENCE": "the WS-11 MUST_PRECEDE edge blocks only SEPARATE_EXECUTION and can never defer WS-13 FRESH_ATTRIBUTION; WS-12 CAN_PRECEDE is non-blocking",
+        "FUTURE_G3_SYNTHETIC_REQUIREMENTS": [
+          "C5 + blocked SEPARATE_EXECUTION => R3 / C5",
+          "C5 + blocked FRESH_ATTRIBUTION => R1 / C2",
+          "C4 + blocked SEPARATE_EXECUTION => R1 / C2",
+          "C3 + blocked FRESH_ATTRIBUTION => R2 / C3",
+          "C3 + blocked EVIDENCE_RECONCILIATION => R1 / C2",
+          "C1 always outranks C2"
+        ]
+      },
+      "UNCHANGED": [
+        "edge types",
+        "APPLIES_TO_ACTION vocabulary",
+        "readiness class vocabulary",
+        "NEXT_PERMISSIBLE_ACTION mapping",
+        "graph content"
+      ]
+    },
+    "fix_3_classification_semantic_digest_binding": {
+      "fragment_id": "C",
+      "fix_name": "CLASSIFICATION_SEMANTIC_DIGEST_BINDS_CLASSIFIER_OUTPUTS",
+      "SUPERSEDES_BASE_RULE": {
+        "base_payload_location": "semantic_vs_provenance_field_contract.CLASSIFICATION_SEMANTIC_KEY_SET",
+        "base_superseded_text": "CLASSIFICATION_SEMANTIC_KEY_SET = OBSERVATION_SEMANTIC_KEY_SET (RULE = EQUALS_OBSERVATION_SEMANTIC_KEY_SET; value = identical to OBSERVATION_SEMANTIC_KEY_SET)",
+        "base_superseded_effect": "the classification digest was an exact copy of the observation digest over the same key set, so classifier outputs (predicate outputs, per-run status, confounds) and the classifier identity were bound by no digest",
+        "defect_class": "CLASSIFICATION_DIGEST_DID_NOT_BIND_CLASSIFIER_OUTPUTS",
+        "defect_impact": "a changed predicate table, truth-table application, confound derivation or classifier implementation could not change any classification digest"
+      },
+      "FROZEN_RULE": {
+        "CLASSIFICATION_KEY_SET_DIFFERS_FROM_OBSERVATION_KEY_SET": "YES",
+        "CLASSIFICATION_SEMANTIC_PAYLOAD_TOP_LEVEL_KEYS": [
+          "observation_semantic_digest",
+          "run_ordinal",
+          "predicate_outputs",
+          "per_run_citation_status",
+          "generation_confound",
+          "retrieval_confound",
+          "measurement_confound",
+          "effective_ws13_design_digest",
+          "classifier_sha256"
+        ],
+        "PREDICATE_OUTPUT_KEYS": [
+          "CLAIM_PRESENT",
+          "SUPPORTING_EVIDENCE_PRESENT",
+          "CITATION_EXPECTED",
+          "CITATION_EMITTED",
+          "CITATION_TARGET_VALID",
+          "CITATION_ALIGNMENT_VALID",
+          "INVALID_CITATION_PRESENT",
+          "SCOPE_VIOLATION_PRESENT",
+          "GENERATION_CONFOUND",
+          "RETRIEVAL_CONFOUND",
+          "MEASUREMENT_CONFOUND",
+          "CITATION_SPECIFIC_FAILURE"
+        ],
+        "PAYLOAD_SEMANTICS": {
+          "observation_semantic_digest": "the per-run digest computed over exactly the frozen observation semantic key set of that run; the observation layer is bound only through this single digest and is never re-hashed field-by-field here",
+          "run_ordinal": "the authorized run position of the same run",
+          "predicate_outputs": "the 12 frozen predicate outputs of that run (exactly the frozen classification_predicates.predicate_evaluation_order names)",
+          "per_run_citation_status": "the run citation-status value produced by the frozen truth table",
+          "generation_confound": "the run Generation confound value",
+          "retrieval_confound": "the run Retrieval confound value",
+          "measurement_confound": "the run Measurement confound value",
+          "effective_ws13_design_digest": "the effective design identity under which the run was classified",
+          "classifier_sha256": "the future classifier implementation identity (a REQUIRED_EXTERNAL_BINDING_BEFORE_G4 role; never invented here)"
+        },
+        "CANONICAL_DIGEST_RULE": "canonical JSON: json.dumps(sort_keys=True, ensure_ascii=False, separators=comma-colon), UTF-8 encoded, SHA256",
+        "BINDING_REQUIREMENT": "any change to a predicate output, the per-run citation status, a confound value, the classifier identity, the effective design identity or the observation semantic digest must change the classification semantic digest",
+        "PROVENANCE_ONLY_FIELDS_ENTER_CLASSIFICATION_DIGEST": "NO",
+        "G5_VOCABULARY_UNCHANGED": "YES"
+      },
+      "KEY_SET_WITNESS": {
+        "present_in_classification_payload_absent_from_observation_key_set": [
+          "predicate_outputs",
+          "per_run_citation_status",
+          "generation_confound",
+          "retrieval_confound",
+          "measurement_confound",
+          "observation_semantic_digest"
+        ],
+        "present_in_observation_key_set_absent_from_classification_payload": [
+          "scope.effective_scope",
+          "routing.route",
+          "citation.emitted_citation_tokens",
+          "measurement.evaluator_output"
+        ]
+      },
+      "G5_SCHEMA_NOTE": "g5_attribution_schema.value_domains.CLASSIFICATION_SEMANTIC_DIGESTS keeps its name and its per-run role; only the key set and payload it is computed over are superseded by this fix"
+    },
+    "fix_4_canonical_sent_evidence_representation": {
+      "fragment_id": "D",
+      "fix_name": "CANONICAL_SENT_EVIDENCE_TEXT_AND_HASH_REPRESENTATION",
+      "SUPERSEDES_BASE_RULE": {
+        "base_payload_locations": [
+          "observation_schema.field_groups.retrieval.sent_evidence_text_or_governed_content_hash",
+          "semantic_vs_provenance_field_contract.OBSERVATION_SEMANTIC_KEY_SET entry retrieval.sent_evidence_text_or_governed_content_hash",
+          "classification_predicates.predicates.SUPPORTING_EVIDENCE_PRESENT",
+          "confound_rules.RETRIEVAL_CONFOUND_RULE"
+        ],
+        "base_superseded_text": "a single ambiguous observation field retrieval.sent_evidence_text_or_governed_content_hash accepted either the exact sent-evidence text or its governed canonical content hash",
+        "base_superseded_effect": "the support predicate and the retrieval-confound rule could be satisfied by a hash-only record, and the sent evidence was not represented canonically",
+        "defect_class": "SENT_EVIDENCE_TEXT_VS_HASH_AMBIGUITY",
+        "defect_impact": "non-deterministic support matching and a non-canonical sent-evidence representation in the future G4 observation record"
+      },
+      "FROZEN_RULE": {
+        "FUTURE_OBSERVATION_FIELD": "retrieval.sent_evidence_records",
+        "RECORD_SHAPE": [
+          "sent_context_id",
+          "sent_evidence_text",
+          "sent_evidence_content_sha256"
+        ],
+        "ordering": "exact generation-sent order",
+        "sent_context_id": "canonical sent material / context identity of the sent context",
+        "sent_evidence_text": "the exact application-level text actually sent",
+        "sent_evidence_content_sha256": "SHA256 hex digest of the UTF-8 encoding of the exact sent_evidence_text; not the canonical-lf file-hash contract",
+        "HASH_PRECONDITION": "no Unicode normalization, no newline normalization, no trim, no rewrite and no reconstruction is performed before hashing",
+        "BOTH_FIELDS_MANDATORY": [
+          "sent_evidence_text",
+          "sent_evidence_content_sha256"
+        ],
+        "MISSING_FIELD_BEHAVIOR": [
+          "hash-only record => NOT_ESTABLISHED",
+          "text-only record => NOT_ESTABLISHED",
+          "hash mismatch between the recomputed SHA256 of sent_evidence_text and sent_evidence_content_sha256 => invalid observation / NOT_ESTABLISHED"
+        ],
+        "SUPPORT_PREDICATE_INPUTS": "SUPPORTING_EVIDENCE_PRESENT uses ONLY the exact sent_evidence_text records plus the frozen expected facts under the frozen exact-substring match; sent_evidence_content_sha256 is integrity only and is never matching material",
+        "OBSERVATION_SEMANTIC_KEY_SET_CHANGE": {
+          "REMOVE": [
+            "retrieval.sent_evidence_text_or_governed_content_hash"
+          ],
+          "ADD": [
+            "retrieval.sent_evidence_records[].sent_context_id",
+            "retrieval.sent_evidence_records[].sent_evidence_text",
+            "retrieval.sent_evidence_records[].sent_evidence_content_sha256"
+          ],
+          "OTHER_OBSERVATION_KEYS_UNCHANGED": "YES",
+          "OBSERVATION_SEMANTIC_KEY_COUNT_BEFORE": 60,
+          "OBSERVATION_SEMANTIC_KEY_COUNT_EFFECTIVE": 62
+        },
+        "RETRIEVAL_CONFOUND_RULE_INPUTS": "the admissible inputs become the sent_evidence_records text (exact) plus the frozen expected contract; the prohibited inputs (DB-only content, retrieved-but-unsent chunks, historical evidence, manual evidence) are unchanged",
+        "GENERATION_INPUT_SENT_CONTEXT_IDS_UNCHANGED": "YES"
+      }
+    },
+    "fix_5_g5_to_a003_a005_case_state_projection": {
+      "fragment_id": "E",
+      "fix_name": "G5_TO_ACCEPTED_A003_A005_CASE_STATE_PROJECTION",
+      "SUPERSEDES_BASE_RULE": {
+        "base_payload_locations": [
+          "g6_readiness_bridge_spec.PER_GATE_MAPPING.CURRENT_UNRESOLVED_ISSUE_ESTABLISHED",
+          "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C5_R3_CHECK",
+          "absence of a frozen G5 to A003 case-state projection rule"
+        ],
+        "base_superseded_text": "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED mapped directly from the G5 CITATION_STATUS, with no frozen projection of a G5 result into an accepted A003 WS-13 case-state record",
+        "base_superseded_effect": "a fresh negative observation had no frozen route into the accepted bucket / readiness mechanics and could only be consumed by ad-hoc attribution semantics",
+        "defect_class": "MISSING_G5_TO_ACCEPTED_A003_A005_CASE_STATE_PROJECTION",
+        "defect_impact": "a fresh negative could not mechanically produce CURRENT_NEGATIVE bucket membership and the readiness layer could not derive CURRENT_UNRESOLVED_ISSUE_ESTABLISHED / HISTORICAL_EVIDENCE_MATERIAL from accepted bucket state"
+      },
+      "FORBIDDEN_SHORTCUTS": [
+        "fresh negative => CURRENT_ATTRIBUTION_STATUS = CURRENTLY_ESTABLISHED",
+        "fresh negative or NOT_ESTABLISHED => CURRENT_CONFIRMED / CURRENT_NEGATIVE synthesis",
+        "any ad-hoc fresh-negative flag"
+      ],
+      "PROJECTION_PIPELINE": [
+        "STEP_1 project the G5 result into a prospective accepted-A003 WS-13 case-state record",
+        "STEP_2 apply the accepted A003 project_case_bucket() mechanics to the projected record",
+        "STEP_3 derive the projected WS-13 five bucket sets",
+        "STEP_4 derive CURRENT_UNRESOLVED_ISSUE_ESTABLISHED and HISTORICAL_EVIDENCE_MATERIAL by accepted A005 mechanics",
+        "STEP_5 derive CURRENT_ATTRIBUTION_STATUS by accepted A005 _current_attribution_status() semantics",
+        "STEP_6 derive the C5 fresh-attribution candidate"
+      ],
+      "INPUTS_AND_VOCABULARIES": {
+        "CONSUMED_G5_FIELDS_ONLY": [
+          "CASE_ID",
+          "CITATION_STATUS",
+          "CITATION_CONFIDENCE",
+          "CITATION_DEFECT_MECHANICALLY_ESTABLISHED",
+          "ATTRIBUTION_FRESHNESS",
+          "LATEST_PRODUCT_STATE_COMPATIBLE",
+          "SUPPORTING_EVIDENCE",
+          "LIMITING_EVIDENCE",
+          "SOURCE_TRACE",
+          "RUN_COUNT_EXPECTED",
+          "RUN_COUNT_COMPLETED",
+          "ADDITIONAL_FRESH_EVIDENCE_REQUIRED"
+        ],
+        "TARGET": "cit-001 (frozen primary target; WS-13 domain stays [cit-001])",
+        "PROHIBITED_INPUTS": [
+          "provenance-only fields",
+          "Product axis values",
+          "Measurement axis values",
+          "any field not listed in CONSUMED_G5_FIELDS_ONLY"
+        ],
+        "G5_CONFIDENCE_VOCABULARY": [
+          "DETERMINATE_ALL_RUNS_AGREE",
+          "NOT_ESTABLISHED_DUE_TO_VARIABILITY",
+          "NOT_ESTABLISHED_DUE_TO_INCOMPLETE_RUN",
+          "NOT_ESTABLISHED_DUE_TO_MISSING_EVIDENCE",
+          "NOT_ESTABLISHED_DUE_TO_CONFOUND"
+        ],
+        "PROJECTED_A003_CITATION_CONFIDENCE_ONLY": [
+          "MECHANICALLY_ESTABLISHED",
+          "SUPPORTED",
+          "HISTORICAL_ONLY",
+          "NOT_ESTABLISHED"
+        ],
+        "G5_CONFIDENCE_VERBATIM_COPY_ALLOWED": "NO",
+        "TRANSLATION_IS_MECHANICAL_AND_TOTAL": "YES"
+      },
+      "FRESH_POSITIVE_PROJECTION": {
+        "ALL_REQUIRED_CONDITIONS": [
+          "CITATION_STATUS = CURRENT_CONFIRMED_CITATION_DEFECT",
+          "CITATION_CONFIDENCE = DETERMINATE_ALL_RUNS_AGREE",
+          "CITATION_DEFECT_MECHANICALLY_ESTABLISHED = YES",
+          "ATTRIBUTION_FRESHNESS = FRESH",
+          "LATEST_PRODUCT_STATE_COMPATIBLE = YES",
+          "RUN_COUNT_EXPECTED = 3",
+          "RUN_COUNT_COMPLETED = 3",
+          "ADDITIONAL_FRESH_EVIDENCE_REQUIRED = NO"
+        ],
+        "PROJECTED_RECORD": {
+          "case_id": "cit-001",
+          "citation_status": "CURRENT_CONFIRMED_CITATION_DEFECT",
+          "citation_confidence": "MECHANICALLY_ESTABLISHED",
+          "attribution_freshness": "CURRENT",
+          "latest_product_state_compatible": "YES",
+          "supporting_evidence": "G5 SUPPORTING_EVIDENCE",
+          "limiting_evidence": "G5 LIMITING_EVIDENCE",
+          "source_trace": "G5 SOURCE_TRACE + projection-rule identity"
+        },
+        "THEN": "the accepted A003 project_case_bucket() mechanics project CURRENT_CONFIRMED_CASES only if all inherited A003 prerequisites pass",
+        "WHY_MECHANICALLY_ESTABLISHED": "the accepted A005 gate_issue over CURRENT_CONFIRMED cases is YES only when the relevant primary-axis confidence set is exactly MECHANICALLY_ESTABLISHED, so a determinate mechanically-established fresh positive must be translated to MECHANICALLY_ESTABLISHED and never copied verbatim as DETERMINATE_ALL_RUNS_AGREE",
+        "AUDIT_TOKENS": [
+          "PROJECTED_FROM_G5_FRESH_CURRENT_CONFIRMED",
+          "G5_CONFIDENCE_TRANSLATED_TO_MECHANICALLY_ESTABLISHED",
+          "CURRENT_PRIMARY_STATUS"
+        ]
+      },
+      "FRESH_NEGATIVE_PROJECTION": {
+        "ALL_REQUIRED_CONDITIONS": [
+          "CITATION_STATUS = NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+          "CITATION_CONFIDENCE = DETERMINATE_ALL_RUNS_AGREE",
+          "ATTRIBUTION_FRESHNESS = FRESH",
+          "LATEST_PRODUCT_STATE_COMPATIBLE = YES",
+          "RUN_COUNT_EXPECTED = 3",
+          "RUN_COUNT_COMPLETED = 3",
+          "ADDITIONAL_FRESH_EVIDENCE_REQUIRED = NO"
+        ],
+        "PROJECTED_RECORD": {
+          "case_id": "cit-001",
+          "citation_status": "NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+          "citation_confidence": "SUPPORTED",
+          "attribution_freshness": "CURRENT",
+          "latest_product_state_compatible": "YES",
+          "supporting_evidence": "G5 SUPPORTING_EVIDENCE",
+          "limiting_evidence": "G5 LIMITING_EVIDENCE",
+          "source_trace": "G5 SOURCE_TRACE + projection-rule identity"
+        },
+        "THEN": "the accepted A003 Citation mechanics project CURRENT_NEGATIVE_CASES with the accepted current-negative reason semantics CURRENT_NEGATIVE_EVIDENCE",
+        "FORBIDDEN": [
+          "citation_confidence = MECHANICALLY_ESTABLISHED for a fresh negative",
+          "synthesizing CURRENTLY_ESTABLISHED attribution status from a fresh negative"
+        ],
+        "AUDIT_TOKENS": [
+          "PROJECTED_FROM_G5_FRESH_CURRENT_NEGATIVE",
+          "G5_CONFIDENCE_TRANSLATED_TO_SUPPORTED",
+          "CURRENT_NEGATIVE_EVIDENCE"
+        ]
+      },
+      "NOT_ESTABLISHED_AND_FAIL_CLOSED_PROJECTION": {
+        "TRIGGER": [
+          "CITATION_STATUS = NOT_ESTABLISHED",
+          "G5 CITATION_CONFIDENCE is any NOT_ESTABLISHED_DUE_TO_* value",
+          "freshness / compatibility / completeness prerequisites fail"
+        ],
+        "PROHIBITIONS": [
+          "DO NOT synthesize CURRENT_CONFIRMED",
+          "DO NOT synthesize CURRENT_NEGATIVE",
+          "DO NOT synthesize CURRENT attribution"
+        ],
+        "BRANCH_RULE": [
+          "PRESERVE_INHERITED_HISTORICAL_OR_STALE_RECORD: an admissible inherited historical / stale A003 record exists for the case under the accepted mechanics; its inherited accepted citation_confidence (e.g. HISTORICAL_ONLY) is preserved mechanically and is never overwritten merely because the fresh observation is NOT_ESTABLISHED",
+          "NEW_PROJECTED_NOT_ESTABLISHED_RECORD: no admissible inherited historical / stale record exists and the minimum projected record fields are materializable; the projection emits citation_status = NOT_ESTABLISHED and citation_confidence = NOT_ESTABLISHED with the relevant supporting / limiting / source trace"
+        ],
+        "THE_TWO_OUTCOMES_MUST_BE_DISTINGUISHED": [
+          "NEW_PROJECTED_NOT_ESTABLISHED_RECORD",
+          "PRESERVE_INHERITED_HISTORICAL_OR_STALE_RECORD"
+        ],
+        "IF_ANY_REQUIRED_FIELD_UNDEFINED": "no admissible current projection / fail closed",
+        "AUDIT_TOKENS": [
+          "PROJECTED_NOT_ESTABLISHED_FAIL_CLOSED",
+          "PRESERVED_INHERITED_HISTORICAL_OR_STALE"
+        ]
+      },
+      "OTHER_STATUSES": {
+        "RESOLVED_OR_CLOSED": "consume only already accepted A003 status / confidence / bucket semantics; existing closure prerequisites are required; no new mapping is created",
+        "STALE_ATTRIBUTION_REQUIRES_REFRESH": "consume only already accepted A003 status / confidence / bucket semantics; no new mapping is created"
+      },
+      "MINIMUM_PROJECTED_RECORD": {
+        "REQUIRED_FIELDS_PER_NEWLY_PROJECTED_CURRENT_RECORD": [
+          "case_id",
+          "citation_status",
+          "citation_confidence",
+          "attribution_freshness",
+          "latest_product_state_compatible",
+          "supporting_evidence",
+          "limiting_evidence",
+          "source_trace"
+        ],
+        "POSITIVE_REQUIRES": [
+          "citation_confidence = MECHANICALLY_ESTABLISHED",
+          "latest_product_state_compatible = YES"
+        ],
+        "NEGATIVE_REQUIRES": [
+          "citation_confidence = SUPPORTED",
+          "latest_product_state_compatible = YES"
+        ],
+        "UNDEFINED_REQUIRED_FIELD_EFFECT": "no admissible current projection / fail closed"
+      },
+      "BUCKET_AND_A005_CONSUMPTION": {
+        "BUCKET_PRECEDENCE": [
+          "CURRENT_CONFIRMED_CASES",
+          "RESOLVED_CASES",
+          "CURRENT_NEGATIVE_CASES",
+          "HISTORICAL_OR_STALE_CASES",
+          "NOT_ESTABLISHED_CASES"
+        ],
+        "EXACTLY_ONE_BUCKET_PER_ELIGIBLE_CASE": "YES",
+        "PROJECTED_DOMAIN": [
+          "cit-001"
+        ],
+        "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED_DERIVATION": [
+          "if PROJECTED_CURRENT_CONFIRMED_CASES is non-empty: the confidence set is the set of projected citation_confidence values and the value is YES iff that set is exactly MECHANICALLY_ESTABLISHED, else NOT_ESTABLISHED",
+          "else NO"
+        ],
+        "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED_SOURCE": "accepted A005 build_readiness gate_issue mechanics",
+        "HISTORICAL_EVIDENCE_MATERIAL_DERIVATION": "YES iff the projected HISTORICAL_OR_STALE_CASES set is non-empty (accepted A005 historical_material mechanics)",
+        "FRESH_NEGATIVE_EXCLUSIVITY": "a fresh negative projects cit-001 into CURRENT_NEGATIVE_CASES; the projected case state carries exactly one bucket per eligible case, so the superseded stale membership of cit-001 cannot simultaneously establish HISTORICAL_OR_STALE material",
+        "NO_AD_HOC_FRESH_NEGATIVE_FLAG": "YES",
+        "CURRENT_ATTRIBUTION_STATUS_DERIVATION": [
+          "use the accepted A005 _current_attribution_status() semantics",
+          "for WS-13 (CITATION axis, primary root-cause filter NOT_APPLICABLE) this reduces to: if CURRENT_UNRESOLVED_ISSUE_ESTABLISHED != YES then CURRENT_ATTRIBUTION_STATUS = NOT_CURRENTLY_ESTABLISHED, else CURRENTLY_ESTABLISHED"
+        ],
+        "VALID_FRESH_NEGATIVE_OUTCOME": "a fresh negative may validly yield CURRENT_UNRESOLVED_ISSUE_ESTABLISHED = NO together with CURRENT_ATTRIBUTION_STATUS = NOT_CURRENTLY_ESTABLISHED; loop prevention comes from the projected bucket / material state, never from custom attribution semantics",
+        "C5_SUBSTANTIVE_CANDIDATE_RULE": "C5_FRESH_ATTRIBUTION_CANDIDATE = YES iff HISTORICAL_EVIDENCE_MATERIAL = YES AND CURRENT_ATTRIBUTION_STATUS = NOT_CURRENTLY_ESTABLISHED AND FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE = YES AND MATERIAL_SOURCE_CONFLICT = NO AND PRODUCT_MEASUREMENT_RECONCILIATION_REQUIRED = NO",
+        "PARENT_BLOCKER_HANDLING": "handled by C1 precedence",
+        "FRESH_DEPENDENCY_HANDLING": "intercepted by the FIX 2 action-scoped C2"
+      },
+      "REQUIRED_FUTURE_G3_TESTS": [
+        "T01 positive determinate / mechanically-established / FRESH / compatible / 3-of-3 -> confidence MECHANICALLY_ESTABLISHED -> CURRENT_CONFIRMED_CASES",
+        "T02 negative determinate / FRESH / compatible / 3-of-3 -> confidence SUPPORTED -> CURRENT_NEGATIVE_CASES",
+        "T03 positive CURRENT_CONFIRMED with confidence MECHANICALLY_ESTABLISHED -> A005 CURRENT_UNRESOLVED_ISSUE_ESTABLISHED = YES",
+        "T04 CURRENT_NEGATIVE excludes simultaneous HISTORICAL_OR_STALE membership",
+        "T05 fresh negative does not synthesize CURRENTLY_ESTABLISHED attribution",
+        "T06 gate_issue != YES -> accepted attribution status NOT_CURRENTLY_ESTABLISHED",
+        "T07 NOT_ESTABLISHED and NOT_ESTABLISHED_DUE_TO_* never project CURRENT_CONFIRMED / CURRENT_NEGATIVE",
+        "T08 a new projected NOT_ESTABLISHED record -> confidence NOT_ESTABLISHED",
+        "T09 a preserved inherited historical / stale record -> the inherited accepted confidence is preserved (e.g. HISTORICAL_ONLY)",
+        "T10 admissible positive / negative current projections explicitly store latest_product_state_compatible = YES"
+      ],
+      "REQUIRED_AUDIT_VOCABULARY": [
+        "PROJECTED_FROM_G5_FRESH_CURRENT_CONFIRMED",
+        "PROJECTED_FROM_G5_FRESH_CURRENT_NEGATIVE",
+        "PROJECTED_NOT_ESTABLISHED_FAIL_CLOSED",
+        "PRESERVED_INHERITED_HISTORICAL_OR_STALE",
+        "G5_CONFIDENCE_TRANSLATED_TO_MECHANICALLY_ESTABLISHED",
+        "G5_CONFIDENCE_TRANSLATED_TO_SUPPORTED",
+        "CURRENT_NEGATIVE_EVIDENCE",
+        "CURRENT_PRIMARY_STATUS"
+      ]
+    },
+    "inheritance_and_supersession": {
+      "INHERITED_BASE_EFFECTIVE_DESIGN_DIGEST": "fe69ea63cf67e571355da68a4d8f1490771bf90ca821354161eb4e4159771021",
+      "BASE_DIGEST_IS_AN_INHERITED_INPUT_IDENTITY_NOT_A_SELF_REFERENCE": "YES",
+      "SUPERSEDED_BASE_RULE_COUNT": 5,
+      "INHERITED_UNCHANGED": "YES",
+      "SUPERSEDED_BASE_RULES": [
+        {
+          "fragment_id": "A",
+          "fix": "fix_1_c1_r0_alignment",
+          "base_payload_locations": [
+            "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C1_R0_BLOCKER_CHECK"
+          ]
+        },
+        {
+          "fragment_id": "B",
+          "fix": "fix_2_c2_action_scoped_dependency_alignment",
+          "base_payload_locations": [
+            "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C2_R1_CHECK",
+            "g6_readiness_bridge_spec.PER_GATE_MAPPING.UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION"
+          ]
+        },
+        {
+          "fragment_id": "C",
+          "fix": "fix_3_classification_semantic_digest_binding",
+          "base_payload_locations": [
+            "semantic_vs_provenance_field_contract.CLASSIFICATION_SEMANTIC_KEY_SET"
+          ]
+        },
+        {
+          "fragment_id": "D",
+          "fix": "fix_4_canonical_sent_evidence_representation",
+          "base_payload_locations": [
+            "observation_schema.field_groups.retrieval.sent_evidence_text_or_governed_content_hash",
+            "semantic_vs_provenance_field_contract.OBSERVATION_SEMANTIC_KEY_SET entry retrieval.sent_evidence_text_or_governed_content_hash",
+            "classification_predicates.predicates.SUPPORTING_EVIDENCE_PRESENT",
+            "confound_rules.RETRIEVAL_CONFOUND_RULE"
+          ]
+        },
+        {
+          "fragment_id": "E",
+          "fix": "fix_5_g5_to_a003_a005_case_state_projection",
+          "base_payload_locations": [
+            "g6_readiness_bridge_spec.PER_GATE_MAPPING.CURRENT_UNRESOLVED_ISSUE_ESTABLISHED",
+            "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C5_R3_CHECK",
+            "absence_of_a_frozen_g5_to_a003_case_state_projection_rule"
+          ]
+        }
+      ],
+      "NO_SIXTH_INDEPENDENT_CHANGE": "YES",
+      "PRESERVED_UNCHANGED_SURFACES": [
+        "target / control case policy (cit-001, no control case)",
+        "run policy (3 runs, ordinals 1-2-3, seed discipline, non-adaptive execution, incomplete => NOT_ESTABLISHED)",
+        "citation-status truth table",
+        "aggregate rule",
+        "G5 schema vocabulary",
+        "accepted dependency graph (no edit)",
+        "authorization boundary",
+        "citation / generation / retrieval / measurement axis separation"
+      ],
+      "AMENDMENT_IS_PROSPECTIVE_ONLY": "YES",
+      "BASE_ARTIFACT_IN_PLACE_EDIT": "PROHIBITED",
+      "BASE_ARTIFACT_PRESERVED": "YES"
+    },
+    "amendment_authorization_boundary": {
+      "AMENDMENT_MODE": "GOVERNANCE / DESIGN-AMENDMENT ONLY",
+      "AMENDMENT_AUTHORIZES": [
+        "freezing the five superseding corrections against the provisional G1 base design contract"
+      ],
+      "AMENDMENT_DOES_NOT_AUTHORIZE": [
+        "G2 execution",
+        "G3 execution",
+        "G4 execution",
+        "any cit-001 live run",
+        "answer-model or embedding calls",
+        "production retrieval",
+        "counterfactual or Full-144 execution",
+        "observer / classifier / readiness implementation",
+        "product or citation remediation",
+        "any product code, prompt, citation, retriever or reranker edit",
+        "any Golden, evaluator, verifier or runtime DB edit",
+        "any Master, Priority Review or A001-A009 edit",
+        "any accepted dependency-graph edit",
+        "baseline or release advancement",
+        "Publish synchronisation"
+      ],
+      "G2_AUTHORIZED": "NO",
+      "G3_AUTHORIZED": "NO",
+      "G4_AUTHORIZED": "NO",
+      "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+      "CITATION_REMEDIATION_AUTHORIZED": "NO",
+      "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO",
+      "OPERATIVE_DESIGN_AFTER_REVIEWER_ACCEPTANCE": "new_effective_ws13_design_digest",
+      "G4_EXTERNAL_BINDING_REQUIREMENT": "future G4 additionally requires the accepted amendment raw sha256 as an external binding; the amendment concrete sha256 is never stored inside the amendment artifact",
+      "UNRESOLVED_OR_MISMATCHED_EXTERNAL_BINDING_EFFECT": "G4 = 0-call BLOCK"
+    }
+  },
+  "amendment_semantic_digest": "eb0837a5d47712ec13a93c914ae072d95c34b0f6ff8bb984471d6ef7c2487043",
+  "effective_design_chain_payload": {
+    "base_effective_ws13_design_digest": "fe69ea63cf67e571355da68a4d8f1490771bf90ca821354161eb4e4159771021",
+    "amendment_001_semantic_digest": "eb0837a5d47712ec13a93c914ae072d95c34b0f6ff8bb984471d6ef7c2487043"
+  },
+  "new_effective_ws13_design_digest": "646d354284fe6a419e144ead01ffd879c7cd426a05346d523c350be178b2ea94",
+  "inheritance_contract": {
+    "INHERITED_BASE_EFFECTIVE_DESIGN_DIGEST": "fe69ea63cf67e571355da68a4d8f1490771bf90ca821354161eb4e4159771021",
+    "BASE_DIGEST_IS_AN_INHERITED_INPUT_IDENTITY_NOT_A_SELF_REFERENCE": "YES",
+    "SUPERSEDED_BASE_RULE_COUNT": 5,
+    "INHERITED_UNCHANGED": "YES",
+    "SUPERSEDED_BASE_RULES": [
+      {
+        "fragment_id": "A",
+        "fix": "fix_1_c1_r0_alignment",
+        "base_payload_locations": [
+          "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C1_R0_BLOCKER_CHECK"
+        ]
+      },
+      {
+        "fragment_id": "B",
+        "fix": "fix_2_c2_action_scoped_dependency_alignment",
+        "base_payload_locations": [
+          "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C2_R1_CHECK",
+          "g6_readiness_bridge_spec.PER_GATE_MAPPING.UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION"
+        ]
+      },
+      {
+        "fragment_id": "C",
+        "fix": "fix_3_classification_semantic_digest_binding",
+        "base_payload_locations": [
+          "semantic_vs_provenance_field_contract.CLASSIFICATION_SEMANTIC_KEY_SET"
+        ]
+      },
+      {
+        "fragment_id": "D",
+        "fix": "fix_4_canonical_sent_evidence_representation",
+        "base_payload_locations": [
+          "observation_schema.field_groups.retrieval.sent_evidence_text_or_governed_content_hash",
+          "semantic_vs_provenance_field_contract.OBSERVATION_SEMANTIC_KEY_SET entry retrieval.sent_evidence_text_or_governed_content_hash",
+          "classification_predicates.predicates.SUPPORTING_EVIDENCE_PRESENT",
+          "confound_rules.RETRIEVAL_CONFOUND_RULE"
+        ]
+      },
+      {
+        "fragment_id": "E",
+        "fix": "fix_5_g5_to_a003_a005_case_state_projection",
+        "base_payload_locations": [
+          "g6_readiness_bridge_spec.PER_GATE_MAPPING.CURRENT_UNRESOLVED_ISSUE_ESTABLISHED",
+          "g6_readiness_bridge_spec.READINESS_CLASS_DERIVATION.C5_R3_CHECK",
+          "absence_of_a_frozen_g5_to_a003_case_state_projection_rule"
+        ]
+      }
+    ],
+    "NO_SIXTH_INDEPENDENT_CHANGE": "YES",
+    "PRESERVED_UNCHANGED_SURFACES": [
+      "target / control case policy (cit-001, no control case)",
+      "run policy (3 runs, ordinals 1-2-3, seed discipline, non-adaptive execution, incomplete => NOT_ESTABLISHED)",
+      "citation-status truth table",
+      "aggregate rule",
+      "G5 schema vocabulary",
+      "accepted dependency graph (no edit)",
+      "authorization boundary",
+      "citation / generation / retrieval / measurement axis separation"
+    ],
+    "AMENDMENT_IS_PROSPECTIVE_ONLY": "YES",
+    "BASE_ARTIFACT_IN_PLACE_EDIT": "PROHIBITED",
+    "BASE_ARTIFACT_PRESERVED": "YES"
+  },
+  "scientific_boundary": {
+    "current_citation_status": "NOT_EVALUATED_IN_G1_A001",
+    "scientific_attribution_performed": "NO",
+    "target_observation_performed": "NO",
+    "not_concluded_in_g1_a001": [
+      "CURRENT_CONFIRMED_CITATION_DEFECT",
+      "NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+      "citation root cause",
+      "citation defect mechanism",
+      "remediation target",
+      "remediation recommendation"
+    ],
+    "scope_statement": "this amendment revises the provisional G1 design contract only; it contains no citation scientific conclusion and no product verdict"
+  },
+  "execution_counts": {
+    "model_calls": 0,
+    "embedding_calls": 0,
+    "production_retrieval_runs": 0,
+    "target_observation_runs": 0,
+    "counterfactual_runs": 0,
+    "full_144_runs": 0,
+    "priority_comparator_executions": 0,
+    "recommendation_support_classifier_executions": 0,
+    "pre_write_unit_tests_executed": 247,
+    "post_write_unit_tests_executed": 247,
+    "runtime_db_inspections": 1,
+    "runtime_db_inspection_mode": "STRICT_READ_ONLY_BYTE_HASH_AND_STAT_ONLY",
+    "read_only_harness_computations": 5
+  },
+  "integrity": {
+    "pre_write_workspace_manifest_entry_count": 19666,
+    "pre_write_workspace_manifest_digest": "45032ad16048c7afe8614b1d22b249cc8ebccf9db41da9ba151d52904f643287",
+    "pre_write_workspace_manifest_rule": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "pre_manifest_excluding_amendment_digest": "45032ad16048c7afe8614b1d22b249cc8ebccf9db41da9ba151d52904f643287",
+    "pre_write_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "runtime_db_identity_before": "10698752:c6bc9b3eb63ae4e6",
+    "runtime_db_full_sha256_before": "c6bc9b3eb63ae4e6d96caf859a2b0c5f2f1e5a5b6f438e81aa0bbc3cf4084c97",
+    "base_g1_artifact_sha256_before": "67a9ee245bc80520a7c02463215d1e00cdeb1e1b0b97c088ec7adb976e6c943d",
+    "authorized_write_paths": [
+      "eval/v4_ws13_citation_fresh_attribution_design_amendment_001.json"
+    ],
+    "expected_changed_paths": [
+      "eval/v4_ws13_citation_fresh_attribution_design_amendment_001.json"
+    ],
+    "authorized_write_path_count": 1,
+    "existing_file_modifications": "NONE",
+    "new_path_count": 1,
+    "pre_write_unit_tests": "PASS 247 / OK (python -B -m unittest tests.test_v4_post_v4_8_2_priority_review -v)",
+    "total_test_methods_ast": 247,
+    "unique_test_method_names_ast": 247,
+    "post_write_integrity_verification": "EXTERNAL_TO_THIS_ARTIFACT",
+    "no_scratch_files_written_in_workspace": "YES",
+    "transient_builder_outside_workspace_removed": "YES"
+  },
+  "authorization_after_amendment": {
+    "g2_execution_authorized": "NO",
+    "g3_execution_authorized": "NO",
+    "g4_execution_authorized": "NO",
+    "product_remediation_authorized": "NO",
+    "citation_remediation_authorized": "NO",
+    "next_stage_automatically_authorized": "NO"
+  },
+  "blockers": []
+}

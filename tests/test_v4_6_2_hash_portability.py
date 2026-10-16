@@ -11,8 +11,9 @@ Guarantees:
 * a real content change (value / trailing space / JSON value) still changes the
   hash (T2/T3/T4),
 * binary bytes stay raw-byte-sensitive and are never newline-normalized (T5),
-* the live lineage points at V4.6.2 while V4.6.1 and every earlier historical
-  raw hash remain intact (T7/T8/T9).
+* the preserved V4.6.2 lineage points at that stage while V4.6.1 and every
+  earlier historical raw hash remain intact (T7/T8/T9). Current production
+  identity is checked separately by the live product guard.
 """
 
 from __future__ import annotations
@@ -29,6 +30,7 @@ if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 
 import eval_v4_baseline as baseline  # noqa: E402
+from product_revision import pre_product_json  # noqa: E402
 
 _EVAL = _ROOT / "eval"
 
@@ -191,7 +193,8 @@ class TestRealArtifactCrossPlatform(unittest.TestCase):
         )
 
     def test_lineage_current_is_v4_6_2(self):  # T7
-        lineage = json.loads((_EVAL / "v4_baseline_lineage.json").read_text(encoding="utf-8"))
+        # This is the preserved stage pointer, not today's live product pointer.
+        lineage = pre_product_json("eval/v4_baseline_lineage.json")
         self.assertEqual(lineage["current_baseline_id"], "V4_6_2_HASH_PORTABILITY_BASELINE")
         by_id = {b["baseline_id"]: b for b in lineage["baselines"]}
         self.assertEqual(

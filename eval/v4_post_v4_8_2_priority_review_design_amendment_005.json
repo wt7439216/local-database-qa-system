@@ -1,0 +1,530 @@
+{
+  "artifact_type": "ANALYSIS_DESIGN_AMENDMENT",
+  "amendment_id": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_005",
+  "review_id": "POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW",
+  "checkpoint": "R1E_READINESS_RESOLUTION_AND_ACTION_SCOPED_DEPENDENCY_AMENDMENT",
+  "mode": "GOVERNANCE / DESIGN-AMENDMENT ONLY",
+  "amendment_status": "ACTIVE_FOR_FUTURE_GOVERNED_R3_REDERIVATION_UNDER_AMENDMENTS_001_002_003_004_005",
+  "AMENDMENT_IS_PROSPECTIVE": "YES",
+  "RETROACTIVE_REWRITE": "NO",
+  "is_product_baseline": false,
+  "is_product_remediation": false,
+  "is_scientific_experiment": false,
+  "new_evidence_added": false,
+  "MODEL_CALLS": 0,
+  "PRODUCTION_RETRIEVAL_RUNS": 0,
+  "COUNTERFACTUAL_RUNS": 0,
+  "FULL_144_RUNS": 0,
+  "AMENDMENT_REASON": "READINESS_PREDICATES_REQUIRE_FAIL_CLOSED_RESOLUTION_ORDER_AND_DEPENDENCIES_MUST_BE_SCOPED_TO_NEXT_ACTION",
+  "PARENT_PREFLIGHT_PATH": "eval/v4_post_v4_8_2_priority_review_preflight.json",
+  "PARENT_PREFLIGHT_SHA256": "c24ebc94b504ccb9e3ff492616ebe1f29461ec1c5d7c8e632fd5c2c2031f4bf2",
+  "PARENT_AMENDMENT_ID": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_004",
+  "PARENT_AMENDMENT_PATH": "eval/v4_post_v4_8_2_priority_review_design_amendment_004.json",
+  "PARENT_AMENDMENT_SHA256": "2e2da080775dc2a79b23e7b2abb80987d2f8650cf4b90eed0e5088d3d8cc6df2",
+  "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "500690d66fae4c4f88e3cd5203a98b4764179c9e6eb71ebdcba6a2931ed8492f",
+  "defect_record": {
+    "defect_class": "READINESS_CLASSIFICATION_NOT_FAIL_CLOSED_AND_DEPENDENCY_EDGES_NOT_SCOPED_TO_NEXT_ACTION",
+    "defect_impact_scope": "READINESS_CLASS_ASSIGNMENT_AND_DEPENDENCY_EDGE_BLOCKING_SEMANTICS_ONLY",
+    "governance_verdict_being_resolved": {
+      "R3_IMPLEMENTATION_BOUNDARY": "ACCEPT",
+      "R3_DOMAIN_AND_BUCKET_PROJECTION": "PROVISIONALLY_ACCEPT",
+      "R3_READINESS_AND_DEPENDENCY": "NOT_ACCEPTED_PENDING_DESIGN_CLARIFICATION",
+      "READY_FOR_R4": "NO"
+    },
+    "ambiguous_field_locations": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/readiness_rules/assignment_rule (a workstream may satisfy more than one class condition set at once and the frozen rule does not define a fail-closed resolution order among them)",
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/workstream_matrix_schema/required_fields/TARGET_SET_MECHANICALLY_DEFINABLE (a single purpose-free target-set gate: a fresh-attribution target set and a separate-execution target set are not distinguished)",
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/dependency_rules (dependency edges carry no action scope, so a broad remediation dependency or a citation precedence rule can be over-read as blocking fresh attribution)",
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/dependency_rules/citation_precedence (the frozen rule names answer-quality / attribution stabilization as preceding broad citation coverage remediation; it does not by itself establish a Product MUST_PRECEDE edge into WS-13 FRESH_ATTRIBUTION)"
+    ],
+    "resolution_in_this_amendment": "freeze (1) the NEXT_PERMISSIBLE_ACTION semantics, (2) the purpose-split target-set semantics, (3) the fail-closed readiness classification resolution order C1-C6, and (4) the action-scoped dependency attribute APPLIES_TO_ACTION; the R4-R0 underlying definitions and the dependency edge types are retained verbatim",
+    "reinterpretation_of_this_reason": "PROHIBITED"
+  },
+  "amendment_scope": {
+    "adds_prospectively": [
+      "NEXT_PERMISSIBLE_ACTION vocabulary and its mechanical mapping from READINESS_CLASS",
+      "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE semantics (purpose-scoped target-set gate for R3)",
+      "SEPARATE_EXECUTION_TARGET_SET_DEFINABLE semantics (purpose-scoped target-set gate for R4)",
+      "fail-closed readiness classification resolution order C1-C6",
+      "frozen R3 fresh-attribution gate and R2 evidence-reconciliation gate restatements",
+      "R4 separate-execution gate reading under the purpose-scoped target-set semantics",
+      "ACTION_SCOPED_DEPENDENCY: the APPLIES_TO_ACTION attribute required on every dependency edge",
+      "citation dependency action-scoping clarification and citation upstream specificity requirement",
+      "measurement dependency action scoping (the measurement precedence threshold itself is unchanged)",
+      "the required readiness gate schema for the future R3 rederivation under Amendment 005"
+    ],
+    "supersedes_prospectively": [
+      "the non-fail-closed reading of the R1 frozen assignment_rule for the case where more than one readiness class condition set co-occurs for one workstream (readiness_rules itself is retained verbatim; the fail-closed order frozen in this amendment governs that co-occurrence)",
+      "TARGET_SET_MECHANICALLY_DEFINABLE read as the sole target-set gate (the field is retained only as a historical compatibility field and must never gate a readiness class by itself)",
+      "the reading of dependency edges as unscoped broad blockers capable of blocking any action (every edge must declare APPLIES_TO_ACTION)"
+    ],
+    "does_not_change": [
+      "the 42-case multi-axis case state (Amendment 001) and every axis value",
+      "workstream domains and domain eligibility (Amendment 004)",
+      "the A003 bucket projection core (five buckets, bucket precedence, per-axis bucket conditions, reason codes, historical-only versus mechanically stale distinction, cross-workstream counting)",
+      "the A004 domain denominator rules",
+      "readiness R4-R0 underlying definitions (readiness_rules)",
+      "dependency edge types (dependency_rules.allowed_edge_types)",
+      "quality-gate link types (quality_gate_link_rules.allowed_link_types)",
+      "P1-P7 lexicographic priority order (priority_decision_rules)",
+      "recommendation support rules (recommendation_support_rules)",
+      "candidate workstreams",
+      "authorization boundary"
+    ],
+    "readiness_class_definitions_changed": "NO",
+    "readiness_resolution_and_target_set_semantics_changed": "YES (additions only)",
+    "original_snapshot_immutable": "YES",
+    "in_place_edit_of_parent_snapshot_or_amendment_001_002_003_004": "PROHIBITED",
+    "existing_r3_harness_and_tests": "UNCHANGED / NOT AUTHORIZED TO MODIFY IN THIS CHECKPOINT",
+    "r3_rederivation_must_use_effective_design": "YES"
+  },
+  "r3_provisional_state_reference": {
+    "R3_HARNESS_PATH": "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+    "R3_HARNESS_SHA256": "efdd45fa295754a09873ad6f81a3ea53d14fbc1d298e7b91ba5176fa6b23ec91",
+    "R3_TEST_PATH": "tests/test_v4_post_v4_8_2_priority_review.py",
+    "R3_TEST_SHA256": "e0c6675185d5b9c4a9079c5462e0f54efb7fb0126c1ca9f3a6f715fe6503ebca",
+    "CASE_INVENTORY_COUNT": 42,
+    "MULTI_AXIS_CASE_STATE_DIGEST": "17edfe2ce93f30e3370f80d2d32ce7e18ac637bfdcd223be1947f23987ba61b2",
+    "WORKSTREAM_DOMAIN_DIGEST": {
+      "value": "b9711ac2d683cb4aa79640bb580e8d4e951fadb586eefa7b2e80e8e8aab650fc",
+      "status": "PROVISIONAL_PRE_A005_ONLY",
+      "governance_marker": "R3_DOMAIN_AND_BUCKET_PROJECTION = PROVISIONALLY_ACCEPT",
+      "modified_by_this_amendment": "NO"
+    },
+    "WORKSTREAM_BUCKET_DIGEST": {
+      "value": "1bb9fd79734a348c68ab26134867b1276bc67da95e9594df95b78a71c7cd7fa8",
+      "status": "PROVISIONAL_PRE_A005_ONLY",
+      "governance_marker": "R3_DOMAIN_AND_BUCKET_PROJECTION = PROVISIONALLY_ACCEPT",
+      "modified_by_this_amendment": "NO"
+    },
+    "DEPENDENCY_GRAPH_DIGEST": {
+      "value": "ae47207bedeff7d7532c06e64c7b0cf136fcaacd4b7ce54736478895560c756b",
+      "status": "PROVISIONAL_PRE_A005_ONLY",
+      "governance_marker": "R3_READINESS_AND_DEPENDENCY = NOT_ACCEPTED_PENDING_DESIGN_CLARIFICATION",
+      "rederivation_required_under_a005": "YES"
+    },
+    "WORKSTREAM_READINESS_DIGEST": {
+      "value": "d296efb058236c41128c20f79c0f4ac4a13857dd286fd20a283b06de848851f5",
+      "status": "PROVISIONAL_PRE_A005_ONLY",
+      "governance_marker": "R3_READINESS_AND_DEPENDENCY = NOT_ACCEPTED_PENDING_DESIGN_CLARIFICATION",
+      "rederivation_required_under_a005": "YES"
+    },
+    "global_status": "ACCEPTED_REFERENCE_ONLY_NOT_REDERIVED_IN_THIS_CHECKPOINT",
+    "note": "R3 was executed before this amendment. Its implementation boundary is accepted and its domain / bucket results are provisionally accepted; they are not modified by this amendment. Its dependency graph and readiness results are pre-A005 provisional and are superseded only by the future R3_REDERIVATION_UNDER_AMENDMENT_005 checkpoint. This checkpoint recomputes no readiness, no dependency graph, no priority ranking and no recommendation."
+  },
+  "readiness_resolution_and_action_scoped_dependency": {
+    "schema_version": "v4-post-v4-8-2-priority-review-readiness-resolution-and-action-scoped-dependency-v1",
+    "PROSPECTIVE_ONLY": "YES",
+    "NEXT_PERMISSIBLE_ACTION": {
+      "rule_id": "NEXT_ACTION_IS_EXECUTION_PERMISSION_NOT_DEFECT_VERDICT",
+      "VOCABULARY": [
+        "SEPARATE_EXECUTION",
+        "FRESH_ATTRIBUTION",
+        "EVIDENCE_RECONCILIATION",
+        "DEFER_PENDING_UPSTREAM",
+        "NO_SUPPORTED_ACTION"
+      ],
+      "READINESS_DESCRIBES": "under the current evidence, what this workstream is next allowed to do",
+      "READINESS_DOES_NOT_DESCRIBE": "whether this workstream ultimately has a problem",
+      "MAPPING": {
+        "R4": "SEPARATE_EXECUTION",
+        "R3": "FRESH_ATTRIBUTION",
+        "R2": "EVIDENCE_RECONCILIATION",
+        "R1": "DEFER_PENDING_UPSTREAM",
+        "R0": "NO_SUPPORTED_ACTION"
+      },
+      "MAPPING_IS_TOTAL_AND_SINGLE_VALUED": "YES",
+      "DERIVATION_REQUIREMENT": "every workstream must mechanically derive NEXT_PERMISSIBLE_ACTION from its assigned READINESS_CLASS before any priority or recommendation use; a NEXT_PERMISSIBLE_ACTION that contradicts the assigned READINESS_CLASS is a hard error",
+      "NEXT_PERMISSIBLE_ACTION_IS_NOT_A_NEW_READINESS_CLASS": "YES",
+      "READINESS_CLASS_VOCABULARY_UNCHANGED": "R4 / R3 / R2 / R1 / R0 only"
+    },
+    "TARGET_SET_PURPOSE_SEMANTICS": {
+      "rule_id": "TARGET_SET_MUST_BE_PURPOSE_SCOPED",
+      "SUPERSEDED_SOLE_GATE": "TARGET_SET_MECHANICALLY_DEFINABLE used as the only target-set criterion",
+      "HISTORICAL_COMPATIBILITY_FIELD": {
+        "field": "TARGET_SET_MECHANICALLY_DEFINABLE",
+        "retained": "YES",
+        "may_be_used_as_sole_target_set_gate": "NO",
+        "may_be_read_as_either_purpose_scoped_field": "NO",
+        "requirement_if_emitted_after_a005": "it may be emitted only together with FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE and SEPARATE_EXECUTION_TARGET_SET_DEFINABLE, and it must never assign, promote or downgrade a readiness class by itself"
+      },
+      "PURPOSE_SCOPED_FIELDS": {
+        "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE": {
+          "value_domain": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "purpose": "R3 / FRESH_ATTRIBUTION",
+          "may_be_defined_by": "a stable historical or domain-eligible case set",
+          "requires_an_existing_remediation_target": "NO",
+          "frozen_statement": "historical domain is mechanically stable can support R3 / FRESH_ATTRIBUTION even when no remediation target exists"
+        },
+        "SEPARATE_EXECUTION_TARGET_SET_DEFINABLE": {
+          "value_domain": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "purpose": "R4 / SEPARATE_EXECUTION",
+          "must_mechanically_define": "the current target set that is to be independently authorized for execution now",
+          "historical_domain_alone_sufficient": "NO",
+          "frozen_statement": "when the specific mechanism or the current target cannot be stabilized, the value is NO or NOT_ESTABLISHED"
+        }
+      },
+      "FIELDS_ARE_NOT_INTERCHANGEABLE": "YES",
+      "SEPARATE_EXECUTION_TARGET_SET_NO_ALONE_DOWNGRADES_A_LAWFUL_R3": "NO"
+    },
+    "READINESS_CLASSIFICATION_RESOLUTION_ORDER": {
+      "rule_id": "READINESS_FAIL_CLOSED_CLASSIFICATION_RESOLUTION_ORDER",
+      "ORDER": [
+        "C1_R0_BLOCKER_CHECK",
+        "C2_R1_ACTION_SPECIFIC_UPSTREAM_DEPENDENCY_CHECK",
+        "C3_R2_EVIDENCE_RECONCILIATION_CHECK",
+        "C4_R4_SEPARATE_EXECUTION_GATE_CHECK",
+        "C5_R3_FRESH_ATTRIBUTION_GATE_CHECK",
+        "C6_OTHERWISE_R0_FALLBACK"
+      ],
+      "EVALUATION_RULE": "evaluate C1 to C5 in order; assign the first class whose gate condition holds; if none of C1 to C5 holds, assign R0 as the C6 fallback",
+      "FAIL_CLOSED": "YES",
+      "C1_R0_BLOCKER_CHECK": "R0 blocker conditions, reading readiness_rules.R0_applies_when verbatim: parent evidence disproves the proposed defect, or an explicit governance blocker exists, or no admissible evidence exists",
+      "C2_R1_ACTION_SPECIFIC_UPSTREAM_DEPENDENCY_CHECK": "an unresolved upstream dependency that explicitly applies to the permissible next action must logically precede it; the action applicability of a dependency is decided only under ACTION_SCOPED_DEPENDENCY below",
+      "C3_R2_EVIDENCE_RECONCILIATION_CHECK": "the frozen R2 conditions restated in EVIDENCE_RECONCILIATION_GATE below",
+      "C4_R4_SEPARATE_EXECUTION_GATE_CHECK": "R4 holds only when the complete frozen R4 gate set (readiness_rules.R4_requires_all_of, retained verbatim) is satisfied, with its target-set condition resolved under SEPARATE_EXECUTION_TARGET_SET_DEFINABLE semantics",
+      "C5_R3_FRESH_ATTRIBUTION_GATE_CHECK": "the frozen R3 conditions restated in FRESH_ATTRIBUTION_GATE below",
+      "C6_OTHERWISE_R0_FALLBACK": "a workstream matching none of C1 to C5 is classified R0",
+      "CO_OCCURRENCE_RESOLUTION_FROZEN": {
+        "current_defect_established_but_r4_intercepted_at_c3": "R2 (R4 requires the complete gate; evidence reconciliation or target instability outranks it under C3, and the desirability of R4 must not bypass C3)",
+        "historical_or_current_ambiguous_with_stable_fresh_attribution_target_and_no_c1_c2_c3_blocker": "R3 (even when no separate-execution / remediation target exists)",
+        "order_used_to_assign_a_class": "C1 greater than C2 greater than C3 greater than C4 greater than C5 greater than C6"
+      },
+      "P3_PRIORITY_ORDER_MUST_NOT_DECIDE_CLASSIFICATION": "YES",
+      "CLASSIFICATION_RESOLUTION_ORDER": "C1 > C2 > C3 > C4 > C5 > C6",
+      "P3_READINESS_PRIORITY_ORDER": "R4 > R3 > R2 > R1 > R0 (priority_decision_rules P3 and readiness_rules.order_high_to_low, retained unchanged)",
+      "CLASSIFICATION_ORDER_EQUALS_PRIORITY_ORDER": "NO",
+      "TWO_ORDERS_HAVE_DIFFERENT_PURPOSES": "the classification resolution order is a fail-closed assignment device; the readiness priority order is only the P3 desirability order applied after classification; classification must never be chosen by reverting the desirability order"
+    },
+    "FRESH_ATTRIBUTION_GATE": {
+      "rule_id": "R3_FRESH_ATTRIBUTION_GATE",
+      "FROZEN_REQUIREMENTS_ALL_OF": [
+        "historical evidence material",
+        "current-state attribution stale / changed / ambiguous / not-currently-established",
+        "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE = YES",
+        "no material source conflict requiring reconciliation",
+        "no Product-vs-Measurement contradiction requiring reconciliation"
+      ],
+      "REMEDIATION_TARGET_REQUIRED": "NO",
+      "frozen_statement": "R3 does not require a remediation target to be defined"
+    },
+    "EVIDENCE_RECONCILIATION_GATE": {
+      "rule_id": "R2_EVIDENCE_RECONCILIATION_GATE",
+      "FROZEN_REQUIREMENTS_ANY_OF": [
+        "material source conflict",
+        "Product-vs-Measurement classification conflict",
+        "no mechanically stable target set for the otherwise permissible next analytical action",
+        "case or workstream state requires reconciliation before a valid fresh-attribution target can be formed"
+      ],
+      "OPERATIVE_DOWNGRADE_PREDICATE": "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE",
+      "SEPARATE_EXECUTION_TARGET_SET_NO_ALONE_DOWNGRADES_A_LAWFUL_R3": "NO",
+      "frozen_statement": "SEPARATE_EXECUTION_TARGET_SET_DEFINABLE = NO does not by itself downgrade a lawful R3 into R2; the operative question is whether FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE holds"
+    },
+    "R4_SEPARATE_EXECUTION_GATE": {
+      "rule_id": "R4_SEPARATE_EXECUTION_GATE",
+      "FROZEN_REQUIREMENTS": "readiness_rules.R4_requires_all_of retained verbatim: current unresolved issue mechanically established; latest product state compatible; target set mechanically definable; single primary subsystem identifiable; no unresolved upstream dependency capable of reclassification; no parent governance blocker",
+      "TARGET_SET_CONDITION_READING": "the R4 target-set condition is resolved under SEPARATE_EXECUTION_TARGET_SET_DEFINABLE semantics",
+      "R4_ONLY_WHEN_COMPLETE_GATE_SATISFIED": "YES",
+      "INTERCEPTED_R4": "a currently established defect that is intercepted at C3 by evidence reconciliation or by target instability is classified R2, not R4"
+    },
+    "ACTION_SCOPED_DEPENDENCY": {
+      "rule_id": "DEPENDENCY_EDGE_MUST_DECLARE_APPLIES_TO_ACTION",
+      "REQUIRED_EDGE_ATTRIBUTE": "APPLIES_TO_ACTION",
+      "VALUE_DOMAIN": [
+        "SEPARATE_EXECUTION",
+        "FRESH_ATTRIBUTION",
+        "EVIDENCE_RECONCILIATION",
+        "ALL_ACTIONS"
+      ],
+      "EXACTLY_ONE_VALUE_PER_EDGE": "YES",
+      "BLOCKING_RULE": "a dependency may block only the action or actions it explicitly applies to",
+      "FORBIDDEN_DEFAULT": "broad remediation dependency -> block fresh attribution",
+      "FORBIDDEN_UNLESS": "frozen evidence explicitly supports the FRESH_ATTRIBUTION scoping of that edge",
+      "EDGE_WITHOUT_ESTABLISHED_ACTION_SCOPE": "must block no action; it is recorded NOT_ESTABLISHED, or its scope is established only by frozen evidence",
+      "DEPENDENCY_EDGE_TYPES_UNCHANGED": "YES (dependency_rules.allowed_edge_types retained verbatim; APPLIES_TO_ACTION is an additional attribute, not a new edge type)",
+      "APPLIES_TO_ACTION_IS_NOT_A_READINESS_CLASS": "YES"
+    },
+    "CITATION_DEPENDENCY_CLARIFICATION": {
+      "rule_id": "BROAD_CITATION_REMEDIATION_PRECEDENCE_IS_SEPARATE_EXECUTION_SCOPED",
+      "FROZEN_RULE": "answer-quality / attribution stabilization precedes broad citation coverage remediation",
+      "DEFAULT_APPLIES_TO_ACTION": "SEPARATE_EXECUTION",
+      "DEFAULT_SCOPE_APPLIES_ESPECIALLY_TO": "broad citation coverage remediation",
+      "NOT_AN_AUTOMATIC_CONCLUSION": "Product workstream MUST_PRECEDE WS-13 FRESH_ATTRIBUTION",
+      "BLOCKING_WS_13_FRESH_ATTRIBUTION_REQUIRES": "independent mechanical evidence that citation attribution itself cannot be validly performed before that upstream workstream",
+      "OTHERWISE": "MUST_PRECEDE for FRESH_ATTRIBUTION must not be established; the edge either stays SEPARATE_EXECUTION scoped or is NOT_ESTABLISHED for FRESH_ATTRIBUTION"
+    },
+    "CITATION_UPSTREAM_SPECIFICITY": {
+      "rule_id": "CITATION_UPSTREAM_EDGE_REQUIRES_SPECIFICITY",
+      "FORBIDDEN": "deriving WS-11 MUST_PRECEDE WS-13 from case_exact < target alone",
+      "MUST_PROVE": "why WS-11 specifically, rather than WS-09 / WS-10 / overall answer-quality uncertainty",
+      "IF_ONLY_BROAD_ANSWER_QUALITY_INSTABILITY_IS_PROVABLE": "the specific MUST_PRECEDE edge is NOT_ESTABLISHED; CAN_PRECEDE may be used only when frozen evidence supports it while not constituting a hard dependency",
+      "MANUAL_SELECTION_OF_GENERATION_AS_SOLE_UPSTREAM": "FORBIDDEN",
+      "NOT_ESTABLISHED_IS_A_VALID_OUTCOME": "YES"
+    },
+    "MEASUREMENT_DEPENDENCY_SCOPE": {
+      "rule_id": "MEASUREMENT_PRECEDENCE_SCOPE_UNCHANGED",
+      "THRESHOLD_UNCHANGED": "mechanically established measurement ambiguity capable of changing defect classification for >= 2 candidate workstreams",
+      "MUST_ALSO_DECLARE": "APPLIES_TO_ACTION",
+      "CURRENT_MEASUREMENT_COEXISTENCE_ON_ONE_PRODUCT_WORKSTREAM": "does not establish a hard dependency",
+      "SOURCE": "dependency_rules.measurement_precedence retained verbatim; only the action-scope attribute is added"
+    },
+    "REQUIRED_READINESS_GATE_SCHEMA": {
+      "rule_id": "A005_READINESS_GATE_SCHEMA",
+      "REQUIRED_FIELDS": [
+        "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED",
+        "LATEST_STATE_COMPATIBLE",
+        "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE",
+        "SEPARATE_EXECUTION_TARGET_SET_DEFINABLE",
+        "SINGLE_PRIMARY_SUBSYSTEM",
+        "MATERIAL_SOURCE_CONFLICT",
+        "PRODUCT_MEASUREMENT_RECONCILIATION_REQUIRED",
+        "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION",
+        "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_SEPARATE_EXECUTION",
+        "PARENT_GOVERNANCE_BLOCKER",
+        "NEXT_PERMISSIBLE_ACTION",
+        "READINESS_CLASS"
+      ],
+      "FIELD_VALUE_DOMAINS": {
+        "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "LATEST_STATE_COMPATIBLE": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "SEPARATE_EXECUTION_TARGET_SET_DEFINABLE": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "SINGLE_PRIMARY_SUBSYSTEM": [
+          "YES",
+          "NO"
+        ],
+        "MATERIAL_SOURCE_CONFLICT": [
+          "YES",
+          "NO"
+        ],
+        "PRODUCT_MEASUREMENT_RECONCILIATION_REQUIRED": [
+          "YES",
+          "NO"
+        ],
+        "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION": [
+          "YES",
+          "NO"
+        ],
+        "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_SEPARATE_EXECUTION": [
+          "YES",
+          "NO"
+        ],
+        "PARENT_GOVERNANCE_BLOCKER": [
+          "YES",
+          "NO"
+        ],
+        "NEXT_PERMISSIBLE_ACTION": [
+          "SEPARATE_EXECUTION",
+          "FRESH_ATTRIBUTION",
+          "EVIDENCE_RECONCILIATION",
+          "DEFER_PENDING_UPSTREAM",
+          "NO_SUPPORTED_ACTION"
+        ],
+        "READINESS_CLASS": [
+          "R4",
+          "R3",
+          "R2",
+          "R1",
+          "R0"
+        ]
+      },
+      "LEGACY_COMPATIBILITY_FIELD": "TARGET_SET_MECHANICALLY_DEFINABLE may be retained as a historical compatibility field but must never be used as the sole target-set gate",
+      "APPLIES_TO": "the future R3_REDERIVATION_UNDER_AMENDMENT_005 checkpoint; the current R3 harness and tests are not modified by this amendment and are not re-run in this checkpoint"
+    },
+    "REQUIRED_CONSISTENCY_CONSTRAINTS": {
+      "rule_id": "A005_RERUN_CONSISTENCY_CONSTRAINTS",
+      "NOT_RECOMPUTED_IN_THIS_CHECKPOINT": "actual readiness of any workstream is not recomputed here; the following are prospective consistency constraints the R3 rerun must obey",
+      "HISTORICAL_ONLY_PRODUCT_WORKSTREAM": "if the current defect is not established, the historical domain is stable, the fresh-attribution target is stable, and there is no conflict / blocker / dependency, the workstream is R3 even when the separate-execution or remediation target is not defined",
+      "CURRENT_DEFECT_BUT_MECHANISM_OR_TARGET_UNRESOLVED": "if the current defect is established but a valid execution target cannot be stabilized and evidence reconciliation is required, the workstream is R2",
+      "CITATION": "if no current citation defect is established, historical case-specific citation evidence exists, the fresh-attribution target is stable, and no attribution-specific upstream dependency is proven, the citation workstream may be R3; it must not become R1 automatically merely because of the broad remediation downstream rule; the concrete result must be determined by the rerun evidence",
+      "CLASSIFICATION_MUST_BE_FAIL_CLOSED": "YES",
+      "NO_RESULT_IS_PRESUPPOSED_HERE": "YES"
+    },
+    "UNCHANGED_UNDER_THIS_AMENDMENT": [
+      "readiness R4-R0 definitions (readiness_rules)",
+      "dependency edge types (dependency_rules.allowed_edge_types)",
+      "quality-gate link types",
+      "P1-P7 priority order",
+      "recommendation support rules",
+      "the 42-case state, workstream domains, A003 bucket projection and A004 domain denominator"
+    ],
+    "NON_AUTHORIZATION_NOTE": "readiness and dependency semantics are review-scope rules only; this amendment creates no readiness assignment, no priority tier, no recommendation, no authorization and no remediation content in this checkpoint"
+  },
+  "effective_analysis_design_definition": {
+    "EFFECTIVE_ANALYSIS_DESIGN": "R1 original frozen design + Amendment 001 + Amendment 002 + Amendment 003 + Amendment 004 + Amendment 005",
+    "payload_construction": "payload = {key: parent_preflight[key] for key in parent_preflight.analysis_design_digest_spec.extracted_keys}; payload['case_classification_schema'] = amendment_001.amended_case_state_schema; payload['effective_analysis_design_additions'] = amendment_001.effective_analysis_design_additions; payload['workstream_axis_mapping'] = amendment_002.workstream_axis_mapping; payload['workstream_bucket_projection'] = amendment_003.workstream_bucket_projection; payload['workstream_bucket_projection']['DOMAIN_ELIGIBILITY_BEFORE_PROJECTION'] = amendment_004.workstream_domain_eligibility; payload['readiness_resolution_and_action_scoped_dependency'] = amendment_005.readiness_resolution_and_action_scoped_dependency; digest = sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8'))",
+    "canonicalization": "UTF-8; json.dumps(ensure_ascii=False, sort_keys=True, separators=(',', ':'))",
+    "excluded_content": [
+      "timestamps",
+      "machine paths",
+      "file SHA metadata",
+      "manifest digests"
+    ],
+    "superseded_payload_keys": [],
+    "added_payload_keys": [
+      "readiness_resolution_and_action_scoped_dependency"
+    ],
+    "overridden_payload_key_paths": [],
+    "interpretation_level_supersessions": [
+      "readiness_rules.assignment_rule (readiness_rules retained verbatim in the payload; when multiple class condition sets co-occur, the fail-closed resolution order in this amendment governs the assignment)",
+      "workstream_matrix_schema.TARGET_SET_MECHANICALLY_DEFINABLE (retained verbatim in the payload; no longer the sole target-set gate)",
+      "dependency_rules (retained verbatim in the payload; every future edge must additionally declare APPLIES_TO_ACTION)"
+    ],
+    "retained_parent_payload_keys_reinterpreted": [
+      "readiness_rules (retained verbatim; applied through the fail-closed classification resolution order)",
+      "dependency_rules (retained verbatim; extended only by the required APPLIES_TO_ACTION edge attribute)",
+      "workstream_matrix_schema (retained verbatim; TARGET_SET_MECHANICALLY_DEFINABLE retained only as a historical compatibility field)"
+    ],
+    "parent_payload_keys_from_amendment_001": [
+      "case_classification_schema (superseded by amended_case_state_schema)",
+      "effective_analysis_design_additions"
+    ],
+    "parent_payload_keys_from_amendment_002": [
+      "workstream_axis_mapping"
+    ],
+    "parent_payload_keys_from_amendment_003": [
+      "workstream_bucket_projection"
+    ],
+    "parent_payload_keys_from_amendment_004": [
+      "workstream_domain_eligibility (value-level override at workstream_bucket_projection.DOMAIN_ELIGIBILITY_BEFORE_PROJECTION)"
+    ],
+    "recomputation_inputs": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json (frozen parent)",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_004.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json (this artifact)"
+    ],
+    "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "500690d66fae4c4f88e3cd5203a98b4764179c9e6eb71ebdcba6a2931ed8492f",
+    "recomputation_must_reproduce_embedded_digest": "YES"
+  },
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "417e912f46c16ec6e1f8a27fc927b3bf0b9213402fa85faab22a72995a40f59e",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DETERMINISTIC": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DIFFERS_FROM_PARENT": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_RECOMPUTATION_1": "417e912f46c16ec6e1f8a27fc927b3bf0b9213402fa85faab22a72995a40f59e",
+  "integrity": {
+    "PRE_CHANGE_WORKSPACE_MANIFEST_DIGEST": "d3feccf387a41a92c6b7383d1d450378ce65236d759e1afa60ad2773548c1045",
+    "PRE_CHANGE_WORKSPACE_MANIFEST_ENTRY_COUNT": 19657,
+    "PRE_CHANGE_WORKSPACE_MANIFEST_RULE": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "PRE_CHANGE_PRODUCTION_HASH": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "EXPECTED_POST_CHANGE_DELTA": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json (added)"
+    ],
+    "ORIGINAL_PREFLIGHT_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_001_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_002_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_003_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_004_EXPECTED_UNCHANGED": "YES",
+    "R3_HARNESS_EXPECTED_UNCHANGED": "YES",
+    "R3_TEST_EXPECTED_UNCHANGED": "YES",
+    "MASTER_EXPECTED_UNCHANGED": "YES",
+    "PARENT_ARTIFACTS_EXPECTED_UNCHANGED": "YES",
+    "PRODUCT_BASELINE_GOLDEN_EVALUATOR_RUNTIME_DB_EXPECTED_UNCHANGED": "YES",
+    "POST_MANIFEST_MINUS_A005_MUST_EQUAL_PRE_MANIFEST": "YES",
+    "POST_WRITE_VERIFICATION_LOCATION": "R1E final console (this checkpoint)",
+    "no_scratch_files_written": "YES",
+    "cache_writes": 0,
+    "computation_mode": "IN_MEMORY_ONLY",
+    "AMENDMENT_FINALIZATION": "the amendment is created on the single authorized path; the two effective-design digest fields are then recomputed from this very artifact and finalized in place on the same single authorized path; no other path is written at any time and no temporary or scratch file is created"
+  },
+  "authorization_boundary": {
+    "ACTIVE_V4_WRITE_PATHS_THIS_CHECKPOINT": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json"
+    ],
+    "OTHER_ACTIVE_V4_WRITES_AUTHORIZED": "NO",
+    "V3_WORKSPACE": "FROZEN / READ-ONLY / UNTOUCHED",
+    "PUBLISH_WORKSPACE": "READ-ONLY / NO SYNC / NO WRITE / NO GIT MUTATION",
+    "GIT_INIT_PERFORMED": "NO",
+    "R3_RERUN_PERFORMED_HERE": "NO",
+    "R3_HARNESS_MODIFIED": "NO",
+    "R3_TEST_MODIFIED": "NO",
+    "DEPENDENCY_GRAPH_RECOMPUTED_HERE": "NO",
+    "WORKSTREAM_READINESS_RECOMPUTED_HERE": "NO",
+    "WORKSTREAM_DOMAIN_DIGEST_MODIFIED": "NO",
+    "WORKSTREAM_BUCKET_DIGEST_MODIFIED": "NO",
+    "PRIORITY_RANKING_PERFORMED_HERE": "NO",
+    "RECOMMENDATION_EVALUATED_HERE": "NO",
+    "HARNESS_MODIFICATION_AUTHORIZED": "NO",
+    "TEST_MODIFICATION_AUTHORIZED": "NO",
+    "MACHINE_RESULT_CREATED": "NO",
+    "HUMAN_REPORT_CREATED": "NO",
+    "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+    "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+    "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO"
+  },
+  "r1e_execution_declarations": {
+    "MODEL_CALLS": 0,
+    "PRODUCTION_RETRIEVAL_RUNS": 0,
+    "COUNTERFACTUAL_RUNS": 0,
+    "FULL_144_RUNS": 0,
+    "PYTEST_RUNS": 0,
+    "RUFF_RUNS": 0,
+    "PY_COMPILE_OR_COMPILEALL_RUNS": 0,
+    "BYTECODE_OR_PYCACHE_WRITES": 0,
+    "CACHE_WRITES": 0,
+    "TEMPORARY_FILES_CREATED": 0,
+    "SCRATCH_FILES_WRITTEN": 0,
+    "READ_ONLY_HARNESS_EXECUTIONS": 0,
+    "READ_ONLY_HARNESS_WRITES": 0,
+    "IDENTITY_SHA256_VERIFIED_PRE_WRITE": 9
+  },
+  "r1e_declarations": {
+    "FRESH_ATTRIBUTION_TARGET_SET_SEMANTICS_FROZEN": "YES",
+    "SEPARATE_EXECUTION_TARGET_SET_SEMANTICS_FROZEN": "YES",
+    "READINESS_RESOLUTION_ORDER_FROZEN": "YES",
+    "READINESS_RESOLUTION_ORDER": "R0_BLOCKER > R1_ACTION_DEPENDENCY > R2_RECONCILIATION > R4_SEPARATE_EXECUTION > R3_FRESH_ATTRIBUTION > R0_FALLBACK",
+    "READINESS_PRIORITY_ORDER_UNCHANGED": "YES",
+    "READINESS_PRIORITY_ORDER": "R4 > R3 > R2 > R1 > R0",
+    "CLASSIFICATION_ORDER_EQUALS_PRIORITY_ORDER": "NO",
+    "DEPENDENCY_ACTION_SCOPE_FROZEN": "YES",
+    "BROAD_CITATION_REMEDIATION_DEPENDENCY_BLOCKS_FRESH_ATTRIBUTION_BY_DEFAULT": "NO",
+    "CASE_EXACT_GAP_ALONE_ESTABLISHES_WS11_TO_WS13_MUST_PRECEDE": "NO",
+    "MEASUREMENT_DEPENDENCY_THRESHOLD_UNCHANGED": "YES",
+    "R3_DOMAIN_DIGEST_MODIFIED": "NO",
+    "R3_BUCKET_DIGEST_MODIFIED": "NO",
+    "R3_DEPENDENCY_DIGEST": "PROVISIONAL_PRE_A005_ONLY",
+    "R3_READINESS_DIGEST": "PROVISIONAL_PRE_A005_ONLY",
+    "R3_HARNESS_MODIFIED": "NO",
+    "R3_TEST_MODIFIED": "NO"
+  },
+  "next_authorized_checkpoint": "R3_REDERIVATION_UNDER_AMENDMENT_005",
+  "READY_FOR_R3_REDERIVATION": "YES",
+  "READY_FOR_R3_REDERIVATION_BASIS": "the governance blocking condition (readiness classification was not fail-closed; the target-set gate was purpose-free; dependency edges were not action-scoped) is prospectively closed by this amendment; readiness remains subject to governance acceptance of Amendment 005",
+  "READY_FOR_R4": "NO",
+  "R3_RERUN_PERFORMED_IN_R1E": "NO",
+  "WS_READINESS": "NOT_EVALUATED_IN_R1E",
+  "DEPENDENCY_GRAPH": "NOT_EVALUATED_IN_R1E",
+  "PRIORITY_TIER": "NOT_EVALUATED_IN_R1E",
+  "RECOMMENDED_NEXT_WORKSTREAM": "NOT_EVALUATED_IN_R1E",
+  "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+  "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+  "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO",
+  "STOP": "YES",
+  "WAIT_FOR_GOVERNANCE_REVIEWER": "YES",
+  "timestamp": "2026-09-15T11:46:15"
+}

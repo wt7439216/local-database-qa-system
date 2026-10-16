@@ -1,0 +1,3189 @@
+{
+  "stage": "V4.7",
+  "mode": "READ_ONLY_PRODUCT_DIAGNOSIS",
+  "produced_by": "scripts/analyze_v4_7_document_identity.py",
+  "current_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+  "product_metrics_source": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+  "production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "production_hash_start": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "production_hash_end": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "production_trees_unchanged_during_run": true,
+  "closure_run_production_hash_start": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "closure_run_production_hash_end": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "preflight": {
+    "current_baseline_id": "V4_6_2_HASH_PORTABILITY_BASELINE",
+    "current_baseline_id_expected": "V4_6_2_HASH_PORTABILITY_BASELINE",
+    "current_baseline_role": "HASH_PORTABILITY_FORMALIZATION",
+    "product_metrics_source": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+    "product_metrics_source_expected": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+    "metrics_recomputed_in_v4_6_2": false,
+    "recorded_canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "live_canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "production_hash_match": true,
+    "canonical_hash_algorithm": "sha256-path-content-v2-canonical-lf",
+    "production_tree_hashes": {
+      "core": "ce33e5504bebc1a3941ce381c77baad1716acd845f5e80b97c3f515016a78db0",
+      "desktop": "22173f277d0b3ac1fbc6935c24e2f217e2f5df196e43ba4dd8ca5e392b1120a2",
+      "web": "7283dfb676ce5355f6911cf3fdf7790722a97a95479986cf815311161057bbaf"
+    },
+    "production_trees_hashed": [
+      "core",
+      "desktop",
+      "web"
+    ],
+    "lineage_chain": [
+      "V4_INITIAL_BASELINE",
+      "V4_4_SCOPE_REMEDIATION_BASELINE",
+      "V4_5_ROUTING_BASELINE",
+      "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+      "V4_6_2_HASH_PORTABILITY_BASELINE"
+    ]
+  },
+  "runtime_library_identity_gate": {
+    "baseline_library_path": "E:\\Project_ws\\Local Database Q&A System\\Local Database Q&A System本地版v4\\data\\library\\documents.sqlite3",
+    "baseline_library_identity": "10698752:c6bc9b3eb63ae4e6",
+    "metrics_source_library_identity": "10698752:c6bc9b3eb63ae4e6",
+    "current_library_path": "data\\library\\documents.sqlite3",
+    "current_library_identity": "10698752:c6bc9b3eb63ae4e6",
+    "identity_formula": "<st_size>:<canonical_sha256_first_16> (reused from eval_v4_baseline._library_identity)",
+    "environment_equivalence": "PASS",
+    "diagnostic_fields": {
+      "schema_version": "5",
+      "embedding_model": "bge-m3",
+      "embedding_dimension": "1024",
+      "document_count": 6,
+      "chunk_count": 637
+    },
+    "note": "diagnostic fields are recorded for context only; they never replace the canonical library identity contract"
+  },
+  "environment_equivalence": "PASS",
+  "target_cases": [
+    "md-004",
+    "md-009",
+    "md-015"
+  ],
+  "canonical_document_identity_source": {
+    "table": "documents",
+    "canonical_field": "documents.title",
+    "documents": [
+      {
+        "id": "doc-ac5ebfeffaef",
+        "title": "移动通信测试文档",
+        "source_name": "sample.md",
+        "sha256": "8296ef7af6a5ea4b50fa809b0623b97f0ac6b95283ab36d97b6f29aaccdd0d09",
+        "page_count": 0
+      },
+      {
+        "id": "doc-0859ccef5fcf",
+        "title": "第1章 移动通信测试文档",
+        "source_name": "sample.txt",
+        "sha256": "287b422dea26035f3d0a92ff5a4a240e78a34fb9fa6c879b3e2b7f6e990e7d92",
+        "page_count": 0
+      },
+      {
+        "id": "doc-2dd528b05211",
+        "title": "移动通信测试文档",
+        "source_name": "sample.docx",
+        "sha256": "af058ee0977efecd4f8e98cd5ce10e511b73590c4f7bf04273951cf147f70856",
+        "page_count": 0
+      },
+      {
+        "id": "doc-b25da8bbc559",
+        "title": "移动通信测试文档",
+        "source_name": "sample.pptx",
+        "sha256": "31528c9c0ca13f2352aec9f0296c86cc3bb85b7eca32a7d6ed6bf462fc8d4817",
+        "page_count": 0
+      },
+      {
+        "id": "doc-4afe842e5c66",
+        "title": "1. 多径传播",
+        "source_name": "sample.pdf",
+        "sha256": "4300b3b8574da16886cca4810d308c4123b1ea3c03cb01b2af9da853d95af779",
+        "page_count": 3
+      },
+      {
+        "id": "doc-01d13356ce2f",
+        "title": "移动通信 (李兆玉)",
+        "source_name": "移动通信 (李兆玉).pdf",
+        "sha256": "b3c8340366ea5391b335ad6265cb0974b4362943e4946d63b89a8d8a23be3dba",
+        "page_count": 352
+      }
+    ],
+    "chunk_document_title_join": [
+      {
+        "document_id": "doc-01d13356ce2f",
+        "document_title": "移动通信 (李兆玉)",
+        "kind": "front_matter"
+      },
+      {
+        "document_id": "doc-01d13356ce2f",
+        "document_title": "移动通信 (李兆玉)",
+        "kind": "body"
+      },
+      {
+        "document_id": "doc-0859ccef5fcf",
+        "document_title": "第1章 移动通信测试文档",
+        "kind": "body"
+      },
+      {
+        "document_id": "doc-2dd528b05211",
+        "document_title": "移动通信测试文档",
+        "kind": "body"
+      },
+      {
+        "document_id": "doc-4afe842e5c66",
+        "document_title": "1. 多径传播",
+        "kind": "body"
+      },
+      {
+        "document_id": "doc-ac5ebfeffaef",
+        "document_title": "移动通信测试文档",
+        "kind": "body"
+      },
+      {
+        "document_id": "doc-b25da8bbc559",
+        "document_title": "移动通信测试文档",
+        "kind": "body"
+      }
+    ],
+    "field_semantics": {
+      "documents.title": "canonical document title (the only canonical document identity)",
+      "documents.source_name": "original source filename at import time (NOT the document identity)",
+      "chunks has no title column": "there is no authoritative chunk-level title in the schema",
+      "chunk_fts.heading_text": "FTS heading column = chapter/section heading (NOT a document title)",
+      "chunks.section": "section heading path (NOT a document title)",
+      "ChunkRecord.document_title": "denormalised copy of documents.title joined at load time",
+      "ChunkRecord.location": "document_title + pages + chapter + section (first component IS the canonical document title)",
+      "material index N": "1-based enumeration index over PreparedAnswer.contexts (a CHUNK index, not a document id)",
+      "[n] citation index": "1-based citation id over sent contexts (a CHUNK index, not a document id)",
+      "Golden semantic label": "role words used by the frozen Golden (教材 / 测试文档)"
+    },
+    "distinct_fts_heading_text_sample": [
+      "1 传播 信测 信测试 动通 动通信 多径 多径传 径传 径传播 文档 测试 测试文 移动 移动通 试文 试文档 通信 通信测",
+      "2 信测 信测试 动通 动通信 技术 抗衰 抗衰落 文档 测试 测试文 移动 移动通 落技 落技术 衰落 衰落技 试文 试文档 通信 通信测",
+      "3 信测 信测试 动通 动通信 参数 参数表 数表 文档 测试 测试文 移动 移动通 试文 试文档 通信 通信测",
+      "1 传播 多径 多径传 径传 径传播",
+      "2 技术 抗衰 抗衰落 落技 落技术 衰落 衰落技",
+      "3 参数 参数表 数表",
+      "信测 信测试 动通 动通信 文档 测试 测试文 移动 移动通 试文 试文档 通信 通信测",
+      "",
+      "188 5.1.2 wcdma 系统 系统结 结构 统结 统结构",
+      "314 6.4.2 td-lte 入过 入过程 接入 接入过 机接 机接入 的随 的随机 过程 随机 随机接"
+    ],
+    "distinct_section_titles_sample": [
+      "移动通信测试文档 / 1. 多径传播",
+      "移动通信测试文档 / 2. 抗衰落技术",
+      "移动通信测试文档 / 3. 参数表",
+      "1. 多径传播",
+      "2. 抗衰落技术",
+      "3. 参数表",
+      "移动通信测试文档",
+      "5.1.2 WCDMA系统结构· 188",
+      "6.4.2 TD-LTE的随机接入过程 314",
+      "1.1 移动通信特点"
+    ]
+  },
+  "golden_to_canonical_mapping": {
+    "md-004": {
+      "query": "分集接收在哪些文档中被提到？",
+      "category": "multi_document",
+      "expected_route": "qa",
+      "expected_refusal": false,
+      "expected_answer_facts": [
+        "分集",
+        "教材",
+        "测试文档"
+      ],
+      "expected_entities": [
+        "分集"
+      ],
+      "notes": "跨文档定位",
+      "history": null,
+      "scope": "none (evaluator calls engine.answer(query, history=...) with scope=None)",
+      "fact_relations": {
+        "分集": {
+          "fact_kind": "content_token",
+          "canonical_document_title": null,
+          "relation": "N/A_CONTENT",
+          "lexically_in_canonical_title": null
+        },
+        "教材": {
+          "fact_kind": "document_role_label",
+          "canonical_document_title": "移动通信 (李兆玉)",
+          "relation": "SEMANTIC_ROLE",
+          "lexically_in_canonical_title": false
+        },
+        "测试文档": {
+          "fact_kind": "document_role_label",
+          "canonical_document_title": "移动通信测试文档",
+          "relation": "SUBSTRING",
+          "lexically_in_canonical_title": true
+        }
+      },
+      "canonical_titles_referenced": [
+        "移动通信 (李兆玉)",
+        "移动通信测试文档"
+      ]
+    },
+    "md-009": {
+      "query": "哪些文档提到了 RAKE 接收机？",
+      "category": "multi_document",
+      "expected_route": "qa",
+      "expected_refusal": false,
+      "expected_answer_facts": [
+        "RAKE",
+        "教材",
+        "测试文档"
+      ],
+      "expected_entities": [
+        "RAKE"
+      ],
+      "notes": "跨文档定位",
+      "history": null,
+      "scope": "none (evaluator calls engine.answer(query, history=...) with scope=None)",
+      "fact_relations": {
+        "RAKE": {
+          "fact_kind": "content_token",
+          "canonical_document_title": null,
+          "relation": "N/A_CONTENT",
+          "lexically_in_canonical_title": null
+        },
+        "教材": {
+          "fact_kind": "document_role_label",
+          "canonical_document_title": "移动通信 (李兆玉)",
+          "relation": "SEMANTIC_ROLE",
+          "lexically_in_canonical_title": false
+        },
+        "测试文档": {
+          "fact_kind": "document_role_label",
+          "canonical_document_title": "移动通信测试文档",
+          "relation": "SUBSTRING",
+          "lexically_in_canonical_title": true
+        }
+      },
+      "canonical_titles_referenced": [
+        "移动通信 (李兆玉)",
+        "移动通信测试文档"
+      ]
+    },
+    "md-015": {
+      "query": "哪份文档明确把 OFDMA 与 LTE 关联？",
+      "category": "multi_document",
+      "expected_route": "qa",
+      "expected_refusal": false,
+      "expected_answer_facts": [
+        "OFDMA",
+        "LTE",
+        "测试文档"
+      ],
+      "expected_entities": [
+        "OFDMA",
+        "LTE"
+      ],
+      "notes": "测试文档明确说 OFDMA 是 LTE 多址",
+      "history": null,
+      "scope": "none (evaluator calls engine.answer(query, history=...) with scope=None)",
+      "fact_relations": {
+        "OFDMA": {
+          "fact_kind": "content_token",
+          "canonical_document_title": null,
+          "relation": "N/A_CONTENT",
+          "lexically_in_canonical_title": null
+        },
+        "LTE": {
+          "fact_kind": "content_token",
+          "canonical_document_title": null,
+          "relation": "N/A_CONTENT",
+          "lexically_in_canonical_title": null
+        },
+        "测试文档": {
+          "fact_kind": "document_role_label",
+          "canonical_document_title": "移动通信测试文档",
+          "relation": "SUBSTRING",
+          "lexically_in_canonical_title": true
+        }
+      },
+      "canonical_titles_referenced": [
+        "移动通信测试文档"
+      ]
+    }
+  },
+  "counterfactual_evaluator_probe": {
+    "md-004": {
+      "evaluator_fact_matcher": "reused canonical eval_v4_baseline._build_row (literal substring: f in answer)",
+      "canonical_titles_used": [
+        "移动通信 (李兆玉)",
+        "移动通信测试文档"
+      ],
+      "variants": {
+        "canonical_title_only": {
+          "answer": "分集 在《移动通信 (李兆玉)》与《移动通信测试文档》中均有提及。",
+          "fact_present": 2,
+          "fact_total": 3,
+          "matched_facts": [
+            "分集",
+            "测试文档"
+          ],
+          "missing_facts": [
+            "教材"
+          ],
+          "answer_state": "ANSWERED",
+          "exact_pass": false
+        },
+        "role_label_plus_canonical_title": {
+          "answer": "分集 在教材《移动通信 (李兆玉)》与测试文档《移动通信测试文档》中均有提及。",
+          "fact_present": 3,
+          "fact_total": 3,
+          "matched_facts": [
+            "分集",
+            "教材",
+            "测试文档"
+          ],
+          "missing_facts": [],
+          "answer_state": "ANSWERED",
+          "exact_pass": true
+        }
+      },
+      "CANONICAL_TITLE_ONLY_SATISFIES_GOLDEN": "PARTIAL",
+      "ROLE_LABEL_PLUS_CANONICAL_TITLE_SATISFIES_GOLDEN": "YES",
+      "CANONICAL_TITLE_WOULD_SATISFY_GOLDEN": "PARTIAL"
+    },
+    "md-009": {
+      "evaluator_fact_matcher": "reused canonical eval_v4_baseline._build_row (literal substring: f in answer)",
+      "canonical_titles_used": [
+        "移动通信 (李兆玉)",
+        "移动通信测试文档"
+      ],
+      "variants": {
+        "canonical_title_only": {
+          "answer": "RAKE 在《移动通信 (李兆玉)》与《移动通信测试文档》中均有提及。",
+          "fact_present": 2,
+          "fact_total": 3,
+          "matched_facts": [
+            "RAKE",
+            "测试文档"
+          ],
+          "missing_facts": [
+            "教材"
+          ],
+          "answer_state": "ANSWERED",
+          "exact_pass": false
+        },
+        "role_label_plus_canonical_title": {
+          "answer": "RAKE 在教材《移动通信 (李兆玉)》与测试文档《移动通信测试文档》中均有提及。",
+          "fact_present": 3,
+          "fact_total": 3,
+          "matched_facts": [
+            "RAKE",
+            "教材",
+            "测试文档"
+          ],
+          "missing_facts": [],
+          "answer_state": "ANSWERED",
+          "exact_pass": true
+        }
+      },
+      "CANONICAL_TITLE_ONLY_SATISFIES_GOLDEN": "PARTIAL",
+      "ROLE_LABEL_PLUS_CANONICAL_TITLE_SATISFIES_GOLDEN": "YES",
+      "CANONICAL_TITLE_WOULD_SATISFY_GOLDEN": "PARTIAL"
+    },
+    "md-015": {
+      "evaluator_fact_matcher": "reused canonical eval_v4_baseline._build_row (literal substring: f in answer)",
+      "canonical_titles_used": [
+        "移动通信测试文档"
+      ],
+      "variants": {
+        "canonical_title_only": {
+          "answer": "OFDMA、LTE 在《移动通信测试文档》中均有提及。",
+          "fact_present": 3,
+          "fact_total": 3,
+          "matched_facts": [
+            "OFDMA",
+            "LTE",
+            "测试文档"
+          ],
+          "missing_facts": [],
+          "answer_state": "ANSWERED",
+          "exact_pass": true
+        },
+        "role_label_plus_canonical_title": {
+          "answer": "OFDMA、LTE 在测试文档《移动通信测试文档》中均有提及。",
+          "fact_present": 3,
+          "fact_total": 3,
+          "matched_facts": [
+            "OFDMA",
+            "LTE",
+            "测试文档"
+          ],
+          "missing_facts": [],
+          "answer_state": "ANSWERED",
+          "exact_pass": true
+        }
+      },
+      "CANONICAL_TITLE_ONLY_SATISFIES_GOLDEN": "YES",
+      "ROLE_LABEL_PLUS_CANONICAL_TITLE_SATISFIES_GOLDEN": "YES",
+      "CANONICAL_TITLE_WOULD_SATISFY_GOLDEN": "YES"
+    }
+  },
+  "per_case_layer_trace": {
+    "md-004": {
+      "case_id": "md-004",
+      "query": "分集接收在哪些文档中被提到？",
+      "history": null,
+      "scope": "none",
+      "replay_equivalence": "FULL",
+      "replay_path": "StructuredQAEngine.answer(query, history=case.get('history'))  [same call as scripts/eval_v4_baseline.py]",
+      "route": "qa",
+      "route_decision": {
+        "route": "qa",
+        "normalized_question": "分集接收在哪些文档中被提到？",
+        "reason_code": "DEFAULT_QA",
+        "resolution_status": "none",
+        "scope_conflict": false
+      },
+      "retrieval": {
+        "candidate_set_fts": {
+          "count": 30,
+          "chunk_ids": [
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-f895c788dd1f0fdbe4341d1400318dcac7c382c2d8da5a53690791f8580fd516",
+            "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "chk-2d2328c7df43eed3",
+            "chk-5c8465271c2ee3d6",
+            "chk-cd184b42860b80ef",
+            "chk-00a687020c91fcb2",
+            "chk-5e3f39f1472e33bf",
+            "chk-baf7dbbc21d2ad33",
+            "chk-e154b63288d1e3b5",
+            "chk-ea92954a3e6857f2",
+            "chk-b1d3b5425ee25b0a",
+            "chk-6ea6bf5e2889e0972f40fae5b36c10719d877895f544b5bd28569922ead2b173",
+            "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+            "chk-38c420a913c8ff40",
+            "chk-bc453206d6a2999a",
+            "chk-703d270e759d5655",
+            "chk-989c53a661a60640",
+            "chk-b223a7b4a4bb57b3",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-9e3fbcec26824cd1a497890b7dc9cb44c0b5aec31c158b1bae9ea683c0af9bec",
+            "chk-bbedeff78b70557a",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-56e7cd38f3a9dc4c",
+            "chk-15534123de9368fdcf68230f59c834ee40c133b0c48367985bcf5bbb7383c16d",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-17100fcdb36eacf3",
+            "chk-d276b1ca3e833ad2"
+          ]
+        },
+        "candidate_set_dense": {
+          "count": 30,
+          "chunk_ids": [
+            "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "chk-ea92954a3e6857f2",
+            "chk-5e3f39f1472e33bf",
+            "chk-fd1995d88f9bd6fc",
+            "chk-189cd3d2b48d85ac",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "chk-00a687020c91fcb2",
+            "chk-655410ba5cdf5ad4",
+            "chk-8dbddb70895e1a1e",
+            "chk-c881fce09281af66",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-0ab6214b4f691061",
+            "chk-02faa4f108559ade",
+            "chk-e154b63288d1e3b5",
+            "chk-83a88ccad263c628",
+            "chk-190f836c0625d57d",
+            "chk-19091699ae6f3486",
+            "chk-d051aa2c4941adf7",
+            "chk-6ea6bf5e2889e0972f40fae5b36c10719d877895f544b5bd28569922ead2b173",
+            "chk-71791e3a7515f24c",
+            "chk-d879a5a9987a41b4923846378f119888fdf2e0fb46bda81a431dee0447ff0637",
+            "chk-28184dcc162ecf21",
+            "chk-bb11614e2a31b389",
+            "chk-1b0bb061c4d2d2ce",
+            "chk-713746f17a5c006d",
+            "chk-d1a8d49e41ab3525",
+            "chk-51d4651e6b3ce419",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-bee0aeaff4ce518d"
+          ]
+        },
+        "final_ranked_contexts": [
+          {
+            "rank": 1,
+            "chunk_id": "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "document_id": "doc-2dd528b05211",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "score": 0.036147540983606556,
+            "lexical_rank": 1,
+            "dense_rank": 1,
+            "dense_score": 0.6083148988357282,
+            "rerank_score": null
+          },
+          {
+            "rank": 2,
+            "chunk_id": "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "document_id": "doc-ac5ebfeffaef",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "score": 0.03436705767350928,
+            "lexical_rank": 2,
+            "dense_rank": 6,
+            "dense_score": 0.5428802082604623,
+            "rerank_score": null
+          },
+          {
+            "rank": 3,
+            "chunk_id": "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "document_id": "doc-0859ccef5fcf",
+            "document_title": "第1章 移动通信测试文档",
+            "chapter": "2. 抗衰落技术",
+            "section": "2. 抗衰落技术",
+            "score": 0.03336050516647531,
+            "lexical_rank": 5,
+            "dense_rank": 7,
+            "dense_score": 0.5348059250783654,
+            "rerank_score": null
+          },
+          {
+            "rank": 4,
+            "chunk_id": "chk-5e3f39f1472e33bf",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "score": 0.032079365079365076,
+            "lexical_rank": 10,
+            "dense_rank": 3,
+            "dense_score": 0.5684486866263547,
+            "rerank_score": null
+          },
+          {
+            "rank": 5,
+            "chunk_id": "chk-ea92954a3e6857f2",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.1.1 基本概念与分类",
+            "score": 0.03182832523199292,
+            "lexical_rank": 13,
+            "dense_rank": 2,
+            "dense_score": 0.6064810872782957,
+            "rerank_score": null
+          }
+        ],
+        "prepared_answer_contexts": [
+          {
+            "chunk_id": "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "document_id": "doc-2dd528b05211",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "69a87d31b2d6c288",
+            "text_len": 21
+          },
+          {
+            "chunk_id": "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "document_id": "doc-ac5ebfeffaef",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "bf36de00fd344806",
+            "text_len": 55
+          },
+          {
+            "chunk_id": "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "document_id": "doc-0859ccef5fcf",
+            "document_title": "第1章 移动通信测试文档",
+            "chapter": "2. 抗衰落技术",
+            "section": "2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "bf36de00fd344806",
+            "text_len": 55
+          },
+          {
+            "chunk_id": "chk-5e3f39f1472e33bf",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "kind": "body",
+            "pdf_page_start": 148,
+            "location": "移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "title_in_location": true,
+            "text_fingerprint": "b68b4b1cf5a0c45b",
+            "text_len": 811
+          },
+          {
+            "chunk_id": "chk-ea92954a3e6857f2",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.1.1 基本概念与分类",
+            "kind": "body",
+            "pdf_page_start": 99,
+            "location": "移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类",
+            "title_in_location": true,
+            "text_fingerprint": "852610bd684e0b93",
+            "text_len": 760
+          }
+        ],
+        "sent_contexts": [
+          {
+            "chunk_id": "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+            "document_id": "doc-2dd528b05211",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "69a87d31b2d6c288",
+            "text_len": 21
+          },
+          {
+            "chunk_id": "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "document_id": "doc-ac5ebfeffaef",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "bf36de00fd344806",
+            "text_len": 55
+          },
+          {
+            "chunk_id": "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "document_id": "doc-0859ccef5fcf",
+            "document_title": "第1章 移动通信测试文档",
+            "chapter": "2. 抗衰落技术",
+            "section": "2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "bf36de00fd344806",
+            "text_len": 55
+          },
+          {
+            "chunk_id": "chk-5e3f39f1472e33bf",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "kind": "body",
+            "pdf_page_start": 148,
+            "location": "移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "title_in_location": true,
+            "text_fingerprint": "b68b4b1cf5a0c45b",
+            "text_len": 811
+          },
+          {
+            "chunk_id": "chk-ea92954a3e6857f2",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.1.1 基本概念与分类",
+            "kind": "body",
+            "pdf_page_start": 99,
+            "location": "移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类",
+            "title_in_location": true,
+            "text_fingerprint": "852610bd684e0b93",
+            "text_len": 760
+          }
+        ],
+        "counts": {
+          "fts_candidates": 30,
+          "dense_candidates": 30,
+          "final_ranked_contexts": 5,
+          "prepared_contexts": 5,
+          "sent_material_count": 5,
+          "distinct_sent_chunk_count": 5,
+          "distinct_sent_document_count": 4
+        }
+      },
+      "material_index_semantics": "CHUNK_CONTEXT_INDEX (for index, chunk in enumerate(contexts, 1) in build_messages)",
+      "material_to_chunk_to_document_map": [
+        {
+          "material_index": 1,
+          "chunk_id": "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+          "document_id": "doc-2dd528b05211",
+          "document_title": "移动通信测试文档",
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 2. 抗衰落技术",
+          "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 2,
+          "chunk_id": "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+          "document_id": "doc-ac5ebfeffaef",
+          "document_title": "移动通信测试文档",
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 2. 抗衰落技术",
+          "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 3,
+          "chunk_id": "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+          "document_id": "doc-0859ccef5fcf",
+          "document_title": "第1章 移动通信测试文档",
+          "chapter": "2. 抗衰落技术",
+          "section": "2. 抗衰落技术",
+          "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 4,
+          "chunk_id": "chk-5e3f39f1472e33bf",
+          "document_id": "doc-01d13356ce2f",
+          "document_title": "移动通信 (李兆玉)",
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+          "location": "移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 5,
+          "chunk_id": "chk-ea92954a3e6857f2",
+          "document_id": "doc-01d13356ce2f",
+          "document_title": "移动通信 (李兆玉)",
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.1.1 基本概念与分类",
+          "location": "移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类",
+          "title_present_in_serialized_header": true
+        }
+      ],
+      "serialized_material_headers": [
+        {
+          "material_index": 1,
+          "header": "[材料1｜移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术]",
+          "location_in_header": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术"
+        },
+        {
+          "material_index": 2,
+          "header": "[材料2｜移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术]",
+          "location_in_header": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术"
+        },
+        {
+          "material_index": 3,
+          "header": "[材料3｜第1章 移动通信测试文档 · 2. 抗衰落技术]",
+          "location_in_header": "第1章 移动通信测试文档 · 2. 抗衰落技术"
+        },
+        {
+          "material_index": 4,
+          "header": "[材料4｜移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能]",
+          "location_in_header": "移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能"
+        },
+        {
+          "material_index": 5,
+          "header": "[材料5｜移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类]",
+          "location_in_header": "移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类"
+        }
+      ],
+      "material_header_contains_canonical_title": true,
+      "canonical_titles_visible_in_request": [
+        "移动通信 (李兆玉)",
+        "移动通信测试文档",
+        "第1章 移动通信测试文档"
+      ],
+      "chunk_to_document_grouping": "IMPLICIT (every material header carries document_title via chunk.location; no separate document grouping block)",
+      "evidence_continuity": [
+        {
+          "term": "分集",
+          "document_id": "doc-ac5ebfeffaef",
+          "document_title": "移动通信测试文档",
+          "representative_chunk_id": "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": true,
+          "in_prepared_contexts": true,
+          "in_sent_contexts": true,
+          "title_in_serialized_material": true,
+          "document_title_in_any_sent_material": true
+        },
+        {
+          "term": "分集",
+          "document_id": "doc-0859ccef5fcf",
+          "document_title": "第1章 移动通信测试文档",
+          "representative_chunk_id": "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": true,
+          "in_prepared_contexts": true,
+          "in_sent_contexts": true,
+          "title_in_serialized_material": true,
+          "document_title_in_any_sent_material": true
+        },
+        {
+          "term": "分集",
+          "document_id": "doc-2dd528b05211",
+          "document_title": "移动通信测试文档",
+          "representative_chunk_id": "chk-1b4ffe323d3971a16a3b0d831131c0b65502e5230636546f317125cc939bd5a7",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": true,
+          "in_prepared_contexts": true,
+          "in_sent_contexts": true,
+          "title_in_serialized_material": true,
+          "document_title_in_any_sent_material": true
+        },
+        {
+          "term": "分集",
+          "document_id": "doc-b25da8bbc559",
+          "document_title": "移动通信测试文档",
+          "representative_chunk_id": "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": false,
+          "in_prepared_contexts": false,
+          "in_sent_contexts": false,
+          "title_in_serialized_material": false,
+          "document_title_in_any_sent_material": true
+        },
+        {
+          "term": "分集",
+          "document_id": "doc-4afe842e5c66",
+          "document_title": "1. 多径传播",
+          "representative_chunk_id": "chk-f895c788dd1f0fdbe4341d1400318dcac7c382c2d8da5a53690791f8580fd516",
+          "in_fts_candidates": true,
+          "in_dense_candidates": false,
+          "in_final_ranked_contexts": false,
+          "in_prepared_contexts": false,
+          "in_sent_contexts": false,
+          "title_in_serialized_material": false,
+          "document_title_in_any_sent_material": false
+        },
+        {
+          "term": "分集",
+          "document_id": "doc-01d13356ce2f",
+          "document_title": "移动通信 (李兆玉)",
+          "representative_chunk_id": "chk-da4158eae1a55c17",
+          "in_fts_candidates": false,
+          "in_dense_candidates": false,
+          "in_final_ranked_contexts": false,
+          "in_prepared_contexts": false,
+          "in_sent_contexts": false,
+          "title_in_serialized_material": false,
+          "document_title_in_any_sent_material": true
+        }
+      ],
+      "final_application_model_request": {
+        "model": "qwen2.5:7b",
+        "transport": "chat",
+        "stream": false,
+        "messages": [
+          {
+            "role": "system",
+            "content": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。"
+          },
+          {
+            "role": "user",
+            "content": "任务要求：直接回答概念、原理、条件或工程作用。\n\n[材料1｜移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术]\n分集接收通过合并独立衰落的支路来对抗衰落。\n\n[材料2｜移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术]\n分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。\n\n[材料3｜第1章 移动通信测试文档 · 2. 抗衰落技术]\n分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。\n\n[材料4｜移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能]\n139 如果各条路径加权系数为1，可视为等增益合并方式。 在实际系统中还可以采用最大比合并或最佳样点合并方式。 RAKE接收机利用多个并行相关器，获得各多径信号能量， 即利用多径信号，改善信噪比，提高了通信质量。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。 如果接收信号r(t)中包括多条路径，如图3-43所示。 图中每一个峰值对应一条多径， 每个峰值幅度的不同，是由每条路径的传输损耗不同引起的。 1支路 PN PN 2支路 PN PN M支路 T(M) PN PN Ts+4, Ts+4, Ts+4, 图3-42多径信号的分离图3-43RAKE接收机接输出波形为了将这些多径信号进行有效的合并，可将每一条多径通过延迟的方法使它们在同一时刻达到最大，按最大比的方式合并，就可以得到最佳的输出信号。 扩频信号的带宽远大于信道的相关带宽，信号频谱的衰落仅是一个小部分，因此也可以说信号的频谱扩展使信号获得了频率分集的好处。 另外，多径信号的分离接收，就是把先后到达接收机的携带同一信息的衰落独立的多个信号的能量充分加以利用，改善接收信号的质量，这也是一种时间分集。 习题与思考题 3 1.分集接收技术的指导思想是什么？ 什么是宏观分集和微观分集？ 在移动通信中常用哪些微观分集？ a=a +a+as 3.已知(8,4)线性分组码的监督方程组为： a=a +as+as a =a+as +as a=a+ag+as 试求：（1）监督矩阵； （2）生成矩阵； （3）当信息位是1001时，求整个码组； （4）接收到的码组为10110101时，求校正子S并说明它是否出错。 （5）求最小码距。 4.已知某(7,3)循环码的生成多项式为g(x)=x4+x3+x²+1，试求： （1）当信息位为101时，写出编码过程，并求出整个发送码组。\n\n[材料5｜移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类]\n3.1.1基本概念与分类 1.分集接收技术的基本概念在移动通信中为对抗衰落产生的影响，分集接收是常采用的有效措施之一。 在移动环境中，通过不同途径所接收到的多个信号其衰落情况是不同的，衰落是独立的。 所谓分集接收，是指接收端对它收到的多个衰落特性互相独立（携带同一信息）的信号进行特定的处理，以降低信号电平起伏的办法。 综合利用各信号分量，就有可能明显地改善接收信号的质量，这就是分集接收的基本思想。 分集接收的代价是增加接收机的复杂度，因为要对各径信号进行跟踪，及时对更多的信号分量进行处理，但它可以提高通信的可靠性，故被广泛用于移动通信。 分集有两重含义：一是分散传输，使接收端能获得多个统计独立的、携带同一信息的衰落信号； 二是集中处理，即接收机把收到的多个统计独立的衰落信号进行合并（包括选择与组合）以降低衰落的影响。 2.分集接收技术的分类移动无线信号的衰落包括两个方面：一个来自因地形地物造成的阴影衰落，它使接收的信号平均功率（或者信号的中值）在一个比较长的空间（或时间）区间内发生波动，这 度发生急剧的变化（但信号的平均功率不变），这是一种微观衰落。 针对这两种不同的衰落，常用的分集技术可以分为宏观分集和微观分集。 （1）宏观分集宏观分集主要用于蜂窝通信系统中，也称为多基站分集。 这是一种减小慢衰落影响的分集技术，其做法是把多个基站设置在不同的地理位置上，并使其在不同的方向上，这些基站同时和小区内的一个移动台进行通信（可以选用其中信号最好的一个基站进行通信）。 显然，只要在各个方向上的信号传播不是同时受到阴影效应或地形的影响而出现严重的慢衰落，这种办法就能保持通信不会中断。 软切换就是宏分集的典型应用。 刘（2）微观分集建德微观分集是一种减小快衰落影响的分集技术，在各种无线通信系统中都经常使用。\n\n问题：分集接收在哪些文档中被提到？"
+          }
+        ],
+        "num_messages": 2,
+        "keep_alive": "10m",
+        "options": {
+          "temperature": 0,
+          "top_p": 1,
+          "top_k": 1,
+          "repeat_penalty": 1.15,
+          "num_predict": 800,
+          "num_ctx": 8192
+        }
+      },
+      "APPLICATION_LEVEL_REQUEST_CAPTURED": true,
+      "OLLAMA_RENDERED_TOKEN_PROMPT_CAPTURED": false,
+      "title_visibility_at_application_request": true,
+      "raw_vs_final_answer": {
+        "raw_model_answer": "分集接收在材料1、材料2和材料3中被提及。[1][2][3]",
+        "after_normalize_citations": "分集接收在材料1、材料2和材料3中被提及。[1][2][3]",
+        "pre_renumber_answer": "分集接收在材料1、材料2和材料3中被提及。[1][2][3]",
+        "final_answer": "分集接收在材料1、材料2和材料3中被提及。[1][2][3]",
+        "raw_contains_canonical_title": false,
+        "final_contains_canonical_title": false,
+        "raw_uses_材料N": true,
+        "final_uses_材料N": true,
+        "post_processing_changed_identity": false
+      },
+      "prompt_instruction_audit": {
+        "system_prompt": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+        "task_hint": "直接回答概念、原理、条件或工程作用。",
+        "user_framing_prefix": "任务要求：<hint>\\n\\n[材料N｜location]\\n<text>...\\n\\n问题：<question>",
+        "patterns": {
+          "mentions_材料_numbering": true,
+          "encourages_材料N_expression": true,
+          "forbids_or_weakens_document_title": false,
+          "emphasizes_citation_index": true,
+          "document_title_instruction_present": false
+        }
+      },
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "citation_verified": true,
+      "elapsed_ms": 5044
+    },
+    "md-009": {
+      "case_id": "md-009",
+      "query": "哪些文档提到了 RAKE 接收机？",
+      "history": null,
+      "scope": "none",
+      "replay_equivalence": "FULL",
+      "replay_path": "StructuredQAEngine.answer(query, history=case.get('history'))  [same call as scripts/eval_v4_baseline.py]",
+      "route": "qa",
+      "route_decision": {
+        "route": "qa",
+        "normalized_question": "哪些文档提到了 RAKE 接收机？",
+        "reason_code": "DEFAULT_QA",
+        "resolution_status": "none",
+        "scope_conflict": false
+      },
+      "retrieval": {
+        "candidate_set_fts": {
+          "count": 30,
+          "chunk_ids": [
+            "chk-56e7cd38f3a9dc4c",
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-52f3c7e41a5af4f64babd17658b627bed1c5df48543aa7fd2fcd8305a5a6188a",
+            "chk-04bc6c596a7cc880",
+            "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b",
+            "chk-f439463f20b5d4b9",
+            "chk-12aa271d8a20f8d4",
+            "chk-5c8465271c2ee3d6",
+            "chk-00a687020c91fcb2",
+            "chk-83a88ccad263c628",
+            "chk-190f836c0625d57d",
+            "chk-5e3f39f1472e33bf",
+            "chk-e2701be9653901d8",
+            "chk-e154b63288d1e3b5",
+            "chk-53d499bf587c884b",
+            "chk-356fe36ed11100c5",
+            "chk-8dbddb70895e1a1e",
+            "chk-54ec747638e9e737",
+            "chk-f4fa0b23168d8b9a",
+            "chk-43224041198d5446",
+            "chk-ea4d12bdf4ee3333",
+            "chk-0abf447e6a12a6dc",
+            "chk-3396ddd1a918480e",
+            "chk-76f7a9950b33f3a0",
+            "chk-f3ce762ec4852ffe",
+            "chk-bc453206d6a2999a",
+            "chk-b291cc418e4782a9",
+            "chk-25f52758a8fce561"
+          ]
+        },
+        "candidate_set_dense": {
+          "count": 30,
+          "chunk_ids": [
+            "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "chk-190f836c0625d57d",
+            "chk-52f3c7e41a5af4f64babd17658b627bed1c5df48543aa7fd2fcd8305a5a6188a",
+            "chk-00a687020c91fcb2",
+            "chk-04bc6c596a7cc880",
+            "chk-12aa271d8a20f8d4",
+            "chk-f439463f20b5d4b9",
+            "chk-e154b63288d1e3b5",
+            "chk-5e3f39f1472e33bf",
+            "chk-83a88ccad263c628",
+            "chk-54ec747638e9e737",
+            "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b",
+            "chk-f4fa0b23168d8b9a",
+            "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-126e4ef53d4bffe7",
+            "chk-365a0d466e72c582",
+            "chk-24fc476f3f6c8f25",
+            "chk-0fe7f80d52b8dca2",
+            "chk-9e37fe01c8c1190b",
+            "chk-ea18e29bf9a19690",
+            "chk-71b59c979d883eb8",
+            "chk-381dd92d5bee4045",
+            "chk-b5f55f603a89ca99",
+            "chk-92c6ceac85833983",
+            "chk-38c420a913c8ff40",
+            "chk-a114378c5784da11",
+            "chk-4ae1a29d2f7c22ba",
+            "chk-b17bcbe50aeb0d56",
+            "chk-c652359ef564b661"
+          ]
+        },
+        "final_ranked_contexts": [
+          {
+            "rank": 1,
+            "chunk_id": "chk-04bc6c596a7cc880",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "score": 0.038319347319347316,
+            "lexical_rank": 6,
+            "dense_rank": 5,
+            "dense_score": 0.6068834668747183,
+            "rerank_score": null
+          },
+          {
+            "rank": 2,
+            "chunk_id": "chk-190f836c0625d57d",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "score": 0.03782832523199292,
+            "lexical_rank": 13,
+            "dense_rank": 2,
+            "dense_score": 0.6273575203108744,
+            "rerank_score": null
+          },
+          {
+            "rank": 3,
+            "chunk_id": "chk-00a687020c91fcb2",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第5章 WCDMA移动通信系统",
+            "section": "5.2.2 RAKE接收",
+            "score": 0.03759881161971831,
+            "lexical_rank": 11,
+            "dense_rank": 4,
+            "dense_score": 0.612860578181386,
+            "rerank_score": null
+          },
+          {
+            "rank": 4,
+            "chunk_id": "chk-f439463f20b5d4b9",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第5章 WCDMA移动通信系统",
+            "section": "5.2.2 RAKE接收",
+            "score": 0.03736084284460053,
+            "lexical_rank": 8,
+            "dense_rank": 7,
+            "dense_score": 0.5975855464267041,
+            "rerank_score": null
+          },
+          {
+            "rank": 5,
+            "chunk_id": "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "document_id": "doc-2dd528b05211",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 1. 多径传播",
+            "score": 0.035888418826017975,
+            "lexical_rank": 2,
+            "dense_rank": 1,
+            "dense_score": 0.6400899148616525,
+            "rerank_score": null
+          }
+        ],
+        "prepared_answer_contexts": [
+          {
+            "chunk_id": "chk-04bc6c596a7cc880",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "kind": "body",
+            "pdf_page_start": 147,
+            "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "title_in_location": true,
+            "text_fingerprint": "475aa6021a51d722",
+            "text_len": 84
+          },
+          {
+            "chunk_id": "chk-190f836c0625d57d",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "kind": "body",
+            "pdf_page_start": 147,
+            "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "title_in_location": true,
+            "text_fingerprint": "1d7725328b676402",
+            "text_len": 766
+          },
+          {
+            "chunk_id": "chk-00a687020c91fcb2",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第5章 WCDMA移动通信系统",
+            "section": "5.2.2 RAKE接收",
+            "kind": "body",
+            "pdf_page_start": 208,
+            "location": "移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+            "title_in_location": true,
+            "text_fingerprint": "48828142c2b16cdf",
+            "text_len": 581
+          },
+          {
+            "chunk_id": "chk-f439463f20b5d4b9",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第5章 WCDMA移动通信系统",
+            "section": "5.2.2 RAKE接收",
+            "kind": "body",
+            "pdf_page_start": 206,
+            "location": "移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+            "title_in_location": true,
+            "text_fingerprint": "cce6733ce9f935b9",
+            "text_len": 179
+          },
+          {
+            "chunk_id": "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "document_id": "doc-2dd528b05211",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 1. 多径传播",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播",
+            "title_in_location": true,
+            "text_fingerprint": "81836fbba8eaa9e9",
+            "text_len": 34
+          }
+        ],
+        "sent_contexts": [
+          {
+            "chunk_id": "chk-04bc6c596a7cc880",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "kind": "body",
+            "pdf_page_start": 147,
+            "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "title_in_location": true,
+            "text_fingerprint": "475aa6021a51d722",
+            "text_len": 84
+          },
+          {
+            "chunk_id": "chk-190f836c0625d57d",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第3章 抗衰落技术",
+            "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "kind": "body",
+            "pdf_page_start": 147,
+            "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+            "title_in_location": true,
+            "text_fingerprint": "1d7725328b676402",
+            "text_len": 766
+          },
+          {
+            "chunk_id": "chk-00a687020c91fcb2",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第5章 WCDMA移动通信系统",
+            "section": "5.2.2 RAKE接收",
+            "kind": "body",
+            "pdf_page_start": 208,
+            "location": "移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+            "title_in_location": true,
+            "text_fingerprint": "48828142c2b16cdf",
+            "text_len": 581
+          },
+          {
+            "chunk_id": "chk-f439463f20b5d4b9",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第5章 WCDMA移动通信系统",
+            "section": "5.2.2 RAKE接收",
+            "kind": "body",
+            "pdf_page_start": 206,
+            "location": "移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+            "title_in_location": true,
+            "text_fingerprint": "cce6733ce9f935b9",
+            "text_len": 179
+          },
+          {
+            "chunk_id": "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+            "document_id": "doc-2dd528b05211",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 1. 多径传播",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播",
+            "title_in_location": true,
+            "text_fingerprint": "81836fbba8eaa9e9",
+            "text_len": 34
+          }
+        ],
+        "counts": {
+          "fts_candidates": 30,
+          "dense_candidates": 30,
+          "final_ranked_contexts": 5,
+          "prepared_contexts": 5,
+          "sent_material_count": 5,
+          "distinct_sent_chunk_count": 5,
+          "distinct_sent_document_count": 2
+        }
+      },
+      "material_index_semantics": "CHUNK_CONTEXT_INDEX (for index, chunk in enumerate(contexts, 1) in build_messages)",
+      "material_to_chunk_to_document_map": [
+        {
+          "material_index": 1,
+          "chunk_id": "chk-04bc6c596a7cc880",
+          "document_id": "doc-01d13356ce2f",
+          "document_title": "移动通信 (李兆玉)",
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+          "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 2,
+          "chunk_id": "chk-190f836c0625d57d",
+          "document_id": "doc-01d13356ce2f",
+          "document_title": "移动通信 (李兆玉)",
+          "chapter": "第3章 抗衰落技术",
+          "section": "3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+          "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 3,
+          "chunk_id": "chk-00a687020c91fcb2",
+          "document_id": "doc-01d13356ce2f",
+          "document_title": "移动通信 (李兆玉)",
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.2.2 RAKE接收",
+          "location": "移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 4,
+          "chunk_id": "chk-f439463f20b5d4b9",
+          "document_id": "doc-01d13356ce2f",
+          "document_title": "移动通信 (李兆玉)",
+          "chapter": "第5章 WCDMA移动通信系统",
+          "section": "5.2.2 RAKE接收",
+          "location": "移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 5,
+          "chunk_id": "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+          "document_id": "doc-2dd528b05211",
+          "document_title": "移动通信测试文档",
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 1. 多径传播",
+          "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播",
+          "title_present_in_serialized_header": true
+        }
+      ],
+      "serialized_material_headers": [
+        {
+          "material_index": 1,
+          "header": "[材料1｜移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能]",
+          "location_in_header": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能"
+        },
+        {
+          "material_index": 2,
+          "header": "[材料2｜移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能]",
+          "location_in_header": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能"
+        },
+        {
+          "material_index": 3,
+          "header": "[材料3｜移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收]",
+          "location_in_header": "移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收"
+        },
+        {
+          "material_index": 4,
+          "header": "[材料4｜移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收]",
+          "location_in_header": "移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收"
+        },
+        {
+          "material_index": 5,
+          "header": "[材料5｜移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播]",
+          "location_in_header": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播"
+        }
+      ],
+      "material_header_contains_canonical_title": true,
+      "canonical_titles_visible_in_request": [
+        "移动通信 (李兆玉)",
+        "移动通信测试文档"
+      ],
+      "chunk_to_document_grouping": "IMPLICIT (every material header carries document_title via chunk.location; no separate document grouping block)",
+      "evidence_continuity": [
+        {
+          "term": "RAKE",
+          "document_id": "doc-ac5ebfeffaef",
+          "document_title": "移动通信测试文档",
+          "representative_chunk_id": "chk-5304cc3d5fb8638aecdde5497b04acacb12c9c4e5793428761cb3a8b24e29989",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": false,
+          "in_prepared_contexts": false,
+          "in_sent_contexts": false,
+          "title_in_serialized_material": false,
+          "document_title_in_any_sent_material": true
+        },
+        {
+          "term": "RAKE",
+          "document_id": "doc-0859ccef5fcf",
+          "document_title": "第1章 移动通信测试文档",
+          "representative_chunk_id": "chk-c4f30fac733c4431fc0b96bdb9c91cec5d4467c861c012d198472ec5ee7fd09b",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": false,
+          "in_prepared_contexts": false,
+          "in_sent_contexts": false,
+          "title_in_serialized_material": false,
+          "document_title_in_any_sent_material": false
+        },
+        {
+          "term": "RAKE",
+          "document_id": "doc-2dd528b05211",
+          "document_title": "移动通信测试文档",
+          "representative_chunk_id": "chk-ce0a355ebe35b48aff250028e986c9ffc8392db17d306fbcfb76e41261f38250",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": true,
+          "in_prepared_contexts": true,
+          "in_sent_contexts": true,
+          "title_in_serialized_material": true,
+          "document_title_in_any_sent_material": true
+        },
+        {
+          "term": "RAKE",
+          "document_id": "doc-b25da8bbc559",
+          "document_title": "移动通信测试文档",
+          "representative_chunk_id": "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": false,
+          "in_prepared_contexts": false,
+          "in_sent_contexts": false,
+          "title_in_serialized_material": false,
+          "document_title_in_any_sent_material": true
+        },
+        {
+          "term": "RAKE",
+          "document_id": "doc-4afe842e5c66",
+          "document_title": "1. 多径传播",
+          "representative_chunk_id": "chk-52f3c7e41a5af4f64babd17658b627bed1c5df48543aa7fd2fcd8305a5a6188a",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": false,
+          "in_prepared_contexts": false,
+          "in_sent_contexts": false,
+          "title_in_serialized_material": false,
+          "document_title_in_any_sent_material": false
+        },
+        {
+          "term": "RAKE",
+          "document_id": "doc-01d13356ce2f",
+          "document_title": "移动通信 (李兆玉)",
+          "representative_chunk_id": "chk-5c8465271c2ee3d6",
+          "in_fts_candidates": true,
+          "in_dense_candidates": false,
+          "in_final_ranked_contexts": false,
+          "in_prepared_contexts": false,
+          "in_sent_contexts": false,
+          "title_in_serialized_material": false,
+          "document_title_in_any_sent_material": true
+        }
+      ],
+      "final_application_model_request": {
+        "model": "qwen2.5:7b",
+        "transport": "chat",
+        "stream": false,
+        "messages": [
+          {
+            "role": "system",
+            "content": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。"
+          },
+          {
+            "role": "user",
+            "content": "任务要求：直接回答概念、原理、条件或工程作用。\n\n[材料1｜移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能]\n这都保证了对多径信号的分离与接收，提高了接收信号的质量。 相关器1 延时、加权输出相关器2 延时、加权合并器多径信号相关器M 延时、加权图3-41J RAKE接收机原理\n\n[材料2｜移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能]\n3.3.5RAKE接收机在未采用扩频的移动通信系统，接收端只能对收到的多径信号进行矢量叠加，由于相位差和幅度不同导致信号呈现衰落。 在直扩通信系统中，采用自相关特性良好的扩频码， 在接收端进行相关解扩时可以有效地抑制不同步的其他多径信号分量，单独分离出主径分量，实现抗多径干扰的作用。 但是这些先后到达的不同步的其他多径信号分量，都携带相同的信息，都具有能量，若能够利用这些能量，则可以变害为利，改善接收信号的质量。 基于这种思想，Price和Green在1958年提出了多径分离接收的技术，这就是RAKE接收机。 利用RAKE接收机将被分离的各条路径信号相位校准、幅度加权，并将矢量和变成代数和。 三种不同的通信系统下，在接收端对信号的处理如图3-40所示。 第3径接收后的第2径合成失量分离出主径信号第1径第2径第3径第1径第1径接收后的合成矢量（代数和） (a)未采用扩频 (b)仅采用直扩 (c)直扩+RAKE 图3-40接收机对多径信号的处理所谓RAKE接收机，就是利用多个并行相关器检测多径信号，按照一定的准则合成一路信号供解调用的接收机。 RAKE接收机主要由一组相关器构成，其原理如图3-41所示。 假设每个相关器和多径 信号。 把这些输出信号适当的时延对齐，然后按某种方法合并。 如果各条路径加权系数为 1，称为等增益合并方式，在实际系统中还可以采用最大比合并或最佳样点合并方式。 该接收机利用多个并行相关器，可以增加信号的能量，改善信噪比，提高通信质量，所以RAKE 接收机具有搜集多径信号能量的能力，它的作用就像花园里用的耙子（rake），故取名为 RAKE接收机。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3 个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。\n\n[材料3｜移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收]\n199 的信道估计，通过低通滤波得到比较好的信道估计结果。 这种方法的缺点是由于非线性和非因果预测技术，使噪声比较大的时候，信道估计的准确度大大降低，而且还引入了较大的解码延迟。 延迟估计的主要部件是匹配滤波器，如图5-14所示。 匹配滤波器的功能是用输入的数据和不同相位的本地码字进行相关，取得不同码字相位的相关能量。 当串行输入的采样数据和本地的扩频码和扰码的相位一致时，其相关能量最大，在滤波器输出端有一个最大值。 根据相关能量，延迟估计器就可以得到多径的到达时间量。 本地的扩频码和扰码 N-1 串行输入的采样数据 N-1 图5-14 匹配滤波器的基本结构从实现的角度而言，RAKE接收机的处理包括码片级和符号级，码片级的处理有相关器、本地码产生器和匹配滤波器； 符号级的处理包括信道估计，相位旋转和合并相加。 码片级的处理一般用ASIC器件实现，而符号级的处理用DSP实现。 移动台和基站间的RAKE 接收机的实现方法和功能尽管有所不同，但其原理是完全一样的。 对于多个接收天线分集接收而言，多个接收天线接收的多径可以用上面的方法同样处理，RAKE接收机既可以接收来自同一天线的多径，也可以接收来自不同天线的多径，从 RAKE接收的角度来看，两种分集并没有本质的不同。 但是，在具体实现上由于多个天线的数据要进行分路的控制处理，增加了基带处理的复杂度。\n\n[材料4｜移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收]\n延迟估计的作用是通过匹配滤波器获取不同时间延迟位置上的信号能量分布（见图5-12 右下方的小图），识别具有较大能量的多径位置，并将它们的时间量分配到RAKE接收机的不同接收径上。 匹配滤波器的测量精度可以达到1/4或1/2码片，而RAKE接收机的不同接收径的间隔是一个码片。 在实现中，如果延迟估计的更新速度很快，比如几十毫秒一次，就可以无须迟早门的锁相环。\n\n[材料5｜移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播]\nRAKE 接收机可以合并多径能量，是 CDMA 系列系统的关键部件。\n\n问题：哪些文档提到了 RAKE 接收机？"
+          }
+        ],
+        "num_messages": 2,
+        "keep_alive": "10m",
+        "options": {
+          "temperature": 0,
+          "top_p": 1,
+          "top_k": 1,
+          "repeat_penalty": 1.15,
+          "num_predict": 800,
+          "num_ctx": 8192
+        }
+      },
+      "APPLICATION_LEVEL_REQUEST_CAPTURED": true,
+      "OLLAMA_RENDERED_TOKEN_PROMPT_CAPTURED": false,
+      "title_visibility_at_application_request": true,
+      "raw_vs_final_answer": {
+        "raw_model_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][5]",
+        "after_normalize_citations": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][5]",
+        "pre_renumber_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][5]",
+        "final_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][3]",
+        "raw_contains_canonical_title": false,
+        "final_contains_canonical_title": false,
+        "raw_uses_材料N": true,
+        "final_uses_材料N": true,
+        "post_processing_changed_identity": false
+      },
+      "prompt_instruction_audit": {
+        "system_prompt": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+        "task_hint": "直接回答概念、原理、条件或工程作用。",
+        "user_framing_prefix": "任务要求：<hint>\\n\\n[材料N｜location]\\n<text>...\\n\\n问题：<question>",
+        "patterns": {
+          "mentions_材料_numbering": true,
+          "encourages_材料N_expression": true,
+          "forbids_or_weakens_document_title": false,
+          "emphasizes_citation_index": true,
+          "document_title_instruction_present": false
+        }
+      },
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "citation_verified": true,
+      "elapsed_ms": 5038
+    },
+    "md-015": {
+      "case_id": "md-015",
+      "query": "哪份文档明确把 OFDMA 与 LTE 关联？",
+      "history": null,
+      "scope": "none",
+      "replay_equivalence": "FULL",
+      "replay_path": "StructuredQAEngine.answer(query, history=case.get('history'))  [same call as scripts/eval_v4_baseline.py]",
+      "route": "qa",
+      "route_decision": {
+        "route": "qa",
+        "normalized_question": "哪份文档明确把 OFDMA 与 LTE 关联？",
+        "reason_code": "DEFAULT_QA",
+        "resolution_status": "none",
+        "scope_conflict": false
+      },
+      "retrieval": {
+        "candidate_set_fts": {
+          "count": 30,
+          "chunk_ids": [
+            "chk-8913e2d79c408331",
+            "chk-be993070511d13af",
+            "chk-8318e8e58aca2e3d",
+            "chk-b223a7b4a4bb57b3",
+            "chk-799036f3c34cc2af",
+            "chk-002fccc5f7d8ab94",
+            "chk-9373ab885946dc30",
+            "chk-27b071f2e32aaac9",
+            "chk-784fb456936fd9be",
+            "chk-685b74acda49688b",
+            "chk-32e407b6099efdd5",
+            "chk-abf7d55ab3bffd98",
+            "chk-a114378c5784da11",
+            "chk-24f96c4fd8a2f478",
+            "chk-3396eda2c287d704",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-aa7ed3909c7c3560",
+            "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+            "chk-cd05480fa58fe550",
+            "chk-9c0b74f7bc269e60",
+            "chk-8d11a9d9fb8de265",
+            "chk-356fe36ed11100c5",
+            "chk-a3e15af7cf43eb85",
+            "chk-16c1bbc4a8f71117",
+            "chk-d3ba9e61592dacba",
+            "chk-b5cd37366e7715e1",
+            "chk-f7b33800ccb6a8f3",
+            "chk-56f58c85c481caff"
+          ]
+        },
+        "candidate_set_dense": {
+          "count": 30,
+          "chunk_ids": [
+            "chk-8318e8e58aca2e3d",
+            "chk-8913e2d79c408331",
+            "chk-2a55f67a81578998",
+            "chk-be993070511d13af",
+            "chk-27b071f2e32aaac9",
+            "chk-53743d589ada69a9",
+            "chk-3b7cddc5e462c6c1",
+            "chk-b223a7b4a4bb57b3",
+            "chk-799036f3c34cc2af",
+            "chk-69942813705f143d",
+            "chk-c7e2aebb1634fc6a",
+            "chk-5079586d3b7e745c",
+            "chk-831676397c2f5c6b",
+            "chk-bc453206d6a2999a",
+            "chk-009df139835b3554",
+            "chk-599ca42ea0531906",
+            "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "chk-e52a66df7fd1ee15",
+            "chk-6c60c58af9a3b2de",
+            "chk-986e3f72be7d9b0d",
+            "chk-6f7409d12627d8bc",
+            "chk-cd05480fa58fe550",
+            "chk-9c0b74f7bc269e60",
+            "chk-279872174825af71",
+            "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "chk-32e407b6099efdd5",
+            "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "chk-a114378c5784da11",
+            "chk-002fccc5f7d8ab94",
+            "chk-e65f9b1ba54de534"
+          ]
+        },
+        "final_ranked_contexts": [
+          {
+            "rank": 1,
+            "chunk_id": "chk-8913e2d79c408331",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第6章 LTE移动通信系统",
+            "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+            "score": 0.03308203331570598,
+            "lexical_rank": 1,
+            "dense_rank": 2,
+            "dense_score": 0.6366046833430556,
+            "rerank_score": null
+          },
+          {
+            "rank": 2,
+            "chunk_id": "chk-8318e8e58aca2e3d",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第6章 LTE移动通信系统",
+            "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+            "score": 0.03291016133229248,
+            "lexical_rank": 3,
+            "dense_rank": 1,
+            "dense_score": 0.6439038714422839,
+            "rerank_score": null
+          },
+          {
+            "rank": 3,
+            "chunk_id": "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "document_id": "doc-2dd528b05211",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "score": 0.02880382775119617,
+            "lexical_rank": 16,
+            "dense_rank": 17,
+            "dense_score": 0.5751462657959384,
+            "rerank_score": null
+          },
+          {
+            "rank": 4,
+            "chunk_id": "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "document_id": "doc-ac5ebfeffaef",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "score": 0.026975867269984917,
+            "lexical_rank": 18,
+            "dense_rank": 25,
+            "dense_score": 0.548297895883982,
+            "rerank_score": null
+          },
+          {
+            "rank": 5,
+            "chunk_id": "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "document_id": "doc-0859ccef5fcf",
+            "document_title": "第1章 移动通信测试文档",
+            "chapter": "2. 抗衰落技术",
+            "section": "2. 抗衰落技术",
+            "score": 0.02680773249738767,
+            "lexical_rank": 17,
+            "dense_rank": 27,
+            "dense_score": 0.5437422838009272,
+            "rerank_score": null
+          }
+        ],
+        "prepared_answer_contexts": [
+          {
+            "chunk_id": "chk-8913e2d79c408331",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第6章 LTE移动通信系统",
+            "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+            "kind": "body",
+            "pdf_page_start": 278,
+            "location": "移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+            "title_in_location": true,
+            "text_fingerprint": "a98c7b49bc06f396",
+            "text_len": 837
+          },
+          {
+            "chunk_id": "chk-8318e8e58aca2e3d",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第6章 LTE移动通信系统",
+            "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+            "kind": "body",
+            "pdf_page_start": 276,
+            "location": "移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+            "title_in_location": true,
+            "text_fingerprint": "cc5a261d0f1560c4",
+            "text_len": 718
+          },
+          {
+            "chunk_id": "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "document_id": "doc-2dd528b05211",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "7183cdfa7f9fca80",
+            "text_len": 33
+          },
+          {
+            "chunk_id": "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "document_id": "doc-ac5ebfeffaef",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "bf36de00fd344806",
+            "text_len": 55
+          },
+          {
+            "chunk_id": "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "document_id": "doc-0859ccef5fcf",
+            "document_title": "第1章 移动通信测试文档",
+            "chapter": "2. 抗衰落技术",
+            "section": "2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "bf36de00fd344806",
+            "text_len": 55
+          }
+        ],
+        "sent_contexts": [
+          {
+            "chunk_id": "chk-8913e2d79c408331",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第6章 LTE移动通信系统",
+            "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+            "kind": "body",
+            "pdf_page_start": 278,
+            "location": "移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+            "title_in_location": true,
+            "text_fingerprint": "a98c7b49bc06f396",
+            "text_len": 837
+          },
+          {
+            "chunk_id": "chk-8318e8e58aca2e3d",
+            "document_id": "doc-01d13356ce2f",
+            "document_title": "移动通信 (李兆玉)",
+            "chapter": "第6章 LTE移动通信系统",
+            "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+            "kind": "body",
+            "pdf_page_start": 276,
+            "location": "移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+            "title_in_location": true,
+            "text_fingerprint": "cc5a261d0f1560c4",
+            "text_len": 718
+          },
+          {
+            "chunk_id": "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+            "document_id": "doc-2dd528b05211",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "7183cdfa7f9fca80",
+            "text_len": 33
+          },
+          {
+            "chunk_id": "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+            "document_id": "doc-ac5ebfeffaef",
+            "document_title": "移动通信测试文档",
+            "chapter": "移动通信测试文档",
+            "section": "移动通信测试文档 / 2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "bf36de00fd344806",
+            "text_len": 55
+          },
+          {
+            "chunk_id": "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+            "document_id": "doc-0859ccef5fcf",
+            "document_title": "第1章 移动通信测试文档",
+            "chapter": "2. 抗衰落技术",
+            "section": "2. 抗衰落技术",
+            "kind": "body",
+            "pdf_page_start": 0,
+            "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+            "title_in_location": true,
+            "text_fingerprint": "bf36de00fd344806",
+            "text_len": 55
+          }
+        ],
+        "counts": {
+          "fts_candidates": 30,
+          "dense_candidates": 30,
+          "final_ranked_contexts": 5,
+          "prepared_contexts": 5,
+          "sent_material_count": 5,
+          "distinct_sent_chunk_count": 5,
+          "distinct_sent_document_count": 4
+        }
+      },
+      "material_index_semantics": "CHUNK_CONTEXT_INDEX (for index, chunk in enumerate(contexts, 1) in build_messages)",
+      "material_to_chunk_to_document_map": [
+        {
+          "material_index": 1,
+          "chunk_id": "chk-8913e2d79c408331",
+          "document_id": "doc-01d13356ce2f",
+          "document_title": "移动通信 (李兆玉)",
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+          "location": "移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 2,
+          "chunk_id": "chk-8318e8e58aca2e3d",
+          "document_id": "doc-01d13356ce2f",
+          "document_title": "移动通信 (李兆玉)",
+          "chapter": "第6章 LTE移动通信系统",
+          "section": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+          "location": "移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 3,
+          "chunk_id": "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+          "document_id": "doc-2dd528b05211",
+          "document_title": "移动通信测试文档",
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 2. 抗衰落技术",
+          "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 4,
+          "chunk_id": "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+          "document_id": "doc-ac5ebfeffaef",
+          "document_title": "移动通信测试文档",
+          "chapter": "移动通信测试文档",
+          "section": "移动通信测试文档 / 2. 抗衰落技术",
+          "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+          "title_present_in_serialized_header": true
+        },
+        {
+          "material_index": 5,
+          "chunk_id": "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+          "document_id": "doc-0859ccef5fcf",
+          "document_title": "第1章 移动通信测试文档",
+          "chapter": "2. 抗衰落技术",
+          "section": "2. 抗衰落技术",
+          "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+          "title_present_in_serialized_header": true
+        }
+      ],
+      "serialized_material_headers": [
+        {
+          "material_index": 1,
+          "header": "[材料1｜移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所]",
+          "location_in_header": "移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所"
+        },
+        {
+          "material_index": 2,
+          "header": "[材料2｜移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所]",
+          "location_in_header": "移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所"
+        },
+        {
+          "material_index": 3,
+          "header": "[材料3｜移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术]",
+          "location_in_header": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术"
+        },
+        {
+          "material_index": 4,
+          "header": "[材料4｜移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术]",
+          "location_in_header": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术"
+        },
+        {
+          "material_index": 5,
+          "header": "[材料5｜第1章 移动通信测试文档 · 2. 抗衰落技术]",
+          "location_in_header": "第1章 移动通信测试文档 · 2. 抗衰落技术"
+        }
+      ],
+      "material_header_contains_canonical_title": true,
+      "canonical_titles_visible_in_request": [
+        "移动通信 (李兆玉)",
+        "移动通信测试文档",
+        "第1章 移动通信测试文档"
+      ],
+      "chunk_to_document_grouping": "IMPLICIT (every material header carries document_title via chunk.location; no separate document grouping block)",
+      "evidence_continuity": [
+        {
+          "term": "OFDMA",
+          "document_id": "doc-ac5ebfeffaef",
+          "document_title": "移动通信测试文档",
+          "representative_chunk_id": "chk-a64d1dc767f541a189745eeea3af51b7f8f58047370c424593633356baff2d8b",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": true,
+          "in_prepared_contexts": true,
+          "in_sent_contexts": true,
+          "title_in_serialized_material": true,
+          "document_title_in_any_sent_material": true
+        },
+        {
+          "term": "OFDMA",
+          "document_id": "doc-0859ccef5fcf",
+          "document_title": "第1章 移动通信测试文档",
+          "representative_chunk_id": "chk-62a640e68c711ea4fcfe226aa579f897572e532b2b31d9f28c9693022727794b",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": true,
+          "in_prepared_contexts": true,
+          "in_sent_contexts": true,
+          "title_in_serialized_material": true,
+          "document_title_in_any_sent_material": true
+        },
+        {
+          "term": "OFDMA",
+          "document_id": "doc-2dd528b05211",
+          "document_title": "移动通信测试文档",
+          "representative_chunk_id": "chk-93c1dad6596a71badf67a5829bba75ceab9e297dcbcaf88108ce1bfe49ff922d",
+          "in_fts_candidates": true,
+          "in_dense_candidates": true,
+          "in_final_ranked_contexts": true,
+          "in_prepared_contexts": true,
+          "in_sent_contexts": true,
+          "title_in_serialized_material": true,
+          "document_title_in_any_sent_material": true
+        },
+        {
+          "term": "OFDMA",
+          "document_id": "doc-b25da8bbc559",
+          "document_title": "移动通信测试文档",
+          "representative_chunk_id": "chk-56a710fd56097ad521461103d1a3933b129100a29d616fe52302258d0cf367a1",
+          "in_fts_candidates": true,
+          "in_dense_candidates": false,
+          "in_final_ranked_contexts": false,
+          "in_prepared_contexts": false,
+          "in_sent_contexts": false,
+          "title_in_serialized_material": false,
+          "document_title_in_any_sent_material": true
+        },
+        {
+          "term": "OFDMA",
+          "document_id": "doc-4afe842e5c66",
+          "document_title": "1. 多径传播",
+          "representative_chunk_id": "chk-f8fcbdd8fcb915c87eab5ff6b8157fd57664473bf64ffe9f9d1872d154b0a9ec",
+          "in_fts_candidates": false,
+          "in_dense_candidates": false,
+          "in_final_ranked_contexts": false,
+          "in_prepared_contexts": false,
+          "in_sent_contexts": false,
+          "title_in_serialized_material": false,
+          "document_title_in_any_sent_material": false
+        },
+        {
+          "term": "OFDMA",
+          "document_id": "doc-01d13356ce2f",
+          "document_title": "移动通信 (李兆玉)",
+          "representative_chunk_id": "chk-a74b2f873d453bc2",
+          "in_fts_candidates": false,
+          "in_dense_candidates": false,
+          "in_final_ranked_contexts": false,
+          "in_prepared_contexts": false,
+          "in_sent_contexts": false,
+          "title_in_serialized_material": false,
+          "document_title_in_any_sent_material": true
+        }
+      ],
+      "final_application_model_request": {
+        "model": "qwen2.5:7b",
+        "transport": "chat",
+        "stream": false,
+        "messages": [
+          {
+            "role": "system",
+            "content": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。"
+          },
+          {
+            "role": "user",
+            "content": "任务要求：直接回答概念、原理、条件或工程作用。\n\n[材料1｜移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所]\n269 当f.为较大的频率时， cos[2元(fk + f,)t+k+p,Jdt~0, 因为正好是整数个(k一j)积分周期，所以 cos2元 +-dt=0，证毕。 普通的频分复用（FDM）调制，为了避免载波间干扰，要求各载波之间留有一定的保护间隔（GP）。 FDM信号的功率谱如图6-2所示。 图中f，表示载波中心频率，Af表示调制信号带宽，GP表示载波间隔。 如果不同的载波传输不同用户的数据，则形成FDMA多址方式。 GP GP Af 图6-2FDM信号功率谱 OFDM信号的功率谱如图6-3所示。 图中f，表示OFDM子载波频率。 从图中可以看出， OFDM各子载波之间是相互重叠的，没有保护间隔，和FDM调制相比，频谱利用率明显提高。 应该说OFDM各子载波间功率谱的重叠不是随机的，而是有规律的，即在任意子载波的中心频率处的其他子载波的功率为零，这正是各子载波间相互正交特性在功率谱上的体现。 图6-3OFDM信号功率谱但此时的OFDM多址接入技术在实际系统应用中还存在众多难以克服的困难，主要表现有：每个子载波需要单独的信号振荡器用于信号的生成和调制，这对于硬件要求比较高， 且由于信号振荡器间的非同步，容易造成子载波间干扰； 同时，由于子载波信号的单独调制和生成，在子载波数量比较大的情况下，基带信号处理计算复杂度也很高。 OFDM的两个重要实用化设计方案的提出，为OFDM的大规模应用铺平了道路。 一个是1971年Weinstein和Ebert提出的采用离散傅里叶变换（DFT，DiscreteFourierTransform） 进行OFDM信号的调制和解调，使得OFDM各子载波信号的生成只需要一个信号振荡器， 从而使得OFDM调制的实现更为简便。 另一个重要设计是，Peled和Ruiz在1980年提出了在OFDM各子载波符号中引入循环前缀（CP，CyclicPrefix）的设计，从而使得OFDM 各子载波调制信号在复杂的传输信道中仍然能够保证正交性。\n\n[材料2｜移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所]\n6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所示。 表中对TD-SCDMA、LTE和802.16e三种系统的传输方案进行了简要对比。 表6-1LTE基本传输方案 TD-SCDMA 3GPPLTE 802.16e 多址技术 CDMA 下行OFDMA：上行SC-FDMA OFDMA 双工方式 TDD FDD和TDD尽可能融合，FDD FDD、TDD和FDD半双工半双工顿结构 10ms无线顿分为2个顿长10ms，分为10个子顿， 规定了5ms、10ms和20ms等多种不 5ms子顿 20个时隙同的顿结构每个子顿分为7个正下行7或6个OFDM符号； 上每个顿分为下行子顿和上行子顿，两子顿结构常时隙和DwPTS、GP、 行7或6个OFDM符号者之间用适当的保护时隙分隔 UpPTS三个特殊时隙调制方式 QPSK、16QAM QPSK、16QAM和64QAM BPSK、QPSK、16QAM、64QAM 编码方式卷积编码和Turbo码以Turbo码为主，正在考虑有卷积码、卷积Turbo码和低密度奇 LDPC码偶校验码多天线技术智能天线基本MIMO模型：下行2×2，上支持MIMO（多入多出）和AAS（自行1×2个天线，考虑最多4×4配置适应天线阵）两种不同的多天线实现方式 Chase合并与增量亢余 Chase合并与增量穴余HARQ， 采用最为简单的停-等（SAW）机制， HARQ 正在考虑异步HARQ和自适应 HARQ的控制开销最小并且对发射和接 HARQ HARQ 收的缓存要求最小 6.1.4 OFDM基本原理 1.OFDM原理介绍 OFDM起源于20世纪40年代的第二次世界大战时期，早期用于美国军队的高频通信\n\n[材料3｜移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术]\n均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。\n\n[材料4｜移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术]\n分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。\n\n[材料5｜第1章 移动通信测试文档 · 2. 抗衰落技术]\n分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。\n\n问题：哪份文档明确把 OFDMA 与 LTE 关联？"
+          }
+        ],
+        "num_messages": 2,
+        "keep_alive": "10m",
+        "options": {
+          "temperature": 0,
+          "top_p": 1,
+          "top_k": 1,
+          "repeat_penalty": 1.15,
+          "num_predict": 800,
+          "num_ctx": 8192
+        }
+      },
+      "APPLICATION_LEVEL_REQUEST_CAPTURED": true,
+      "OLLAMA_RENDERED_TOKEN_PROMPT_CAPTURED": false,
+      "title_visibility_at_application_request": true,
+      "raw_vs_final_answer": {
+        "raw_model_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+        "after_normalize_citations": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+        "pre_renumber_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+        "final_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+        "raw_contains_canonical_title": false,
+        "final_contains_canonical_title": false,
+        "raw_uses_材料N": true,
+        "final_uses_材料N": true,
+        "post_processing_changed_identity": false
+      },
+      "prompt_instruction_audit": {
+        "system_prompt": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+        "task_hint": "直接回答概念、原理、条件或工程作用。",
+        "user_framing_prefix": "任务要求：<hint>\\n\\n[材料N｜location]\\n<text>...\\n\\n问题：<question>",
+        "patterns": {
+          "mentions_材料_numbering": true,
+          "encourages_材料N_expression": true,
+          "forbids_or_weakens_document_title": false,
+          "emphasizes_citation_index": true,
+          "document_title_instruction_present": false
+        }
+      },
+      "answer_state": "ANSWERED",
+      "out_of_scope": false,
+      "citation_verified": false,
+      "elapsed_ms": 6460
+    }
+  },
+  "ollama_runtime_identity": {
+    "answer_model_requested": "qwen2.5:7b",
+    "installed_tags": [
+      "bge-m3:latest",
+      "qwen2.5:7b"
+    ],
+    "resolved_model_tag": "qwen2.5:7b",
+    "model_digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "modified_at": "2026-04-28T08:23:21.908203+08:00",
+    "size": 4683087332,
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "7.6B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 32768,
+      "embedding_length": 3584
+    },
+    "show_details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "7.6B",
+      "quantization_level": "Q4_K_M"
+    },
+    "show_model_info": {
+      "general.architecture": "qwen2",
+      "general.base_model.0.name": "Qwen2.5 7B",
+      "general.base_model.0.organization": "Qwen",
+      "general.base_model.0.repo_url": "https://huggingface.co/Qwen/Qwen2.5-7B",
+      "general.base_model.count": 1,
+      "general.basename": "Qwen2.5",
+      "general.file_type": 15,
+      "general.finetune": "Instruct",
+      "general.languages": null,
+      "general.license": "apache-2.0",
+      "general.license.link": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/blob/main/LICENSE",
+      "general.parameter_count": 7615616512,
+      "general.quantization_version": 2,
+      "general.size_label": "7B",
+      "general.tags": null,
+      "general.type": "model",
+      "qwen2.attention.head_count": 28,
+      "qwen2.attention.head_count_kv": 4,
+      "qwen2.attention.layer_norm_rms_epsilon": 1e-06,
+      "qwen2.block_count": 28,
+      "qwen2.context_length": 32768,
+      "qwen2.embedding_length": 3584,
+      "qwen2.feed_forward_length": 18944,
+      "qwen2.rope.freq_base": 1000000,
+      "tokenizer.ggml.add_bos_token": false,
+      "tokenizer.ggml.bos_token_id": 151643,
+      "tokenizer.ggml.eos_token_id": 151645,
+      "tokenizer.ggml.merges": null,
+      "tokenizer.ggml.model": "gpt2",
+      "tokenizer.ggml.padding_token_id": 151643,
+      "tokenizer.ggml.pre": "qwen2",
+      "tokenizer.ggml.token_type": null,
+      "tokenizer.ggml.tokens": null
+    },
+    "show_template_present": true
+  },
+  "historical_evidence": {
+    "historical_failure_set": {
+      "md-004": {
+        "case_id": "md-004",
+        "category": "multi_document",
+        "query": "分集接收在哪些文档中被提到？",
+        "expected_refusal": false,
+        "expected_route": "qa",
+        "current_route": "qa",
+        "mismatch": false,
+        "mismatch_class": "NONE",
+        "detail": "",
+        "matched_location_words": [
+          "在哪"
+        ],
+        "matched_chapter_words": [],
+        "upstream_branch": "qa",
+        "history_dependent": false,
+        "normalized_question": "分集接收在哪些文档中被提到？",
+        "resolution_status": "none"
+      },
+      "md-009": {
+        "case_id": "md-009",
+        "category": "multi_document",
+        "query": "哪些文档提到了 RAKE 接收机？",
+        "expected_refusal": false,
+        "expected_route": "qa",
+        "current_route": "qa",
+        "mismatch": false,
+        "mismatch_class": "NONE",
+        "detail": "",
+        "matched_location_words": [],
+        "matched_chapter_words": [],
+        "upstream_branch": "qa",
+        "history_dependent": false,
+        "normalized_question": "哪些文档提到了 RAKE 接收机？",
+        "resolution_status": "none"
+      },
+      "md-015": {
+        "case_id": "md-015",
+        "category": "multi_document",
+        "query": "哪份文档明确把 OFDMA 与 LTE 关联？",
+        "expected_refusal": false,
+        "expected_route": "qa",
+        "current_route": "qa",
+        "mismatch": false,
+        "mismatch_class": "NONE",
+        "detail": "",
+        "matched_location_words": [],
+        "matched_chapter_words": [],
+        "upstream_branch": "qa",
+        "history_dependent": false,
+        "normalized_question": "哪份文档明确把 OFDMA 与 LTE 关联？",
+        "resolution_status": "none"
+      }
+    },
+    "answer_caches": {
+      "v4_baseline_10698752_0837e83333c858c6_prod4b4e60b1_qwen2.5-7b_v4-baseline-v1_f2-v4.json": {
+        "production_hash_prefix": "4b4e60b1",
+        "cases": {
+          "md-004": {
+            "raw_answer": "分集接收在材料1、材料2和材料3中的文档中被提及。[1][2][3]",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "教材",
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-009": {
+            "raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][3]",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "教材",
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-015": {
+            "raw_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+            "fact_present": 2,
+            "fact_total": 3,
+            "missing_facts": [
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          }
+        }
+      },
+      "v4_baseline_10698752_0837e83333c858c6_prod7216c885_qwen2.5-7b_v4-baseline-v1_f2-v4.json": {
+        "production_hash_prefix": "7216c885",
+        "cases": {
+          "md-004": {
+            "raw_answer": "分集接收在材料1、材料2和材料3中的文档中被提及。[1][2][3]",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "教材",
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-009": {
+            "raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][3]",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "教材",
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-015": {
+            "raw_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+            "fact_present": 2,
+            "fact_total": 3,
+            "missing_facts": [
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          }
+        }
+      },
+      "v4_baseline_10698752_0837e83333c858c6_prodc36d61a1_qwen2.5-7b_v4-baseline-v1_f2-v4.json": {
+        "production_hash_prefix": "c36d61a1",
+        "cases": {
+          "md-004": {
+            "raw_answer": "分集接收在材料1、材料2和材料3中的文档中被提及。[1][2][3]",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "教材",
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-009": {
+            "raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][3]",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "教材",
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-015": {
+            "raw_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+            "fact_present": 2,
+            "fact_total": 3,
+            "missing_facts": [
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          }
+        }
+      },
+      "v4_baseline_10698752_0837e83333c858c6_proddc35c6eb_qwen2.5-7b_v4-baseline-v1_f2-v4.json": {
+        "production_hash_prefix": "dc35c6eb",
+        "cases": {
+          "md-004": {
+            "raw_answer": "可在以下位置找到相关内容：\n- [1] 移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术\n- [2] 移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术\n- [3] 第1章 移动通信测试文档 · 2. 抗衰落技术\n- [4] 移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能\n- [5] 移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "分集",
+              "教材"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-009": {
+            "raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][3]",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "教材",
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-015": {
+            "raw_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+            "fact_present": 2,
+            "fact_total": 3,
+            "missing_facts": [
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          }
+        }
+      },
+      "v4_baseline_10698752_0837e83333c858c6_qwen2.5-7b_v4-baseline-v1_f2-v4.json": {
+        "production_hash_prefix": "unknown",
+        "cases": {
+          "md-004": {
+            "raw_answer": "可在以下位置找到相关内容：\n- [1] 移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术\n- [2] 移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术\n- [3] 第1章 移动通信测试文档 · 2. 抗衰落技术\n- [4] 移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能\n- [5] 移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "分集",
+              "教材"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-009": {
+            "raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][3]",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "教材",
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-015": {
+            "raw_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+            "fact_present": 2,
+            "fact_total": 3,
+            "missing_facts": [
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          }
+        }
+      },
+      "v4_baseline_10698752_6e18ee4ee9669bef_qwen2.5-7b_v4-baseline-v1_f2-v4.json": {
+        "production_hash_prefix": "unknown",
+        "cases": {
+          "md-004": {
+            "raw_answer": "可在以下位置找到相关内容：\n- [1] 移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术\n- [2] 移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术\n- [3] 第1章 移动通信测试文档 · 2. 抗衰落技术\n- [4] 移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能\n- [5] 移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "分集",
+              "教材"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-009": {
+            "raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][3]",
+            "fact_present": 1,
+            "fact_total": 3,
+            "missing_facts": [
+              "教材",
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          },
+          "md-015": {
+            "raw_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+            "fact_present": 2,
+            "fact_total": 3,
+            "missing_facts": [
+              "测试文档"
+            ],
+            "answer_state": "ANSWERED"
+          }
+        }
+      }
+    },
+    "attribution": {
+      "md_004_analysis": {
+        "case_id": "md-004",
+        "category": "multi_document",
+        "query": "分集接收在哪些文档中被提到？",
+        "history": null,
+        "expected_route": "qa",
+        "current_route": "qa",
+        "route_matches": true,
+        "reason_code": "DEFAULT_QA",
+        "normalized_question": "分集接收在哪些文档中被提到？",
+        "resolution_status": "none",
+        "referent": "",
+        "scope": {
+          "out_of_scope": false,
+          "scope_conflict": false,
+          "confidence": "high",
+          "retrieval_mode": "hybrid"
+        },
+        "expected_facts": [
+          "分集",
+          "教材",
+          "测试文档"
+        ],
+        "failed_facts": [
+          "教材",
+          "测试文档"
+        ],
+        "expected_chapters": [],
+        "expected_entities": [
+          "分集"
+        ],
+        "answer_state": "ANSWERED",
+        "fact_present": 1,
+        "fact_total": 3,
+        "term_traces": [
+          {
+            "term": "教材",
+            "is_failed_fact": true,
+            "source_chunk_count": 6,
+            "source_documents": [
+              "移动通信 (李兆玉)"
+            ],
+            "source_chapters": [],
+            "lexical_reached_source": true,
+            "in_final_context": false,
+            "in_answer": false,
+            "verdict": "RRF_RANKING_MISS"
+          },
+          {
+            "term": "测试文档",
+            "is_failed_fact": true,
+            "source_chunk_count": 10,
+            "source_documents": [
+              "移动通信测试文档"
+            ],
+            "source_chapters": [
+              "移动通信测试文档"
+            ],
+            "lexical_reached_source": true,
+            "in_final_context": true,
+            "in_answer": false,
+            "verdict": "EVIDENCE_DELIVERED"
+          },
+          {
+            "term": "分集",
+            "is_failed_fact": false,
+            "source_chunk_count": 58,
+            "source_documents": [
+              "1. 多径传播",
+              "移动通信 (李兆玉)",
+              "移动通信测试文档",
+              "第1章 移动通信测试文档"
+            ],
+            "source_chapters": [
+              "1. 多径传播",
+              "2. 抗衰落技术",
+              "3. 参数表",
+              "移动通信测试文档",
+              "第1章 移动通信概述",
+              "第2章 移动信道的传播特性与模型",
+              "第3章 抗衰落技术",
+              "第5章 WCDMA移动通信系统",
+              "第6章 LTE移动通信系统"
+            ],
+            "lexical_reached_source": true,
+            "in_final_context": true,
+            "in_answer": true,
+            "verdict": "EVIDENCE_DELIVERED"
+          }
+        ],
+        "context_titles": [
+          "移动通信测试文档",
+          "移动通信测试文档",
+          "第1章 移动通信测试文档",
+          "移动通信 (李兆玉)",
+          "移动通信 (李兆玉)"
+        ],
+        "raw_answer": "分集接收在材料1、材料2和材料3中的文档中被提及。[1][2][3]",
+        "citation": {
+          "verifier_version": "f2-v4",
+          "factual_claim_count": 1,
+          "cited_claim_count": 0,
+          "citation_coverage": 0.0,
+          "supported": 0,
+          "unsupported": 1,
+          "uncertain": 0,
+          "invalid": 0,
+          "scope_violation": 0
+        },
+        "v43_historical": {
+          "label": "PRE_V4_4_PRE_V4_5 HISTORICAL",
+          "primary_root_cause": "ROUTING_FAILURE",
+          "secondary_causes": [
+            "GOLDEN_CONTRACT_ISSUE"
+          ],
+          "classification": "PRODUCT_FAILURE"
+        },
+        "requested_documents": [
+          "教材 (textbook)",
+          "测试文档 (test document)"
+        ],
+        "document_identity_available": true,
+        "title_metadata_available": true,
+        "sqlite_searchable": true,
+        "fts_reachable": true,
+        "dense_input": true,
+        "scope_resolution": "no conflict",
+        "retrieved_documents": [
+          "移动通信测试文档",
+          "移动通信 (李兆玉)"
+        ],
+        "final_context": [
+          "移动通信测试文档",
+          "移动通信 (李兆玉) (第3章 抗衰落技术)"
+        ],
+        "answer_references": "材料1、材料2和材料3 (indices, not titles)",
+        "primary": "DOCUMENT_IDENTITY_FAILURE",
+        "secondary": [
+          "GENERATION_SYNTHESIS_FAILURE"
+        ],
+        "why_not_retrieval": "both documents were in the final context (测试文档 in ctx[1..3], 移动通信 in ctx[4..5]); the miss is that the answer names them '材料N' instead of titles",
+        "why_not_generation_only": "the decisive failed facts are the two document names; the mechanism is title surfacing in the evidence framing"
+      }
+    }
+  },
+  "historical_pipeline_equivalence": {
+    "git_available": false,
+    "v4_5_source_snapshot_available": false,
+    "region_comparisons": {
+      "core/library_store.py::ChunkRecord.location": {
+        "current_region_sha16": "6a3ee45d4c819195",
+        "v3_frozen_region_sha16": "6a3ee45d4c819195",
+        "equal_to_v3_frozen": true,
+        "publish_region_sha16": "6a3ee45d4c819195",
+        "equal_to_publish": true
+      },
+      "core/engine_v2.py::build_messages": {
+        "current_region_sha16": "8c038d542c500e7d",
+        "v3_frozen_region_sha16": "8c038d542c500e7d",
+        "equal_to_v3_frozen": true,
+        "publish_region_sha16": "8c038d542c500e7d",
+        "equal_to_publish": true
+      },
+      "core/engine_v2.py::normalize_citations": {
+        "current_region_sha16": "36df5fe88e3c7cd5",
+        "v3_frozen_region_sha16": "36df5fe88e3c7cd5",
+        "equal_to_v3_frozen": true,
+        "publish_region_sha16": "36df5fe88e3c7cd5",
+        "equal_to_publish": true
+      },
+      "core/engine_v2.py::renumber_citations": {
+        "current_region_sha16": "a5fd1b0872f30b70",
+        "v3_frozen_region_sha16": "a5fd1b0872f30b70",
+        "equal_to_v3_frozen": true,
+        "publish_region_sha16": "a5fd1b0872f30b70",
+        "equal_to_publish": true
+      },
+      "core/hybrid_retriever.py::_fuse": {
+        "current_region_sha16": "dbfbab59039628ae",
+        "v3_frozen_region_sha16": "dbfbab59039628ae",
+        "equal_to_v3_frozen": true,
+        "publish_region_sha16": "dbfbab59039628ae",
+        "equal_to_publish": true
+      },
+      "core/ollama_http.py::chat": {
+        "current_region_sha16": "7dc702acfc7d7c69",
+        "v3_frozen_region_sha16": "7dc702acfc7d7c69",
+        "equal_to_v3_frozen": true,
+        "publish_region_sha16": "7dc702acfc7d7c69",
+        "equal_to_publish": true
+      }
+    },
+    "function_level_diff_v3_to_current": {
+      "core/engine_v2.py": {
+        "changed_symbols_v3_to_current": [
+          "StructuredQAEngine"
+        ],
+        "current_symbol_count": 14,
+        "unchanged_symbol_count": 13
+      },
+      "core/library_store.py": {
+        "changed_symbols_v3_to_current": [
+          "EmbeddingIdentityError",
+          "_gates_for_model",
+          "_normalize_model_name",
+          "embedding_profile",
+          "validate_embedding_identity"
+        ],
+        "current_symbol_count": 18,
+        "unchanged_symbol_count": 9
+      },
+      "core/hybrid_retriever.py": {
+        "changed_symbols_v3_to_current": [
+          "HybridRetriever"
+        ],
+        "current_symbol_count": 2,
+        "unchanged_symbol_count": 1
+      },
+      "core/ollama_http.py": {
+        "changed_symbols_v3_to_current": [],
+        "current_symbol_count": 4,
+        "unchanged_symbol_count": 4
+      }
+    },
+    "relevant_symbols": [
+      "core/engine_v2.py::build_messages",
+      "core/engine_v2.py::normalize_citations",
+      "core/engine_v2.py::renumber_citations",
+      "core/library_store.py::ChunkRecord",
+      "core/library_store.py::ChapterRecord",
+      "core/hybrid_retriever.py::_fuse",
+      "core/ollama_http.py::OllamaClient"
+    ],
+    "relevant_symbols_unchanged_v3_to_current": true,
+    "context_selection_symbols": {
+      "core/hybrid_retriever.py::HybridRetriever": false,
+      "core/engine_v2.py::StructuredQAEngine": false
+    },
+    "historical_source_anchor_available": "NO",
+    "RELEVANT_PIPELINE_EQUIVALENCE": "NOT_ESTABLISHED",
+    "supporting_observation_only_grade": "PROVEN_EQUIVALENT",
+    "supporting_observation_is_binding": false,
+    "basis": "The V3 frozen tree is the V4.2 production inheritance base (V4_INITIAL_BASELINE inheritance = COPY_OF_V3_FINAL_BASELINE, production_behavior_changed_in_v4_2 = false). Byte-identity of the identity-carrying functions from that base through Publish to current, plus the function-level diff, is recorded as SUPPORTING evidence only. It is NOT sufficient to establish RELEVANT_PIPELINE_EQUIVALENCE, because the V4.5/V4.6.1 development source is not available as an exact anchor and the intervening change chain (V4.4 scope gate / V4.5 routing / V4.6.1 embedding identity) cannot be closed byte-for-byte without it. Therefore RELEVANT_PIPELINE_EQUIVALENCE = NOT_ESTABLISHED."
+  },
+  "timestamp": "2026-09-12T23:41:18",
+  "raw_evidence_preservation": {
+    "raw_evidence_digest_algorithm": "sha256 over canonical JSON (UTF-8, sorted keys, compact separators, stable array order) of the raw/observed evidence subset; derived interpretations excluded",
+    "raw_evidence_keys": [
+      "production_hash",
+      "production_hash_start",
+      "production_hash_end",
+      "production_trees_unchanged_during_run",
+      "preflight",
+      "runtime_library_identity_gate",
+      "environment_equivalence",
+      "target_cases",
+      "canonical_document_identity_source",
+      "golden_to_canonical_mapping",
+      "counterfactual_evaluator_probe",
+      "per_case_layer_trace",
+      "ollama_runtime_identity",
+      "historical_evidence"
+    ],
+    "pipeline_observation_keys": [
+      "git_available",
+      "v4_5_source_snapshot_available",
+      "region_comparisons",
+      "function_level_diff_v3_to_current",
+      "relevant_symbols",
+      "relevant_symbols_unchanged_v3_to_current",
+      "context_selection_symbols"
+    ],
+    "raw_evidence_schema_supports_unified_block": true,
+    "RAW_EVIDENCE_DIGEST_BEFORE": "22fe4b4650d85b9a38cda07b2884a690a24d40073ce469daa4ac457c1473c969",
+    "RAW_EVIDENCE_DIGEST_AFTER": "22fe4b4650d85b9a38cda07b2884a690a24d40073ce469daa4ac457c1473c969",
+    "raw_evidence_digest_before": "22fe4b4650d85b9a38cda07b2884a690a24d40073ce469daa4ac457c1473c969",
+    "raw_evidence_digest_after": "22fe4b4650d85b9a38cda07b2884a690a24d40073ce469daa4ac457c1473c969",
+    "raw_evidence_preserved": true,
+    "RAW_EVIDENCE_PRESERVATION": "VERIFIED_BY_SEMANTIC_DIGEST"
+  },
+  "historical_source_anchor": {
+    "historical_production_hashes_under_audit": {
+      "V4_5_ROUTING_BASELINE": "c36d61a1c4691201cb72c4bbed7932ba1f89dae26cb202ae5a5cf3483f824561",
+      "V4_6_1_EMBEDDING_IDENTITY_BASELINE": "7216c885d9ab315333973b9af6d9e0406da2a316f0f7abdcf89bef686d70a22a"
+    },
+    "candidate_methods": {
+      "local_active_workspace_git": {
+        "available": false,
+        "detail": "no .git in the active V4 workspace"
+      },
+      "publish_workspace_git": {
+        "available": true,
+        "path": "Local Database Q&A System上传版",
+        "refs_tested": {
+          "v3-final": {
+            "available": true,
+            "canonical_production_hash": "15c29f810cf91a85f9d3f214daefda8a9fb7dc7f0b0ca215a764288c976c9fa4",
+            "file_count": 41
+          },
+          "v4.0.0-alpha.1": {
+            "available": true,
+            "canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+            "file_count": 41
+          },
+          "v4.0.0-alpha.2": {
+            "available": true,
+            "canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+            "file_count": 41
+          },
+          "HEAD": {
+            "available": true,
+            "canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+            "file_count": 41
+          }
+        },
+        "line_ending_note": "Published git trees store LF. The V4.2-V4.6.1 provenance hashes are RAW CRLF worktree hashes, so no LF git tree can reproduce them; the V4.6.2 canonical contract is the only line-ending-portable identity.",
+        "all_commits": [
+          "1efc74f1c5aa4021766ed443f68ef8c5046116e4|2026-09-12|docs: finalize cold-start guidance before V4.7",
+          "51118004e3e607594febf6ae5701f963162e6a64|2026-09-12|docs: fix final post-alpha.2 remote state",
+          "825288f2a139eeb5a8167374c0efac284abef7b1|2026-09-12|docs: close alpha.2 release cycle before V4.7",
+          "4a75919f0bb07fe45574f1ab4f488006d4adaeb1|2026-09-12|release: publish KB-V4 development snapshot v4.0.0-alpha.2",
+          "86c94793406bfdeac352c1bd4745e1fab1358f98|2026-09-12|release: publish KB-V4 development snapshot v4.0.0-alpha.1",
+          "117ebfa044ee3905322b3f7a932defd8a373ec66|2026-09-10|docs: finalize V3 source commit SHA",
+          "b6164115ff72b0187fe2d6deaf6b3a35011deecf|2026-09-10|docs: backfill V3 final source commit SHA",
+          "e7d5d9bd0d5875ff2e75afdfcb1fe536cf755b08|2026-09-10|docs: freeze KB-V3 final baseline and status",
+          "bc83dbde6520b6801a82e2b77133ad8889529a5c|2026-09-10|fix(v3.5): Q4.2 deterministic route precision (compare/locate)",
+          "bde21a94468bc0e765ae9532887e2cdaeb47500c|2026-09-10|feat(v3.5): Q2.2 conservative citation completion (INSUFFICIENT)",
+          "1d8de73aa1247ea01710d0f6c892c6134217d3da|2026-09-10|feat(v3.5): Q3.1 verifier edge closure for selector safety",
+          "ce3dee74686304b3a3cbadb319c66cdd5c26574d|2026-09-09|feat(v3.5): Q3 deterministic citation verifier precision",
+          "eae2dafe4273701f4e72f2cb90bd0cf542b7b808|2026-09-09|docs(v3.5): Q1.1 corrected evaluation baseline rebuild",
+          "7ba6541b6e9472815ecb537686dd62671540d494|2026-09-09|test(v3.5): Q1 evaluator refusal precision fix",
+          "15c634f2670732e3dfa44fff66eb2567a556ea77|2026-09-09|docs(v3.5): freeze V3 product quality acceptance contract v1.0",
+          "df883eb58a4d713ef9cdd635de93781c800fbbff|2026-09-09|docs(v3.5): add quality acceptance contract and correct DoD overclaim",
+          "2ac54f2f62faf3686059bf295dea8f1a984db0b4|2026-09-09|fix(v3.5): restrict citation_verified downgrade to high-confidence failures",
+          "25f37682e94c98e51ef6266910f8e86c403b7b36|2026-09-09|feat(v3.5): close Phase F.4.1 final closure remediation",
+          "8602e3e64efdac871e74756f1f63ea14a9f8a039|2026-09-09|feat(v3.5): add V3 final golden set and release quality gate (Phase F.4)",
+          "d21a11d9201c6c234e2302415bed5016372c7ce7|2026-09-08|docs(v3.5): add Phase F.3 semantic citation verifier decision gate (DEFER_L2)",
+          "f9fad23c58e76b224ce3397b1e5ba349af85e199|2026-09-08|feat(v3.5): add deterministic citation quality closure (Phase F.2)",
+          "35b439b0270634eaea46404c49eb7c65f11fadf7|2026-09-08|feat(v3.5): add hierarchical summaries with provenance and invalidation",
+          "b57e68a252b93041b516dfc3a18cc35b0c5dcd7c|2026-09-08|chore(v3.4): finalize Phase E publication gate",
+          "bbadb1f476ccd91aba0d47f4f46d5ac1977f21cf|2026-09-08|feat(v3.4): add conversation-aware query routing",
+          "f6782c3c2eb3c3455123e8be4a752ace855683df|2026-09-08|docs(v3.3): record Phase D.1.1 migration closure evidence and CI run",
+          "7de0e4e2993521867432cd86a23918408ea00bf4|2026-09-08|feat(v3.3): close Phase D.1.1 legacy library migration compatibility closure",
+          "57e0bb205ca010fd44b656e92105e8fe2c838605|2026-09-08|docs(v3.3): finalize Phase D.1 gate record and publication notes",
+          "3416de30de4c787a0aeb58258c321ebd16d4c492|2026-09-08|fix(v3.3): close runtime library integration gaps",
+          "cdcbf4edd1ff1c5a6ca2e17bfa6cd0e1bbf23d0c|2026-09-08|chore(release): protect GitHub-only assets from publication sync",
+          "a251bc2765eb74ee58935b7333c23d2dd833047e|2026-09-08|fix(ci): close Phase D publication validation",
+          "7aabaf98eaabd6041e085533b6177914722cd629|2026-09-08|feat(v3.3): complete knowledge library and scoped retrieval",
+          "d0ad1bef46c822b97e4f2b37ea22ba36e06c2a34|2026-09-06|Merge v2 improvements: multi-turn QA, retrieval tuning, telemetry, hardening",
+          "2d77e5831d577c5034232c97f8b3e32d8ea4719d|2026-09-05|Improve book-level questions and chapter retrieval",
+          "c0e1b53e0b42e3e41a10c446e69b1968ff949ee7|2026-09-05|Initial public release"
+        ],
+        "head": "1efc74f1c5aa4021766ed443f68ef8c5046116e4"
+      },
+      "local_immutable_snapshot": {
+        "available": false,
+        "detail": "The only local non-active trees are the V3 frozen workspace and the Publish workspace. Neither carries provenance binding it to the V4.5 (c36d61a1) or V4.6.1 (7216c885) production state."
+      },
+      "production_hash_only": {
+        "sufficient": false,
+        "detail": "A recorded hash identifies a state but carries no source tree to compare."
+      }
+    },
+    "matches": [
+      {
+        "ref": "v4.0.0-alpha.1",
+        "canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+        "binds_to": "V4_6_2_HASH_PORTABILITY_BASELINE canonical"
+      },
+      {
+        "ref": "v4.0.0-alpha.2",
+        "canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+        "binds_to": "V4_6_2_HASH_PORTABILITY_BASELINE canonical"
+      },
+      {
+        "ref": "HEAD",
+        "canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+        "binds_to": "V4_6_2_HASH_PORTABILITY_BASELINE canonical"
+      }
+    ],
+    "historical_source_anchor_available": "NO",
+    "historical_source_anchor": {
+      "anchor_type": "NONE",
+      "anchor_identity": null,
+      "detail": "No git commit, immutable snapshot or verifiable source artifact could be mechanically bound to the V4.5 / V4.6.1 production provenance. The active workspace has no git history, and the published history contains no commit for the V4.4/V4.5/V4.6 development states."
+    },
+    "relevant_source_files_expected": [
+      "core/engine_v2.py",
+      "core/library_store.py",
+      "core/hybrid_retriever.py",
+      "core/ollama_http.py"
+    ],
+    "comparison_method": "git ls-tree + cat-file --batch (read-only) -> canonical production_source_hash per ref, compared against the recorded historical production hashes",
+    "comparison_result": "no ref reproduces the V4.5 / V4.6.1 provenance hash"
+  },
+  "layer_matrix": {
+    "md-004": {
+      "DB canonical title": "YES",
+      "ChunkRecord document_title": "YES",
+      "retrieval candidate title": "YES",
+      "final ranked context title": "YES",
+      "PreparedAnswer title": "YES",
+      "sent_context title": "YES",
+      "serialized material header title": "YES",
+      "application request title": "YES",
+      "raw answer title": "NO",
+      "final answer title": "NO",
+      "raw answer uses 材料N": "YES",
+      "final answer uses 材料N": "YES"
+    },
+    "md-009": {
+      "DB canonical title": "YES",
+      "ChunkRecord document_title": "YES",
+      "retrieval candidate title": "YES",
+      "final ranked context title": "YES",
+      "PreparedAnswer title": "YES",
+      "sent_context title": "YES",
+      "serialized material header title": "YES",
+      "application request title": "YES",
+      "raw answer title": "NO",
+      "final answer title": "NO",
+      "raw answer uses 材料N": "YES",
+      "final answer uses 材料N": "YES"
+    },
+    "md-015": {
+      "DB canonical title": "YES",
+      "ChunkRecord document_title": "YES",
+      "retrieval candidate title": "YES",
+      "final ranked context title": "YES",
+      "PreparedAnswer title": "YES",
+      "sent_context title": "YES",
+      "serialized material header title": "YES",
+      "application request title": "YES",
+      "raw answer title": "NO",
+      "final answer title": "NO",
+      "raw answer uses 材料N": "YES",
+      "final answer uses 材料N": "YES"
+    }
+  },
+  "per_case_layer_conclusion": {
+    "md-004": {
+      "query": "分集接收在哪些文档中被提到？",
+      "history": null,
+      "scope": "none",
+      "route": "qa",
+      "evidence_continuity": "PRESERVED (every document referenced by the Golden is represented in the serialized materials)",
+      "target_documents_present_in_sent_materials": true,
+      "first_identity_loss_layer": "NONE",
+      "first_evidence_drop_layer": "NONE",
+      "material_index_semantics": "CHUNK_CONTEXT_INDEX (for index, chunk in enumerate(contexts, 1) in build_messages)",
+      "sent_chunk_count": 5,
+      "sent_document_count": 4,
+      "document_grouping": "IMPLICIT (every material header carries document_title via chunk.location; no separate document grouping block)",
+      "prompt_framing_bias": true,
+      "post_processing_changed_identity": false,
+      "golden_to_canonical_relation": {
+        "分集": {
+          "fact_kind": "content_token",
+          "canonical_document_title": null,
+          "relation": "N/A_CONTENT",
+          "lexically_in_canonical_title": null
+        },
+        "教材": {
+          "fact_kind": "document_role_label",
+          "canonical_document_title": "移动通信 (李兆玉)",
+          "relation": "SEMANTIC_ROLE",
+          "lexically_in_canonical_title": false
+        },
+        "测试文档": {
+          "fact_kind": "document_role_label",
+          "canonical_document_title": "移动通信测试文档",
+          "relation": "SUBSTRING",
+          "lexically_in_canonical_title": true
+        }
+      },
+      "counterfactual_evaluator_result": {
+        "canonical_title_only": "PARTIAL",
+        "role_label_plus_canonical_title": "YES"
+      },
+      "DOCUMENT_IDENTITY_ROOT_CAUSE": "NOT_PROVEN",
+      "document_identity_mechanism_applicable": "NO",
+      "root_cause_family": "GENERATION",
+      "primary_mechanism": "MATERIAL_INDEX_BIAS",
+      "secondary_mechanisms": [
+        "PROMPT_FRAMING",
+        "CHUNK_TO_DOCUMENT_AGGREGATION"
+      ],
+      "measurement_issue": "SUPPORTED",
+      "confidence": "HIGH"
+    },
+    "md-009": {
+      "query": "哪些文档提到了 RAKE 接收机？",
+      "history": null,
+      "scope": "none",
+      "route": "qa",
+      "evidence_continuity": "PRESERVED (every document referenced by the Golden is represented in the serialized materials)",
+      "target_documents_present_in_sent_materials": true,
+      "first_identity_loss_layer": "NONE",
+      "first_evidence_drop_layer": "NONE",
+      "material_index_semantics": "CHUNK_CONTEXT_INDEX (for index, chunk in enumerate(contexts, 1) in build_messages)",
+      "sent_chunk_count": 5,
+      "sent_document_count": 2,
+      "document_grouping": "IMPLICIT (every material header carries document_title via chunk.location; no separate document grouping block)",
+      "prompt_framing_bias": true,
+      "post_processing_changed_identity": false,
+      "golden_to_canonical_relation": {
+        "RAKE": {
+          "fact_kind": "content_token",
+          "canonical_document_title": null,
+          "relation": "N/A_CONTENT",
+          "lexically_in_canonical_title": null
+        },
+        "教材": {
+          "fact_kind": "document_role_label",
+          "canonical_document_title": "移动通信 (李兆玉)",
+          "relation": "SEMANTIC_ROLE",
+          "lexically_in_canonical_title": false
+        },
+        "测试文档": {
+          "fact_kind": "document_role_label",
+          "canonical_document_title": "移动通信测试文档",
+          "relation": "SUBSTRING",
+          "lexically_in_canonical_title": true
+        }
+      },
+      "counterfactual_evaluator_result": {
+        "canonical_title_only": "PARTIAL",
+        "role_label_plus_canonical_title": "YES"
+      },
+      "DOCUMENT_IDENTITY_ROOT_CAUSE": "NOT_PROVEN",
+      "document_identity_mechanism_applicable": "NO",
+      "root_cause_family": "GENERATION",
+      "primary_mechanism": "MATERIAL_INDEX_BIAS",
+      "secondary_mechanisms": [
+        "PROMPT_FRAMING",
+        "CHUNK_TO_DOCUMENT_AGGREGATION"
+      ],
+      "measurement_issue": "SUPPORTED",
+      "confidence": "HIGH"
+    },
+    "md-015": {
+      "query": "哪份文档明确把 OFDMA 与 LTE 关联？",
+      "history": null,
+      "scope": "none",
+      "route": "qa",
+      "evidence_continuity": "PRESERVED (every document referenced by the Golden is represented in the serialized materials)",
+      "target_documents_present_in_sent_materials": true,
+      "first_identity_loss_layer": "NONE",
+      "first_evidence_drop_layer": "NONE",
+      "material_index_semantics": "CHUNK_CONTEXT_INDEX (for index, chunk in enumerate(contexts, 1) in build_messages)",
+      "sent_chunk_count": 5,
+      "sent_document_count": 4,
+      "document_grouping": "IMPLICIT (every material header carries document_title via chunk.location; no separate document grouping block)",
+      "prompt_framing_bias": true,
+      "post_processing_changed_identity": false,
+      "golden_to_canonical_relation": {
+        "OFDMA": {
+          "fact_kind": "content_token",
+          "canonical_document_title": null,
+          "relation": "N/A_CONTENT",
+          "lexically_in_canonical_title": null
+        },
+        "LTE": {
+          "fact_kind": "content_token",
+          "canonical_document_title": null,
+          "relation": "N/A_CONTENT",
+          "lexically_in_canonical_title": null
+        },
+        "测试文档": {
+          "fact_kind": "document_role_label",
+          "canonical_document_title": "移动通信测试文档",
+          "relation": "SUBSTRING",
+          "lexically_in_canonical_title": true
+        }
+      },
+      "counterfactual_evaluator_result": {
+        "canonical_title_only": "YES",
+        "role_label_plus_canonical_title": "YES"
+      },
+      "DOCUMENT_IDENTITY_ROOT_CAUSE": "NOT_PROVEN",
+      "document_identity_mechanism_applicable": "NO",
+      "root_cause_family": "GENERATION",
+      "primary_mechanism": "MATERIAL_INDEX_BIAS",
+      "secondary_mechanisms": [
+        "PROMPT_FRAMING",
+        "CHUNK_TO_DOCUMENT_AGGREGATION"
+      ],
+      "measurement_issue": "NOT_OBSERVED",
+      "confidence": "HIGH"
+    }
+  },
+  "v4_7_diagnosis_closure": "PASS",
+  "v4_7_document_identity_root_cause_confirmation": "PASS",
+  "current_pipeline_root_cause": "GENERATION",
+  "current_pipeline_document_identity_loss": "DISPROVEN",
+  "document_identity_root_cause": "NOT_PROVEN",
+  "document_identity_mechanism_applicable": "NO",
+  "document_identity_single_mechanism": "NOT_APPLICABLE",
+  "first_identity_loss_layer": "NONE (canonical title is present up to and including the application-level model request)",
+  "first_evidence_drop_layer": "NONE for the target documents (only lower-ranked chunks of already-represented documents are dropped by ranking)",
+  "application_request_title_visibility": "YES_FOR_ALL_TARGETS",
+  "evidence_continuity": "PRESERVED_FOR_ALL_TARGETS",
+  "post_processing_cause": "EXCLUDED",
+  "per_case_product_root_cause": {
+    "md-004": {
+      "family": "GENERATION",
+      "primary_mechanism": "MATERIAL_INDEX_BIAS",
+      "secondary_mechanisms": [
+        "PROMPT_FRAMING",
+        "CHUNK_TO_DOCUMENT_AGGREGATION"
+      ],
+      "confidence": "HIGH",
+      "rationale": "the raw answer denotes the documents by their material index (材料N) and never by the canonical title, although the title is present in the request",
+      "supporting_evidence": {
+        "application_request_title_visible": true,
+        "evidence_continuity": "PRESERVED",
+        "material_index_semantics": "CHUNK_CONTEXT_INDEX (for index, chunk in enumerate(contexts, 1) in build_messages)",
+        "raw_answer_uses_material_index": true,
+        "raw_answer_contains_canonical_title": false,
+        "chunk_to_document_grouping": "IMPLICIT (every material header carries document_title via chunk.location; no separate document grouping block)",
+        "sent_material_count": 5,
+        "distinct_sent_document_count": 4,
+        "post_processing_changed_identity": false
+      }
+    },
+    "md-009": {
+      "family": "GENERATION",
+      "primary_mechanism": "MATERIAL_INDEX_BIAS",
+      "secondary_mechanisms": [
+        "PROMPT_FRAMING",
+        "CHUNK_TO_DOCUMENT_AGGREGATION"
+      ],
+      "confidence": "HIGH",
+      "rationale": "the raw answer denotes the documents by their material index (材料N) and never by the canonical title, although the title is present in the request",
+      "supporting_evidence": {
+        "application_request_title_visible": true,
+        "evidence_continuity": "PRESERVED",
+        "material_index_semantics": "CHUNK_CONTEXT_INDEX (for index, chunk in enumerate(contexts, 1) in build_messages)",
+        "raw_answer_uses_material_index": true,
+        "raw_answer_contains_canonical_title": false,
+        "chunk_to_document_grouping": "IMPLICIT (every material header carries document_title via chunk.location; no separate document grouping block)",
+        "sent_material_count": 5,
+        "distinct_sent_document_count": 2,
+        "post_processing_changed_identity": false
+      }
+    },
+    "md-015": {
+      "family": "GENERATION",
+      "primary_mechanism": "MATERIAL_INDEX_BIAS",
+      "secondary_mechanisms": [
+        "PROMPT_FRAMING",
+        "CHUNK_TO_DOCUMENT_AGGREGATION"
+      ],
+      "confidence": "HIGH",
+      "rationale": "the raw answer denotes the documents by their material index (材料N) and never by the canonical title, although the title is present in the request",
+      "supporting_evidence": {
+        "application_request_title_visible": true,
+        "evidence_continuity": "PRESERVED",
+        "material_index_semantics": "CHUNK_CONTEXT_INDEX (for index, chunk in enumerate(contexts, 1) in build_messages)",
+        "raw_answer_uses_material_index": true,
+        "raw_answer_contains_canonical_title": false,
+        "chunk_to_document_grouping": "IMPLICIT (every material header carries document_title via chunk.location; no separate document grouping block)",
+        "sent_material_count": 5,
+        "distinct_sent_document_count": 4,
+        "post_processing_changed_identity": false
+      }
+    }
+  },
+  "per_case_generation_mechanisms": {
+    "md-004": {
+      "primary_mechanism": "MATERIAL_INDEX_BIAS",
+      "secondary_mechanisms": [
+        "PROMPT_FRAMING",
+        "CHUNK_TO_DOCUMENT_AGGREGATION"
+      ],
+      "mechanism_signature": [
+        "MATERIAL_INDEX_BIAS",
+        "CHUNK_TO_DOCUMENT_AGGREGATION",
+        "PROMPT_FRAMING"
+      ],
+      "rationale": "the raw answer denotes the documents by their material index (材料N) and never by the canonical title, although the title is present in the request",
+      "observed": {
+        "title_visible_at_application_request": true,
+        "raw_answer_uses_material_index": true,
+        "raw_answer_contains_canonical_title": false,
+        "prompt_material_index_bias": true,
+        "prompt_document_title_instruction_present": false,
+        "sent_material_count": 5,
+        "distinct_sent_document_count": 4,
+        "aggregation_demand": true,
+        "chunk_to_document_grouping_implicit": true,
+        "sent_context_headers_carry_document_title": true
+      },
+      "counterfactual_canonical_title_only": "PARTIAL"
+    },
+    "md-009": {
+      "primary_mechanism": "MATERIAL_INDEX_BIAS",
+      "secondary_mechanisms": [
+        "PROMPT_FRAMING",
+        "CHUNK_TO_DOCUMENT_AGGREGATION"
+      ],
+      "mechanism_signature": [
+        "MATERIAL_INDEX_BIAS",
+        "CHUNK_TO_DOCUMENT_AGGREGATION",
+        "PROMPT_FRAMING"
+      ],
+      "rationale": "the raw answer denotes the documents by their material index (材料N) and never by the canonical title, although the title is present in the request",
+      "observed": {
+        "title_visible_at_application_request": true,
+        "raw_answer_uses_material_index": true,
+        "raw_answer_contains_canonical_title": false,
+        "prompt_material_index_bias": true,
+        "prompt_document_title_instruction_present": false,
+        "sent_material_count": 5,
+        "distinct_sent_document_count": 2,
+        "aggregation_demand": true,
+        "chunk_to_document_grouping_implicit": true,
+        "sent_context_headers_carry_document_title": true
+      },
+      "counterfactual_canonical_title_only": "PARTIAL"
+    },
+    "md-015": {
+      "primary_mechanism": "MATERIAL_INDEX_BIAS",
+      "secondary_mechanisms": [
+        "PROMPT_FRAMING",
+        "CHUNK_TO_DOCUMENT_AGGREGATION"
+      ],
+      "mechanism_signature": [
+        "MATERIAL_INDEX_BIAS",
+        "CHUNK_TO_DOCUMENT_AGGREGATION",
+        "PROMPT_FRAMING"
+      ],
+      "rationale": "the raw answer denotes the documents by their material index (材料N) and never by the canonical title, although the title is present in the request",
+      "observed": {
+        "title_visible_at_application_request": true,
+        "raw_answer_uses_material_index": true,
+        "raw_answer_contains_canonical_title": false,
+        "prompt_material_index_bias": true,
+        "prompt_document_title_instruction_present": false,
+        "sent_material_count": 5,
+        "distinct_sent_document_count": 4,
+        "aggregation_demand": true,
+        "chunk_to_document_grouping_implicit": true,
+        "sent_context_headers_carry_document_title": true
+      },
+      "counterfactual_canonical_title_only": "YES"
+    }
+  },
+  "product_root_cause_family_shared": "YES",
+  "shared_product_root_cause_family": "GENERATION",
+  "mixed_product_root_cause_families": "NO",
+  "shared_generation_mechanism": "YES",
+  "shared_generation_mechanism_name": "MATERIAL_INDEX_REPRESENTATION_BIAS: the prompt mandates a material-index (材料N) vocabulary and gives no document-title instruction, and the answer reproduces the chunk-level material index instead of the canonical document title over only-implicit chunk->document grouping",
+  "mixed_product_mechanisms": "NO",
+  "generation_mechanism_isolation": "NOT_ESTABLISHED (the co-present material-index / prompt-framing / chunk->document-aggregation mechanisms cannot be separated by this read-only diagnosis; the next phase must confirm which one dominates)",
+  "generation_mechanism_taxonomy": [
+    "MATERIAL_INDEX_BIAS",
+    "PROMPT_FRAMING",
+    "CHUNK_TO_DOCUMENT_AGGREGATION",
+    "PURE_GENERATION_SYNTHESIS",
+    "OTHER_GENERATION_FAMILY"
+  ],
+  "measurement_semantic_issue": "SUPPORTED",
+  "per_case_measurement_issue": {
+    "md-004": "SUPPORTED",
+    "md-009": "SUPPORTED",
+    "md-015": "NOT_OBSERVED"
+  },
+  "relevant_pipeline_equivalence": "NOT_ESTABLISHED",
+  "historical_failure_compatibility": "STRONGLY_SUPPORTED",
+  "historical_v4_6_document_identity_attribution": "STRONGLY_CHALLENGED",
+  "historical_evidence_consistent": true,
+  "ready_for_document_identity_remediation": "NO",
+  "ready_for_minimal_document_identity_remediation": "NO",
+  "product_code_change_authorized": "NO",
+  "generation_workstream_candidate": "SUPPORTED",
+  "generation_remediation_scope_ready": "YES",
+  "measurement_review_candidate": "SUPPORTED",
+  "candidate_next_product_workstream": "Generation / Prompt-Evidence Framing for document-identity questions",
+  "recommended_next_authorization_boundary": "Narrow Generation / prompt-evidence-framing diagnosis-and-design for document-identity questions (mechanism confirmation first), plus an independent Measurement semantic review of Golden document-identity expression. NOT AUTHORIZED in this phase.",
+  "gate_results": {
+    "G1 current baseline verified": true,
+    "G2 product metrics source verified": true,
+    "G3 canonical production hash verified": true,
+    "G4 baseline library identity mechanically read": true,
+    "G5 current runtime library identity computed by canonical method": true,
+    "G6 runtime library equivalence explicitly decided": true,
+    "G7 production trees unchanged": true,
+    "G10 md-004 canonical replay performed": true,
+    "G11 md-009 canonical replay performed": true,
+    "G12 md-015 canonical replay performed": true,
+    "G13 replay equivalence recorded": true,
+    "G14 canonical document-title source identified": true,
+    "G15 Golden-to-canonical identity relation recorded": true,
+    "G16 counterfactual evaluator probe completed": true,
+    "G17 retrieval DTO identity inspected": true,
+    "G18 final ranked contexts inspected": true,
+    "G19 PreparedAnswer contexts inspected": true,
+    "G20 sent_contexts inspected": true,
+    "G21 evidence continuity established": true,
+    "G22 serialized material headers inspected": true,
+    "G23 materialN semantics mechanically identified": true,
+    "G24 material->chunk->document mapping produced": true,
+    "G25 chunk->document grouping assessed": true,
+    "G26 application-level model request captured": true,
+    "G27 title visibility at application request established": true,
+    "G28 request-level/token-level terminology used correctly": true,
+    "G29 Ollama runtime identity recorded where obtainable": true,
+    "G30 prompt instruction interaction assessed": true,
+    "G31 raw answer inspected": true,
+    "G32 normalize/post-processing inspected": true,
+    "G33 final answer inspected": true,
+    "G34 relevant historical/current pipeline equivalence assessed": true,
+    "G35 historical failure compatibility explicitly graded": true,
+    "G36 first identity-loss layer determined where applicable": true,
+    "G37 first evidence-drop layer determined where applicable": true,
+    "G38 root-cause family determined per case": true,
+    "G39 generation mechanism determined where applicable": true,
+    "G40 single-vs-mixed explicitly decided": true,
+    "G41 confidence reported per case": true,
+    "G42 Golden unchanged": true,
+    "G43 evaluator unchanged": true,
+    "G44 citation semantics unchanged": true,
+    "G45 historical artifacts unchanged": true,
+    "G46 baseline lineage unchanged": true,
+    "G47 no new product baseline": true,
+    "G51 no product fix performed": true
+  },
+  "closure_gate_results": {
+    "C1 original V4.7 raw evidence preserved": true,
+    "C2 current pipeline root cause remains Generation": true,
+    "C3 current-pipeline Document Identity loss remains DISPROVEN": true,
+    "C4 Document Identity remediation remains blocked": true,
+    "C5 historical overclaim removed": true,
+    "C6 historical source anchor explicitly audited": true,
+    "C7 PROVEN_EQUIVALENT requires mechanically bound anchor": true,
+    "C8 without anchor: equivalence = NOT_ESTABLISHED": true,
+    "C9 historical compatibility independently graded": true,
+    "C10 Product and Measurement axes separated": true,
+    "C11 per-case Product family independently derived": true,
+    "C12 shared Product family explicitly decided": true,
+    "C13 per-case Generation mechanism independently derived": true,
+    "C14 shared Generation mechanism explicitly decided": true,
+    "C15 mixed Product family field consistent": true,
+    "C16 mixed Product mechanism field consistent": true,
+    "C17 measurement issue does not create mixed Product attribution": true,
+    "C18 Document Identity mechanism = NOT_APPLICABLE": true,
+    "C19 counterfactual evidence preserved": true,
+    "C25 production code unchanged": true,
+    "C26 runtime DB unchanged": true,
+    "C27 no new baseline": true,
+    "C31 production canonical hash unchanged": true,
+    "C20 V4.6 historical artifacts unchanged": true,
+    "C21 Golden unchanged": true,
+    "C22 evaluator unchanged": true,
+    "C23 citation semantics unchanged": true,
+    "C24 baseline lineage unchanged": true,
+    "C28 diagnosis tests PASS": true,
+    "C29 live production hash guard PASS": true,
+    "C30 hash portability tests PASS": true,
+    "C32 frozen-file hashes unchanged": true,
+    "C33 actual changed paths stay inside authorized surface": true,
+    "C34 V3 untouched": true,
+    "C35 Publish untouched": true,
+    "C36 no product remediation performed": true,
+    "C37 no sync / commit / tag / push / release": true
+  },
+  "closure_gate_notes": "C1-C19/C25-C27/C31 are computed by this read-only analyzer. C20-C24/C28-C30/C32-C37 are verified by the phase regression + boundary audit (see the closure report) and re-asserted by tests/test_v4_7_document_identity_diagnosis.py."
+}

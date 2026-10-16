@@ -247,7 +247,10 @@ class TestFreshLibraryFirstImportPinsProductionModel(unittest.TestCase):
             )
 
             embedder = _RecordingEmbedder(dimension=1024)
-            with mock.patch.object(config, "VECTOR_BACKEND", "sqlite"):
+            with (
+                mock.patch.object(config, "VECTOR_BACKEND", "sqlite"),
+                mock.patch.object(config, "LOG_DIR", root / "logs"),
+            ):
                 service = LibraryService(library, ollama=embedder, log_dir=root / "logs")
                 result = service.import_document(source)
             self.assertEqual(result.get("import_status"), "READY", result.get("error"))

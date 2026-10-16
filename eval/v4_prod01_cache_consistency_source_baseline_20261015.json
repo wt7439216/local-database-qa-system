@@ -1,0 +1,34 @@
+{
+  "baseline_identity": {
+    "baseline_id": "V4_PROD01_CACHE_CONSISTENCY_BASELINE",
+    "baseline_role": "REGISTERED_PRODUCT_SOURCE_UNMEASURED"
+  },
+  "stage_identity": {
+    "parent_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE"
+  },
+  "description": "Serialize scope identity, cache read, answer serialization and cache commit with library mutation refresh; isolate empty scope and preserve cancellation.",
+  "artifact_hashes": {
+    "production_source_sha256": "e8793f427266dc0a15c38df0e86915539d3db33df8a3223d889fe8efa0f9c16c"
+  },
+  "production_provenance": {
+    "production_source_hash": "e8793f427266dc0a15c38df0e86915539d3db33df8a3223d889fe8efa0f9c16c",
+    "production_trees_hashed": [
+      "core",
+      "desktop",
+      "web"
+    ]
+  },
+  "changed_sources": {
+    "desktop/web_server.py": {
+      "raw_sha256": "b23b55f26845bc39f27e05dc2ef5553d569abeb906f051e97c7b010cfb7f9270",
+      "canonical_lf_sha256": "f682f82d254506f8643dc7854bbd128c2d958d7837fb58ad7b701326b8b97a9e"
+    }
+  },
+  "validation_evidence": [
+    "tests/test_answer_cache_consistency.py"
+  ],
+  "metrics": null,
+  "product_gate_status": "NOT_MEASURED",
+  "measurement_note": "No Full144 run belongs to this source stage. Historical scores are not candidate scores.",
+  "timestamp": "2026-10-15T15:14:39+0800"
+}

@@ -46,6 +46,7 @@ if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 
 import eval_v4_baseline as baseline  # noqa: E402
+from product_revision import pre_product_json  # noqa: E402
 
 # The four proven V4.5 routing targets (frozen golden `expected_route` = qa).
 TARGETS = {
@@ -247,7 +248,9 @@ class TestV45BaselineGovernance(unittest.TestCase):
         self.assertEqual(stage["metrics"]["citation_scope_violation"], 0)
 
     def test_lineage_chain(self):
-        lineage = self._load("v4_baseline_lineage.json")
+        # Replay the exact pre-product history; new child stages have their own
+        # live-pointer validation and must not rewrite this old chain.
+        lineage = pre_product_json("eval/v4_baseline_lineage.json")
         by_id = {b["baseline_id"]: b for b in lineage["baselines"]}
         # V4.5 remains an immutable historical stage; V4.6.1 / V4.6.2 later appended
         # their children and advanced the current pointer

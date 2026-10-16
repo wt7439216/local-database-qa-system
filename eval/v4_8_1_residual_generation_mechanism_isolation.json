@@ -1,0 +1,1055 @@
+{
+  "phase": "V4.8.1",
+  "mode": "SINGLE_FACTOR_MEMBERSHIP_DIAGNOSIS",
+  "artifact_type": "DIAGNOSTIC_ONLY",
+  "is_product_baseline": false,
+  "produced_by": "scripts/analyze_v4_8_1_residual_generation.py",
+  "parent_phase": "V4.8",
+  "parent_closure": "V4_8_DIAGNOSIS_CLOSURE",
+  "parent_protocol_provenance_confidence": "PARTIAL",
+  "parent_primary_outcome_invariant": true,
+  "parent_preclosure_derived_semantic_digest": "NOT_AVAILABLE_PRECLOSURE_DERIVED_DIGEST_OVERWRITTEN",
+  "historical_claim_freeze": {
+    "HISTORICAL_SOURCE_ANCHOR_AVAILABLE": "NO",
+    "RELEVANT_PIPELINE_EQUIVALENCE": "NOT_ESTABLISHED",
+    "HISTORICAL_FAILURE_COMPATIBILITY": "STRONGLY_SUPPORTED",
+    "HISTORICAL_V4_6_DOCUMENT_IDENTITY_ATTRIBUTION": "STRONGLY_CHALLENGED"
+  },
+  "current_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+  "product_metrics_source": "v4_6_1_embedding_identity_baseline",
+  "production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "production_hash_before": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "production_hash_changed": "NO",
+  "remote_main_head": "1efc74f1c5aa4021766ed443f68ef8c5046116e4",
+  "phase_numbering_audit": {
+    "PHASE_NUMBERING_AUDIT": "PASS",
+    "occupied_by_other_phase": false
+  },
+  "preflight_snapshot_identity": {
+    "path": "eval/v4_8_1_preflight_snapshot.json",
+    "PREFLIGHT_SNAPSHOT_SHA256": "e73ed965b994fb25ac39923040385333f509c9dc5804e2e023bd9623fd26b6ce",
+    "PRESTATE_LOCKED": "YES",
+    "is_first_v4_8_1_write": "YES",
+    "preexisting_at_session_start": "YES",
+    "PRESTATE_SNAPSHOT_OVERWRITTEN": "NO"
+  },
+  "pre_change_integrity": {
+    "PRE_CHANGE_PRODUCTION_HASH": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "PRE_CHANGE_WORKSPACE_MANIFEST_ENTRY_COUNT": 300,
+    "PRE_CHANGE_WORKSPACE_MANIFEST_DIGEST": "0ec724ccccc89ee6821bedeb09f262d6c819d657a1a2fc629aa00f070754f2e0",
+    "CURRENT_WITH_V481_MANIFEST_ENTRY_COUNT": 305,
+    "CURRENT_WITH_V481_MANIFEST_DIGEST": "d10078e1d94b0ab5e6c844b1f5a001d5bb3c28bf5643ce558d267c87e8ab6ddc",
+    "SNAPSHOT_RECORDED_MANIFEST_ENTRY_COUNT": 300,
+    "SNAPSHOT_RECORDED_COUNT_RECONCILED": true,
+    "MANIFEST_RULE": "all regular files; exclude segments {__pycache__, .git, .codebuddy, node_modules, .venv, venv}; exclude top-level dirs {data, .github}; exclude root names {.gitignore, .gitattributes}; exclude *.pyc/*.pyo; pre-change variant excludes all V4.8.1 authorized paths; per-file hash = sha256-path-content-v2-canonical-lf",
+    "RUNTIME_DB_IDENTITY_BEFORE": {
+      "path": "data\\library\\documents.sqlite3",
+      "identity": "10698752:c6bc9b3eb63ae4e6",
+      "sha256": "c6bc9b3eb63ae4e6d96caf859a2b0c5f2f1e5a5b6f438e81aa0bbc3cf4084c97"
+    },
+    "frozen_artifact_hashes_before": {
+      "V4_8_FROZEN_ARTIFACT_HASHES": {
+        "eval/v4_8_generation_mechanism_isolation.json": "72eaa33f024f9e7f6086149a075b2ae11532bd8dcad7c9fd1890997ae3b66397",
+        "docs/V4_8_GENERATION_MECHANISM_ISOLATION.md": "fbb68911e32509be6f794ffe76352fc14c5bf9c3a51adcc278b015b4433c3468",
+        "scripts/analyze_v4_8_generation_mechanism.py": "28a5316fa95533f9d0c4832d0ad96e117c7d66afa1c42b547bee5b87886fd03a",
+        "tests/test_v4_8_generation_mechanism_diagnosis.py": "7a89b59fdcb9c5f5a326954dbec792790287ef9b4a95cf47cab9aab5f0a4049d"
+      },
+      "V4_7_FROZEN_ARTIFACT_HASHES": {
+        "eval/v4_7_document_identity_root_cause.json": "effcbdfd18a93b2a52db813e1b19f88b4c65dbb7e9837206a82ebac0b9ee313d",
+        "docs/V4_7_DOCUMENT_IDENTITY_ROOT_CAUSE.md": "7073a64a7b1a537a1d16b31d858a62ad8d11620a9348d756cce4ade961870849",
+        "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md": "9e33894038faa88a03e182c30287b9ef1b242172d8d774f33244be98857ec771"
+      },
+      "BASELINE_ARTIFACT_HASHES": {
+        "eval/v4_baseline_lineage.json": "18ca7ccb445d46c2b38fd711d07e4f59e0d515d2992b9bce948b854df27ac54c",
+        "eval/v4_6_2_hash_portability_baseline.json": "414e5a711d6bfbf0825469e09e6c9c31d52ca66dc2e0df7cabe719e6dc99ed95",
+        "eval/v4_6_1_embedding_identity_baseline.json": "2c7b9d0beca0af94bc80496874e95ac4a9ad7d613843bf70da7c3e8ec5a94ddb"
+      },
+      "GOLDEN_HASH": {
+        "eval/v3_final_golden.json": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb"
+      },
+      "V4_6_HISTORICAL_ARTIFACT_HASHES": {
+        "eval/v4_6_post_routing_attribution.json": "5a644a3fe9a9b280ff095493627844cea745f44d06d2c2f249feb6c4e444a5f8",
+        "docs/V4_POST_ROUTING_ATTRIBUTION.md": "fbac1e51ca621d93c04a66db396fde1cbeffa7237e3034fb3b1b2c4a777f703a"
+      }
+    },
+    "PRE_CHANGE_WORKSPACE_MANIFEST_POST_RUN_DIGEST": "0ec724ccccc89ee6821bedeb09f262d6c819d657a1a2fc629aa00f070754f2e0",
+    "PRE_CHANGE_WORKSPACE_MANIFEST_STABLE": "YES"
+  },
+  "experiment_design_digest": "e11d83797ed89c99f335f58f7317997c513b626c02304e0fe4333d40dc0f48bf",
+  "EXPERIMENT_DESIGN_CHANGED_AFTER_FIRST_CALL": "NO",
+  "production_implementation_mapping": {
+    "message_construction": "core/engine_v2.py::build_messages",
+    "context_serialization": "core/engine_v2.py::build_messages (task_hint + material blocks + question)",
+    "material_evidence_header": "[材料{index}｜{chunk.location}]  (index = chunk/context index)",
+    "document_id": "per-case material_to_chunk_to_document_map[].document_id (frozen V4.7 evidence)",
+    "document_title": "per-case chunk.location prefix / canonical titles (frozen V4.7 evidence)",
+    "chunk_to_document_mapping": "V4.7 CHUNK_TO_DOCUMENT_GROUPING = IMPLICIT (no document grouping block)",
+    "model_invocation": "core/ollama_http.py::OllamaClient.chat -> /api/chat",
+    "runtime_generation_parameters": "temperature 0 / top_p 1 / top_k 1 / repeat_penalty 1.15 / num_predict 800 / num_ctx 8192"
+  },
+  "model_runtime_identity": {
+    "answer_model_requested": "qwen2.5:7b",
+    "model_digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "seed": "NOT_AVAILABLE (production does not set a seed; generation layer is stochastic)",
+    "generation_parameters": {
+      "temperature": 0,
+      "top_p": 1,
+      "top_k": 1,
+      "repeat_penalty": 1.15,
+      "num_predict": 800,
+      "num_ctx": 8192,
+      "keep_alive": "10m",
+      "stream": false
+    },
+    "resolved_model_tag": "qwen2.5:7b"
+  },
+  "generation_parameters": {
+    "temperature": 0,
+    "top_p": 1,
+    "top_k": 1,
+    "repeat_penalty": 1.15,
+    "num_predict": 800,
+    "num_ctx": 8192,
+    "keep_alive": "10m",
+    "stream": false
+  },
+  "target_cases": [
+    "md-009",
+    "md-015"
+  ],
+  "control_reference_case": "md-004",
+  "control_reference_role": "NON_PRIMARY_CONTROL_REFERENCE",
+  "MD004_REFERENCE_PAIR_REQUIRED": "NO",
+  "factor_G_operationalization": {
+    "G_OPERATIONALIZATION": "EXPLICIT_MEMBERSHIP_METADATA_ONLY",
+    "definition": "add opaque same-document membership metadata mechanically derived from the frozen document_id, without changing existing chunks, chunk order, chunk text, canonical titles, material labels, production task instruction or citation contract",
+    "PHYSICAL_CHUNK_REGROUPING": "NO",
+    "CHUNK_REORDERING": "NO",
+    "DOCUMENT_SUMMARIZATION": "NO"
+  },
+  "G_OPERATIONALIZATION": "EXPLICIT_MEMBERSHIP_METADATA_ONLY",
+  "factor_definitions": {
+    "A": "A0 (production-equivalent material representation; FROZEN, NOT MANIPULATED)",
+    "B": "B0 (production-equivalent task instruction; FROZEN, NOT MANIPULATED)",
+    "G": "EXPLICIT_DOCUMENT_MEMBERSHIP_REPRESENTATION"
+  },
+  "G0_definition": "CURRENT PRODUCTION-EQUIVALENT CHUNK-CENTRIC REPRESENTATION = A0 + B0 + NO explicit cross-chunk document-membership metadata",
+  "G1_definition": "DIAGNOSTIC-ONLY EXPLICIT DOCUMENT-MEMBERSHIP REPRESENTATION = G0 + exactly one membership-metadata block",
+  "G1_template": {
+    "exact_template": "[同源关系]\n组<TOKEN>: 材料<i>, 材料<j>, ...\n组<TOKEN>: 材料<k>\n...",
+    "rendered_block_md-009": "[同源关系]\n组A: 材料1, 材料2, 材料3, 材料4\n组B: 材料5",
+    "rendered_block_md-015": "[同源关系]\n组A: 材料1, 材料2\n组B: 材料3\n组C: 材料4\n组D: 材料5",
+    "rendering_rule": "one line per group token in first-occurrence order; token label = 组 + A/B/C/...; members listed as 材料<n> in ascending material index order, separated by ', '",
+    "header_line": "[同源关系]",
+    "forbidden_additions": [
+      "请按组回答",
+      "同一组请合并",
+      "组A 是某文档",
+      "这些是文档标题",
+      "请输出标题"
+    ],
+    "no_extra_explanation": "YES"
+  },
+  "G1_insertion_rule": {
+    "rule": "insert the membership block as one additional block AFTER the complete evidence/context serialization (i.e. immediately after the last material block) and BEFORE the final question/task suffix line",
+    "mechanical_form": "pieces = user_content.split('\\n\\n'); new_content = '\\n\\n'.join(pieces[:-1] + [membership_block] + [pieces[-1]])",
+    "SAME_INSERTION_RULE_ACROSS_CASES": "YES",
+    "case_specific_placement": "NO",
+    "absolute_character_offset_invariance_claimed": "NO",
+    "note": "inserting metadata necessarily shifts later absolute character offsets; this is NOT used as a gate. Only relative position within the existing evidence sequence is preserved."
+  },
+  "SAME_INSERTION_RULE_ACROSS_CASES": "YES",
+  "group_mapping": {
+    "md-009": {
+      "material_chunk_count": 5,
+      "unique_document_count": 2,
+      "group_sizes": [
+        4,
+        1
+      ],
+      "group_tokens": {
+        "A": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "B": [
+          5
+        ]
+      },
+      "GROUPING_INFORMATION_NONTRIVIAL": "YES"
+    },
+    "md-015": {
+      "material_chunk_count": 5,
+      "unique_document_count": 4,
+      "group_sizes": [
+        2,
+        1,
+        1,
+        1
+      ],
+      "group_tokens": {
+        "A": [
+          1,
+          2
+        ],
+        "B": [
+          3
+        ],
+        "C": [
+          4
+        ],
+        "D": [
+          5
+        ]
+      },
+      "GROUPING_INFORMATION_NONTRIVIAL": "YES"
+    }
+  },
+  "membership_blocks": {
+    "md-009": "[同源关系]\n组A: 材料1, 材料2, 材料3, 材料4\n组B: 材料5",
+    "md-015": "[同源关系]\n组A: 材料1, 材料2\n组B: 材料3\n组C: 材料4\n组D: 材料5"
+  },
+  "grouping_information_nontriviality": {
+    "md-009": {
+      "CHUNK_COUNT": 5,
+      "UNIQUE_DOCUMENT_COUNT": 2,
+      "GROUP_SIZES": [
+        4,
+        1
+      ],
+      "GROUPING_INFORMATION_NONTRIVIAL": "YES"
+    },
+    "md-015": {
+      "CHUNK_COUNT": 5,
+      "UNIQUE_DOCUMENT_COUNT": 4,
+      "GROUP_SIZES": [
+        2,
+        1,
+        1,
+        1
+      ],
+      "GROUPING_INFORMATION_NONTRIVIAL": "YES"
+    }
+  },
+  "information_firewall": {
+    "md-009": {
+      "GROUP_TOKEN_TITLE_LEAKAGE": "NO",
+      "GROUP_TOKEN_DOCUMENT_ID_LEAKAGE": "NO",
+      "GROUP_TOKEN_SOURCE_NAME_LEAKAGE": "NO",
+      "GROUP_TOKEN_PATH_LEAKAGE": "NO",
+      "GROUP_TOKEN_GOLDEN_ROLE_LEAKAGE": "NO",
+      "GROUP_TOKEN_EXPECTED_ANSWER_LEAKAGE": "NO",
+      "NAMING_INSTRUCTION_CONTAMINATION": "NO",
+      "GROUP_INFORMATION_FIREWALL": "PASS",
+      "INVALID_COUNTERFACTUAL": "NO"
+    },
+    "md-015": {
+      "GROUP_TOKEN_TITLE_LEAKAGE": "NO",
+      "GROUP_TOKEN_DOCUMENT_ID_LEAKAGE": "NO",
+      "GROUP_TOKEN_SOURCE_NAME_LEAKAGE": "NO",
+      "GROUP_TOKEN_PATH_LEAKAGE": "NO",
+      "GROUP_TOKEN_GOLDEN_ROLE_LEAKAGE": "NO",
+      "GROUP_TOKEN_EXPECTED_ANSWER_LEAKAGE": "NO",
+      "NAMING_INSTRUCTION_CONTAMINATION": "NO",
+      "GROUP_INFORMATION_FIREWALL": "PASS",
+      "INVALID_COUNTERFACTUAL": "NO"
+    }
+  },
+  "call_order_policy": "G0_THEN_G1",
+  "replication_policy": {
+    "default": "1 G0/G1 pair per eligible primary case",
+    "trigger_for_extension": "G0 and G1 differ in primary Y, or an explicit stochasticity signal exists",
+    "max_paired_runs_per_case": 3,
+    "symmetry_rule_once_triggered": "NUMBER_OF_VALID_G0_RUNS == NUMBER_OF_VALID_G1_RUNS"
+  },
+  "aggregate_support_semantics": {
+    "YES": "both primary cases have sufficient valid evidence and both SUPPORT the mechanism/state",
+    "PARTIAL": "at least one primary case SUPPORTS it, while the other is NOT_SUPPORTED or NOT_ESTABLISHED",
+    "NO": "both primary cases have sufficient valid evidence and both are NOT_SUPPORTED",
+    "NOT_ESTABLISHED": "no primary case provides sufficient positive support AND at least one primary case lacks sufficient valid evidence, so neither YES nor NO can be mechanically established"
+  },
+  "AGGREGATE_SUPPORT_SEMANTICS": "FROZEN",
+  "conditions_G0_G1": {
+    "G0": "A0+B0 (production-equivalent)",
+    "G1": "A0+B0+G1 (explicit membership)"
+  },
+  "request_semantic_digests": {
+    "md-009": {
+      "G0": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "b9943d23c9960da1d5c51a2e2ce5a4b526972a529aa88dba0f0438b1f30319f9",
+        "request_char_length": 2582,
+        "user_content_char_length": 2062,
+        "prompt_eval_count": 1577,
+        "num_ctx": 8192
+      },
+      "G1": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "8034bac105635706e01da34c662d639bb8d6f19828b8213504c84043dbb1b9ac",
+        "request_char_length": 2625,
+        "user_content_char_length": 2101,
+        "prompt_eval_count": 1613,
+        "num_ctx": 8192
+      }
+    },
+    "md-015": {
+      "G0": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "d6cb157261f74d7482f161445af28f569d97f831466da1f0aef397a76a372791",
+        "request_char_length": 2585,
+        "user_content_char_length": 2065,
+        "prompt_eval_count": 1531,
+        "num_ctx": 8192
+      },
+      "G1": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "6265d602f49f3743ad724fad1e12b10df01fbebd4557d23d517b508293451235",
+        "request_char_length": 2636,
+        "user_content_char_length": 2110,
+        "prompt_eval_count": 1573,
+        "num_ctx": 8192
+      }
+    }
+  },
+  "request_diff_audits": {
+    "md-009": {
+      "case_id": "md-009",
+      "per_condition_semantic_objects": {
+        "G0": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "这都保证了对多径信号的分离与接收，提高了接收信号的质量。 相关器1 延时、加权输出相关器2 延时、加权合并器多径信号相关器M 延时、加权图3-41J RAKE接收机原理",
+              "label": "材料"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "3.3.5RAKE接收机在未采用扩频的移动通信系统，接收端只能对收到的多径信号进行矢量叠加，由于相位差和幅度不同导致信号呈现衰落。 在直扩通信系统中，采用自相关特性良好的扩频码， 在接收端进行相关解扩时可以有效地抑制不同步的其他多径信号分量，单独分离出主径分量，实现抗多径干扰的作用。 但是这些先后到达的不同步的其他多径信号分量，都携带相同的信息，都具有能量，若能够利用这些能量，则可以变害为利，改善接收信号的质量。 基于这种思想，Price和Green在1958年提出了多径分离接收的技术，这就是RAKE接收机。 利用RAKE接收机将被分离的各条路径信号相位校准、幅度加权，并将矢量和变成代数和。 三种不同的通信系统下，在接收端对信号的处理如图3-40所示。 第3径接收后的第2径合成失量分离出主径信号第1径第2径第3径第1径第1径接收后的合成矢量（代数和） (a)未采用扩频 (b)仅采用直扩 (c)直扩+RAKE 图3-40接收机对多径信号的处理所谓RAKE接收机，就是利用多个并行相关器检测多径信号，按照一定的准则合成一路信号供解调用的接收机。 RAKE接收机主要由一组相关器构成，其原理如图3-41所示。 假设每个相关器和多径 信号。 把这些输出信号适当的时延对齐，然后按某种方法合并。 如果各条路径加权系数为 1，称为等增益合并方式，在实际系统中还可以采用最大比合并或最佳样点合并方式。 该接收机利用多个并行相关器，可以增加信号的能量，改善信噪比，提高通信质量，所以RAKE 接收机具有搜集多径信号能量的能力，它的作用就像花园里用的耙子（rake），故取名为 RAKE接收机。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3 个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。",
+              "label": "材料"
+            },
+            {
+              "index": 3,
+              "location": "移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "199 的信道估计，通过低通滤波得到比较好的信道估计结果。 这种方法的缺点是由于非线性和非因果预测技术，使噪声比较大的时候，信道估计的准确度大大降低，而且还引入了较大的解码延迟。 延迟估计的主要部件是匹配滤波器，如图5-14所示。 匹配滤波器的功能是用输入的数据和不同相位的本地码字进行相关，取得不同码字相位的相关能量。 当串行输入的采样数据和本地的扩频码和扰码的相位一致时，其相关能量最大，在滤波器输出端有一个最大值。 根据相关能量，延迟估计器就可以得到多径的到达时间量。 本地的扩频码和扰码 N-1 串行输入的采样数据 N-1 图5-14 匹配滤波器的基本结构从实现的角度而言，RAKE接收机的处理包括码片级和符号级，码片级的处理有相关器、本地码产生器和匹配滤波器； 符号级的处理包括信道估计，相位旋转和合并相加。 码片级的处理一般用ASIC器件实现，而符号级的处理用DSP实现。 移动台和基站间的RAKE 接收机的实现方法和功能尽管有所不同，但其原理是完全一样的。 对于多个接收天线分集接收而言，多个接收天线接收的多径可以用上面的方法同样处理，RAKE接收机既可以接收来自同一天线的多径，也可以接收来自不同天线的多径，从 RAKE接收的角度来看，两种分集并没有本质的不同。 但是，在具体实现上由于多个天线的数据要进行分路的控制处理，增加了基带处理的复杂度。",
+              "label": "材料"
+            },
+            {
+              "index": 4,
+              "location": "移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "延迟估计的作用是通过匹配滤波器获取不同时间延迟位置上的信号能量分布（见图5-12 右下方的小图），识别具有较大能量的多径位置，并将它们的时间量分配到RAKE接收机的不同接收径上。 匹配滤波器的测量精度可以达到1/4或1/2码片，而RAKE接收机的不同接收径的间隔是一个码片。 在实现中，如果延迟估计的更新速度很快，比如几十毫秒一次，就可以无须迟早门的锁相环。",
+              "label": "材料"
+            },
+            {
+              "index": 5,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播",
+              "text": "RAKE 接收机可以合并多径能量，是 CDMA 系列系统的关键部件。",
+              "label": "材料"
+            }
+          ],
+          "membership_block": [],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [],
+          "question_line": "问题：哪些文档提到了 RAKE 接收机？",
+          "message_count": 2
+        },
+        "G1": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "这都保证了对多径信号的分离与接收，提高了接收信号的质量。 相关器1 延时、加权输出相关器2 延时、加权合并器多径信号相关器M 延时、加权图3-41J RAKE接收机原理",
+              "label": "材料"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "3.3.5RAKE接收机在未采用扩频的移动通信系统，接收端只能对收到的多径信号进行矢量叠加，由于相位差和幅度不同导致信号呈现衰落。 在直扩通信系统中，采用自相关特性良好的扩频码， 在接收端进行相关解扩时可以有效地抑制不同步的其他多径信号分量，单独分离出主径分量，实现抗多径干扰的作用。 但是这些先后到达的不同步的其他多径信号分量，都携带相同的信息，都具有能量，若能够利用这些能量，则可以变害为利，改善接收信号的质量。 基于这种思想，Price和Green在1958年提出了多径分离接收的技术，这就是RAKE接收机。 利用RAKE接收机将被分离的各条路径信号相位校准、幅度加权，并将矢量和变成代数和。 三种不同的通信系统下，在接收端对信号的处理如图3-40所示。 第3径接收后的第2径合成失量分离出主径信号第1径第2径第3径第1径第1径接收后的合成矢量（代数和） (a)未采用扩频 (b)仅采用直扩 (c)直扩+RAKE 图3-40接收机对多径信号的处理所谓RAKE接收机，就是利用多个并行相关器检测多径信号，按照一定的准则合成一路信号供解调用的接收机。 RAKE接收机主要由一组相关器构成，其原理如图3-41所示。 假设每个相关器和多径 信号。 把这些输出信号适当的时延对齐，然后按某种方法合并。 如果各条路径加权系数为 1，称为等增益合并方式，在实际系统中还可以采用最大比合并或最佳样点合并方式。 该接收机利用多个并行相关器，可以增加信号的能量，改善信噪比，提高通信质量，所以RAKE 接收机具有搜集多径信号能量的能力，它的作用就像花园里用的耙子（rake），故取名为 RAKE接收机。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3 个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。",
+              "label": "材料"
+            },
+            {
+              "index": 3,
+              "location": "移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "199 的信道估计，通过低通滤波得到比较好的信道估计结果。 这种方法的缺点是由于非线性和非因果预测技术，使噪声比较大的时候，信道估计的准确度大大降低，而且还引入了较大的解码延迟。 延迟估计的主要部件是匹配滤波器，如图5-14所示。 匹配滤波器的功能是用输入的数据和不同相位的本地码字进行相关，取得不同码字相位的相关能量。 当串行输入的采样数据和本地的扩频码和扰码的相位一致时，其相关能量最大，在滤波器输出端有一个最大值。 根据相关能量，延迟估计器就可以得到多径的到达时间量。 本地的扩频码和扰码 N-1 串行输入的采样数据 N-1 图5-14 匹配滤波器的基本结构从实现的角度而言，RAKE接收机的处理包括码片级和符号级，码片级的处理有相关器、本地码产生器和匹配滤波器； 符号级的处理包括信道估计，相位旋转和合并相加。 码片级的处理一般用ASIC器件实现，而符号级的处理用DSP实现。 移动台和基站间的RAKE 接收机的实现方法和功能尽管有所不同，但其原理是完全一样的。 对于多个接收天线分集接收而言，多个接收天线接收的多径可以用上面的方法同样处理，RAKE接收机既可以接收来自同一天线的多径，也可以接收来自不同天线的多径，从 RAKE接收的角度来看，两种分集并没有本质的不同。 但是，在具体实现上由于多个天线的数据要进行分路的控制处理，增加了基带处理的复杂度。",
+              "label": "材料"
+            },
+            {
+              "index": 4,
+              "location": "移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "延迟估计的作用是通过匹配滤波器获取不同时间延迟位置上的信号能量分布（见图5-12 右下方的小图），识别具有较大能量的多径位置，并将它们的时间量分配到RAKE接收机的不同接收径上。 匹配滤波器的测量精度可以达到1/4或1/2码片，而RAKE接收机的不同接收径的间隔是一个码片。 在实现中，如果延迟估计的更新速度很快，比如几十毫秒一次，就可以无须迟早门的锁相环。",
+              "label": "材料"
+            },
+            {
+              "index": 5,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播",
+              "text": "RAKE 接收机可以合并多径能量，是 CDMA 系列系统的关键部件。",
+              "label": "材料"
+            }
+          ],
+          "membership_block": [
+            "[同源关系]\n组A: 材料1, 材料2, 材料3, 材料4\n组B: 材料5"
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [],
+          "question_line": "问题：哪些文档提到了 RAKE 接收机？",
+          "message_count": 2
+        }
+      },
+      "changed_keys": [
+        "membership_block"
+      ],
+      "held_keys": [
+        "model",
+        "system_message",
+        "materials",
+        "task_line",
+        "instruction_lines",
+        "question_line",
+        "message_count"
+      ],
+      "allowed_changed_keys": [
+        "membership_block"
+      ],
+      "AUTHORIZED_INTERVENTION_DIFF": "PASS",
+      "structural_checks": {
+        "evidence_text_unchanged": true,
+        "evidence_order_unchanged": true,
+        "canonical_title_content_and_position_unchanged": true,
+        "material_labels_unchanged": true,
+        "title_occurrence_count_unchanged": true,
+        "instruction_lines_unchanged": true,
+        "question_line_unchanged": true,
+        "system_message_unchanged": true
+      }
+    },
+    "md-015": {
+      "case_id": "md-015",
+      "per_condition_semantic_objects": {
+        "G0": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "269 当f.为较大的频率时， cos[2元(fk + f,)t+k+p,Jdt~0, 因为正好是整数个(k一j)积分周期，所以 cos2元 +-dt=0，证毕。 普通的频分复用（FDM）调制，为了避免载波间干扰，要求各载波之间留有一定的保护间隔（GP）。 FDM信号的功率谱如图6-2所示。 图中f，表示载波中心频率，Af表示调制信号带宽，GP表示载波间隔。 如果不同的载波传输不同用户的数据，则形成FDMA多址方式。 GP GP Af 图6-2FDM信号功率谱 OFDM信号的功率谱如图6-3所示。 图中f，表示OFDM子载波频率。 从图中可以看出， OFDM各子载波之间是相互重叠的，没有保护间隔，和FDM调制相比，频谱利用率明显提高。 应该说OFDM各子载波间功率谱的重叠不是随机的，而是有规律的，即在任意子载波的中心频率处的其他子载波的功率为零，这正是各子载波间相互正交特性在功率谱上的体现。 图6-3OFDM信号功率谱但此时的OFDM多址接入技术在实际系统应用中还存在众多难以克服的困难，主要表现有：每个子载波需要单独的信号振荡器用于信号的生成和调制，这对于硬件要求比较高， 且由于信号振荡器间的非同步，容易造成子载波间干扰； 同时，由于子载波信号的单独调制和生成，在子载波数量比较大的情况下，基带信号处理计算复杂度也很高。 OFDM的两个重要实用化设计方案的提出，为OFDM的大规模应用铺平了道路。 一个是1971年Weinstein和Ebert提出的采用离散傅里叶变换（DFT，DiscreteFourierTransform） 进行OFDM信号的调制和解调，使得OFDM各子载波信号的生成只需要一个信号振荡器， 从而使得OFDM调制的实现更为简便。 另一个重要设计是，Peled和Ruiz在1980年提出了在OFDM各子载波符号中引入循环前缀（CP，CyclicPrefix）的设计，从而使得OFDM 各子载波调制信号在复杂的传输信道中仍然能够保证正交性。",
+              "label": "材料"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所示。 表中对TD-SCDMA、LTE和802.16e三种系统的传输方案进行了简要对比。 表6-1LTE基本传输方案 TD-SCDMA 3GPPLTE 802.16e 多址技术 CDMA 下行OFDMA：上行SC-FDMA OFDMA 双工方式 TDD FDD和TDD尽可能融合，FDD FDD、TDD和FDD半双工半双工顿结构 10ms无线顿分为2个顿长10ms，分为10个子顿， 规定了5ms、10ms和20ms等多种不 5ms子顿 20个时隙同的顿结构每个子顿分为7个正下行7或6个OFDM符号； 上每个顿分为下行子顿和上行子顿，两子顿结构常时隙和DwPTS、GP、 行7或6个OFDM符号者之间用适当的保护时隙分隔 UpPTS三个特殊时隙调制方式 QPSK、16QAM QPSK、16QAM和64QAM BPSK、QPSK、16QAM、64QAM 编码方式卷积编码和Turbo码以Turbo码为主，正在考虑有卷积码、卷积Turbo码和低密度奇 LDPC码偶校验码多天线技术智能天线基本MIMO模型：下行2×2，上支持MIMO（多入多出）和AAS（自行1×2个天线，考虑最多4×4配置适应天线阵）两种不同的多天线实现方式 Chase合并与增量亢余 Chase合并与增量穴余HARQ， 采用最为简单的停-等（SAW）机制， HARQ 正在考虑异步HARQ和自适应 HARQ的控制开销最小并且对发射和接 HARQ HARQ 收的缓存要求最小 6.1.4 OFDM基本原理 1.OFDM原理介绍 OFDM起源于20世纪40年代的第二次世界大战时期，早期用于美国军队的高频通信",
+              "label": "材料"
+            },
+            {
+              "index": 3,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 4,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 5,
+              "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            }
+          ],
+          "membership_block": [],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [],
+          "question_line": "问题：哪份文档明确把 OFDMA 与 LTE 关联？",
+          "message_count": 2
+        },
+        "G1": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "269 当f.为较大的频率时， cos[2元(fk + f,)t+k+p,Jdt~0, 因为正好是整数个(k一j)积分周期，所以 cos2元 +-dt=0，证毕。 普通的频分复用（FDM）调制，为了避免载波间干扰，要求各载波之间留有一定的保护间隔（GP）。 FDM信号的功率谱如图6-2所示。 图中f，表示载波中心频率，Af表示调制信号带宽，GP表示载波间隔。 如果不同的载波传输不同用户的数据，则形成FDMA多址方式。 GP GP Af 图6-2FDM信号功率谱 OFDM信号的功率谱如图6-3所示。 图中f，表示OFDM子载波频率。 从图中可以看出， OFDM各子载波之间是相互重叠的，没有保护间隔，和FDM调制相比，频谱利用率明显提高。 应该说OFDM各子载波间功率谱的重叠不是随机的，而是有规律的，即在任意子载波的中心频率处的其他子载波的功率为零，这正是各子载波间相互正交特性在功率谱上的体现。 图6-3OFDM信号功率谱但此时的OFDM多址接入技术在实际系统应用中还存在众多难以克服的困难，主要表现有：每个子载波需要单独的信号振荡器用于信号的生成和调制，这对于硬件要求比较高， 且由于信号振荡器间的非同步，容易造成子载波间干扰； 同时，由于子载波信号的单独调制和生成，在子载波数量比较大的情况下，基带信号处理计算复杂度也很高。 OFDM的两个重要实用化设计方案的提出，为OFDM的大规模应用铺平了道路。 一个是1971年Weinstein和Ebert提出的采用离散傅里叶变换（DFT，DiscreteFourierTransform） 进行OFDM信号的调制和解调，使得OFDM各子载波信号的生成只需要一个信号振荡器， 从而使得OFDM调制的实现更为简便。 另一个重要设计是，Peled和Ruiz在1980年提出了在OFDM各子载波符号中引入循环前缀（CP，CyclicPrefix）的设计，从而使得OFDM 各子载波调制信号在复杂的传输信道中仍然能够保证正交性。",
+              "label": "材料"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所示。 表中对TD-SCDMA、LTE和802.16e三种系统的传输方案进行了简要对比。 表6-1LTE基本传输方案 TD-SCDMA 3GPPLTE 802.16e 多址技术 CDMA 下行OFDMA：上行SC-FDMA OFDMA 双工方式 TDD FDD和TDD尽可能融合，FDD FDD、TDD和FDD半双工半双工顿结构 10ms无线顿分为2个顿长10ms，分为10个子顿， 规定了5ms、10ms和20ms等多种不 5ms子顿 20个时隙同的顿结构每个子顿分为7个正下行7或6个OFDM符号； 上每个顿分为下行子顿和上行子顿，两子顿结构常时隙和DwPTS、GP、 行7或6个OFDM符号者之间用适当的保护时隙分隔 UpPTS三个特殊时隙调制方式 QPSK、16QAM QPSK、16QAM和64QAM BPSK、QPSK、16QAM、64QAM 编码方式卷积编码和Turbo码以Turbo码为主，正在考虑有卷积码、卷积Turbo码和低密度奇 LDPC码偶校验码多天线技术智能天线基本MIMO模型：下行2×2，上支持MIMO（多入多出）和AAS（自行1×2个天线，考虑最多4×4配置适应天线阵）两种不同的多天线实现方式 Chase合并与增量亢余 Chase合并与增量穴余HARQ， 采用最为简单的停-等（SAW）机制， HARQ 正在考虑异步HARQ和自适应 HARQ的控制开销最小并且对发射和接 HARQ HARQ 收的缓存要求最小 6.1.4 OFDM基本原理 1.OFDM原理介绍 OFDM起源于20世纪40年代的第二次世界大战时期，早期用于美国军队的高频通信",
+              "label": "材料"
+            },
+            {
+              "index": 3,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 4,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 5,
+              "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            }
+          ],
+          "membership_block": [
+            "[同源关系]\n组A: 材料1, 材料2\n组B: 材料3\n组C: 材料4\n组D: 材料5"
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [],
+          "question_line": "问题：哪份文档明确把 OFDMA 与 LTE 关联？",
+          "message_count": 2
+        }
+      },
+      "changed_keys": [
+        "membership_block"
+      ],
+      "held_keys": [
+        "model",
+        "system_message",
+        "materials",
+        "task_line",
+        "instruction_lines",
+        "question_line",
+        "message_count"
+      ],
+      "allowed_changed_keys": [
+        "membership_block"
+      ],
+      "AUTHORIZED_INTERVENTION_DIFF": "PASS",
+      "structural_checks": {
+        "evidence_text_unchanged": true,
+        "evidence_order_unchanged": true,
+        "canonical_title_content_and_position_unchanged": true,
+        "material_labels_unchanged": true,
+        "title_occurrence_count_unchanged": true,
+        "instruction_lines_unchanged": true,
+        "question_line_unchanged": true,
+        "system_message_unchanged": true
+      }
+    }
+  },
+  "truncation_audits": {
+    "md-009": {
+      "REQUEST_CHAR_LENGTH": {
+        "G0": 2582,
+        "G1": 2625
+      },
+      "REQUEST_TOKEN_LENGTH_IF_MECHANICALLY_AVAILABLE": {
+        "G0": 1577,
+        "G1": 1613
+      },
+      "MODEL_CONTEXT_LIMIT_IF_AVAILABLE": 8192,
+      "TRUNCATION_OCCURRED": "NO",
+      "ALL_ORIGINAL_EVIDENCE_MODEL_VISIBLE": "YES",
+      "ALL_ORIGINAL_TITLES_MODEL_VISIBLE": "YES",
+      "HISTORY_MODEL_VISIBLE": "YES",
+      "QUESTION_MODEL_VISIBLE": "YES"
+    },
+    "md-015": {
+      "REQUEST_CHAR_LENGTH": {
+        "G0": 2585,
+        "G1": 2636
+      },
+      "REQUEST_TOKEN_LENGTH_IF_MECHANICALLY_AVAILABLE": {
+        "G0": 1531,
+        "G1": 1573
+      },
+      "MODEL_CONTEXT_LIMIT_IF_AVAILABLE": 8192,
+      "TRUNCATION_OCCURRED": "NO",
+      "ALL_ORIGINAL_EVIDENCE_MODEL_VISIBLE": "YES",
+      "ALL_ORIGINAL_TITLES_MODEL_VISIBLE": "YES",
+      "HISTORY_MODEL_VISIBLE": "YES",
+      "QUESTION_MODEL_VISIBLE": "YES"
+    }
+  },
+  "per_case": {
+    "md-009": {
+      "query": "哪些文档提到了 RAKE 接收机？",
+      "history": null,
+      "scope": "none",
+      "expected_documents": [
+        "移动通信 (李兆玉)",
+        "移动通信测试文档"
+      ],
+      "v48_historical_C0_raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][5]",
+      "conditions": {
+        "G0": {
+          "A": "A0",
+          "B": "B0",
+          "run_count": 1,
+          "raw_answers": [
+            "材料1、材料2和材料5都提到了RAKE接收机。[1][2][5]"
+          ],
+          "raw_answer_sha256": [
+            "b113d5a153f2dab4b95f9e6339afd032a975862d9d1020a625f6969fdebf9e3c"
+          ],
+          "observables": [
+            {
+              "O1_CANONICAL_TITLE_EMITTED": "NO",
+              "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+              "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+              "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+              "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+              "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+              "O7_ROLE_TERM_EMITTED": "NO",
+              "_expected_titles": [
+                "移动通信 (李兆玉)",
+                "移动通信测试文档"
+              ],
+              "_emitted_titles": [],
+              "_invented_document_identities": [],
+              "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+              "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+              "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+            }
+          ],
+          "Y": [
+            0
+          ]
+        },
+        "G1": {
+          "A": "A0",
+          "B": "B0",
+          "G": "G1",
+          "run_count": 1,
+          "raw_answers": [
+            "材料1、材料2、材料3和材料4都提到了RAKE接收机。[组A]"
+          ],
+          "raw_answer_sha256": [
+            "a5f10d4016f1015cf15c70631ac9ced41ca7914436633d621bd49575407944c5"
+          ],
+          "observables": [
+            {
+              "O1_CANONICAL_TITLE_EMITTED": "NO",
+              "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+              "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+              "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+              "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+              "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+              "O7_ROLE_TERM_EMITTED": "NO",
+              "_expected_titles": [
+                "移动通信 (李兆玉)",
+                "移动通信测试文档"
+              ],
+              "_emitted_titles": [],
+              "_invented_document_identities": [],
+              "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+              "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+              "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+            }
+          ],
+          "Y": [
+            0
+          ]
+        }
+      },
+      "RESIDUAL_FAILURE_REPRODUCED": "YES",
+      "G0_RUN_COUNT": 1,
+      "G1_RUN_COUNT": 1,
+      "G0_Y": [
+        0
+      ],
+      "G1_Y": [
+        0
+      ],
+      "G0_SUCCESS_RATE": 0.0,
+      "G1_SUCCESS_RATE": 0.0,
+      "DELTA_G": 0.0,
+      "EXPLICIT_MEMBERSHIP_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "EXPLICIT_MEMBERSHIP_ISOLATED": "NO",
+      "CHUNK_TO_DOCUMENT_AGGREGATION_HYPOTHESIS_STATUS": "NOT_SUPPORTED_BY_THIS_OPERATIONALIZATION",
+      "SOURCE_REFERENT_PRESERVED": "YES",
+      "FACTUAL_CONTENT_PRESERVED": "YES",
+      "DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+      "TITLE_SALIENCE_CONFOUNDED": "NO",
+      "ORDER_CONFOUNDED": "NO",
+      "TRUNCATION_OCCURRED": "NO",
+      "AUTHORIZED_INTERVENTION_DIFF": "PASS",
+      "PAIR_RUNTIME_VALIDITY": "PASS",
+      "COUNTERFACTUAL_VALIDITY": "PASS",
+      "RESIDUAL_MECHANISM_STATUS": "MEMBERSHIP_REPRESENTATION_UNRESPONSIVE"
+    },
+    "md-015": {
+      "query": "哪份文档明确把 OFDMA 与 LTE 关联？",
+      "history": null,
+      "scope": "none",
+      "expected_documents": [
+        "移动通信测试文档"
+      ],
+      "v48_historical_C0_raw_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+      "conditions": {
+        "G0": {
+          "A": "A0",
+          "B": "B0",
+          "run_count": 1,
+          "raw_answers": [
+            "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。"
+          ],
+          "raw_answer_sha256": [
+            "0ca171f63bb69488e65e76f70d4807d479c90d39e1f12ea9f3dcaec0590e6580"
+          ],
+          "observables": [
+            {
+              "O1_CANONICAL_TITLE_EMITTED": "NO",
+              "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+              "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+              "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+              "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+              "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+              "O7_ROLE_TERM_EMITTED": "NO",
+              "_expected_titles": [
+                "移动通信测试文档"
+              ],
+              "_emitted_titles": [],
+              "_invented_document_identities": [],
+              "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+              "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+              "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+            }
+          ],
+          "Y": [
+            0
+          ]
+        },
+        "G1": {
+          "A": "A0",
+          "B": "B0",
+          "G": "G1",
+          "run_count": 1,
+          "raw_answers": [
+            "材料2明确把OFDMA与LTE关联[2]。具体表现在材料2中提到“下行OFDMA：上行SC-FDMA”以及“6.1.4 OFDM基本原理 1.OFDM原理介绍 OFDM起源于20世纪40年代的第二次世界大战时期，早期用于美国军队的高频通信”，虽然直接关联词不出现，但通过对比表中信息可以推断OFDMA是LTE的一种传输方案。[2]"
+          ],
+          "raw_answer_sha256": [
+            "fd4d7775f3b7d253344c1c26ee8e6e290ae45517eca01e25ad7d18b2c745b449"
+          ],
+          "observables": [
+            {
+              "O1_CANONICAL_TITLE_EMITTED": "NO",
+              "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+              "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+              "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+              "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+              "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+              "O7_ROLE_TERM_EMITTED": "NO",
+              "_expected_titles": [
+                "移动通信测试文档"
+              ],
+              "_emitted_titles": [],
+              "_invented_document_identities": [],
+              "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+              "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+              "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+            }
+          ],
+          "Y": [
+            0
+          ]
+        }
+      },
+      "RESIDUAL_FAILURE_REPRODUCED": "YES",
+      "G0_RUN_COUNT": 1,
+      "G1_RUN_COUNT": 1,
+      "G0_Y": [
+        0
+      ],
+      "G1_Y": [
+        0
+      ],
+      "G0_SUCCESS_RATE": 0.0,
+      "G1_SUCCESS_RATE": 0.0,
+      "DELTA_G": 0.0,
+      "EXPLICIT_MEMBERSHIP_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "EXPLICIT_MEMBERSHIP_ISOLATED": "NO",
+      "CHUNK_TO_DOCUMENT_AGGREGATION_HYPOTHESIS_STATUS": "NOT_SUPPORTED_BY_THIS_OPERATIONALIZATION",
+      "SOURCE_REFERENT_PRESERVED": "YES",
+      "FACTUAL_CONTENT_PRESERVED": "YES",
+      "DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+      "TITLE_SALIENCE_CONFOUNDED": "NO",
+      "ORDER_CONFOUNDED": "NO",
+      "TRUNCATION_OCCURRED": "NO",
+      "AUTHORIZED_INTERVENTION_DIFF": "PASS",
+      "PAIR_RUNTIME_VALIDITY": "PASS",
+      "COUNTERFACTUAL_VALIDITY": "PASS",
+      "RESIDUAL_MECHANISM_STATUS": "MEMBERSHIP_REPRESENTATION_UNRESPONSIVE"
+    }
+  },
+  "product_observables": {
+    "md-009": {
+      "G0": [
+        {
+          "O1_CANONICAL_TITLE_EMITTED": "NO",
+          "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+          "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+          "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+          "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+          "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+          "O7_ROLE_TERM_EMITTED": "NO",
+          "_expected_titles": [
+            "移动通信 (李兆玉)",
+            "移动通信测试文档"
+          ],
+          "_emitted_titles": [],
+          "_invented_document_identities": [],
+          "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+          "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+          "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+        }
+      ],
+      "G1": [
+        {
+          "O1_CANONICAL_TITLE_EMITTED": "NO",
+          "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+          "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+          "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+          "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+          "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+          "O7_ROLE_TERM_EMITTED": "NO",
+          "_expected_titles": [
+            "移动通信 (李兆玉)",
+            "移动通信测试文档"
+          ],
+          "_emitted_titles": [],
+          "_invented_document_identities": [],
+          "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+          "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+          "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+        }
+      ]
+    },
+    "md-015": {
+      "G0": [
+        {
+          "O1_CANONICAL_TITLE_EMITTED": "NO",
+          "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+          "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+          "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+          "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+          "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+          "O7_ROLE_TERM_EMITTED": "NO",
+          "_expected_titles": [
+            "移动通信测试文档"
+          ],
+          "_emitted_titles": [],
+          "_invented_document_identities": [],
+          "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+          "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+          "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+        }
+      ],
+      "G1": [
+        {
+          "O1_CANONICAL_TITLE_EMITTED": "NO",
+          "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+          "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+          "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+          "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+          "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+          "O7_ROLE_TERM_EMITTED": "NO",
+          "_expected_titles": [
+            "移动通信测试文档"
+          ],
+          "_emitted_titles": [],
+          "_invented_document_identities": [],
+          "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+          "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+          "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+        }
+      ]
+    }
+  },
+  "measurement_supporting_observables": {
+    "md-009": {
+      "G0": {
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "ROLE_TERM_MATCH": "NO",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "note": "SUPPORTING_ONLY (never feeds primary Y)"
+      },
+      "G1": {
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "ROLE_TERM_MATCH": "NO",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "note": "SUPPORTING_ONLY (never feeds primary Y)"
+      }
+    },
+    "md-015": {
+      "G0": {
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "ROLE_TERM_MATCH": "NO",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "note": "SUPPORTING_ONLY (never feeds primary Y)"
+      },
+      "G1": {
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "ROLE_TERM_MATCH": "NO",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "note": "SUPPORTING_ONLY (never feeds primary Y)"
+      }
+    }
+  },
+  "historical_control_consistency": {
+    "md-009": {
+      "new_G0_raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][5]",
+      "v48_historical_C0_raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][5]",
+      "exact_text_match": true,
+      "HISTORICAL_CONTROL_PHENOTYPE_MATCH": "YES"
+    },
+    "md-015": {
+      "new_G0_raw_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+      "v48_historical_C0_raw_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+      "exact_text_match": true,
+      "HISTORICAL_CONTROL_PHENOTYPE_MATCH": "YES"
+    }
+  },
+  "per_case_membership_results": {
+    "md-009": {
+      "GROUPING_INFORMATION_NONTRIVIAL": "YES",
+      "RESIDUAL_FAILURE_REPRODUCED": "YES",
+      "G0_RUN_COUNT": 1,
+      "G1_RUN_COUNT": 1,
+      "G0_Y": [
+        0
+      ],
+      "G1_Y": [
+        0
+      ],
+      "DELTA_G": 0.0,
+      "EXPLICIT_MEMBERSHIP_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "EXPLICIT_MEMBERSHIP_ISOLATED": "NO",
+      "CHUNK_TO_DOCUMENT_AGGREGATION_HYPOTHESIS_STATUS": "NOT_SUPPORTED_BY_THIS_OPERATIONALIZATION",
+      "SOURCE_REFERENT_PRESERVED": "YES",
+      "FACTUAL_CONTENT_PRESERVED": "YES",
+      "DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+      "TITLE_SALIENCE_CONFOUNDED": "NO",
+      "ORDER_CONFOUNDED": "NO",
+      "TRUNCATION_OCCURRED": "NO",
+      "AUTHORIZED_INTERVENTION_DIFF": "PASS",
+      "PAIR_RUNTIME_VALIDITY": "PASS",
+      "COUNTERFACTUAL_VALIDITY": "PASS",
+      "RESIDUAL_MECHANISM_STATUS": "MEMBERSHIP_REPRESENTATION_UNRESPONSIVE"
+    },
+    "md-015": {
+      "GROUPING_INFORMATION_NONTRIVIAL": "YES",
+      "RESIDUAL_FAILURE_REPRODUCED": "YES",
+      "G0_RUN_COUNT": 1,
+      "G1_RUN_COUNT": 1,
+      "G0_Y": [
+        0
+      ],
+      "G1_Y": [
+        0
+      ],
+      "DELTA_G": 0.0,
+      "EXPLICIT_MEMBERSHIP_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "EXPLICIT_MEMBERSHIP_ISOLATED": "NO",
+      "CHUNK_TO_DOCUMENT_AGGREGATION_HYPOTHESIS_STATUS": "NOT_SUPPORTED_BY_THIS_OPERATIONALIZATION",
+      "SOURCE_REFERENT_PRESERVED": "YES",
+      "FACTUAL_CONTENT_PRESERVED": "YES",
+      "DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+      "TITLE_SALIENCE_CONFOUNDED": "NO",
+      "ORDER_CONFOUNDED": "NO",
+      "TRUNCATION_OCCURRED": "NO",
+      "AUTHORIZED_INTERVENTION_DIFF": "PASS",
+      "PAIR_RUNTIME_VALIDITY": "PASS",
+      "COUNTERFACTUAL_VALIDITY": "PASS",
+      "RESIDUAL_MECHANISM_STATUS": "MEMBERSHIP_REPRESENTATION_UNRESPONSIVE"
+    }
+  },
+  "residual_subset_shared_membership_support": "NO",
+  "heterogeneous_residual_response": "NO",
+  "mixed_residual_mechanisms": "NOT_ESTABLISHED",
+  "explicit_membership_representation_causal_support": "NO",
+  "explicit_membership_representation_isolation": "NO",
+  "chunk_to_document_aggregation_hypothesis_status": "NOT_SUPPORTED_BY_THIS_OPERATIONALIZATION",
+  "generation_mechanism_isolation": "NOT_ESTABLISHED",
+  "control_reference_state": {
+    "MD004_REFERENCE_PAIR_REQUIRED": "NO",
+    "CONTROL_REFERENCE_EXECUTED": "NO",
+    "G0_Y": "NOT_RUN",
+    "G1_Y": "NOT_RUN",
+    "CONTROL_REFERENCE_NO_REGRESSION": "NOT_RUN",
+    "CONTROL_REFERENCE_GENERALIZATION_SIGNAL": "NOT_RUN",
+    "V4_8_M1_M2_CLASSIFICATION_CHANGED": "NO"
+  },
+  "remediation_readiness": {
+    "MEMBERSHIP_REPRESENTATION_REMEDIATION_CANDIDATE": "NOT_ESTABLISHED",
+    "READY_FOR_SEPARATE_MEMBERSHIP_REMEDIATION_AUTHORIZATION": "NO",
+    "PRODUCT_REMEDIATION_AUTHORIZED": "NO"
+  },
+  "product_remediation_authorized": false,
+  "changed_path_boundary": {
+    "AUTHORIZED_V4_8_1_PATHS": [
+      "eval/v4_8_1_preflight_snapshot.json",
+      "eval/v4_8_1_residual_generation_mechanism_isolation.json",
+      "docs/V4_8_1_RESIDUAL_GENERATION_MECHANISM_ISOLATION.md",
+      "scripts/analyze_v4_8_1_residual_generation.py",
+      "tests/test_v4_8_1_residual_generation_diagnosis.py"
+    ],
+    "ACTUAL_CHANGED_PATHS": [
+      "eval/v4_8_1_preflight_snapshot.json",
+      "eval/v4_8_1_residual_generation_mechanism_isolation.json",
+      "docs/V4_8_1_RESIDUAL_GENERATION_MECHANISM_ISOLATION.md",
+      "scripts/analyze_v4_8_1_residual_generation.py",
+      "tests/test_v4_8_1_residual_generation_diagnosis.py"
+    ],
+    "ACTUAL_CHANGED_PATHS_SUBSET_OF_AUTHORIZED": "YES",
+    "CHANGE_BOUNDARY": "PASS",
+    "NON_AUTHORIZED_CHANGES": "NONE (pre-change manifest digest unchanged; only V4.8.1 paths differ)"
+  },
+  "integrity_results": {
+    "V4_8_ARTIFACTS_MODIFIED": "NO",
+    "V4_7_ARTIFACTS_MODIFIED": "NO",
+    "PRODUCT_CODE_MODIFIED": "NO",
+    "PRODUCTION_PROMPT_MODIFIED": "NO",
+    "CONTEXT_PIPELINE_MODIFIED": "NO",
+    "RETRIEVAL_MODIFIED": "NO",
+    "RANKING_MODIFIED": "NO",
+    "RUNTIME_DB_MODIFIED": "NO",
+    "EMBEDDINGS_MODIFIED": "NO",
+    "GOLDEN_MODIFIED": "NO",
+    "EVALUATOR_MODIFIED": "NO",
+    "CITATION_SEMANTICS_MODIFIED": "NO",
+    "BASELINE_CHANGED": "NO",
+    "PRODUCT_METRICS_RECOMPUTED": "NO",
+    "HISTORICAL_CLAIM_STRENGTH_CHANGED": "NO",
+    "PRESTATE_SNAPSHOT_OVERWRITTEN": "NO"
+  },
+  "gate_results": {
+    "G_PRODUCTION_HASH_UNCHANGED": "PASS",
+    "G_PREFLIGHT_SNAPSHOT_LOCKED": "PASS",
+    "G_EXPERIMENT_DESIGN_FROZEN": "PASS",
+    "G_ONLY_FACTOR_G_CHANGED": "PASS",
+    "G_INFORMATION_FIREWALL": "PASS",
+    "G_NO_TRUNCATION": "PASS",
+    "G_CALL_ORDER_FROZEN": "PASS",
+    "G_REPLICATION_SYMMETRIC": "PASS"
+  },
+  "V4_8_1_PROTOCOL_EXECUTION": "PASS",
+  "timestamp": "2026-09-13T02:12:59",
+  "production_hash_after": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "recompute": {
+    "mode": "FROZEN_EVIDENCE_REANALYSIS_NO_MODEL_CALLS",
+    "V4_8_1_RAW_EVIDENCE_REUSED": "YES",
+    "NEW_MODEL_CALLS": 0,
+    "NEW_COUNTERFACTUAL_RUNS": 0,
+    "NEW_RETRIEVAL_RUNS": 0,
+    "reason": "derived-layer completion: measurement-supporting observables (§42/§43) and the historical-control phenotype match (§34) were added; raw answers, request digests and intervention audits are preserved verbatim"
+  }
+}

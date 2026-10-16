@@ -1,0 +1,1690 @@
+{
+  "artifact_type": "WS13_CITATION_FRESH_ATTRIBUTION_DESIGN_CONTRACT",
+  "checkpoint": "WS13_G1_FRESH_ATTRIBUTION_DESIGN_CONTRACT",
+  "mode": "DESIGN-CONTRACT FREEZE WITH ONE CONDITIONAL GOVERNED ARTIFACT WRITE",
+  "artifact_stage": "DESIGN_FROZEN_PENDING_POST_WRITE_VALIDATION",
+  "artifact_stage_note": "the artifact is finalized before post-write validation and stores no final checkpoint status; the post-write console status is external to this artifact",
+  "workspace_role_binding": {
+    "active_v4_workspace_role": "ACTIVE_V4 (the only writable V4 workspace)",
+    "all_paths_in_this_artifact_are_relative_to": "ACTIVE V4 workspace root",
+    "v3_workspace": "FROZEN / READ-ONLY / UNTOUCHED",
+    "publish_workspace": "READ-ONLY / NO SYNC / NO WRITE / NO GIT MUTATION",
+    "git_init_commit_push_tag_release": "NOT_PERFORMED",
+    "absolute_paths_in_design_semantic_payload": "NONE"
+  },
+  "parent_g0": {
+    "path": "eval/v4_ws13_citation_fresh_attribution_preflight.json",
+    "raw_sha256": "fc84f0205008f3b505722ab1a73fded1e6ebced123bc5bb69319fd5d744e1556",
+    "raw_sha256_recomputed_live": "fc84f0205008f3b505722ab1a73fded1e6ebced123bc5bb69319fd5d744e1556",
+    "raw_sha256_match": "YES",
+    "status": "FINAL_ACCEPTED",
+    "checked_fields": {
+      "artifact_type": "WS13_CITATION_FRESH_ATTRIBUTION_PREFLIGHT",
+      "checkpoint": "WS13_G0_PREFLIGHT_AND_SCOPE_BINDING",
+      "artifact_stage": "PRE_WRITE_GATES_PASSED_PENDING_POST_WRITE_VALIDATION",
+      "PRIMARY_TARGET_CASE_IDS": [
+        "cit-001"
+      ],
+      "CONTROL_CASE_IDS": [],
+      "CURRENT_CITATION_STATUS": "NOT_EVALUATED_IN_G0",
+      "SCIENTIFIC_ATTRIBUTION_PERFORMED": "NO",
+      "CANONICAL_NARROW_REPLAY_TECHNICALLY_POSSIBLE": "YES",
+      "OBSERVATION_EQUIVALENCE_DESIGN_PATH_IDENTIFIED": "YES"
+    },
+    "identity_check": "ALL_G0_EXPECTED_FIELDS_MATCH",
+    "g0_blockers": []
+  },
+  "source_identities": {
+    "verification_method": "raw sha256 recomputed mechanically in the ACTIVE V4 workspace before the single governed write and compared against the accepted G0 identity; no expected value was modified",
+    "current_master": {
+      "path": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+      "expected_raw_sha256": "f29d4df55cdabfd03eba02c5cb68ea086c990c45bb92f121cc08399b82d40702",
+      "observed_raw_sha256": "f29d4df55cdabfd03eba02c5cb68ea086c990c45bb92f121cc08399b82d40702",
+      "identity_match": "YES"
+    },
+    "priority_machine_artifact": {
+      "path": "eval/v4_post_v4_8_2_next_workstream_priority_review.json",
+      "expected_raw_sha256": "d80053040f4bbb55f48a95050528f5f3933e408a079888ee6d962e7113752670",
+      "observed_raw_sha256": "d80053040f4bbb55f48a95050528f5f3933e408a079888ee6d962e7113752670",
+      "identity_match": "YES"
+    },
+    "priority_human_report": {
+      "path": "docs/V4_POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW.md",
+      "expected_raw_sha256": "da463797e160210e507be3980207eb3a3f69a8a5f401e288b7bef7d91879fc6d",
+      "observed_raw_sha256": "da463797e160210e507be3980207eb3a3f69a8a5f401e288b7bef7d91879fc6d",
+      "identity_match": "YES"
+    },
+    "priority_harness": {
+      "path": "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+      "expected_raw_sha256": "2ec9219df3774251b3e7e0e4a292c7d7bc16524f4d65ae73eb4598d17cca7471",
+      "observed_raw_sha256": "2ec9219df3774251b3e7e0e4a292c7d7bc16524f4d65ae73eb4598d17cca7471",
+      "identity_match": "YES"
+    },
+    "priority_tests": {
+      "path": "tests/test_v4_post_v4_8_2_priority_review.py",
+      "expected_raw_sha256": "e235097900581710a0958cd8bc4292295568040f318aa1bb5367e6878293d173",
+      "observed_raw_sha256": "e235097900581710a0958cd8bc4292295568040f318aa1bb5367e6878293d173",
+      "identity_match": "YES"
+    },
+    "design_amendments_a001_to_a009": {
+      "001": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+        "accepted_raw_sha256": "11c7caa096637d13c62abefc1fce65b1e13978ab5a6850ed365368ffebe1ee8f",
+        "observed_raw_sha256": "11c7caa096637d13c62abefc1fce65b1e13978ab5a6850ed365368ffebe1ee8f",
+        "match": "YES"
+      },
+      "002": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json",
+        "accepted_raw_sha256": "48a6c8eca47ca969d536929f927fea7f684803c79a4b6945c51686b496a1325b",
+        "observed_raw_sha256": "48a6c8eca47ca969d536929f927fea7f684803c79a4b6945c51686b496a1325b",
+        "match": "YES"
+      },
+      "003": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json",
+        "accepted_raw_sha256": "2e8e20d411edd10bd071c0534553d2bec825a9ed3bfd684ad95d73b24607a88b",
+        "observed_raw_sha256": "2e8e20d411edd10bd071c0534553d2bec825a9ed3bfd684ad95d73b24607a88b",
+        "match": "YES"
+      },
+      "004": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_004.json",
+        "accepted_raw_sha256": "2e2da080775dc2a79b23e7b2abb80987d2f8650cf4b90eed0e5088d3d8cc6df2",
+        "observed_raw_sha256": "2e2da080775dc2a79b23e7b2abb80987d2f8650cf4b90eed0e5088d3d8cc6df2",
+        "match": "YES"
+      },
+      "005": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json",
+        "accepted_raw_sha256": "c036aba9e5f2a773c4c73219242ffc13d2fee756e4fa890769f13045377c573e",
+        "observed_raw_sha256": "c036aba9e5f2a773c4c73219242ffc13d2fee756e4fa890769f13045377c573e",
+        "match": "YES"
+      },
+      "006": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_006.json",
+        "accepted_raw_sha256": "94601281c3d02b2c07fd1e8ff7fd7d31360a14edca1de880d74be492212c7eef",
+        "observed_raw_sha256": "94601281c3d02b2c07fd1e8ff7fd7d31360a14edca1de880d74be492212c7eef",
+        "match": "YES"
+      },
+      "007": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_007.json",
+        "accepted_raw_sha256": "e9787de99ffba69e4ad4172bd65d8fecc7b4461fc740aaa24ccacc72020adae6",
+        "observed_raw_sha256": "e9787de99ffba69e4ad4172bd65d8fecc7b4461fc740aaa24ccacc72020adae6",
+        "match": "YES"
+      },
+      "008": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_008.json",
+        "accepted_raw_sha256": "4678036cbab70e2a18a97d814977fb3f02b7f9878fed18ced64c12c4b7d3fc3f",
+        "observed_raw_sha256": "4678036cbab70e2a18a97d814977fb3f02b7f9878fed18ced64c12c4b7d3fc3f",
+        "match": "YES"
+      },
+      "009": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_009.json",
+        "accepted_raw_sha256": "78a936b4922394071686137e4ed506bef33f8a1cae2b1e93b0aa166525a15410",
+        "observed_raw_sha256": "78a936b4922394071686137e4ed506bef33f8a1cae2b1e93b0aa166525a15410",
+        "match": "YES"
+      },
+      "a001_to_a009_identity_check": "ALL_MATCH_9_OF_9"
+    },
+    "historical_provenance_only": {
+      "historical_priority_review_era_master_raw_sha256": "2db9292d8785ce138f74d2e2e7d250ec95ec60b1cdeb2b39a08d3c8b9b804800",
+      "historical_r4s_close_anchor_priority_harness_raw_sha256": "3bab1662bf19fa7f084f88431c0ec852ded79c51195a1f2d720edca7510983e2",
+      "historical_pre_prr_fc1_priority_tests_raw_sha256": "17a79f6376ac944674f61eb98c8561e126bba787de5186d5cfce791b3ebd1474",
+      "role": "HISTORICAL_PROVENANCE_ONLY_NEVER_RE_PINNED_AS_CURRENT"
+    }
+  },
+  "product_state": {
+    "current_release": "v4.0.0-alpha.2",
+    "current_release_evidence": "eval/v4_8_2_residual_differential_attribution.json#/current_release (accepted machine artifact) corroborated by the release prose snapshot",
+    "current_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+    "current_baseline_source": "eval/v4_baseline_lineage.json#/current_baseline_id (recomputed read-only)",
+    "current_baseline_artifact": "eval/v4_6_2_hash_portability_baseline.json",
+    "product_metrics_source": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+    "product_metrics_source_evidence": "eval/v4_6_2_hash_portability_baseline.json#/measurement_provenance/metrics_source with metrics_recomputed_in_stage = false",
+    "canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "production_hash_contract": "sha256-path-content-v2-canonical-lf",
+    "production_hash_recomputed_live": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "production_hash_live_match": "YES",
+    "production_hash_computation": "read-only canonical recomputation over the frozen production trees core/ desktop/ web through the governed harness replication of the frozen production source hash",
+    "new_product_baseline": "NO",
+    "baseline_advancement": "NO",
+    "release_advancement": "NO",
+    "product_code_change": "NO",
+    "product_metrics_changed": "NO"
+  },
+  "runtime_identity_state": {
+    "answer_model": "qwen2.5:7b",
+    "answer_model_evidence": "core/config.py#ANSWER_MODEL (read-only import; observed qwen2.5:7b); eval/v4_6_2_hash_portability_baseline.json#/evaluator_identity/answer_model",
+    "embedding_model": "bge-m3",
+    "embedding_model_evidence": "core/config.py#EMBEDDING_MODEL (read-only import; observed bge-m3)",
+    "embedding_dimension": 1024,
+    "embedding_dimension_evidence": "core/library_store.py#EMBEDDING_PROFILES['bge-m3'].dimension (read-only import; observed 1024)",
+    "vector_backend": "sqlite",
+    "vector_backend_evidence": "core/config.py#VECTOR_BACKEND (read-only import; observed sqlite)",
+    "runtime_db_path": "data/library/documents.sqlite3",
+    "runtime_db_identity_before": "10698752:c6bc9b3eb63ae4e6",
+    "runtime_db_full_sha256_before": "c6bc9b3eb63ae4e6d96caf859a2b0c5f2f1e5a5b6f438e81aa0bbc3cf4084c97",
+    "runtime_db_identity_before_matches_expected": "YES",
+    "runtime_db_inspection_mode": "STRICT_READ_ONLY_BYTE_HASH_AND_STAT_ONLY (no sqlite connection, no VACUUM, no checkpoint, no migration, no insert/update/delete, no reindex, no journal write, no WAL write)",
+    "citation_verifier_version": "f2-v4",
+    "citation_verifier_version_evidence": "core/citation_verifier.py#CITATION_VERIFIER_VERSION (read-only import; observed f2-v4)",
+    "evaluator_version": "v4-baseline-v1",
+    "evaluator_version_evidence": "scripts/eval_v4_baseline.py#EVALUATOR_VERSION; eval/v4_6_2_hash_portability_baseline.json#/evaluator_identity/evaluator_version",
+    "superseded_reference_note": "\"10698752:c6bc9b3eb63ae3e6\" is a SUPERSEDED_PROMPT_REFERENCE_TYPO and is never treated as an expected / historical / baseline / current identity"
+  },
+  "pre_g1_workspace_provenance": {
+    "accepted_provenance_source": "WS13 G0 agent final console accepted provenance",
+    "evidence_level": "ACCEPTED_AGENT_REPORTED_CHECKPOINT_PROVENANCE",
+    "g0_reported_post_write_workspace_manifest_entry_count": 19665,
+    "g0_reported_post_write_workspace_manifest_digest": "232d2340520f188fba6d43f185d4a109fe2f44cba001dd8622e766826e5e5289",
+    "live_recomputed_pre_g1_workspace_manifest_entry_count": 19665,
+    "live_recomputed_pre_g1_workspace_manifest_digest": "232d2340520f188fba6d43f185d4a109fe2f44cba001dd8622e766826e5e5289",
+    "live_recomputation_count": 2,
+    "live_recomputation_deterministic": "YES",
+    "matches_accepted_g0_reported_workspace_state": "YES",
+    "rule": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "role": "CHECKPOINT_START_DRIFT_GUARD_ONLY (not a future permanent workspace invariant)"
+  },
+  "design_semantic_payload": {
+    "target_scope": {
+      "PRIMARY_TARGET_CASE_IDS": [
+        "cit-001"
+      ],
+      "CONTROL_CASE_IDS": [],
+      "target_source": "eval/v4_post_v4_8_2_next_workstream_priority_review.json#/criterion_records/P5/EVIDENCE_TRACE/PER_WORKSTREAM/WS-13/CURRENT_ACTION_TARGET_CASE_IDS with CURRENT_ACTION_TARGET_SOURCE = FROZEN_R3_DOMAIN_ELIGIBLE_CASE_IDS",
+      "target_expansion_allowed": "NO",
+      "control_case_addition_allowed": "NO",
+      "control_requirement_resolution": "NOT_REQUIRED: the observation-equivalence contract is established mechanically by deterministic read-only capture, canonical serialization and hashing rules that are decidable and testable on the single primary target alone (capture-phase determinism, same-run self-consistency between recorded model-visible context and recorded answer, stability of the frozen semantic key set, reproducibility of the canonical digests). No real control case is required to design or test those rules, therefore BLOCKED_CONTROL_REQUIRED_BUT_NOT_AUTHORIZED does not apply.",
+      "control_independence_requirement": "NOT_APPLICABLE_NO_CONTROL_CASE_AUTHORIZED"
+    },
+    "canonical_case_contract": {
+      "CASE_ID": "cit-001",
+      "SOURCE": "eval/v3_final_golden.json",
+      "RAW_SHA256": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+      "CANONICAL_LF_SHA256": "872cf0604d0e31dce02ee8d9f7be02a6c63f671a443496194d9b5f056f9e1171",
+      "LOCATOR": "#/cases[165]",
+      "ELIGIBLE_INDEX": "124 / 144",
+      "QUERY": "GSM 使用 GMSK 调制，请指出出处。",
+      "HISTORY": null,
+      "EXPECTED_ROUTE": "qa",
+      "EXPECTED_REFUSAL": false,
+      "EXPECTED_ANSWER_FACTS": [
+        "GMSK"
+      ],
+      "EXPECTED_ENTITIES": [
+        "GSM",
+        "GMSK"
+      ],
+      "CATEGORY": "citation_negative",
+      "NOTES": "验证 citation validity + support",
+      "GOLDEN_VERSION": "f4-v1",
+      "GOLDEN_CASES_SHA256": "0837e83333c858c6fe0229a06f9e0a3efb25505b03bab5acc3148a6b0af2ad5e",
+      "GOLDEN_TOTAL_CASES": 185,
+      "GOLDEN_ANSWER_ELIGIBLE_CASES": 144,
+      "binding_evidence": "recomputed read-only: #/cases[165] carries id=cit-001 with the frozen contract fields above; it is the 124th (0-based) of the 144 answer-eligible rows; scripts/eval_v4_baseline.py#GOLDEN binds the single canonical evaluation case source",
+      "contract_is_immutable": "YES",
+      "contract_change_requires": "future design amendment; never an in-place edit"
+    },
+    "observation_schema": {
+      "schema_version": "v4-ws13-citation-fresh-attribution-observation-schema-v1",
+      "schema_role": "frozen future G4 observation record shape; every classification-critical field declares its mechanical source, capture phase, semantic role and missing-field behavior",
+      "capture_phase_vocabulary": [
+        "RUN_METADATA",
+        "PRE_INVOCATION",
+        "POST_SCOPE_RESOLUTION",
+        "POST_ROUTING",
+        "POST_HISTORY_RESOLUTION",
+        "POST_RETRIEVAL",
+        "POST_CONTEXT_SERIALIZATION",
+        "POST_GENERATION_RAW",
+        "POST_CITATION_PIPELINE",
+        "POST_VERIFIER",
+        "POST_MEASUREMENT"
+      ],
+      "field_entry_key_order": [
+        "source",
+        "capture_phase",
+        "semantic_role",
+        "missing_field_behavior"
+      ],
+      "missing_field_behavior_vocabulary": [
+        "FAIL_CLOSED_NOT_ESTABLISHED",
+        "PROVENANCE_ONLY_MAY_BE_NULL",
+        "CANONICAL_UNSET_VALUE_RECORDED"
+      ],
+      "capture_is_non_invasive": "the future observer obtains every field as a return value or data attribute of an unmodified canonical function invoked on the canonical path; no prompt change, no retrieval override, no monkeypatch, no postprocessor replacement, no synthetic completion",
+      "field_groups": {
+        "run_identity": {
+          "run_id": {
+            "source": "future governed observer run record (observer-owned identifier; not a production object)",
+            "capture_phase": "RUN_METADATA",
+            "semantic_role": "PROVENANCE_ONLY",
+            "missing_field_behavior": "PROVENANCE_ONLY_MAY_BE_NULL"
+          },
+          "run_ordinal": {
+            "source": "future governed observer run record; execution position inside the frozen 3-run sequence",
+            "capture_phase": "RUN_METADATA",
+            "semantic_role": "SEMANTIC_EXECUTION_POSITION",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "observation_timestamp": {
+            "source": "future governed observer run record (wall-clock capture time)",
+            "capture_phase": "RUN_METADATA",
+            "semantic_role": "PROVENANCE_ONLY",
+            "missing_field_behavior": "PROVENANCE_ONLY_MAY_BE_NULL"
+          }
+        },
+        "case_identity": {
+          "case_id": {
+            "source": "eval/v3_final_golden.json#/cases[165]/id",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_CASE_CONTRACT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "canonical_case_source_identity": {
+            "source": "canonical_case_contract RAW_SHA256 + CANONICAL_LF_SHA256 recomputed read-only from eval/v3_final_golden.json",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_CASE_CONTRACT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "golden_locator": {
+            "source": "canonical_case_contract LOCATOR (#/cases[165]); row index + eligible index frozen read-only",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_CASE_CONTRACT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "canonical_query": {
+            "source": "eval/v3_final_golden.json#/cases[165]/query",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_CASE_CONTRACT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "canonical_history": {
+            "source": "eval/v3_final_golden.json#/cases[165] history member; the case carries no history member and the canonical evaluator passes case.get(\"history\")",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_CASE_CONTRACT",
+            "missing_field_behavior": "CANONICAL_UNSET_VALUE_RECORDED (null is the canonical value, never treated as a missing field)"
+          },
+          "expected_fact_contract": {
+            "source": "eval/v3_final_golden.json#/cases[165] expected_answer_facts / expected_route / expected_refusal / expected_entities / category / notes",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_CASE_CONTRACT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          }
+        },
+        "state_identity": {
+          "master_identity": {
+            "source": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md raw sha256 recomputed read-only",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "production_hash": {
+            "source": "scripts/eval_v4_baseline.py#production_source_hash recomputed read-only over core/desktop/web",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "release": {
+            "source": "accepted release identity (current_release) recorded by the accepted product-state artifacts",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "baseline": {
+            "source": "eval/v4_baseline_lineage.json#/current_baseline_id",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "golden_identity": {
+            "source": "eval/v3_final_golden.json raw + canonical-lf sha256",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "evaluator_identity": {
+            "source": "scripts/eval_v4_baseline.py identity (EVALUATOR_VERSION + file identity)",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "citation_verifier_identity": {
+            "source": "core/citation_verifier.py identity (CITATION_VERIFIER_VERSION f2-v4 + file identity)",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "answer_model_identity": {
+            "source": "core/config.py#ANSWER_MODEL + eval/v4_6_2_hash_portability_baseline.json#/evaluator_identity/answer_model",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "embedding_identity": {
+            "source": "core/config.py#EMBEDDING_MODEL + core/library_store.py#EMBEDDING_PROFILES dimension",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "runtime_db_identity": {
+            "source": "data/library/documents.sqlite3 strict read-only size:sha256-prefix plus full file sha256",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "effective_ws13_design_digest": {
+            "source": "REQUIRED EXTERNAL BINDING ROLE = THIS_ARTIFACT_TOP_LEVEL_BINDING (resolved from the accepted G1 artifact top-level field, never stored inside the payload)",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "accepted_g1_artifact_sha256": {
+            "source": "REQUIRED_EXTERNAL_BINDING_BEFORE_G4 (accepted G1 artifact identity; resolved by G2/G3 or accepted reviewer evidence)",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "observer_sha256": {
+            "source": "REQUIRED_EXTERNAL_BINDING_BEFORE_G4 (future observer implementation identity; never invented in G1)",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "classifier_sha256": {
+            "source": "REQUIRED_EXTERNAL_BINDING_BEFORE_G4 (future classifier implementation identity; never invented in G1)",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "tests_sha256": {
+            "source": "REQUIRED_EXTERNAL_BINDING_BEFORE_G4 (future test-suite identity; never invented in G1)",
+            "capture_phase": "PRE_INVOCATION",
+            "semantic_role": "SEMANTIC_STATE_IDENTITY_DRIFT_GUARD",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          }
+        },
+        "scope": {
+          "requested_scope": {
+            "source": "core/engine_v2.py StructuredQAEngine.answer -> self.library.resolve_scope(scope) (canonical engine entry); LibraryStore.resolve_scope",
+            "capture_phase": "POST_SCOPE_RESOLUTION",
+            "semantic_role": "SEMANTIC_SCOPE_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "effective_scope": {
+            "source": "core/query_scope.py QueryScope / ScopeResolution / resolve_scope; LibraryStore.effective_allowed_ids",
+            "capture_phase": "POST_SCOPE_RESOLUTION",
+            "semantic_role": "SEMANTIC_SCOPE_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "out_of_scope": {
+            "source": "core/query_scope.py ScopeResolution out-of-scope flag",
+            "capture_phase": "POST_SCOPE_RESOLUTION",
+            "semantic_role": "SEMANTIC_SCOPE_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "scope_conflict": {
+            "source": "core/query_scope.py ScopeResolution conflict flag",
+            "capture_phase": "POST_SCOPE_RESOLUTION",
+            "semantic_role": "SEMANTIC_SCOPE_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "confidence": {
+            "source": "core/query_scope.py ScopeResolution confidence",
+            "capture_phase": "POST_SCOPE_RESOLUTION",
+            "semantic_role": "SEMANTIC_SCOPE_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          }
+        },
+        "routing": {
+          "route": {
+            "source": "core/query_router.py QueryRouter.route -> RouteDecision (called from the canonical engine prepare step)",
+            "capture_phase": "POST_ROUTING",
+            "semantic_role": "SEMANTIC_ROUTING_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "reason_code": {
+            "source": "core/query_router.py RouteDecision reason code (e.g. DEFAULT_QA)",
+            "capture_phase": "POST_ROUTING",
+            "semantic_role": "SEMANTIC_ROUTING_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "follow_up": {
+            "source": "core/query_router.py RouteDecision follow-up flag (looks_like_follow_up)",
+            "capture_phase": "POST_ROUTING",
+            "semantic_role": "SEMANTIC_ROUTING_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "normalized_question": {
+            "source": "core/query_router.py normalize_history / QueryRouter normalization",
+            "capture_phase": "POST_ROUTING",
+            "semantic_role": "SEMANTIC_ROUTING_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "rewrite_or_resolution_result": {
+            "source": "core/query_router.py QueryRouter._resolve_followup; for the canonical case history is null so the result is the canonical no-rewrite resolution (recorded as none, not as a missing field)",
+            "capture_phase": "POST_HISTORY_RESOLUTION",
+            "semantic_role": "SEMANTIC_ROUTING_RESULT",
+            "missing_field_behavior": "CANONICAL_UNSET_VALUE_RECORDED"
+          }
+        },
+        "retrieval": {
+          "retrieval_query": {
+            "source": "core/engine_v2.py StructuredQAEngine.prepare retrieval query argument",
+            "capture_phase": "POST_RETRIEVAL",
+            "semantic_role": "SEMANTIC_RETRIEVAL_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "retrieval_mode": {
+            "source": "core/hybrid_retriever.py HybridRetriever.retrieve / _fuse (hybrid lexical FTS5 + dense)",
+            "capture_phase": "POST_RETRIEVAL",
+            "semantic_role": "SEMANTIC_RETRIEVAL_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "top_k": {
+            "source": "core/engine_v2.py prepare retrieve(...) call argument (canonical default 5)",
+            "capture_phase": "POST_RETRIEVAL",
+            "semantic_role": "SEMANTIC_RETRIEVAL_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "retrieved_chunk_ids": {
+            "source": "core/engine_v2.py prepare -> LibraryStore.retrieve -> HybridRetriever result objects (chunk identity)",
+            "capture_phase": "POST_RETRIEVAL",
+            "semantic_role": "SEMANTIC_RETRIEVAL_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "retrieved_document_ids": {
+            "source": "retrieval result document identity",
+            "capture_phase": "POST_RETRIEVAL",
+            "semantic_role": "SEMANTIC_RETRIEVAL_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "title_or_location": {
+            "source": "retrieval result title / location fields",
+            "capture_phase": "POST_RETRIEVAL",
+            "semantic_role": "SEMANTIC_RETRIEVAL_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "sent_evidence_text_or_governed_content_hash": {
+            "source": "exact sent-evidence text of the contexts that reached generation, or its governed canonical content hash (sha256-path-content-v2-canonical-lf of the text)",
+            "capture_phase": "POST_CONTEXT_SERIALIZATION",
+            "semantic_role": "SEMANTIC_EVIDENCE_CONTENT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "rank": {
+            "source": "deterministic retrieval result order before context selection",
+            "capture_phase": "POST_RETRIEVAL",
+            "semantic_role": "SEMANTIC_RETRIEVAL_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "required_support_reached_generation": {
+            "source": "derived: intersection of the frozen expected fact contract with the actually sent evidence texts",
+            "capture_phase": "POST_CONTEXT_SERIALIZATION",
+            "semantic_role": "SEMANTIC_SUPPORT_PRESENCE",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          }
+        },
+        "generation_input": {
+          "sent_context_ids": {
+            "source": "core/engine_v2.py build_messages return value sent_contexts (only contexts actually sent are valid citation targets)",
+            "capture_phase": "POST_CONTEXT_SERIALIZATION",
+            "semantic_role": "SEMANTIC_MODEL_VISIBLE_CONTEXT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "application_level_model_visible_context": {
+            "source": "core/engine_v2.py build_messages return value messages (material headers plus evidence text under the token budget)",
+            "capture_phase": "POST_CONTEXT_SERIALIZATION",
+            "semantic_role": "SEMANTIC_MODEL_VISIBLE_CONTEXT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "serialized_messages_hash": {
+            "source": "canonical digest of the serialized messages returned by build_messages using the frozen canonical JSON digest rule",
+            "capture_phase": "POST_CONTEXT_SERIALIZATION",
+            "semantic_role": "SEMANTIC_MODEL_VISIBLE_CONTEXT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "answer_model": {
+            "source": "core/config.py#ANSWER_MODEL value used for the call",
+            "capture_phase": "POST_CONTEXT_SERIALIZATION",
+            "semantic_role": "SEMANTIC_GENERATION_INPUT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "inference_parameter_identity": {
+            "source": "the inference parameters/options actually passed to the answer-model chat call (canonical production defaults; no diagnostic override)",
+            "capture_phase": "POST_CONTEXT_SERIALIZATION",
+            "semantic_role": "SEMANTIC_GENERATION_INPUT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          }
+        },
+        "generation_output": {
+          "raw_model_answer": {
+            "source": "core/engine_v2.py answer model call return value (raw model text before application post-processing)",
+            "capture_phase": "POST_GENERATION_RAW",
+            "semantic_role": "SEMANTIC_GENERATION_OUTPUT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "final_application_answer": {
+            "source": "core/engine_v2.py AnswerResultV2.answer (the application-level final answer)",
+            "capture_phase": "POST_CITATION_PIPELINE",
+            "semantic_role": "SEMANTIC_GENERATION_OUTPUT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "expected_fact_presence": {
+            "source": "scripts/eval_v4_baseline.py#_build_row (present = [f for f in facts if f in answer]); evaluator-side exact substring membership",
+            "capture_phase": "POST_MEASUREMENT",
+            "semantic_role": "SEMANTIC_GENERATION_OUTPUT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          }
+        },
+        "citation": {
+          "emitted_citation_tokens": {
+            "source": "citation tokens present in the final application answer as parsed by core/engine_v2.py normalize_citations",
+            "capture_phase": "POST_CITATION_PIPELINE",
+            "semantic_role": "SEMANTIC_CITATION_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "parsed_targets": {
+            "source": "core/engine_v2.py normalize_citations parsed citation targets",
+            "capture_phase": "POST_CITATION_PIPELINE",
+            "semantic_role": "SEMANTIC_CITATION_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "target_identities": {
+            "source": "parsed targets resolved against the actually sent model-visible material numbering (sent_context_ids)",
+            "capture_phase": "POST_CITATION_PIPELINE",
+            "semantic_role": "SEMANTIC_CITATION_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "invalid_citation_count": {
+            "source": "core/citation_verifier.py DeterministicCitationVerifier.verify report field",
+            "capture_phase": "POST_VERIFIER",
+            "semantic_role": "SEMANTIC_CITATION_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "scope_violation_count": {
+            "source": "core/citation_verifier.py DeterministicCitationVerifier.verify report field",
+            "capture_phase": "POST_VERIFIER",
+            "semantic_role": "SEMANTIC_CITATION_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "alignment_result": {
+            "source": "core/citation_verifier.py claim-level alignment result (supported / unsupported / uncertain or the equivalent frozen representation)",
+            "capture_phase": "POST_VERIFIER",
+            "semantic_role": "SEMANTIC_CITATION_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "citation_verifier_output": {
+            "source": "core/citation_verifier.py CitationReport.to_dict (the verifier output object returned on AnswerResultV2)",
+            "capture_phase": "POST_VERIFIER",
+            "semantic_role": "SEMANTIC_VERIFIER_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          }
+        },
+        "measurement": {
+          "evaluator_output": {
+            "source": "scripts/eval_v4_baseline.py per-case row produced by the canonical evaluator for this case",
+            "capture_phase": "POST_MEASUREMENT",
+            "semantic_role": "SEMANTIC_MEASUREMENT_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "fact_matcher_output": {
+            "source": "scripts/eval_v4_baseline.py#_build_row expected-fact membership output (exact substring)",
+            "capture_phase": "POST_MEASUREMENT",
+            "semantic_role": "SEMANTIC_MEASUREMENT_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "evaluator_version": {
+            "source": "scripts/eval_v4_baseline.py#EVALUATOR_VERSION",
+            "capture_phase": "POST_MEASUREMENT",
+            "semantic_role": "SEMANTIC_MEASUREMENT_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          },
+          "verifier_version": {
+            "source": "core/citation_verifier.py#CITATION_VERIFIER_VERSION",
+            "capture_phase": "POST_MEASUREMENT",
+            "semantic_role": "SEMANTIC_MEASUREMENT_RESULT",
+            "missing_field_behavior": "FAIL_CLOSED_NOT_ESTABLISHED"
+          }
+        }
+      },
+      "non_canonical_or_unsent_evidence_is_never_an_observation_field": "retrieved-but-unsent contexts, DB-only content, historical artifacts and manual evidence are excluded from the observation record; only the actually sent model-visible evidence may enter the schema"
+    },
+    "semantic_vs_provenance_field_contract": {
+      "SEMANTIC_VS_PROVENANCE_FIELD_CLASSIFICATION": "FROZEN",
+      "classification_frozen_before_any_real_observation": "YES",
+      "PROVENANCE_ONLY_FIELDS": [
+        "run_id",
+        "observation_timestamp",
+        "absolute_machine_paths",
+        "output_paths",
+        "filesystem_mtime",
+        "filesystem_ctime",
+        "console_rendering_only_metadata",
+        "source_trace_relative_path_only"
+      ],
+      "PROVENANCE_ONLY_FIELDS_MAY_AFFECT_SCIENTIFIC_CLASSIFICATION": "NO",
+      "PROVENANCE_ONLY_FIELDS_MAY_ENTER_OBSERVATION_SEMANTIC_DIGEST": "NO",
+      "RUN_ORDINAL": "SEMANTIC_EXECUTION_POSITION",
+      "OBSERVATION_SEMANTIC_KEY_SET": [
+        "run_identity.run_ordinal",
+        "case_identity.case_id",
+        "case_identity.canonical_case_source_identity",
+        "case_identity.golden_locator",
+        "case_identity.canonical_query",
+        "case_identity.canonical_history",
+        "case_identity.expected_fact_contract",
+        "state_identity.master_identity",
+        "state_identity.production_hash",
+        "state_identity.release",
+        "state_identity.baseline",
+        "state_identity.golden_identity",
+        "state_identity.evaluator_identity",
+        "state_identity.citation_verifier_identity",
+        "state_identity.answer_model_identity",
+        "state_identity.embedding_identity",
+        "state_identity.runtime_db_identity",
+        "state_identity.effective_ws13_design_digest",
+        "state_identity.accepted_g1_artifact_sha256",
+        "state_identity.observer_sha256",
+        "state_identity.classifier_sha256",
+        "state_identity.tests_sha256",
+        "scope.requested_scope",
+        "scope.effective_scope",
+        "scope.out_of_scope",
+        "scope.scope_conflict",
+        "scope.confidence",
+        "routing.route",
+        "routing.reason_code",
+        "routing.follow_up",
+        "routing.normalized_question",
+        "routing.rewrite_or_resolution_result",
+        "retrieval.retrieval_query",
+        "retrieval.retrieval_mode",
+        "retrieval.top_k",
+        "retrieval.retrieved_chunk_ids",
+        "retrieval.retrieved_document_ids",
+        "retrieval.title_or_location",
+        "retrieval.sent_evidence_text_or_governed_content_hash",
+        "retrieval.rank",
+        "retrieval.required_support_reached_generation",
+        "generation_input.sent_context_ids",
+        "generation_input.application_level_model_visible_context",
+        "generation_input.serialized_messages_hash",
+        "generation_input.answer_model",
+        "generation_input.inference_parameter_identity",
+        "generation_output.raw_model_answer",
+        "generation_output.final_application_answer",
+        "generation_output.expected_fact_presence",
+        "citation.emitted_citation_tokens",
+        "citation.parsed_targets",
+        "citation.target_identities",
+        "citation.invalid_citation_count",
+        "citation.scope_violation_count",
+        "citation.alignment_result",
+        "citation.citation_verifier_output",
+        "measurement.evaluator_output",
+        "measurement.fact_matcher_output",
+        "measurement.evaluator_version",
+        "measurement.verifier_version"
+      ],
+      "OBSERVATION_PROVENANCE_ONLY_KEY_SET": [
+        "run_identity.run_id",
+        "run_identity.observation_timestamp",
+        "absolute_machine_paths",
+        "output_paths",
+        "filesystem_mtime",
+        "filesystem_ctime",
+        "console_rendering_only_metadata",
+        "source_trace_relative_path_only"
+      ],
+      "CLASSIFICATION_SEMANTIC_KEY_SET": {
+        "RULE": "EQUALS_OBSERVATION_SEMANTIC_KEY_SET",
+        "value": "identical to OBSERVATION_SEMANTIC_KEY_SET",
+        "rationale": "classification consumes every semantic field (case contract, drift-guard state identities, scope, routing, retrieval, actually sent evidence, model-visible context, generation output, citation/verifier output, measurement output) and consumes no provenance-only field; the two sets are frozen equal and any divergence requires a future amendment"
+      },
+      "key_set_immutability": "G2/G3/G4 must not reclassify a field; adding a new classification-critical field requires a future design amendment",
+      "source_trace_rule": "a source-trace-only relative path may be provenance, but the corresponding content identity is semantic and must be recorded"
+    },
+    "observation_equivalence_contract": {
+      "OBSERVATION_EQUIVALENCE_REQUIRED": "YES",
+      "definition": "a future observation is admissible only if it preserves the same scope / routing / history-resolution / retrieval / context-serialization / generation / citation / verifier / evaluator semantics as the canonical production path",
+      "ALLOWED_OBSERVER_OPERATIONS": [
+        "read-only inspection of return values and data objects of unmodified canonical functions",
+        "read-only serialization of those values",
+        "deterministic hashing of those values under the frozen canonical JSON digest rule",
+        "stdout / console reporting",
+        "pure post-run serialization performed after the canonical call has returned"
+      ],
+      "PROHIBITED_OBSERVER_OPERATIONS": [
+        "diagnostic or system prompt modification",
+        "temporary citation instruction",
+        "retrieval / top_k / reranker override",
+        "manual context insertion or removal",
+        "semantic monkeypatch",
+        "postprocessor replacement",
+        "synthetic citation completion",
+        "noncanonical fallback path",
+        "changing model options only for diagnosis",
+        "adaptive or result-dependent execution control"
+      ],
+      "future_G2_requirement": "if observation equivalence cannot be established mechanically, then G2 = BLOCKED and CURRENT_OBSERVATION_ADMISSIBLE = NO",
+      "equivalence_is_not_proven_in_G1": "YES: G1 freezes the contract only; G0 established that a design path exists and G1 does not execute or implement any observer",
+      "self_consistency_checks": [
+        "the recorded model-visible context must be the context that produced the recorded raw answer in the same run",
+        "every recorded citation target must resolve inside the recorded sent-context numbering of the same run",
+        "the recorded semantic key set must equal the frozen OBSERVATION_SEMANTIC_KEY_SET for every run"
+      ]
+    },
+    "future_execution_side_effect_contract": {
+      "production_semantic_equivalence_not_equal_to_governed_filesystem_side_effect_equivalence": "YES",
+      "RUNTIME_DB_MUTATION_ALLOWED": "NO",
+      "PRODUCT_CODE_MUTATION_ALLOWED": "NO",
+      "GOLDEN_MUTATION_ALLOWED": "NO",
+      "EVALUATOR_MUTATION_ALLOWED": "NO",
+      "known_nonsemantic_side_effects_of_a_naive_execution": [
+        "engine telemetry append to the governed QA log path",
+        "evaluator answer-cache creation under the eval cache path",
+        "evaluator artifact output write"
+      ],
+      "frozen_rules": {
+        "G2_observer_itself": "WRITE_FREE (the G2 observer implementation must not write any workspace path)",
+        "G4_unavoidable_nonsemantic_writes": "must be explicitly handled by accepted governance before G4; silent redirection or silent environment manipulation is prohibited unless an accepted design proves semantic equivalence",
+        "G1_authorizes_no_G4_write": "YES",
+        "runtime_db_write": "NEVER_ALLOWED (the runtime DB stays strictly read-only at every stage)",
+        "product_code_write": "NEVER_ALLOWED",
+        "golden_write": "NEVER_ALLOWED",
+        "evaluator_write": "NEVER_ALLOWED"
+      },
+      "cache_policy": "no answer cache may be created, reused or relied upon for the fresh observation; a cache row for this production hash does not exist and any cache write requires separate accepted authorization",
+      "side_effect_declaration_requirement": "the future G2/G4 design must enumerate every write it would perform and either eliminate it or obtain explicit accepted authorization before execution"
+    },
+    "run_policy": {
+      "RUN_MULTIPLICITY": 3,
+      "RUN_ORDINALS": [
+        1,
+        2,
+        3
+      ],
+      "RUN_BUDGET_ROLE": "GOVERNANCE_SAMPLING_BUDGET_NOT_STATISTICAL_CONFIDENCE",
+      "SEED_DISCIPLINE": "PRESERVE_CANONICAL_PRODUCTION_DEFAULTS",
+      "SEED_INJECTION": "PROHIBITED",
+      "ARTIFICIAL_DETERMINISM": "PROHIBITED",
+      "IF_CANONICAL_PATH_HAS_NO_EXPLICIT_SEED": {
+        "SEED": "UNSET_CANONICAL_DEFAULT"
+      },
+      "NON_ADAPTIVE_EXECUTION": "FROZEN",
+      "PROHIBITED_EXECUTION_DEVICES": [
+        "run-until-desired-result",
+        "adaptive stop",
+        "fourth run",
+        "replacement run",
+        "discarding an authorized run",
+        "best-worst selection",
+        "2-of-3 majority vote"
+      ],
+      "RETAIN_ALL_RUN_RECORDS": "YES",
+      "INCOMPLETE_RUN_RULE": {
+        "condition": "any authorized run incomplete or missing a classification-critical field",
+        "INCOMPLETE_RUN_PRESENT": "YES",
+        "NO_REPLACEMENT_RUN": "YES",
+        "CASE_LEVEL_CITATION_STATUS": "NOT_ESTABLISHED"
+      },
+      "run_records_are_reported_verbatim": "YES (per-run records are never summarized away, never averaged and never selected)",
+      "G4_EXTRA_RUNS_AUTHORIZED": "NO"
+    },
+    "classification_predicates": {
+      "predicate_entry_key_order": [
+        "input_fields",
+        "rule",
+        "output_enum",
+        "missing_input_behavior",
+        "contract_source"
+      ],
+      "output_enum": [
+        "YES",
+        "NO",
+        "NOT_ESTABLISHED"
+      ],
+      "predicate_evaluation_order": [
+        "CLAIM_PRESENT",
+        "SUPPORTING_EVIDENCE_PRESENT",
+        "CITATION_EXPECTED",
+        "CITATION_EMITTED",
+        "CITATION_TARGET_VALID",
+        "CITATION_ALIGNMENT_VALID",
+        "INVALID_CITATION_PRESENT",
+        "SCOPE_VIOLATION_PRESENT",
+        "GENERATION_CONFOUND",
+        "RETRIEVAL_CONFOUND",
+        "MEASUREMENT_CONFOUND",
+        "CITATION_SPECIFIC_FAILURE"
+      ],
+      "predicates": {
+        "CLAIM_PRESENT": {
+          "input_fields": [
+            "generation_output.final_application_answer",
+            "case_identity.expected_fact_contract.EXPECTED_ANSWER_FACTS"
+          ],
+          "rule": "YES iff every expected answer fact is an exact substring of the final application answer under the current evaluator rule present = [f for f in facts if f in answer]; for the frozen canonical case the required claim is the exact substring GMSK. The raw model answer is never used for this predicate.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "scripts/eval_v4_baseline.py#_build_row (frozen exact substring membership)"
+        },
+        "SUPPORTING_EVIDENCE_PRESENT": {
+          "input_fields": [
+            "retrieval.sent_evidence_text_or_governed_content_hash",
+            "generation_input.sent_context_ids",
+            "case_identity.expected_fact_contract.EXPECTED_ANSWER_FACTS"
+          ],
+          "rule": "YES iff for every expected answer fact there is at least one actually sent evidence text (exact governed text or its governed canonical content hash) that contains that fact as an exact substring. Only the contexts actually sent to generation are admissible inputs; retrieved-but-unsent chunks, DB-only content, historical artifacts and manually supplied evidence are prohibited inputs. NO iff at least one required fact has no support in the actually sent evidence.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "core/engine_v2.py#build_messages sent_contexts (the only contexts that may serve as citation targets) combined with the frozen exact-substring semantics"
+        },
+        "CITATION_EXPECTED": {
+          "input_fields": [
+            "case_identity.expected_fact_contract (CATEGORY, NOTES, QUERY, EXPECTED_ANSWER_FACTS)",
+            "classification_predicates.CLAIM_PRESENT",
+            "classification_predicates.SUPPORTING_EVIDENCE_PRESENT",
+            "citation.citation_verifier_output"
+          ],
+          "rule": "YES iff (a) the canonical case is citation-requesting under its frozen contract (CATEGORY = citation_negative, NOTES = 验证 citation validity + support, and the canonical QUERY carries the citation-request phrase 请指出出处), AND (b) CLAIM_PRESENT = YES, AND (c) SUPPORTING_EVIDENCE_PRESENT = YES: the answer asserts a contract-relevant claim that the actually sent evidence supports, so a citation is owed. The current verifier factual-claim count is used only as the mechanical witness that the answer contains at least one citation-requiring factual claim. If that witness cannot be represented, the predicate is NOT_ESTABLISHED.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "eval/v3_final_golden.json#/cases[165] frozen contract + core/citation_verifier.py factual-claim semantics",
+          "forbidden_derivation": "deriving citation expectedness from the global citation_coverage metric or from any aggregate product metric"
+        },
+        "CITATION_EMITTED": {
+          "input_fields": [
+            "citation.emitted_citation_tokens",
+            "citation.parsed_targets"
+          ],
+          "rule": "YES iff at least one citation token was parsed from the final application answer by the canonical citation normalizer; NO iff the normalizer parsed none; NOT_ESTABLISHED iff the answer text cannot be represented or parsed by the canonical normalizer at all.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "core/engine_v2.py#normalize_citations"
+        },
+        "CITATION_TARGET_VALID": {
+          "input_fields": [
+            "citation.parsed_targets",
+            "citation.target_identities",
+            "generation_input.sent_context_ids",
+            "citation.invalid_citation_count"
+          ],
+          "rule": "YES iff every parsed citation target resolves to a material actually present in the serialized model-visible context of the same run and invalid_citation_count = 0; NO iff any parsed target is out of range or absent from the sent material numbering, or invalid_citation_count greater than 0; NOT_ESTABLISHED iff target identities cannot be resolved mechanically.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "core/engine_v2.py#normalize_citations + core/citation_verifier.py invalid-citation semantics"
+        },
+        "CITATION_ALIGNMENT_VALID": {
+          "input_fields": [
+            "citation.citation_verifier_output (alignment_result, supported / unsupported / uncertain)",
+            "generation_input.sent_context_ids"
+          ],
+          "rule": "Evaluated with the current DeterministicCitationVerifier f2-v4 alignment semantics: YES iff every citation-requiring factual claim is aligned to actually sent evidence that supports it, with no unsupported claim, no uncertain adjudication of a contract-relevant claim and no unaligned citation-requiring claim; NO iff at least one citation-requiring claim is unsupported or unaligned; NOT_ESTABLISHED iff the verifier output cannot represent the case unambiguously, which is a measurement condition governed by the MEASUREMENT_CONFOUND rule and must never be repaired by a Product citation change.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "core/citation_verifier.py#DeterministicCitationVerifier.verify (CITATION_VERIFIER_VERSION f2-v4)",
+          "frozen_explanation_vocabulary": [
+            "supported",
+            "unsupported",
+            "uncertain"
+          ]
+        },
+        "INVALID_CITATION_PRESENT": {
+          "input_fields": [
+            "citation.invalid_citation_count"
+          ],
+          "rule": "YES iff the verifier invalid-citation count is greater than 0; NO iff it equals 0; NOT_ESTABLISHED iff the count is not mechanically produced for the run.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "core/citation_verifier.py#CitationReport"
+        },
+        "SCOPE_VIOLATION_PRESENT": {
+          "input_fields": [
+            "citation.scope_violation_count"
+          ],
+          "rule": "YES iff the verifier scope-violation count is greater than 0; NO iff it equals 0; NOT_ESTABLISHED iff the count is not mechanically produced for the run.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "core/citation_verifier.py#CitationReport"
+        },
+        "GENERATION_CONFOUND": {
+          "input_fields": [
+            "classification_predicates.CLAIM_PRESENT",
+            "generation_output.raw_model_answer",
+            "generation_output.final_application_answer"
+          ],
+          "rule": "YES iff CLAIM_PRESENT = NO (the contract-relevant required claim is absent from the final application answer): an answer omission is a Generation condition and never a Citation defect. Additionally YES iff the raw model answer and the final application answer differ on a contract-relevant claim in a way the frozen rules cannot represent (recorded as a Generation-side semantic mismatch). NO iff CLAIM_PRESENT = YES and no such mismatch exists. NOT_ESTABLISHED only when the generation outputs cannot be represented at all.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "scripts/eval_v4_baseline.py#_build_row + core/engine_v2.py raw vs final answer objects",
+          "frozen_inequality": "ANSWER_FACT_ABSENT != CITATION_DEFECT"
+        },
+        "RETRIEVAL_CONFOUND": {
+          "input_fields": [
+            "classification_predicates.SUPPORTING_EVIDENCE_PRESENT"
+          ],
+          "rule": "YES iff SUPPORTING_EVIDENCE_PRESENT = NO, that is the required support is absent from the actually sent model-visible evidence: a retrieval condition and never a Citation defect. NO iff the required support is present in the actually sent evidence. NOT_ESTABLISHED only when the sent evidence cannot be represented.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "core/engine_v2.py#build_messages + core/hybrid_retriever.py",
+          "frozen_inequality": "RETRIEVAL_SUPPORT_ABSENCE != CITATION_DEFECT"
+        },
+        "MEASUREMENT_CONFOUND": {
+          "input_fields": [
+            "citation.citation_verifier_output",
+            "measurement.evaluator_output",
+            "measurement.fact_matcher_output",
+            "measurement.evaluator_version",
+            "measurement.verifier_version",
+            "state_identity.golden_identity",
+            "state_identity.evaluator_identity",
+            "state_identity.citation_verifier_identity"
+          ],
+          "rule": "YES iff any frozen trigger holds: (T1) the evaluator fact-matcher output contradicts an independent recomputation of the frozen exact-substring rule on the same final answer; (T2) the verifier cannot represent the citation structure or targets of the run unambiguously (alignment or target identities NOT_ESTABLISHED with no decisive frozen rule); (T3) the evaluator, verifier or golden identity of the run differs from the frozen G1 identity; (T4) the evaluator output and the verifier output semantically conflict about the same run and no frozen table resolves the conflict; (T5) a required adjudication would demand interpretation beyond the frozen truth table. NO iff no trigger holds and at least one complete run exists.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "core/citation_verifier.py + scripts/eval_v4_baseline.py + this frozen truth table",
+          "frozen_inequality": "MEASUREMENT_SEMANTIC_MISMATCH != PRODUCT_CITATION_DEFECT",
+          "resolution": "measurement conditions are resolved by evidence reconciliation, never by a Product citation change"
+        },
+        "CITATION_SPECIFIC_FAILURE": {
+          "input_fields": [
+            "classification_predicates.CITATION_EXPECTED",
+            "classification_predicates.CITATION_EMITTED",
+            "classification_predicates.CITATION_TARGET_VALID",
+            "classification_predicates.CITATION_ALIGNMENT_VALID",
+            "classification_predicates.INVALID_CITATION_PRESENT",
+            "classification_predicates.SCOPE_VIOLATION_PRESENT",
+            "classification_predicates.GENERATION_CONFOUND",
+            "classification_predicates.RETRIEVAL_CONFOUND",
+            "classification_predicates.MEASUREMENT_CONFOUND"
+          ],
+          "rule": "YES iff CITATION_EXPECTED = YES AND at least one of {CITATION_EMITTED = NO, CITATION_TARGET_VALID = NO, CITATION_ALIGNMENT_VALID = NO, INVALID_CITATION_PRESENT = YES, SCOPE_VIOLATION_PRESENT = YES} AND GENERATION_CONFOUND = NO AND RETRIEVAL_CONFOUND = NO AND MEASUREMENT_CONFOUND = NO. NO iff CITATION_EXPECTED = YES and no citation-specific failure condition holds with no controlling confound, or CITATION_EXPECTED = NO with no citation-specific failure condition. NOT_ESTABLISHED iff any input is NOT_ESTABLISHED or any controlling confound is NOT_ESTABLISHED.",
+          "output_enum": [
+            "YES",
+            "NO",
+            "NOT_ESTABLISHED"
+          ],
+          "missing_input_behavior": "FAIL_CLOSED_NOT_ESTABLISHED",
+          "contract_source": "this frozen predicate table"
+        }
+      },
+      "predicates_are_per_run": "YES (each predicate is evaluated independently for each of the 3 authorized runs)",
+      "predicates_are_not_prose_only": "YES (every predicate fixes input fields, an exact rule, an output enum, a missing-input behavior and a contract source)"
+    },
+    "confound_rules": {
+      "frozen_inequalities": [
+        "answer omission != Citation defect",
+        "retrieval support absence != Citation defect",
+        "measurement semantic mismatch != Product Citation defect",
+        "citation present != citation aligned",
+        "citation safety PASS != citation coverage PASS",
+        "historical Citation label != current Citation defect"
+      ],
+      "GENERATION_CONFOUND_RULE": {
+        "trigger": "contract-relevant claim absent (CLAIM_PRESENT = NO)",
+        "then": [
+          "GENERATION_CONFOUND = YES",
+          "the Citation defect claim fails closed (CITATION_SPECIFIC_FAILURE cannot be YES)",
+          "the run is a Generation condition, not a citation finding"
+        ],
+        "source": "classification_predicates.GENERATION_CONFOUND"
+      },
+      "RETRIEVAL_CONFOUND_RULE": {
+        "trigger": "required support absent from the actually sent model-visible evidence (SUPPORTING_EVIDENCE_PRESENT = NO)",
+        "then": [
+          "RETRIEVAL_CONFOUND = YES",
+          "the Citation defect claim fails closed",
+          "the run is a Retrieval condition, not a citation finding"
+        ],
+        "admissible_inputs": "only the actually sent contexts (exact governed text or governed content hash) and the frozen expected contract",
+        "prohibited_inputs": [
+          "DB-only content",
+          "retrieved but unsent chunks",
+          "historical evidence",
+          "manual evidence"
+        ],
+        "source": "classification_predicates.SUPPORTING_EVIDENCE_PRESENT"
+      },
+      "MEASUREMENT_CONFOUND_RULE": {
+        "trigger_set": [
+          "T1 evaluator fact-matcher output contradicts a recomputation of the frozen exact-substring rule",
+          "T2 verifier cannot represent citation structure / targets unambiguously for the run",
+          "T3 evaluator / verifier / golden identity differs from the frozen G1 identity",
+          "T4 evaluator output and verifier output semantically conflict about the same run with no frozen resolution",
+          "T5 a required adjudication needs interpretation beyond the frozen truth table"
+        ],
+        "then": [
+          "MEASUREMENT_CONFOUND = YES",
+          "the run classification is NOT_ESTABLISHED unless another frozen rule already yields a determinate class",
+          "resolution is evidence reconciliation; a Product citation change must never be used to repair a measurement condition"
+        ],
+        "source": "classification_predicates.MEASUREMENT_CONFOUND"
+      },
+      "FAIL_CLOSED_MISSING_EVIDENCE_RULE": "any missing, contradictory or unrepresentable required evidence makes the affected predicate NOT_ESTABLISHED and the affected run classification NOT_ESTABLISHED; a NOT_ESTABLISHED predicate never counts as YES, never counts as NO, and never supports a defect claim",
+      "CITATION_DEFECT_FAILS_CLOSED_UNDER_UPSTREAM_CONFOUND": "YES",
+      "CONTROLLING_CONFOUND": "a Generation, Retrieval or Measurement confound that is YES for a run and is not outweighed by any frozen resolution rule; case-level confounds are the union of the per-run confounds with no majority smoothing"
+    },
+    "citation_status_truth_table": {
+      "allowed_values": [
+        "CURRENT_CONFIRMED_CITATION_DEFECT",
+        "NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+        "STALE_ATTRIBUTION_REQUIRES_REFRESH",
+        "RESOLVED_OR_CLOSED",
+        "NOT_ESTABLISHED"
+      ],
+      "no_other_value_allowed": "YES",
+      "CURRENT_CONFIRMED_CITATION_DEFECT": {
+        "requires_all_of": [
+          "a complete, admissible run",
+          "the contract-relevant claim is present",
+          "supporting evidence is present in the actually sent model-visible context",
+          "a citation is expected",
+          "a mechanically established citation-specific failure",
+          "no controlling Generation / Retrieval / Measurement confound"
+        ]
+      },
+      "NO_CURRENT_CITATION_DEFECT_ESTABLISHED": {
+        "requires_all_of": [
+          "a complete, admissible current run",
+          "the contract-relevant claim is present",
+          "supporting evidence is present in the actually sent model-visible context",
+          "a citation is expected",
+          "a citation was emitted",
+          "the citation target is valid",
+          "the citation alignment is valid",
+          "invalid citation count = 0",
+          "scope violation count = 0",
+          "no controlling upstream or measurement confound"
+        ]
+      },
+      "RESOLVED_OR_CLOSED": {
+        "reachability": "NOT reachable for WS-13 / cit-001 unless an accepted prior current-confirmed citation defect AND an explicit closure contract both exist",
+        "forbidden_derivation": "must never be produced from historical evidence plus a current negative run"
+      },
+      "STALE_ATTRIBUTION_REQUIRES_REFRESH": {
+        "role": "describes only the pre-observation stale state (the historical citation-family attribution for cit-001 is stale and not refreshed)",
+        "may_not_substitute_for_fresh_classification": "YES",
+        "may_not_be_produced_by_a_fresh_run": "YES"
+      },
+      "NOT_ESTABLISHED": {
+        "trigger": "any missing, contradictory or unrepresentable evidence; also any controlling confound that prevents a determinate class",
+        "is_fail_closed": "YES"
+      },
+      "historical_label_never_substitutes_for_current_status": "YES"
+    },
+    "aggregate_rule": {
+      "per_run_classification_first": "YES (the status truth table is applied independently to each of the 3 authorized runs)",
+      "rule": [
+        "IF any run is incomplete THEN CASE_LEVEL_CITATION_STATUS = NOT_ESTABLISHED",
+        "ELSE IF all 3 runs = CURRENT_CONFIRMED_CITATION_DEFECT THEN CASE_LEVEL_CITATION_STATUS = CURRENT_CONFIRMED_CITATION_DEFECT",
+        "ELSE IF all 3 runs = NO_CURRENT_CITATION_DEFECT_ESTABLISHED THEN CASE_LEVEL_CITATION_STATUS = NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+        "ELSE CASE_LEVEL_CITATION_STATUS = NOT_ESTABLISHED and RUN_VARIABILITY = YES"
+      ],
+      "majority_vote_prohibited": "YES",
+      "per_run_confounds_retained": "YES",
+      "case_level_confound_union_reported": "YES",
+      "no_best_or_worst_run_selection": "YES",
+      "no_discard_or_replacement": "YES"
+    },
+    "additional_evidence_rule": {
+      "trigger": "CASE_LEVEL_CITATION_STATUS = NOT_ESTABLISHED caused by run variability, an incomplete run, missing evidence or a controlling confound",
+      "then": {
+        "ADDITIONAL_FRESH_EVIDENCE_REQUIRED": "YES"
+      },
+      "but": {
+        "G4_EXTRA_RUNS_AUTHORIZED": "NO"
+      },
+      "rule": "any additional observation beyond the frozen 3-run budget requires separate governance authorization; the frozen budget is never extended by the observer, the classifier or this design",
+      "no_adaptive_remediation_of_not_established": "YES"
+    },
+    "g5_attribution_schema": {
+      "schema_role": "the frozen G5 semantic payload shape; G5 may not reinterpret, extend or re-scope any field defined here",
+      "value_domains": {
+        "CASE_ID": [
+          "cit-001"
+        ],
+        "RUN_COUNT_EXPECTED": [
+          3
+        ],
+        "RUN_COUNT_COMPLETED": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "PER_RUN_CLASSIFICATIONS": "list of per-run records, one per authorized run ordinal in ascending order; each record carries the run ordinal, the run admissibility flag, every predicate value, the run citation status and the run confounds",
+        "CITATION_STATUS": [
+          "CURRENT_CONFIRMED_CITATION_DEFECT",
+          "NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+          "STALE_ATTRIBUTION_REQUIRES_REFRESH",
+          "RESOLVED_OR_CLOSED",
+          "NOT_ESTABLISHED"
+        ],
+        "CITATION_CONFIDENCE": [
+          "DETERMINATE_ALL_RUNS_AGREE",
+          "NOT_ESTABLISHED_DUE_TO_VARIABILITY",
+          "NOT_ESTABLISHED_DUE_TO_INCOMPLETE_RUN",
+          "NOT_ESTABLISHED_DUE_TO_MISSING_EVIDENCE",
+          "NOT_ESTABLISHED_DUE_TO_CONFOUND"
+        ],
+        "GENERATION_CONFOUND": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "RETRIEVAL_CONFOUND": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "MEASUREMENT_CONFOUND": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "RUN_VARIABILITY": [
+          "YES",
+          "NO"
+        ],
+        "ATTRIBUTION_FRESHNESS": [
+          "FRESH",
+          "NOT_ESTABLISHED"
+        ],
+        "LATEST_PRODUCT_STATE_COMPATIBLE": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "CITATION_DEFECT_MECHANICALLY_ESTABLISHED": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "ADDITIONAL_FRESH_EVIDENCE_REQUIRED": [
+          "YES",
+          "NO"
+        ],
+        "SUPPORTING_EVIDENCE": "list of governed evidence references (relative artifact path plus field locator, or the governed content hash of the actually sent evidence) that support the reported classification",
+        "LIMITING_EVIDENCE": "list of governed evidence references that limit or contradict the reported classification, including every controlling confound and every incomplete-run fact",
+        "SOURCE_TRACE": "ordered list of the governed sources consumed (relative paths plus field locators); no absolute paths and no filesystem metadata",
+        "OBSERVATION_SEMANTIC_DIGESTS": "per-run canonical digest computed over exactly the frozen OBSERVATION_SEMANTIC_KEY_SET of that run",
+        "CLASSIFICATION_SEMANTIC_DIGESTS": "per-run canonical digest computed over exactly the frozen CLASSIFICATION_SEMANTIC_KEY_SET of that run"
+      },
+      "derivation_rules": {
+        "CITATION_STATUS": "the case-level value produced by the frozen aggregate rule",
+        "CITATION_DEFECT_MECHANICALLY_ESTABLISHED": "YES iff CITATION_STATUS = CURRENT_CONFIRMED_CITATION_DEFECT; NO iff CITATION_STATUS = NO_CURRENT_CITATION_DEFECT_ESTABLISHED; NOT_ESTABLISHED otherwise",
+        "RUN_VARIABILITY": "YES iff CITATION_STATUS = NOT_ESTABLISHED while every authorized run is complete and the per-run statuses are not all equal (the frozen aggregate rule branch)",
+        "LATEST_PRODUCT_STATE_COMPATIBLE": "YES iff every frozen concrete G1 state identity matched at run time; NO iff a concrete identity mismatch was observed; NOT_ESTABLISHED iff an identity could not be resolved",
+        "per_run_confounds": "reported verbatim per run; the case-level confound fields are the union of the per-run values, with NOT_ESTABLISHED retained whenever any run is NOT_ESTABLISHED on that axis",
+        "digest_scope": "only the frozen semantic key sets may enter these digests; provenance-only fields must never enter them"
+      },
+      "G5_MAY_NOT_REINTERPRET": "YES",
+      "G5_payload_is_not_a_product_verdict": "YES"
+    },
+    "g6_readiness_bridge_spec": {
+      "spec_role": "prospective mapping only: how a future G6/A005 readiness gate record is mechanically derived from a frozen G5 payload; no G6 value is computed in G1 and A005 is not modified",
+      "READINESS_CLASS_VOCABULARY": [
+        "R4",
+        "R3",
+        "R2",
+        "R1",
+        "R0"
+      ],
+      "NEXT_PERMISSIBLE_ACTION_VOCABULARY": [
+        "SEPARATE_EXECUTION",
+        "FRESH_ATTRIBUTION",
+        "EVIDENCE_RECONCILIATION",
+        "DEFER_PENDING_UPSTREAM",
+        "NO_SUPPORTED_ACTION"
+      ],
+      "READINESS_TO_ACTION_MAPPING": {
+        "R4": "SEPARATE_EXECUTION",
+        "R3": "FRESH_ATTRIBUTION",
+        "R2": "EVIDENCE_RECONCILIATION",
+        "R1": "DEFER_PENDING_UPSTREAM",
+        "R0": "NO_SUPPORTED_ACTION"
+      },
+      "MAPPING_IS_TOTAL_AND_SINGLE_VALUED": "YES",
+      "no_new_readiness_class_may_be_invented": "YES",
+      "GATE_RECORD_REQUIRED_KEYS": [
+        "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED",
+        "LATEST_STATE_COMPATIBLE",
+        "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE",
+        "SEPARATE_EXECUTION_TARGET_SET_DEFINABLE",
+        "SINGLE_PRIMARY_SUBSYSTEM",
+        "MATERIAL_SOURCE_CONFLICT",
+        "PRODUCT_MEASUREMENT_RECONCILIATION_REQUIRED",
+        "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION",
+        "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_SEPARATE_EXECUTION",
+        "PARENT_GOVERNANCE_BLOCKER",
+        "NEXT_PERMISSIBLE_ACTION",
+        "READINESS_CLASS"
+      ],
+      "GATE_VALUE_DOMAINS": {
+        "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "LATEST_STATE_COMPATIBLE": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "SEPARATE_EXECUTION_TARGET_SET_DEFINABLE": [
+          "YES",
+          "NO",
+          "NOT_ESTABLISHED"
+        ],
+        "SINGLE_PRIMARY_SUBSYSTEM": [
+          "YES",
+          "NO"
+        ],
+        "MATERIAL_SOURCE_CONFLICT": [
+          "YES",
+          "NO"
+        ],
+        "PRODUCT_MEASUREMENT_RECONCILIATION_REQUIRED": [
+          "YES",
+          "NO"
+        ],
+        "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION": [
+          "YES",
+          "NO"
+        ],
+        "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_SEPARATE_EXECUTION": [
+          "YES",
+          "NO"
+        ],
+        "PARENT_GOVERNANCE_BLOCKER": [
+          "YES",
+          "NO"
+        ]
+      },
+      "PER_GATE_MAPPING": {
+        "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED": {
+          "consumed_g5_fields": [
+            "CITATION_STATUS",
+            "CITATION_DEFECT_MECHANICALLY_ESTABLISHED"
+          ],
+          "exact_mapping": "YES iff CITATION_STATUS = CURRENT_CONFIRMED_CITATION_DEFECT; NO iff CITATION_STATUS is NO_CURRENT_CITATION_DEFECT_ESTABLISHED, RESOLVED_OR_CLOSED or STALE_ATTRIBUTION_REQUIRES_REFRESH; NOT_ESTABLISHED iff CITATION_STATUS = NOT_ESTABLISHED",
+          "not_established_behavior": "NOT_ESTABLISHED",
+          "consults_dependency_graph": "NO"
+        },
+        "LATEST_STATE_COMPATIBLE": {
+          "consumed_g5_fields": [
+            "LATEST_PRODUCT_STATE_COMPATIBLE"
+          ],
+          "exact_mapping": "value carried verbatim from LATEST_PRODUCT_STATE_COMPATIBLE",
+          "not_established_behavior": "NOT_ESTABLISHED",
+          "consults_dependency_graph": "NO"
+        },
+        "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE": {
+          "consumed_g5_fields": [
+            "CITATION_STATUS",
+            "ATTRIBUTION_FRESHNESS",
+            "SOURCE_TRACE"
+          ],
+          "exact_mapping": "YES iff the frozen primary target set is non-empty and its canonical case contract was verified unchanged at run time while CITATION_STATUS is CURRENT_CONFIRMED_CITATION_DEFECT, NO_CURRENT_CITATION_DEFECT_ESTABLISHED or NOT_ESTABLISHED (a stable historical or domain-eligible case set is sufficient and no remediation target is required); NO iff the frozen target set is empty or its canonical contract can no longer be bound; NOT_ESTABLISHED iff the target identity cannot be verified",
+          "not_established_behavior": "NOT_ESTABLISHED",
+          "consults_dependency_graph": "NO",
+          "purpose": "R3 / FRESH_ATTRIBUTION (purpose-scoped; never interchange with the separate-execution gate)"
+        },
+        "SEPARATE_EXECUTION_TARGET_SET_DEFINABLE": {
+          "consumed_g5_fields": [
+            "CITATION_STATUS",
+            "CITATION_DEFECT_MECHANICALLY_ESTABLISHED",
+            "SINGLE_PRIMARY_SUBSYSTEM"
+          ],
+          "exact_mapping": "YES only if a current defect is mechanically established for the frozen target set (CITATION_STATUS = CURRENT_CONFIRMED_CITATION_DEFECT) and a single primary subsystem is identifiable so that the target set to be independently executed now is mechanically definable; NO if no current defect is established or no execution target can be stabilized; NOT_ESTABLISHED if CITATION_STATUS = NOT_ESTABLISHED",
+          "not_established_behavior": "NOT_ESTABLISHED",
+          "consults_dependency_graph": "NO",
+          "purpose": "R4 / SEPARATE_EXECUTION (purpose-scoped; a NO here never downgrades a lawful R3)"
+        },
+        "SINGLE_PRIMARY_SUBSYSTEM": {
+          "consumed_g5_fields": [
+            "CITATION_DEFECT_MECHANICALLY_ESTABLISHED",
+            "GENERATION_CONFOUND",
+            "RETRIEVAL_CONFOUND",
+            "MEASUREMENT_CONFOUND",
+            "CITATION_STATUS"
+          ],
+          "exact_mapping": "YES iff exactly one of the four axes (Citation / Generation / Retrieval / Measurement) is established as the controlling condition for the target set, with the other three established as NO; NO otherwise",
+          "not_established_behavior": "NO (fail-closed: an indeterminate axis union is never treated as a single primary subsystem)",
+          "consults_dependency_graph": "NO"
+        },
+        "MATERIAL_SOURCE_CONFLICT": {
+          "consumed_g5_fields": [
+            "LIMITING_EVIDENCE",
+            "SOURCE_TRACE",
+            "MEASUREMENT_CONFOUND"
+          ],
+          "exact_mapping": "YES iff two or more admissible governed sources materially contradict each other on a classification-critical field for the same run (including an evaluator-vs-verifier semantic conflict recorded as MEASUREMENT_CONFOUND trigger T4); NO iff at least one complete run exists and no such contradiction is recorded",
+          "not_established_behavior": "YES (fail-closed toward evidence reconciliation; the domain has no NOT_ESTABLISHED value)",
+          "consults_dependency_graph": "NO"
+        },
+        "PRODUCT_MEASUREMENT_RECONCILIATION_REQUIRED": {
+          "consumed_g5_fields": [
+            "MEASUREMENT_CONFOUND",
+            "CITATION_STATUS",
+            "LIMITING_EVIDENCE"
+          ],
+          "exact_mapping": "YES iff a measurement condition is established such that one reading of the same observation would imply a Product citation defect and another would not (including MEASUREMENT_CONFOUND trigger T1, T2 or T5 with a determinate alternative reading); NO iff no such Product-versus-Measurement divergence is established",
+          "not_established_behavior": "YES (fail-closed toward evidence reconciliation; the domain has no NOT_ESTABLISHED value)",
+          "consults_dependency_graph": "NO"
+        },
+        "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION": {
+          "consumed_g5_fields": [
+            "SOURCE_TRACE"
+          ],
+          "exact_mapping": "YES only if the accepted action-scoped dependency graph contains an unresolved hard edge (MUST_PRECEDE or BLOCKED_BY) whose APPLIES_TO_ACTION covers FRESH_ATTRIBUTION and whose status is not NOT_ESTABLISHED and not resolved; NO otherwise; CAN_PRECEDE, INDEPENDENT, NOT_ESTABLISHED and SEPARATE_EXECUTION-scoped edges are never blocking for FRESH_ATTRIBUTION",
+          "not_established_behavior": "NO when the accepted action-scoped graph is mechanically available and no such edge exists; YES only if the accepted graph itself is unusable or unresolved (DEPENDENCY_GRAPH_UNRESOLVED)",
+          "consults_dependency_graph": "YES"
+        },
+        "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_SEPARATE_EXECUTION": {
+          "consumed_g5_fields": [
+            "SOURCE_TRACE"
+          ],
+          "exact_mapping": "YES only if the accepted action-scoped dependency graph contains an unresolved hard edge whose APPLIES_TO_ACTION covers SEPARATE_EXECUTION; NO otherwise; soft and non-covering edges never block",
+          "not_established_behavior": "NO when the accepted graph is mechanically available; YES only if the accepted graph itself is unusable",
+          "consults_dependency_graph": "YES"
+        },
+        "PARENT_GOVERNANCE_BLOCKER": {
+          "consumed_g5_fields": [
+            "SOURCE_TRACE",
+            "LIMITING_EVIDENCE"
+          ],
+          "exact_mapping": "YES iff an explicit accepted governance blocker for WS-13 fresh attribution exists (including a raised dependency-graph-refresh requirement or an explicit governance hold); NO otherwise",
+          "not_established_behavior": "NO, unless an accepted governance record states otherwise",
+          "consults_dependency_graph": "NO",
+          "forbidden_derivation": "a confound, a NOT_ESTABLISHED status or a stale attribution is never by itself a parent governance blocker"
+        }
+      },
+      "READINESS_CLASS_DERIVATION": {
+        "rule_id": "READINESS_FAIL_CLOSED_CLASSIFICATION_RESOLUTION_ORDER",
+        "ORDER": [
+          "C1_R0_BLOCKER_CHECK",
+          "C2_R1_ACTION_SPECIFIC_UPSTREAM_DEPENDENCY_CHECK",
+          "C3_R2_EVIDENCE_RECONCILIATION_CHECK",
+          "C4_R4_SEPARATE_EXECUTION_GATE_CHECK",
+          "C5_R3_FRESH_ATTRIBUTION_GATE_CHECK",
+          "C6_OTHERWISE_R0_FALLBACK"
+        ],
+        "EVALUATION_RULE": "evaluate C1 to C5 in order and assign the first class whose gate condition holds; if none holds assign R0 as the C6 fallback",
+        "C1_R0_BLOCKER_CHECK": "PARENT_GOVERNANCE_BLOCKER = YES, or CURRENT_UNRESOLVED_ISSUE_ESTABLISHED = NO (the admissible current evidence disproves the proposed citation defect), or no admissible evidence exists (RUN_COUNT_COMPLETED = 0 or every authorized run incomplete)",
+        "C2_R1_CHECK": "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION = YES",
+        "C3_R2_CHECK": "MATERIAL_SOURCE_CONFLICT = YES or PRODUCT_MEASUREMENT_RECONCILIATION_REQUIRED = YES or FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE is not YES",
+        "C4_R4_CHECK": "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED = YES and LATEST_STATE_COMPATIBLE = YES and SEPARATE_EXECUTION_TARGET_SET_DEFINABLE = YES and SINGLE_PRIMARY_SUBSYSTEM = YES and UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_SEPARATE_EXECUTION = NO and PARENT_GOVERNANCE_BLOCKER = NO",
+        "C5_R3_CHECK": "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE = YES and MATERIAL_SOURCE_CONFLICT = NO and PRODUCT_MEASUREMENT_RECONCILIATION_REQUIRED = NO and the frozen WS-13 domain evidence exists (historical citation-family evidence for the frozen target set)",
+        "C6_OTHERWISE_R0_FALLBACK": "any target set matching none of C1 to C5 is classified R0",
+        "CLASSIFICATION_ORDER": "C1 > C2 > C3 > C4 > C5 > C6",
+        "CLASSIFICATION_ORDER_EQUALS_PRIORITY_ORDER": "NO",
+        "P3_READINESS_PRIORITY_ORDER": "R4 > R3 > R2 > R1 > R0 (desirability order applied only after classification)",
+        "NOT_ESTABLISHED_BEHAVIOR": "a gate value of NOT_ESTABLISHED never satisfies a positive requirement; it either falls through to the C6 R0 fallback or, where the frozen fail-closed default above applies, takes that more conservative value",
+        "no_result_is_presupposed_in_G1": "YES"
+      },
+      "G6_NOT_COMPUTED_IN_G1": "YES",
+      "A005_NOT_MODIFIED_IN_G1": "YES",
+      "future_G6_obligations": [
+        "consume only the frozen G5 fields listed per gate",
+        "emit every required gate key with a value from its frozen domain",
+        "derive READINESS_CLASS through C1..C6 and derive NEXT_PERMISSIBLE_ACTION through the frozen total single-valued mapping",
+        "raise DEPENDENCY_GRAPH_REFRESH_REQUIRED and stop for separate governance if fresh evidence materially invalidates the accepted graph basis"
+      ]
+    },
+    "dependency_graph_consumption_rules": {
+      "graph_is_not_modified_in_G1": "YES",
+      "accepted_graph_source": "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json#/readiness_resolution_and_action_scoped_dependency (accepted action-scoped graph; APPLIES_TO_ACTION resolved only there)",
+      "accepted_graph_digest_reference": "ACTION_SCOPED_DEPENDENCY_GRAPH_DIGEST = 162a5806ad6c32afe154653b98d0e6eecab87d75236a1583639cdecf9a51dc4d (read from the accepted frozen R3 state; read-only)",
+      "EDGE_TYPES_UNCHANGED": [
+        "MUST_PRECEDE",
+        "CAN_PRECEDE",
+        "INDEPENDENT",
+        "BLOCKED_BY",
+        "NOT_ESTABLISHED"
+      ],
+      "REQUIRED_EDGE_ATTRIBUTE": "APPLIES_TO_ACTION",
+      "APPLIES_TO_ACTION_VOCABULARY": [
+        "SEPARATE_EXECUTION",
+        "FRESH_ATTRIBUTION",
+        "EVIDENCE_RECONCILIATION",
+        "ALL_ACTIONS"
+      ],
+      "FROZEN_EDGE_CONSUMPTION_RULES": {
+        "CAN_PRECEDE": "NONBLOCKING for every action",
+        "MUST_PRECEDE": "blocks only when its APPLIES_TO_ACTION covers the action currently being considered",
+        "BLOCKED_BY": "blocks only when its APPLIES_TO_ACTION covers the action currently being considered",
+        "INDEPENDENT": "NONBLOCKING",
+        "NOT_ESTABLISHED": "blocks no action; recorded NOT_ESTABLISHED",
+        "edge_without_established_action_scope": "blocks no action"
+      },
+      "RELEVANT_FROZEN_EDGES": [
+        "WS-11 -> WS-13 MUST_PRECEDE APPLIES_TO_ACTION = SEPARATE_EXECUTION (does not block FRESH_ATTRIBUTION)",
+        "WS-12 -> WS-13 CAN_PRECEDE APPLIES_TO_ACTION = SEPARATE_EXECUTION (nonblocking)"
+      ],
+      "WS11_TO_WS13_DOES_NOT_BLOCK_CURRENT_FRESH_ATTRIBUTION": "YES",
+      "FUTURE_G6_AT_SEPARATE_EXECUTION": "if a future G6 readiness class reaches R4 / SEPARATE_EXECUTION, the accepted WS-11 MUST_PRECEDE edge applies to that action",
+      "graph_edit_prohibited_in_G1": "YES",
+      "DEPENDENCY_GRAPH_REFRESH_REQUIRED": {
+        "trigger": "fresh evidence materially invalidates the accepted graph basis",
+        "then": [
+          "DEPENDENCY_GRAPH_REFRESH_REQUIRED = YES",
+          "stop for separate governance",
+          "do not edit the graph in place"
+        ],
+        "default_in_G1": "NOT_EVALUATED"
+      }
+    },
+    "current_state_drift_guard": {
+      "guard_role": "identity roles, binding classes, comparison semantics and the zero-call block rule only; G1 never predicts a future sha256",
+      "ROLE_A_CONCRETE_IDENTITY_FROZEN_IN_G1": [
+        "Master identity",
+        "production hash",
+        "release",
+        "baseline",
+        "G0 artifact identity",
+        "Golden identity",
+        "evaluator identity / version",
+        "citation verifier identity / version",
+        "answer model identity",
+        "embedding model / dimension",
+        "runtime DB identity / full sha256"
+      ],
+      "ROLE_A_BINDING_CLASS": "CONCRETE_IDENTITY_FROZEN_IN_G1",
+      "ROLE_B_REQUIRED_EXTERNAL_BINDING_BEFORE_G4": [
+        "accepted_g1_artifact_sha256",
+        "observer_sha256",
+        "classifier_sha256",
+        "future_tests_sha256"
+      ],
+      "ROLE_B_BINDING_CLASS": "REQUIRED_EXTERNAL_BINDING_BEFORE_G4",
+      "SPECIAL_ROLE": {
+        "effective_ws13_design_digest": "THIS_ARTIFACT_TOP_LEVEL_BINDING"
+      },
+      "ROLE_RULES": [
+        "G1's own concrete sha256 must not be stored inside the G1 artifact",
+        "observer / classifier / future-tests sha256 must not be invented in G1",
+        "effective_ws13_design_digest is computed from the design semantic payload and stored at top level only",
+        "G2 / G3 or accepted reviewer evidence resolves every REQUIRED_EXTERNAL_BINDING role"
+      ],
+      "COMPARISON_SEMANTICS": "before any real G4 call, every ROLE_A concrete identity is recomputed live and compared field by field; every ROLE_B role must be resolved to a concrete accepted value and compared; the top-level design digest and the accepted external G1 artifact sha256 are compared; only exact equality passes",
+      "ZERO_CALL_BLOCK_RULE": "if any role is unresolved or any comparison mismatches, G4 = BLOCKED_BECAUSE_CURRENT_STATE_DRIFTED_OR_BINDING_UNRESOLVED with MODEL_CALLS = 0, EMBEDDING_CALLS = 0, PRODUCTION_RETRIEVAL_RUNS = 0",
+      "CONTINUE_ON_LATEST_PROHIBITED": "YES",
+      "payload_contains_no_concrete_g1_sha": "YES",
+      "payload_contains_no_future_sha": "YES"
+    },
+    "authorization_boundary": {
+      "G1_MODE": "DESIGN_CONTRACT_FREEZE_WITH_ONE_CONDITIONAL_GOVERNED_ARTIFACT_WRITE",
+      "G1_AUTHORIZES": [
+        "freezing the observation schema, predicate rules, confound rules, status truth table, aggregate rule, attribution schema, readiness bridge and drift guard",
+        "one governed write of this design contract to the single authorized path"
+      ],
+      "G1_DOES_NOT_AUTHORIZE": [
+        "cit-001 live execution",
+        "answer-model or embedding calls",
+        "production retrieval",
+        "Full-144 or counterfactual execution",
+        "observer / classifier / readiness implementation",
+        "any product code, prompt, citation, retriever or reranker edit",
+        "any Golden, evaluator, verifier or runtime DB edit",
+        "any Master, Priority Review or A001-A009 edit",
+        "G2 / G3 / G4 start",
+        "baseline or release advancement",
+        "Publish synchronisation"
+      ],
+      "scientific_status_declared_in_payload": "NOT_EVALUATED_IN_G1",
+      "design_immutability": {
+        "after_reviewer_acceptance": "IMMUTABLE",
+        "G2_G3_may_not_change": [
+          "target / control sets",
+          "run multiplicity",
+          "seed discipline",
+          "semantic / provenance key sets",
+          "truth table, confound rules and aggregation",
+          "G5 schema and G6 bridge"
+        ],
+        "design_defect_discovered_later": "do not edit the accepted G1 artifact; create a future separate amendment artifact named v4_ws13_citation_fresh_attribution_design_amendment_001.json",
+        "G1_creates_no_amendment": "YES"
+      }
+    }
+  },
+  "design_digest_contract": {
+    "payload_field": "design_semantic_payload",
+    "canonicalization": {
+      "json_dumps_sort_keys": true,
+      "json_dumps_ensure_ascii": false,
+      "json_dumps_separators": [
+        ",",
+        ":"
+      ],
+      "encoding": "UTF-8",
+      "hash": "SHA256"
+    },
+    "digest_field": "effective_ws13_design_digest",
+    "digest_location": "top-level of this artifact only",
+    "digest_is_derived_from": "the design_semantic_payload object only",
+    "payload_must_not_contain": [
+      "this artifact's own sha256",
+      "any absolute machine path",
+      "any timestamp value",
+      "any workspace manifest value",
+      "any post-write validation value",
+      "the effective design digest itself",
+      "any future observer / classifier / future-tests sha256"
+    ],
+    "self_reference": "PROHIBITED",
+    "recomputation_rule": "after the digest value is placed at top level, the payload is re-serialized by the frozen canonicalization and the digest is recomputed independently; the recomputed value must equal the stored value",
+    "digest_immutable_after_reviewer_acceptance": "YES"
+  },
+  "effective_ws13_design_digest": "fe69ea63cf67e571355da68a4d8f1490771bf90ca821354161eb4e4159771021",
+  "scientific_boundary": {
+    "current_citation_status": "NOT_EVALUATED_IN_G1",
+    "scientific_attribution_performed": "NO",
+    "target_observation_performed": "NO",
+    "not_concluded_in_g1": [
+      "CURRENT_CONFIRMED_CITATION_DEFECT",
+      "NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+      "citation root cause",
+      "citation defect mechanism",
+      "remediation target",
+      "remediation recommendation"
+    ],
+    "scope_statement": "G1 freezes the future observation schema, the predicate rules, the confound rules, the status truth table, the aggregate rule, the attribution schema and the readiness bridge only; it contains no citation scientific conclusion and no product verdict"
+  },
+  "execution_counts": {
+    "model_calls": 0,
+    "embedding_calls": 0,
+    "production_retrieval_runs": 0,
+    "target_observation_runs": 0,
+    "counterfactual_runs": 0,
+    "full_144_runs": 0,
+    "priority_comparator_executions": 0,
+    "recommendation_support_classifier_executions": 0,
+    "pre_write_unit_tests_executed": 247,
+    "runtime_db_inspections": 1,
+    "runtime_db_inspection_mode": "STRICT_READ_ONLY_BYTE_HASH_AND_STAT_ONLY",
+    "read_only_harness_computations": 4
+  },
+  "integrity": {
+    "pre_write_workspace_manifest_entry_count": 19665,
+    "pre_write_workspace_manifest_digest": "232d2340520f188fba6d43f185d4a109fe2f44cba001dd8622e766826e5e5289",
+    "pre_write_workspace_manifest_rule": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "pre_manifest_excluding_g1_artifact_digest": "232d2340520f188fba6d43f185d4a109fe2f44cba001dd8622e766826e5e5289",
+    "pre_write_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "runtime_db_identity_before": "10698752:c6bc9b3eb63ae4e6",
+    "runtime_db_full_sha256_before": "c6bc9b3eb63ae4e6d96caf859a2b0c5f2f1e5a5b6f438e81aa0bbc3cf4084c97",
+    "authorized_write_paths": [
+      "eval/v4_ws13_citation_fresh_attribution_design.json"
+    ],
+    "expected_changed_paths": [
+      "eval/v4_ws13_citation_fresh_attribution_design.json"
+    ],
+    "authorized_write_path_count": 1,
+    "existing_file_modifications": "NONE",
+    "new_path_count": 1,
+    "namespace": "v4_ws13_*",
+    "post_write_integrity_verification": "EXTERNAL_TO_THIS_ARTIFACT",
+    "pre_write_unit_tests": "PASS 247 / OK (python -B -m unittest tests.test_v4_post_v4_8_2_priority_review -v)",
+    "total_test_methods_ast": 247,
+    "unique_test_method_names_ast": 247,
+    "no_scratch_files_written": "YES"
+  },
+  "authorization_after_g1": {
+    "g2_execution_authorized": "NO",
+    "g3_execution_authorized": "NO",
+    "g4_execution_authorized": "NO",
+    "product_remediation_authorized": "NO",
+    "citation_remediation_authorized": "NO",
+    "next_stage_automatically_authorized": "NO"
+  },
+  "blockers": []
+}

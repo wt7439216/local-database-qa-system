@@ -2,7 +2,7 @@
   "producer": "scripts/build_v4_baseline_lineage.py",
   "produced_in": "V4.6.2 Hash Portability & CI Reproducibility Formalization",
   "immutability_rule": "Historical stage baselines are immutable. A later remediation creates a new baseline artifact; it never rewrites an earlier stage baseline. eval/v4_initial_baseline.json is permanently the pre-remediation V4 initial state and must never be used as a rolling 'current' baseline. The current pointer lives only in eval/v4_baseline_lineage.json.",
-  "current_baseline_id": "V4_6_2_HASH_PORTABILITY_BASELINE",
+  "current_baseline_id": "V4_20261015_LOCAL_CANDIDATE_BASELINE",
   "baselines": [
     {
       "baseline_id": "V4_INITIAL_BASELINE",
@@ -138,6 +138,104 @@
         "citation_scope_violation": 0
       },
       "timestamp": "2026-09-12T01:01:48"
+    },
+    {
+      "baseline_id": "V4_PROD01_CACHE_CONSISTENCY_BASELINE",
+      "stage": "2026-10-15",
+      "role": "REGISTERED_PRODUCT_SOURCE_UNMEASURED",
+      "metric_artifact": "eval/v4_prod01_cache_consistency_source_baseline_20261015.json",
+      "production_source_hash": "e8793f427266dc0a15c38df0e86915539d3db33df8a3223d889fe8efa0f9c16c",
+      "answer_artifact_sha256": null,
+      "golden_identity": {
+        "file_sha256": "872cf0604d0e31dce02ee8d9f7be02a6c63f671a443496194d9b5f056f9e1171",
+        "cases_sha256": "0837e83333c858c6fe0229a06f9e0a3efb25505b03bab5acc3148a6b0af2ad5e"
+      },
+      "evaluator_version": "v4-baseline-v1",
+      "citation_verifier_version": "f2-v4",
+      "parent_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+      "status": "REGISTERED_PRODUCT_SOURCE",
+      "immutable": true,
+      "metrics": null,
+      "timestamp": "2026-10-15T15:14:39+0800"
+    },
+    {
+      "baseline_id": "V4_PROD02_NUMERIC_MATERIAL_HEADER_BASELINE",
+      "stage": "2026-10-15",
+      "role": "REGISTERED_PRODUCT_SOURCE_UNMEASURED",
+      "metric_artifact": "eval/v4_prod02_numeric_material_header_source_baseline_20261015.json",
+      "production_source_hash": "bef1a9414eaa168702724b982e48338fbaa858661ac1cb1863af842ef7937b6d",
+      "answer_artifact_sha256": null,
+      "golden_identity": {
+        "file_sha256": "872cf0604d0e31dce02ee8d9f7be02a6c63f671a443496194d9b5f056f9e1171",
+        "cases_sha256": "0837e83333c858c6fe0229a06f9e0a3efb25505b03bab5acc3148a6b0af2ad5e"
+      },
+      "evaluator_version": "v4-baseline-v1",
+      "citation_verifier_version": "f2-v4",
+      "parent_baseline": "V4_PROD01_CACHE_CONSISTENCY_BASELINE",
+      "status": "REGISTERED_PRODUCT_SOURCE",
+      "immutable": true,
+      "metrics": null,
+      "timestamp": "2026-10-15T15:23:09+0800"
+    },
+    {
+      "baseline_id": "V4_20261015_LOCAL_CANDIDATE_BASELINE",
+      "stage": "2026-10-15 frozen / 2026-10-16 closure",
+      "role": "MEASUREMENT_OF_FROZEN_PROD01_PROD02_SOURCE",
+      "metric_artifact": "eval/v4_local_candidate_full144_20261015.json",
+      "metric_artifact_raw_sha256": "0ac8229a69b31d33dcd162f5f0caf712766d423331bbcd6ab772fcbff013cfd1",
+      "production_source_hash": "bef1a9414eaa168702724b982e48338fbaa858661ac1cb1863af842ef7937b6d",
+      "answer_artifact_sha256": "c2db80327f5784151231a7c2e59876062d99f49399fa6b04fd573fb36e9581c9",
+      "golden_identity": {
+        "path": "eval/v3_final_golden.json",
+        "version": "f4-v1",
+        "file_sha256": "872cf0604d0e31dce02ee8d9f7be02a6c63f671a443496194d9b5f056f9e1171",
+        "file_sha256_16": "872cf0604d0e31dc",
+        "cases_sha256": "0837e83333c858c6fe0229a06f9e0a3efb25505b03bab5acc3148a6b0af2ad5e",
+        "cases_sha256_16": "0837e83333c858c6",
+        "historical_file_sha256_16_pre_metadata_correction": "6e18ee4ee9669bef",
+        "total_cases": 185,
+        "answer_eligible": 144,
+        "expected_refusal_non_answer": 41,
+        "metadata_corrected_in_v4_2": true,
+        "case_semantics_changed_in_v4_2": false
+      },
+      "evaluator_version": "v4-baseline-v1",
+      "citation_verifier_version": "f2-v4",
+      "parent_baseline": "V4_PROD02_NUMERIC_MATERIAL_HEADER_BASELINE",
+      "status": "CURRENT_LOCAL_DEVELOPMENT_CANDIDATE_QUALITY_FAIL",
+      "immutable": true,
+      "metrics": {
+        "eligible_cases": 144,
+        "fact_cases": 144,
+        "case_exact_fact_match_rate": 0.7292,
+        "case_exact_ok": 105,
+        "fact_recall": 0.8471,
+        "fact_present": 266,
+        "fact_total": 314,
+        "false_refusal_rate": 0.0069,
+        "refused": 1,
+        "citation_coverage": 0.5895,
+        "citation_coverage_claim_level": 0.4954,
+        "citation_supported": 89,
+        "citation_unsupported": 286,
+        "citation_uncertain": 174,
+        "citation_factual_total": 549,
+        "citation_cited_total": 272,
+        "high_confidence_unsupported_rate": 0.0164,
+        "high_confidence_claims": 9,
+        "invalid_citation_count": 0,
+        "citation_scope_violation": 0
+      },
+      "quality_gate_status": {
+        "case_exact_fact_match_rate": "FAIL",
+        "fact_recall": "FAIL",
+        "false_refusal_rate": "PASS",
+        "citation_coverage": "FAIL",
+        "high_confidence_unsupported_rate": "PASS"
+      },
+      "is_v4_final": false,
+      "timestamp": "2026-10-16T10:46:32.331573+08:00",
+      "source_change_in_this_measurement_node": false
     }
   ],
   "clobbered_in_v4_4": {
@@ -149,5 +247,7 @@
     "next_phase_advice": "scripts/eval_v4_baseline.py accepts --baseline-id / --baseline-role / --out so future stages write a NEW artifact instead of overwriting",
     "restore_source_sha256": "371506a99ec7094cad486acb108f33fb66e6a357f31e9ed9e23fcd6ac1f5870f"
   },
-  "timestamp": "2026-09-12T01:02:05"
+  "timestamp": "2026-09-12T01:02:05",
+  "latest_append_producer": "20261015-PROD-151007/register-measured-candidate (technical closure, no old row rewrite)",
+  "current_pointer_rule": "current_baseline_id is authoritative; older entries retain their original recorded status."
 }

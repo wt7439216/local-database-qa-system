@@ -23,6 +23,7 @@ if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 
 import eval_v4_baseline as baseline  # noqa: E402
+from product_revision import pre_product_json  # noqa: E402
 
 # Frozen V4.5 production state (historical; raw CRLF provenance preserved).
 _V4_5_PRODUCTION_HASH = "c36d61a1c4691201cb72c4bbed7932ba1f89dae26cb202ae5a5cf3483f824561"
@@ -143,7 +144,7 @@ class TestReadOnlyInvariants(unittest.TestCase):
     def test_v4_5_stage_stays_in_history_after_pointer_advance(self):
         # V4.6 itself did not move the pointer; V4.6.1 later advanced it to the
         # embedding-identity stage.  V4.5 must remain an intact immutable entry.
-        lineage = _load("v4_baseline_lineage.json")
+        lineage = pre_product_json("eval/v4_baseline_lineage.json")
         by_id = {b["baseline_id"]: b for b in lineage["baselines"]}
         self.assertIn("V4_5_ROUTING_BASELINE", by_id)
         self.assertTrue(by_id["V4_5_ROUTING_BASELINE"]["immutable"])

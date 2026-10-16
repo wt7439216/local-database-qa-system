@@ -8,9 +8,53 @@
 
 ---
 
-## [Unreleased]
+## [v4.0.0-alpha.3] - 2026-10-16
 
-（暂无尚未发布的变更。）
+Development Snapshot / GitHub Pre-release，**NOT V4 Final**。本条描述本次源码快照；实际 commit、tag、发布状态与远端 CI 分别见 [GitHub Releases](https://github.com/wt7439216/local-database-qa-system/releases) 和 [GitHub Actions](https://github.com/wt7439216/local-database-qa-system/actions)。
+
+### Fixed
+
+- 答案缓存与库刷新共用锁，阻止清空后旧结果回写；区分默认范围与显式空范围，并处理序列化及缓存命中窗口内的取消。新增 12 项回归及修复前反事实验证。
+- 模型材料头由 `[材料1｜位置]` 统一为 `[1] 位置`。独立固定 12 次 A/B/C 调查支持该具体干预；没有修改检索算法、材料正文顺序、Golden、canonical evaluator、verifier 或质量门槛。不宣称全局生成机制或全部引用问题已经解决。
+- 工程测试与离线 Phase E 使用隔离夹具，保留真实项目日志；历史源码重放与当前生产漂移校验分别验证。
+
+### Added / Changed
+
+- 追加 PROD-01、PROD-02 源码阶段及 `V4_20261015_LOCAL_CANDIDATE_BASELINE`；旧五项基线和历史科学结论保留。
+- canonical production hash：`bef1a9414eaa168702724b982e48338fbaa858661ac1cb1863af842ef7937b6d`（`core/desktop/web`，canonical LF）。
+- 独立运行新候选 canonical Full144、41 项非回答补充及 34 项范围隔离检查；未把旧成绩复制为新测量。
+- Windows 构建工具只读核验并复制 managed 库，收集五格式与扫描 PDF OCR 依赖；独立 Python 3.12 构建、明确候选激活及 EXE 身份校验。开发环境已验证 alpha.3 EXE，私有数据库与运行包不随本次源码发布。
+- 发布扫描与同步预演覆盖实际候选和评测工件；公开副本的路径处理和历史身份边界独立登记，保留本地原始证据。
+
+### Validation / Quality
+
+- 本地完整工程检查：2026-10-16，1707 tests、0 failures、0 errors、26 skipped。该历史结果与本次公开 fresh checkout / 远端 CI 分列，不能代替实际发布检查。
+- 新候选 Full144：`case_exact 0.7292` / `fact_recall 0.8471` / `false_refusal 0.0069` / `citation_coverage 0.5895` / `high_conf 0.0164` / `invalid 0` / `scope 0`。
+- **Product Quality DoD = NOT_YET_PASS**：事实全对率、事实召回率与引用覆盖率三项仍 FAIL。范围隔离专项 34/34 PASS，不替代语义拒答质量；定位事实遗漏、mt-006 误拒答、多文档实体遗漏与材料不足类引用继续保留为残留问题。
+- 单次新旧答案差异同时包含源码变化与生成随机性，不将指标变化全部归因于材料头格式修复。
+
+本次发布不包含完整私有教材、SQLite、日志、模型、EXE / ZIP 附件或本机候选激活指针；公开评测证据可包含问题、模型答案与少量教材短引文。干净源码克隆需要用户自行导入文档。
+
+## 历史未发布诊断记录 — V4.7
+
+以下为当时阶段的诊断与治理记录，保留原表述；当前产品身份、后续结论及质量结果以上方 alpha.3 条目和当前状态入口为准。
+
+### Diagnosis / Governance
+
+- **V4.7 — Document Identity Root-Cause Confirmation + Diagnosis Closure**（`READ-ONLY DIAGNOSIS`，**仅诊断 / 治理，无产品变更**）：
+  对 `md-004` / `md-009` / `md-015` 机械确认 canonical document title 在
+  `documents.title → ChunkRecord.document_title → chunk.location → serialized material header → application-level Ollama request`
+  全链路保持可见 ⇒ **当前 V4.6.2 pipeline 的 Document Identity Loss = DISPROVEN**；
+  `DOCUMENT_IDENTITY_ROOT_CAUSE = NOT_PROVEN`；**Document Identity remediation = BLOCKED（未授权）**。
+- 当前 pipeline root cause family = `GENERATION`（shared mechanism `MATERIAL_INDEX_REPRESENTATION_BIAS`）；
+  `GENERATION_MECHANISM_ISOLATION = NOT_ESTABLISHED`（**尚未**隔离出具有因果作用的主导机制）。
+- Measurement 语义问题（canonical document title vs Golden semantic-role token）作为**独立轨道**记录
+  （`MEASUREMENT_SEMANTIC_ISSUE = SUPPORTED`）；本轮**未**修改 Golden / evaluator / citation semantics。
+- 历史结论：V4.6 的 `DOCUMENT_IDENTITY_FAILURE` 解释被**强挑战**（`STRONGLY_CHALLENGED`）；
+  历史 pipeline 等价性因缺少 exact historical source anchor 而 `NOT_ESTABLISHED`；V4.6 历史 artifact 保持不可变。
+- 本轮为 governance / documentation alignment：**production behavior unchanged**、
+  **no new product baseline**（current pointer 仍为 `V4_6_2_HASH_PORTABILITY_BASELINE`）、
+  未重算指标、未执行 V4.8、未做任何 publication。
 
 ## [v4.0.0-alpha.2] - 2026-09-12
 

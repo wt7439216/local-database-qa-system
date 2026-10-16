@@ -1,0 +1,921 @@
+{
+  "DO_NOT_MODIFY": "YES",
+  "PRESTATE_LOCKED": "YES",
+  "amendment_rule": {
+    "in_place_edit_of_this_snapshot_allowed": false,
+    "material_change_to_frozen_rules_or_schemas_requires": "DESIGN_AMENDMENT_REQUIRED=YES + STOP + governance review before proceeding",
+    "rule_changes_after_r1_are_prohibited_unless_separately_authorized_as_an_amendment": true,
+    "silent_modification_allowed": false
+  },
+  "analysis_design_digest_spec": {
+    "canonicalization": "json.dumps(subset, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\")) -> UTF-8 bytes -> sha256",
+    "design_amendment_required_if_rules_must_change_after_r1": true,
+    "digest_value_embedded_in_snapshot": false,
+    "digest_value_reported_in": "R1 console output and post-write verification",
+    "excluded_content": [
+      "timestamps",
+      "file sha256 values",
+      "manifest digests",
+      "machine-specific paths",
+      "created_at"
+    ],
+    "extracted_keys": [
+      "source_of_truth_hierarchy",
+      "candidate_workstreams",
+      "case_classification_schema",
+      "workstream_matrix_schema",
+      "readiness_rules",
+      "dependency_rules",
+      "quality_gate_link_rules",
+      "priority_decision_rules",
+      "recommendation_support_rules"
+    ],
+    "purpose": "freeze the review design so that later checkpoints cannot silently change rules"
+  },
+  "artifact_type": "IMMUTABLE_PREFLIGHT_SNAPSHOT",
+  "authorization_boundary": {
+    "compute_deterministic_manifests": true,
+    "compute_sha256": true,
+    "construct_case_and_workstream_matrices_after_r1": true,
+    "git_init_prohibited": true,
+    "not_authorized": {
+      "BASELINE_CHANGE_AUTHORIZED": "NO",
+      "BASELINE_POINTER_MOVE_AUTHORIZED": "NO",
+      "CITATION_SEMANTICS_CHANGE_AUTHORIZED": "NO",
+      "CONTEXT_PIPELINE_CHANGE_AUTHORIZED": "NO",
+      "COUNTERFACTUAL_RUNS_AUTHORIZED": "NO",
+      "EMBEDDING_CHANGE_AUTHORIZED": "NO",
+      "EVALUATOR_CHANGE_AUTHORIZED": "NO",
+      "FULL_144_AUTHORIZED": "NO",
+      "GIT_MUTATION_AUTHORIZED": "NO",
+      "GOLDEN_CHANGE_AUTHORIZED": "NO",
+      "MASTER_CHANGE_AUTHORIZED": "NO",
+      "MODEL_CALLS_AUTHORIZED": "NO",
+      "NEW_CAUSAL_INTERVENTION_AUTHORIZED": "NO",
+      "PRODUCTION_RETRIEVAL_RUNS_AUTHORIZED": "NO",
+      "PRODUCT_CODE_CHANGE_AUTHORIZED": "NO",
+      "PRODUCT_METRICS_RECOMPUTATION_AUTHORIZED": "NO",
+      "PRODUCT_PROMPT_CHANGE_AUTHORIZED": "NO",
+      "PUBLICATION_AUTHORIZED": "NO",
+      "RANKING_CHANGE_AUTHORIZED": "NO",
+      "RETRIEVAL_CHANGE_AUTHORIZED": "NO",
+      "ROADMAP_CHANGE_AUTHORIZED": "NO",
+      "RUNTIME_DB_CHANGE_AUTHORIZED": "NO"
+    },
+    "publish_workspace": "READ-ONLY / NO SYNC / NO WRITE / NO COMMIT / NO PUSH / NO TAG / NO RELEASE",
+    "read_code_tests_for_structure_only": true,
+    "read_current_master": true,
+    "read_governed_artifacts": true,
+    "v3_workspace": "FROZEN / READ-ONLY / UNTOUCHED",
+    "write_only_explicitly_authorized_review_artifacts": true
+  },
+  "authorized_paths": {
+    "authorized_changed_paths": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json"
+    ],
+    "authorized_changed_paths_frozen": true,
+    "every_additional_path_requires_separate_explicit_checkpoint_authorization": true,
+    "later_checkpoint_artifact_ceiling": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json",
+      "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+      "tests/test_v4_post_v4_8_2_priority_review.py",
+      "eval/v4_post_v4_8_2_next_workstream_priority_review.json",
+      "docs/V4_POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW.md"
+    ],
+    "no_other_workspace_file_may_be_created_or_modified_by_this_review": true,
+    "planned_review_artifacts_not_created_in_r1": [
+      "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+      "tests/test_v4_post_v4_8_2_priority_review.py",
+      "eval/v4_post_v4_8_2_next_workstream_priority_review.json",
+      "docs/V4_POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW.md"
+    ],
+    "this_checkpoint_authorization_is_single_path_and_single_write": true
+  },
+  "candidate_workstreams": {
+    "additional_v4_x_candidate_creation_allowed_in_this_review": false,
+    "candidate_set_frozen": true,
+    "workstreams": [
+      {
+        "authorization_status": "NOT_AUTHORIZED",
+        "candidate_phase": "V4.9_HISTORY",
+        "execution_authorized": false,
+        "frozen_boundary": {
+          "fresh_attribution_required_if_historical_evidence_only": true,
+          "historical_signals_may_not_be_treated_as_current_confirmed_defects": true,
+          "latest_product_state_compatible_judgement_required_before_any_current_classification": true,
+          "r4_requires_current_or_fresh_supportive_evidence": true
+        },
+        "historical_signal_case_ids": [
+          "mt-011",
+          "mt-006"
+        ],
+        "historical_signal_description": "mt-011 rewrite = \"CDMA的那\"; mt-006 rewrite -> \"OFDM\"",
+        "subsystem": "HISTORY / CONVERSATIONAL CONTEXT HANDLING",
+        "workstream_id": "WS-09"
+      },
+      {
+        "authorization_status": "NOT_AUTHORIZED",
+        "candidate_phase": "V4.10_RETRIEVAL",
+        "execution_authorized": false,
+        "frozen_boundary": {
+          "historical_attribution_artifacts_must_not_be_used_as_current_truth": true,
+          "multi_cause_cases_must_not_be_collapsed_into_a_single_subsystem": true,
+          "required_future_distinctions": [
+            "true retrieval miss",
+            "generation omission",
+            "history failure",
+            "measurement issue",
+            "multi-cause"
+          ]
+        },
+        "historical_signal_case_ids": [
+          "cit-013",
+          "qa-020",
+          "qa-030",
+          "cmp-001",
+          "loc-008",
+          "loc-013",
+          "loc-015"
+        ],
+        "subsystem": "RETRIEVAL",
+        "workstream_id": "WS-10"
+      },
+      {
+        "authorization_status": "NOT_AUTHORIZED",
+        "candidate_phase": "V4.11_GENERATION_COMPLETENESS",
+        "execution_authorized": false,
+        "frozen_boundary": {
+          "branch_A_current_state": "FROZEN-EVIDENCE ATTRIBUTION CEILING",
+          "branch_A_promotion_to_remediation_ready_authorized": false,
+          "one_unified_generation_fix_may_not_be_claimed": true,
+          "ws_11_may_only_become_r4_or_r3_through_a_current_mechanically_established_target_set_in_branch_B": true
+        },
+        "mandatory_branch_separation": {
+          "branch_A": "V4.7–V4.8.2 residual mechanism branch",
+          "branch_B": "broader generation-completeness residuals"
+        },
+        "subsystem": "GENERATION COMPLETENESS",
+        "workstream_id": "WS-11"
+      },
+      {
+        "auditable_measurement_residual_families": [
+          "canonical document title vs Golden semantic-role token",
+          "locate template vs query concept restatement",
+          "ordinal-expression variation",
+          "synonym / paraphrase",
+          "Golden route vs deterministic answer contract"
+        ],
+        "authorization_status": "NOT_AUTHORIZED",
+        "candidate_phase": "V4.12_MEASUREMENT",
+        "execution_authorized": false,
+        "frozen_boundary": {
+          "forbidden_actions": [
+            "lowering standards",
+            "single-case special casing",
+            "editing expected facts for score",
+            "using Golden to redefine product behaviour"
+          ],
+          "golden_or_evaluator_modification_for_metric_improvement_authorized": false,
+          "measurement_ambiguity_is_a_dependency_signal_not_a_score_rationale": true,
+          "measurement_defect_requires_mechanical_proof": true
+        },
+        "subsystem": "MEASUREMENT / EVALUATOR CONTRACT",
+        "workstream_id": "WS-12"
+      },
+      {
+        "authorization_status": "NOT_AUTHORIZED",
+        "candidate_phase": "V4.13_CITATION",
+        "current_state": {
+          "citation_coverage": 0.4657,
+          "citation_scope_violation": 0,
+          "f2_citation_safety": "PASS",
+          "invalid_citation_count": 0,
+          "target": ">= 0.80"
+        },
+        "execution_authorized": false,
+        "frozen_boundary": {
+          "answer_quality_and_attribution_stabilization_precede_broad_citation_coverage_remediation": true,
+          "citation_safety_invariants_must_be_preserved": true,
+          "coverage_gap_alone_does_not_force_ws_13_priority": true,
+          "readiness_of_ws_13_is_at_most_r1_unless_a_citation_only_target_set_independent_of_unresolved_answer_correctness_is_later_mechanically_proven": true
+        },
+        "subsystem": "CITATION COVERAGE",
+        "workstream_id": "WS-13"
+      }
+    ]
+  },
+  "case_classification_schema": {
+    "classification_enum": [
+      "CURRENT_CONFIRMED_PRODUCT_DEFECT",
+      "CURRENT_CONFIRMED_MEASUREMENT_DEFECT",
+      "CURRENT_CONFIRMED_CITATION_DEFECT",
+      "CURRENT_MULTI_CAUSE",
+      "STALE_ATTRIBUTION_REQUIRES_REFRESH",
+      "RESOLVED_OR_CLOSED",
+      "BLOCKED_BY_PARENT_EVIDENCE",
+      "NOT_ESTABLISHED"
+    ],
+    "classification_performed_in_r1": false,
+    "confidence_enum": [
+      "MECHANICALLY_ESTABLISHED",
+      "SUPPORTED",
+      "HISTORICAL_ONLY",
+      "NOT_ESTABLISHED"
+    ],
+    "frozen_rules": [
+      "historical case prefix != current root cause",
+      "no case may be classified as a current confirmed defect without latest-product-state-compatible evidence",
+      "stale attribution cannot be promoted to current confirmed without fresh evidence",
+      "a case whose conflicting sources cannot be mechanically reconciled must be recorded as STALE_ATTRIBUTION_REQUIRES_REFRESH or NOT_ESTABLISHED, not resolved by prose",
+      "every record must carry a traceable source and field or section, otherwise it is NOT_ESTABLISHED"
+    ],
+    "latest_product_state_compatible_enum": [
+      "YES",
+      "NO",
+      "NOT_ESTABLISHED"
+    ],
+    "record_required_fields": [
+      "CASE_ID",
+      "LATEST_SOURCE",
+      "LATEST_SOURCE_FIELD_OR_SECTION",
+      "SOURCE_LEVEL",
+      "LATEST_PRODUCT_STATE_COMPATIBLE",
+      "ROOT_CAUSE_FAMILY",
+      "CLASSIFICATION",
+      "CONFIDENCE",
+      "NOTES"
+    ],
+    "source_level_enum": [
+      "S1",
+      "S2",
+      "S3",
+      "S4"
+    ],
+    "unit_of_review": "current actionable residual per case, not historical case prefix"
+  },
+  "checkpoint": "R1_EVIDENCE_INVENTORY_AND_DESIGN_FREEZE",
+  "created_at": "2026-09-14T23:14:15",
+  "current_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+  "current_master_identity": {
+    "expected_sha256": "2db9292d8785ce138f74d2e2e7d250ec95ec60b1cdeb2b39a08d3c8b9b804800",
+    "identity_match": true,
+    "master_modified_in_this_round": false,
+    "path": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+    "recomputed_sha256": "2db9292d8785ce138f74d2e2e7d250ec95ec60b1cdeb2b39a08d3c8b9b804800",
+    "role": "AUTHORITATIVE_PROSE_LEVEL_NAVIGATION_INPUT_ONLY",
+    "source_level": "S4"
+  },
+  "current_release": "v4.0.0-alpha.2",
+  "dependency_rules": {
+    "allowed_edge_types": [
+      "MUST_PRECEDE",
+      "CAN_PRECEDE",
+      "INDEPENDENT",
+      "BLOCKED_BY",
+      "NOT_ESTABLISHED"
+    ],
+    "citation_precedence": {
+      "effect": "WS-13 is DOWNSTREAM / DEFERRED",
+      "exception": "unless a citation-only target set independent of unresolved answer correctness is later mechanically proven",
+      "trigger": "answer correctness / root-cause target set is not stable"
+    },
+    "dependency_graph_constructed_in_r1": false,
+    "edge_evidence_rule": "every edge requires a traceable basis; edges without a mechanical basis are recorded as NOT_ESTABLISHED, never assumed",
+    "generation_boundary": {
+      "broader_generation_completeness_review_blocked": false,
+      "v4_8_2_top_candidate": null,
+      "v4_8_x_residual_mechanism_branch_treated_as_remediation_ready": false
+    },
+    "graph_nodes": [
+      "WS-09",
+      "WS-10",
+      "WS-11",
+      "WS-12",
+      "WS-13"
+    ],
+    "measurement_precedence": {
+      "does_not_mean": "Golden modification authorized",
+      "effect": "WS-12 MUST_PRECEDE those dependent workstreams",
+      "meaning": "measurement reconciliation precedence only",
+      "trigger": "a mechanically established measurement ambiguity could change defect classification for >= 2 candidate workstreams"
+    }
+  },
+  "forbidden_actions": [
+    "git init in any workspace",
+    "model calls",
+    "production retrieval runs",
+    "counterfactual runs",
+    "full-144 rerun",
+    "pytest / ruff / py_compile / compileall execution",
+    "modifying Master, product code, Golden, evaluator, baseline, runtime DB or citation semantics",
+    "modifying any V4.7 / V4.8 / V4.8.1 / V4.8.2 parent artifact",
+    "writing to V3 workspace",
+    "writing to Publish workspace",
+    "sync, commit, push, tag or release",
+    "creating V4.8.3 or any new phase number for this review",
+    "creating analysis harness, tests, machine result or human report in R1",
+    "building final case inventory or classifying cases in R1",
+    "assigning workstream readiness in R1",
+    "constructing the final dependency graph in R1",
+    "ranking workstreams or emitting a recommendation in R1",
+    "subjective weighted scoring or manual tie-breaking",
+    "fabricating substitute sources for missing required sources",
+    "modifying or overwriting this snapshot after its first write",
+    "creating any workspace file other than the authorized snapshot path"
+  ],
+  "frozen_parent_scientific_state": {
+    "CAUSAL_MECHANISM_ESTABLISHED": "NO",
+    "CURRENT_PIPELINE_DOCUMENT_IDENTITY_LOSS": "DISPROVEN",
+    "DOCUMENT_IDENTITY_REMEDIATION": "BLOCKED / NOT AUTHORIZED",
+    "DOCUMENT_IDENTITY_ROOT_CAUSE": "NOT_PROVEN",
+    "GENERATION_MECHANISM_ISOLATION": "NOT_ESTABLISHED",
+    "NEXT_AUTHORIZED_WORKSTREAM": "NOT_YET_DETERMINED",
+    "NEXT_DIAGNOSTIC_EXECUTION_AUTHORIZED": "NO",
+    "NEXT_DIAGNOSTIC_PHASE_NUMBER": "NOT_ESTABLISHED",
+    "NEXT_RESIDUAL_HYPOTHESIS": "NOT_ESTABLISHED",
+    "PRODUCT_QUALITY_DOD": "NOT_YET_PASS",
+    "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+    "SHARED_RESIDUAL_HYPOTHESIS": "NOT_ESTABLISHED",
+    "V4_7_MATERIAL_INDEX_REPRESENTATION_BIAS": "HISTORICAL_PHASE_INTERPRETATION_ONLY_NOT_A_CURRENT_UNIFIED_MECHANISM",
+    "V4_8_1_NULL_RESULT_MUST_NOT_BE_EXTENDED_TO": "all aggregation mechanisms disproven",
+    "V4_8_1_NULL_RESULT_SCOPE": "EXPLICIT_MEMBERSHIP_METADATA_ONLY",
+    "V4_8_2_STATUS": "COMPLETE / CLOSED / FINAL ACCEPTED",
+    "V4_8_2_TOP_CANDIDATE_HYPOTHESIS": null,
+    "V4_8_2_TOP_CANDIDATE_SUPPORT": null,
+    "V4_FINAL": "NO",
+    "generation_hypothesis_compensatory_selection_in_this_review": false,
+    "parent_states_may_not_be_rewritten_in_r1": true
+  },
+  "immutable_from": "FIRST_WRITE_COMPLETION",
+  "is_product_baseline": false,
+  "is_product_remediation": false,
+  "is_scientific_experiment": false,
+  "master_sha256": "2db9292d8785ce138f74d2e2e7d250ec95ec60b1cdeb2b39a08d3c8b9b804800",
+  "mode": "FROZEN_EVIDENCE_CURRENT_STATE_PRIORITY_REVIEW",
+  "next_stage_automatically_authorized": false,
+  "next_workstream_execution_authorized": false,
+  "parent_artifact_hashes": {
+    "eval/v4_7_document_identity_root_cause.json": "effcbdfd18a93b2a52db813e1b19f88b4c65dbb7e9837206a82ebac0b9ee313d",
+    "eval/v4_8_1_residual_generation_mechanism_isolation.json": "3b94017ecb67f68cdb45a2315410f11c5e5d5700c7443b5af98e903af62de5cc",
+    "eval/v4_8_2_residual_differential_attribution.json": "47e7155badfcecfb03eb48b0f530c12a3f5d0eb03c20918290e91f5f175da470",
+    "eval/v4_8_generation_mechanism_isolation.json": "72eaa33f024f9e7f6086149a075b2ae11532bd8dcad7c9fd1890997ae3b66397"
+  },
+  "parent_artifact_identities": {
+    "anchors_match_values_recorded_by_the_v4_8_2_preflight_snapshot": true,
+    "frozen_live_identity_inputs": {
+      "frozen_case_ids_verified_present": [
+        "mt-011",
+        "mt-006",
+        "cit-013",
+        "qa-020",
+        "qa-030",
+        "cmp-001",
+        "loc-008",
+        "loc-013",
+        "loc-015"
+      ],
+      "frozen_golden_identity_source": "eval/v3_final_golden.json",
+      "golden_cases_total": 185
+    },
+    "hash_algorithm": "raw sha256 (byte-exact, no line-ending canonicalization) for artifact identity",
+    "live_identity_anchors_recomputed_before_first_write": {
+      "docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md": "b3c1db4eaea0ee4a036c142253909b52e1ec618835bac41b5e638fbcda967a58",
+      "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md": "9e33894038faa88a03e182c30287b9ef1b242172d8d774f33244be98857ec771",
+      "docs/V4_7_DOCUMENT_IDENTITY_ROOT_CAUSE.md": "7073a64a7b1a537a1d16b31d858a62ad8d11620a9348d756cce4ade961870849",
+      "docs/V4_8_1_RESIDUAL_GENERATION_MECHANISM_ISOLATION.md": "af1626a48ea30e5c00793b361f8129ca73d271c40964998e2f13b62c7dc7bf62",
+      "docs/V4_8_2_RESIDUAL_DIFFERENTIAL_ATTRIBUTION.md": "ad2bd56838997c973c7dfc2f06ed05b74423cf448cdef2433a8d4613503240d7",
+      "docs/V4_8_GENERATION_MECHANISM_ISOLATION.md": "fbb68911e32509be6f794ffe76352fc14c5bf9c3a51adcc278b015b4433c3468",
+      "eval/v3_final_golden.json": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+      "eval/v3_quality_acceptance.json": "3e3edb77b00e143ee2b79629d9cac0019581a84cde027c74473ab398d34bb720",
+      "eval/v4_6_1_embedding_identity_baseline.json": "2c7b9d0beca0af94bc80496874e95ac4a9ad7d613843bf70da7c3e8ec5a94ddb",
+      "eval/v4_6_2_hash_portability_baseline.json": "414e5a711d6bfbf0825469e09e6c9c31d52ca66dc2e0df7cabe719e6dc99ed95",
+      "eval/v4_baseline_lineage.json": "18ca7ccb445d46c2b38fd711d07e4f59e0d515d2992b9bce948b854df27ac54c",
+      "scripts/eval_v4_baseline.py": "c901a5c6f7d074296a3a6d7a9283e8315de217ca67561f41b367283112ad2daf"
+    },
+    "parent_identity_match": true,
+    "required_parent_artifacts": {
+      "V4_7": {
+        "artifact": "eval/v4_7_document_identity_root_cause.json",
+        "expected": "effcbdfd18a93b2a52db813e1b19f88b4c65dbb7e9837206a82ebac0b9ee313d",
+        "match": true,
+        "recomputed": "effcbdfd18a93b2a52db813e1b19f88b4c65dbb7e9837206a82ebac0b9ee313d"
+      },
+      "V4_8": {
+        "artifact": "eval/v4_8_generation_mechanism_isolation.json",
+        "expected": "72eaa33f024f9e7f6086149a075b2ae11532bd8dcad7c9fd1890997ae3b66397",
+        "match": true,
+        "recomputed": "72eaa33f024f9e7f6086149a075b2ae11532bd8dcad7c9fd1890997ae3b66397"
+      },
+      "V4_8_1": {
+        "artifact": "eval/v4_8_1_residual_generation_mechanism_isolation.json",
+        "expected": "3b94017ecb67f68cdb45a2315410f11c5e5d5700c7443b5af98e903af62de5cc",
+        "match": true,
+        "recomputed": "3b94017ecb67f68cdb45a2315410f11c5e5d5700c7443b5af98e903af62de5cc"
+      },
+      "V4_8_2": {
+        "artifact": "eval/v4_8_2_residual_differential_attribution.json",
+        "expected": "47e7155badfcecfb03eb48b0f530c12a3f5d0eb03c20918290e91f5f175da470",
+        "match": true,
+        "recomputed": "47e7155badfcecfb03eb48b0f530c12a3f5d0eb03c20918290e91f5f175da470"
+      }
+    }
+  },
+  "phase_number_assigned_to_this_review": null,
+  "phase_number_rule": "this review does not receive a V4.x phase number; V4.8.3 must not be created by this review",
+  "post_r1_checkpoint_plan": [
+    "R2 = case inventory + current/stale classification (harness/test scaffold only)",
+    "R3 = workstream matrix + dependency graph + readiness (no recommendation)",
+    "R4 = priority decision + recommendation support (machine artifact)",
+    "R5 = tests / integrity closure",
+    "R6 = human report + final console closure"
+  ],
+  "pre_change_integrity": {
+    "active_v4_git_repository_present": false,
+    "authorized_snapshot_path_preexisting_before_first_write": false,
+    "git_init_performed_in_any_workspace": false,
+    "identical_or_unexplained_priority_review_prestate_writes_detected": false,
+    "pre_change_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "pre_change_workspace_manifest": {
+      "digest": "6f4cf588e2360c1ed5bbf435256cc29ee058ee80efcfc9d61305b796c0f23f3a",
+      "entry_count": 19650,
+      "rule": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted \"<relpath>\\0<filehash>\" entries joined by LF, UTF-8"
+    },
+    "publish_workspace_newest_write_before_this_round": "2026-09-12T02:24:17",
+    "v3_workspace_newest_write_before_this_round": "2026-09-10T13:05:35",
+    "workspace_scope": "ACTIVE_V4 workspace only (Local Database Q&A System本地版v4)"
+  },
+  "pre_change_workspace_manifest_digest": "6f4cf588e2360c1ed5bbf435256cc29ee058ee80efcfc9d61305b796c0f23f3a",
+  "priority_decision_rules": {
+    "forbidden_transformation": "no later conversion into percentage weights such as quality impact / effort / risk percentages",
+    "gap_size_must_not_be_used_as_priority_weight": true,
+    "lexicographic_order": [
+      "P1 PARENT / GOVERNANCE ELIGIBILITY",
+      "P2 DEPENDENCY PRECEDENCE",
+      "P3 READINESS CLASS (R4 > R3 > R2 > R1 > R0)",
+      "P4 DIRECT LINKAGE TO CURRENTLY FAILING QUALITY GATES",
+      "P5 NARROW MECHANICALLY DEFINABLE TARGET SET",
+      "P6 LATEST-STATE EVIDENCE FRESHNESS",
+      "P7 LOWER CROSS-SUBSYSTEM CONFOUND"
+    ],
+    "manual_tie_break_allowed": false,
+    "method": "lexicographic",
+    "missing_cross_workstream_fresh_attribution_outcome": "RECOMMENDED_NEXT_WORKSTREAM = FRESH_CROSS_WORKSTREAM_ATTRIBUTION_ONLY",
+    "subjective_weighted_scoring_allowed": false,
+    "tie_outcome": "RECOMMENDED_NEXT_WORKSTREAM = NOT_ESTABLISHED"
+  },
+  "priority_lexicographic_rules": {
+    "forbidden_transformation": "no later conversion into percentage weights such as quality impact / effort / risk percentages",
+    "gap_size_must_not_be_used_as_priority_weight": true,
+    "lexicographic_order": [
+      "P1 PARENT / GOVERNANCE ELIGIBILITY",
+      "P2 DEPENDENCY PRECEDENCE",
+      "P3 READINESS CLASS (R4 > R3 > R2 > R1 > R0)",
+      "P4 DIRECT LINKAGE TO CURRENTLY FAILING QUALITY GATES",
+      "P5 NARROW MECHANICALLY DEFINABLE TARGET SET",
+      "P6 LATEST-STATE EVIDENCE FRESHNESS",
+      "P7 LOWER CROSS-SUBSYSTEM CONFOUND"
+    ],
+    "manual_tie_break_allowed": false,
+    "method": "lexicographic",
+    "missing_cross_workstream_fresh_attribution_outcome": "RECOMMENDED_NEXT_WORKSTREAM = FRESH_CROSS_WORKSTREAM_ATTRIBUTION_ONLY",
+    "subjective_weighted_scoring_allowed": false,
+    "tie_outcome": "RECOMMENDED_NEXT_WORKSTREAM = NOT_ESTABLISHED"
+  },
+  "product_metrics_source": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+  "product_remediation_authorized": false,
+  "product_state": {
+    "baseline_pointer": {
+      "current_baseline_id": "V4_6_2_HASH_PORTABILITY_BASELINE",
+      "current_baseline_metric_artifact": "eval/v4_6_2_hash_portability_baseline.json",
+      "current_baseline_recorded_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+      "lineage_artifact": "eval/v4_baseline_lineage.json"
+    },
+    "canonical_production_hash": {
+      "algorithm": "sha256-path-content-v2-canonical-lf over production trees (core, desktop, web)",
+      "expected": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+      "identity_match": true,
+      "independently_replicated": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+      "production_hash_changed_before_first_write": "NO",
+      "recomputed_with_frozen_evaluator": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c"
+    },
+    "current_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+    "current_release": "v4.0.0-alpha.2",
+    "next_authorized_workstream": "NOT_YET_DETERMINED",
+    "next_diagnostic_execution_authorized": "NO",
+    "next_diagnostic_phase_number": "NOT_ESTABLISHED",
+    "next_residual_hypothesis": "NOT_ESTABLISHED",
+    "output_artifact_mutation_audit_required_at_r5_r6": true,
+    "product_metrics_source": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+    "product_quality_dod": "NOT_YET_PASS",
+    "product_remediation_authorized": "NO",
+    "runtime_db_identity_before": {
+      "identity": "10698752:c6bc9b3eb63ae4e6",
+      "identity_matches_governed_baseline_records": true,
+      "path": "data/library/documents.sqlite3",
+      "size_bytes": 10698752
+    },
+    "v4_development": "ACTIVE",
+    "v4_final": "NO"
+  },
+  "production_hash_before": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "quality_gaps": {
+    "case_exact_gap": 0.0708,
+    "citation_coverage_gap": 0.3343,
+    "fact_recall_gap": 0.0465,
+    "gap_derivation": "target minus observed for the three failing gates only",
+    "gap_size_must_not_be_used_as_priority_weight": true,
+    "no_quantified_impact_estimation_allowed": true
+  },
+  "quality_gate_link_rules": {
+    "allowed_link_types": [
+      "DIRECT_LINK",
+      "INDIRECT_LINK",
+      "DEPENDENCY_LINK",
+      "NO_ESTABLISHED_LINK"
+    ],
+    "citation_safety_invariants_are_preconditions_not_gate_links": true,
+    "every_link_requires": "case/evidence trace",
+    "forbidden_link_claims": [
+      "estimated percentage improvement of any gate",
+      "probabilistic improvement wording without formal quantitative evidence",
+      "linkage without an evidence trace"
+    ],
+    "linkable_failing_gates": [
+      "CASE_EXACT",
+      "FACT_RECALL",
+      "CITATION_COVERAGE"
+    ],
+    "links_established_in_r1": false,
+    "non_linkable_gates": [
+      "FALSE_REFUSAL",
+      "HIGH_CONFIDENCE_UNSUPPORTED_RATE",
+      "INVALID_CITATION_COUNT",
+      "CITATION_SCOPE_VIOLATION"
+    ]
+  },
+  "quality_gate_state": {
+    "canonical_metrics": {
+      "case_exact": 0.7292,
+      "citation_coverage": 0.4657,
+      "citation_scope_violation": 0,
+      "fact_recall": 0.8535,
+      "false_refusal": 0.0,
+      "high_confidence_unsupported_rate": 0.0132,
+      "invalid_citation_count": 0
+    },
+    "citation_safety": {
+      "citation_scope_violation": 0,
+      "f2_citation_safety": "PASS",
+      "invalid_citation_count": 0,
+      "safety_invariants_must_be_preserved_by_any_future_workstream": true
+    },
+    "failing_quality_gates": [
+      "CASE_EXACT",
+      "FACT_RECALL",
+      "CITATION_COVERAGE"
+    ],
+    "frozen_targets": {
+      "case_exact": ">= 0.80",
+      "citation_coverage": ">= 0.80",
+      "citation_scope_violation": "== 0",
+      "fact_recall": ">= 0.90",
+      "false_refusal": "<= 0.03",
+      "high_confidence_unsupported_rate": "<= 0.05",
+      "invalid_citation_count": "== 0"
+    },
+    "metrics_provenance": "metrics were NOT recomputed after V4.6.1; later stages record the same values as provenance only",
+    "metrics_source_artifact": "eval/v4_6_1_embedding_identity_baseline.json",
+    "metrics_source_level": "S2",
+    "passing_quality_gates": [
+      "FALSE_REFUSAL",
+      "HIGH_CONFIDENCE_UNSUPPORTED_RATE",
+      "INVALID_CITATION_COUNT",
+      "CITATION_SCOPE_VIOLATION"
+    ],
+    "product_quality_dod": "NOT_YET_PASS"
+  },
+  "r1_execution_declarations": {
+    "bytecode_or_pycache_writes": 0,
+    "cache_writes": 0,
+    "counterfactual_runs": 0,
+    "files_modified_by_r1_expected": 0,
+    "files_written_by_r1_expected": 1,
+    "full_144_runs": 0,
+    "model_calls": 0,
+    "production_retrieval_runs": 0,
+    "py_compile_or_compileall_runs": 0,
+    "pytest_runs": 0,
+    "python_executed_with_bytecode_suppression": true,
+    "ruff_runs": 0,
+    "temporary_files_created_inside_active_v4": 0,
+    "workspace_writes_before_this_snapshot": 0
+  },
+  "r1_explicit_non_goals": [
+    "final case classification",
+    "workstream readiness decisions",
+    "priority ranking",
+    "next-workstream recommendation",
+    "dependency graph construction",
+    "harness, test, machine artifact or human report creation"
+  ],
+  "readiness_rules": {
+    "R0_applies_when": [
+      "parent evidence disproves the proposed defect",
+      "or an explicit governance blocker exists",
+      "or no admissible evidence exists"
+    ],
+    "R1_applies_when": [
+      "another unresolved workstream must logically precede it"
+    ],
+    "R2_applies_when": [
+      "material source conflict",
+      "or product vs measurement classification unresolved",
+      "or target set cannot yet be mechanically stabilized"
+    ],
+    "R3_applies_when": [
+      "historical evidence is material",
+      "but current-state attribution is stale, changed or ambiguous"
+    ],
+    "R4_execution_authorized": false,
+    "R4_requires_all_of": [
+      "current unresolved issue mechanically established",
+      "latest product state compatible",
+      "target set mechanically definable",
+      "single primary subsystem identifiable",
+      "no unresolved upstream dependency capable of reclassification",
+      "no parent governance blocker"
+    ],
+    "assignment_rule": "the highest class whose full condition set is satisfied is assigned; a workstream failing any R4 condition cannot be assigned R4",
+    "enum": {
+      "R0": "BLOCKED_OR_NOT_SUPPORTED",
+      "R1": "DEFERRED_BY_DEPENDENCY",
+      "R2": "NEEDS_EVIDENCE_RECONCILIATION",
+      "R3": "READY_FOR_FRESH_ATTRIBUTION_ONLY",
+      "R4": "READY_FOR_SEPARATE_AUTHORIZATION"
+    },
+    "order_high_to_low": [
+      "R4",
+      "R3",
+      "R2",
+      "R1",
+      "R0"
+    ],
+    "readiness_assigned_in_r1": false
+  },
+  "recommendation_reason_codes": [],
+  "recommendation_support": "NOT_EVALUATED_IN_R1",
+  "recommendation_support_rules": {
+    "MODERATE_requires": [
+      "unique leader",
+      "but one non-blocking ambiguity remains"
+    ],
+    "NOT_ESTABLISHED_applies_when": [
+      "no unique leader",
+      "or critical evidence is missing",
+      "or the dependency graph is unresolved"
+    ],
+    "STRONG_requires_all_of": [
+      "unique dominant workstream under the frozen lexicographic rules",
+      "readiness >= R3",
+      "no unresolved dependency capable of reversing the recommendation",
+      "latest-state evidence mechanically traceable"
+    ],
+    "WEAK_applies_when": [
+      "the leader materially depends on stale or historical evidence",
+      "or small evidence changes may alter the ordering"
+    ],
+    "enum": [
+      "STRONG",
+      "MODERATE",
+      "WEAK",
+      "NOT_ESTABLISHED"
+    ],
+    "next_workstream_execution_authorized_regardless_of_support": false,
+    "recommendation_is_not_authorization": true
+  },
+  "recommended_next_workstream": "NOT_EVALUATED_IN_R1",
+  "reference_protocol_identity": {
+    "expected_sha256": "e7ed1453e29c093a67d90f521f893252f146f0b494e7b1b1aec8e2d05779f97f",
+    "expected_size_bytes": 30857,
+    "identity_match": true,
+    "observed_size_bytes": 30857,
+    "path": "C:\\Users\\PUBLIC_USER\\Downloads\\KB-V4_Post-V4.8.2_Next-Workstream_Priority_Review_Master_Protocol.md",
+    "protocol_rebuilt_in_this_round": false,
+    "recomputed_sha256": "e7ed1453e29c093a67d90f521f893252f146f0b494e7b1b1aec8e2d05779f97f"
+  },
+  "required_source_inventory": {
+    "availability_check": "mechanical file existence check before the first write",
+    "available": 26,
+    "level_assignment_rule": "S1 = machine-readable eval/attribution artifacts and code/tests; S2 = Quality Contract, lineage and canonical baseline/metric artifacts; S3 = phase reports and accepted governance review; S4 = current Master prose",
+    "missing": [],
+    "source_definition": "reference protocol mandatory cold-start set (sections 5 and 17 union)",
+    "sources": [
+      {
+        "available": true,
+        "level": "S4",
+        "path": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md"
+      },
+      {
+        "available": true,
+        "level": "S2",
+        "path": "eval/v4_baseline_lineage.json"
+      },
+      {
+        "available": true,
+        "level": "S2",
+        "path": "eval/v4_6_1_embedding_identity_baseline.json"
+      },
+      {
+        "available": true,
+        "level": "S2",
+        "path": "eval/v4_6_2_hash_portability_baseline.json"
+      },
+      {
+        "available": true,
+        "level": "S2",
+        "path": "docs/V3_QUALITY_ACCEPTANCE_CONTRACT.md"
+      },
+      {
+        "available": true,
+        "level": "S2",
+        "path": "eval/v3_quality_acceptance.json"
+      },
+      {
+        "available": true,
+        "level": "S1",
+        "path": "eval/v4_failure_attribution.json"
+      },
+      {
+        "available": true,
+        "level": "S1",
+        "path": "eval/v4_attribution_closure.json"
+      },
+      {
+        "available": true,
+        "level": "S3",
+        "path": "docs/V4_FAILURE_ATTRIBUTION.md"
+      },
+      {
+        "available": true,
+        "level": "S1",
+        "path": "eval/v4_6_post_routing_attribution.json"
+      },
+      {
+        "available": true,
+        "level": "S3",
+        "path": "docs/V4_POST_ROUTING_ATTRIBUTION.md"
+      },
+      {
+        "available": true,
+        "level": "S1",
+        "path": "eval/v4_7_document_identity_root_cause.json"
+      },
+      {
+        "available": true,
+        "level": "S3",
+        "path": "docs/V4_7_DOCUMENT_IDENTITY_ROOT_CAUSE.md"
+      },
+      {
+        "available": true,
+        "level": "S3",
+        "path": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md"
+      },
+      {
+        "available": true,
+        "level": "S1",
+        "path": "eval/v4_8_generation_mechanism_isolation.json"
+      },
+      {
+        "available": true,
+        "level": "S3",
+        "path": "docs/V4_8_GENERATION_MECHANISM_ISOLATION.md"
+      },
+      {
+        "available": true,
+        "level": "S1",
+        "path": "eval/v4_8_1_residual_generation_mechanism_isolation.json"
+      },
+      {
+        "available": true,
+        "level": "S3",
+        "path": "docs/V4_8_1_RESIDUAL_GENERATION_MECHANISM_ISOLATION.md"
+      },
+      {
+        "available": true,
+        "level": "S1",
+        "path": "eval/v4_8_2_residual_differential_attribution.json"
+      },
+      {
+        "available": true,
+        "level": "S3",
+        "path": "docs/V4_8_2_RESIDUAL_DIFFERENTIAL_ATTRIBUTION.md"
+      },
+      {
+        "available": true,
+        "level": "S2",
+        "path": "eval/v4_4_scope_remediation_baseline.json"
+      },
+      {
+        "available": true,
+        "level": "S1",
+        "path": "eval/v4_scope_remediation.json"
+      },
+      {
+        "available": true,
+        "level": "S3",
+        "path": "docs/V4_SCOPE_OOS_REMEDIATION.md"
+      },
+      {
+        "available": true,
+        "level": "S2",
+        "path": "eval/v4_5_routing_baseline.json"
+      },
+      {
+        "available": true,
+        "level": "S1",
+        "path": "eval/v4_routing_remediation.json"
+      },
+      {
+        "available": true,
+        "level": "S3",
+        "path": "docs/V4_ROUTING_REMEDIATION.md"
+      }
+    ],
+    "substitute_sources_may_not_be_fabricated_for_missing_entries": true,
+    "total": 26
+  },
+  "review_class": "GOVERNANCE_DIAGNOSTIC_ONLY",
+  "review_id": "POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW",
+  "schema_version": "v4-post-v4-8-2-priority-review-preflight-v1",
+  "snapshot_role": "IMMUTABLE_PREFLIGHT_SNAPSHOT",
+  "snapshot_written_before": [
+    "analysis harness creation",
+    "priority-review test creation",
+    "case inventory construction",
+    "case classification",
+    "workstream readiness assignment",
+    "dependency graph construction",
+    "workstream ranking",
+    "machine priority-review artifact creation",
+    "human report creation",
+    "next-workstream recommendation"
+  ],
+  "source_of_truth_hierarchy": {
+    "S1": "code / tests / machine-readable eval artifacts",
+    "S2": "Product Quality Contract / baseline lineage / canonical runtime evaluation outputs",
+    "S3": "phase evidence / phase reports / accepted governance review",
+    "S4": "current Master prose",
+    "current_master_role": "authoritative prose-level navigation only; it cannot override machine artifacts",
+    "precedence": "S1 > S2 > S3 > S4",
+    "prose_must_not_override_machine_source": true,
+    "unexplainable_higher_lower_conflict_action": "retain the contradiction in later classification; never overwrite the machine source with prose",
+    "unexplainable_same_level_conflict_action": "SOURCE_CONTRADICTION=YES; STOP; REPORT BLOCKER; parent artifacts must not be repaired inside this review"
+  },
+  "timestamp": "2026-09-14T23:14:15",
+  "workstream_matrix_schema": {
+    "field_rules": {
+      "CURRENT_AUTHORIZATION_STATUS_in_r1": "NOT_AUTHORIZED for all rows",
+      "LATEST_ATTRIBUTION_FRESHNESS": "expresses whether the governing evidence is current-state compatible or historical/stale",
+      "LATEST_ATTRIBUTION_SOURCE": "governing source identifier plus field or section reference; no absolute machine paths",
+      "READINESS_CLASS_domain": "R4 / R3 / R2 / R1 / R0 only",
+      "RECOMMENDED_NEXT_ACTION": "must stay inside the frozen readiness vocabulary and authorization boundary",
+      "SUPPORTING_EVIDENCE_and_CONTRADICTING_EVIDENCE": "both must be retained; contradicting evidence may not be dropped"
+    },
+    "matrix_populated_in_r1": false,
+    "required_fields": [
+      "WORKSTREAM_ID",
+      "CANDIDATE_PHASE",
+      "SUBSYSTEM",
+      "CURRENT_AUTHORIZATION_STATUS",
+      "CURRENT_CONFIRMED_CASES",
+      "STALE_OR_HISTORICAL_CASES",
+      "RESOLVED_CASES",
+      "NOT_ESTABLISHED_CASES",
+      "FAILING_QUALITY_GATE_LINKS",
+      "LATEST_ATTRIBUTION_SOURCE",
+      "LATEST_ATTRIBUTION_FRESHNESS",
+      "PRODUCT_DEFECT_ESTABLISHED",
+      "MEASUREMENT_DEFECT_ESTABLISHED",
+      "FRESH_ATTRIBUTION_REQUIRED",
+      "UPSTREAM_DEPENDENCIES",
+      "DOWNSTREAM_DEPENDENTS",
+      "SCOPE_ISOLATABLE",
+      "TARGET_SET_MECHANICALLY_DEFINABLE",
+      "PARENT_GOVERNANCE_BLOCKER",
+      "SAFETY_OR_REGRESSION_CONSTRAINT",
+      "READINESS_CLASS",
+      "PRIORITY_TIER",
+      "SUPPORTING_EVIDENCE",
+      "CONTRADICTING_EVIDENCE",
+      "RECOMMENDED_NEXT_ACTION"
+    ],
+    "required_rows": [
+      "WS-09",
+      "WS-10",
+      "WS-11",
+      "WS-12",
+      "WS-13"
+    ],
+    "row_key": "WORKSTREAM_ID"
+  }
+}

@@ -426,8 +426,8 @@ class V2LibraryTests(unittest.TestCase):
         small = make_record_chunk("短材料内容。")
         messages, sent = build_messages("这个问题怎么理解？", [big, big, small], "qa")
         self.assertEqual(len(sent), 1)
-        self.assertIn("[材料1｜", messages[1]["content"])
-        self.assertNotIn("材料2", messages[1]["content"])
+        self.assertIn("[1] ", messages[1]["content"])
+        self.assertNotIn("[2] ", messages[1]["content"])
         messages, sent = build_messages("这个问题怎么理解？", [small, small], "qa")
         self.assertEqual(len(sent), 2)
 

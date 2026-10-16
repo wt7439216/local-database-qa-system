@@ -1,0 +1,3073 @@
+{
+  "phase": "V4.8",
+  "mode": "CONTROLLED_COUNTERFACTUAL_MECHANISM_ISOLATION_ONLY",
+  "artifact_type": "DIAGNOSTIC_ONLY",
+  "is_product_baseline": false,
+  "produced_by": "scripts/analyze_v4_8_generation_mechanism.py",
+  "parent_closure": {
+    "v4_7_diagnosis_closure": "PASS",
+    "generation_mechanism_isolation": "NOT_ESTABLISHED (the co-present material-index / prompt-framing / chunk->document-aggregation mechanisms cannot be separated by this read-only diagnosis; the next phase must confirm which one dominates)",
+    "generation_remediation_scope_ready": "YES",
+    "shared_generation_mechanism_name": "MATERIAL_INDEX_REPRESENTATION_BIAS: the prompt mandates a material-index (材料N) vocabulary and gives no document-title instruction, and the answer reproduces the chunk-level material index instead of the canonical document title over only-implicit chunk->document grouping"
+  },
+  "input_artifact_hashes": {
+    "eval/v4_7_document_identity_root_cause.json": "effcbdfd18a93b2a52db813e1b19f88b4c65dbb7e9837206a82ebac0b9ee313d",
+    "eval/v4_baseline_lineage.json": "18ca7ccb445d46c2b38fd711d07e4f59e0d515d2992b9bce948b854df27ac54c",
+    "eval/v4_6_2_hash_portability_baseline.json": "414e5a711d6bfbf0825469e09e6c9c31d52ca66dc2e0df7cabe719e6dc99ed95",
+    "eval/v4_6_1_embedding_identity_baseline.json": "2c7b9d0beca0af94bc80496874e95ac4a9ad7d613843bf70da7c3e8ec5a94ddb",
+    "eval/v3_final_golden.json": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb"
+  },
+  "current_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+  "product_metrics_source": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+  "production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "production_hash_recorded": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "runtime_db_identity": {
+    "path": "data\\library\\documents.sqlite3",
+    "before": "10698752:c6bc9b3eb63ae4e6",
+    "expected": "10698752:c6bc9b3eb63ae4e6"
+  },
+  "cross_reference_audit": {
+    "patterns": [
+      "V4.8",
+      "History Resolution",
+      "Generation Mechanism Isolation",
+      "GENERATION_MECHANISM_ISOLATION",
+      "MATERIAL_INDEX_REPRESENTATION_BIAS"
+    ],
+    "hit_count": 92,
+    "hits": [
+      {
+        "file": "CHANGELOG.md",
+        "line": 28,
+        "pattern": "V4.8",
+        "snippet": "未重算指标、未执行 V4.8、未做任何 publication。"
+      },
+      {
+        "file": "CHANGELOG.md",
+        "line": 21,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "`GENERATION_MECHANISM_ISOLATION = NOT_ESTABLISHED`（**尚未**隔离出具有因果作用的主导机制）。"
+      },
+      {
+        "file": "CHANGELOG.md",
+        "line": 20,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "- 当前 pipeline root cause family = `GENERATION`（shared mechanism `MATERIAL_INDEX_REPRESENTATION_BIAS`）；"
+      },
+      {
+        "file": "docs/INDEX.md",
+        "line": 16,
+        "pattern": "V4.8",
+        "snippet": "candidate next diagnosis      = V4.8 — Generation / Prompt-Evidence Framing Mechanism Isolation"
+      },
+      {
+        "file": "docs/INDEX.md",
+        "line": 17,
+        "pattern": "V4.8",
+        "snippet": "V4.8 execution                = NOT AUTHORIZED（等待单独授权）"
+      },
+      {
+        "file": "docs/V3_MASTER_REQUIREMENTS_AND_STATUS.md",
+        "line": 552,
+        "pattern": "History Resolution",
+        "snippet": "Q4.3a Multi-turn History Resolution"
+      },
+      {
+        "file": "docs/V3_MASTER_REQUIREMENTS_AND_STATUS.md",
+        "line": 1116,
+        "pattern": "History Resolution",
+        "snippet": "## 32.1 History Resolution"
+      },
+      {
+        "file": "docs/V3_MASTER_REQUIREMENTS_AND_STATUS.md",
+        "line": 1505,
+        "pattern": "History Resolution",
+        "snippet": "## P0.1 — Q4.3a History Resolution"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 1,
+        "pattern": "V4.8",
+        "snippet": "# KB-V4 — V4.7 Closure Governance Alignment & V4.8 Authorization Preparation"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 27,
+        "pattern": "V4.8",
+        "snippet": "未执行：产品修复 / V4.8 / measurement 变更 / baseline 变更 / publication。"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 236,
+        "pattern": "V4.8",
+        "snippet": "| `docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md` | CURRENT_GOVERNANCE（MIXED_SECTION_LEVEL） | YES（header / §13 / §14 / §17 / §18） | YES（§10 phase history、§11 reloc"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 237,
+        "pattern": "V4.8",
+        "snippet": "| `docs/INDEX.md` | CURRENT_GOVERNANCE（cold start 导航） | YES（§3 把 V4.6 attribution 当作 current 依据；缺 V4.7） | 部分（§4/§5 表） | **YES（minimal）** | 新 Agent 无法看出 latest c"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 259,
+        "pattern": "V4.8",
+        "snippet": "| MASTER | §14 | 「Candidate V4.8 — History Resolution」 | §18/§21 要求 V4.8 = Generation Mechanism Isolation | A | EDIT | 命名真冲突 |"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 259,
+        "pattern": "V4.8",
+        "snippet": "| MASTER | §14 | 「Candidate V4.8 — History Resolution」 | §18/§21 要求 V4.8 = Generation Mechanism Isolation | A | EDIT | 命名真冲突 |"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 300,
+        "pattern": "V4.8",
+        "snippet": "1. header  —「当前下一产品阶段 = V4.7」→「V4.7 COMPLETE / CLOSED；下一候选诊断阶段 = V4.8 …（NOT AUTHORIZED）」；"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 305,
+        "pattern": "V4.8",
+        "snippet": "4. §14     — 标题改为 “Candidate Next-phase Sequence”；新增 Candidate V4.8 ="
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 307,
+        "pattern": "V4.8",
+        "snippet": "原 V4.8–V4.12 顺延为 V4.9–V4.13；Retrieval 段说明 Document Identity 已被 V4.7 排除；"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 311,
+        "pattern": "V4.8",
+        "snippet": "并标注 publication 不推进 baseline；开发主线更新为 V4.7 CLOSED + V4.8 candidate。"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 314,
+        "pattern": "V4.8",
+        "snippet": "CANDIDATE NEXT（V4.8）；current 块：V4.7 = COMPLETE / CLOSED、NEXT PRODUCT PHASE = V4.8（NOT AUTHORIZED）。"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 314,
+        "pattern": "V4.8",
+        "snippet": "CANDIDATE NEXT（V4.8）；current 块：V4.7 = COMPLETE / CLOSED、NEXT PRODUCT PHASE = V4.8（NOT AUTHORIZED）。"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 323,
+        "pattern": "V4.8",
+        "snippet": "V4.6 = historical / candidate V4.8 / V4.8 execution = NOT AUTHORIZED）。"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 323,
+        "pattern": "V4.8",
+        "snippet": "V4.6 = historical / candidate V4.8 / V4.8 execution = NOT AUTHORIZED）。"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 333,
+        "pattern": "V4.8",
+        "snippet": "「下一候选阶段 = V4.8（candidate，尚未授权）」。"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 349,
+        "pattern": "V4.8",
+        "snippet": "未声称 generation remediation ready；未声称 V4.8 已开始 / 活跃 / 完成。"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 381,
+        "pattern": "V4.8",
+        "snippet": "## M. V4.8 Candidate Boundary"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 384,
+        "pattern": "V4.8",
+        "snippet": "NEXT_PRODUCT_DIAGNOSIS_CANDIDATE        = V4.8_GENERATION_MECHANISM_ISOLATION"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 385,
+        "pattern": "V4.8",
+        "snippet": "阶段名（推荐）                           = V4.8 — Generation / Prompt-Evidence Framing Mechanism Isolation"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 400,
+        "pattern": "V4.8",
+        "snippet": "本轮**未**创建 V4.8 script / test / experiment / ablation / baseline；未调用任何模型做机制实验。"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 494,
+        "pattern": "V4.8",
+        "snippet": "V4.8 counterfactual / model ablation（未授权）"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 528,
+        "pattern": "V4.8",
+        "snippet": "NEXT_PRODUCT_DIAGNOSIS_CANDIDATE       = V4.8_GENERATION_MECHANISM_ISOLATION"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 574,
+        "pattern": "V4.8",
+        "snippet": "G33 V4.8 defined only as candidate diagnosis           PASS"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 575,
+        "pattern": "V4.8",
+        "snippet": "G34 V4.8 execution remains unauthorized                PASS"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 589,
+        "pattern": "V4.8",
+        "snippet": "本轮结束即 STOP。未执行 V4.8；未创建 V4.8 script / test / experiment；未做 counterfactual / ablation；"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 589,
+        "pattern": "V4.8",
+        "snippet": "本轮结束即 STOP。未执行 V4.8；未创建 V4.8 script / test / experiment；未做 counterfactual / ablation；"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 596,
+        "pattern": "V4.8",
+        "snippet": "以及建议的 V4.8 authorization boundary。等待下一次明确授权。"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 259,
+        "pattern": "History Resolution",
+        "snippet": "| MASTER | §14 | 「Candidate V4.8 — History Resolution」 | §18/§21 要求 V4.8 = Generation Mechanism Isolation | A | EDIT | 命名真冲突 |"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 259,
+        "pattern": "Generation Mechanism Isolation",
+        "snippet": "| MASTER | §14 | 「Candidate V4.8 — History Resolution」 | §18/§21 要求 V4.8 = Generation Mechanism Isolation | A | EDIT | 命名真冲突 |"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 313,
+        "pattern": "Generation Mechanism Isolation",
+        "snippet": "Remediation → BLOCKED、Generation → ROOT CAUSE FAMILY、Generation Mechanism Isolation →"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 104,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "| GENERATION_MECHANISM_ISOLATION | `generation_mechanism_isolation` | `NOT_ESTABLISHED (…)` | EXACT（含说明后缀） | 同上 |"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 222,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "GENERATION_MECHANISM_ISOLATION                 = NOT_ESTABLISHED"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 370,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "GENERATION_MECHANISM_ISOLATION         = NOT_ESTABLISHED"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 384,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "NEXT_PRODUCT_DIAGNOSIS_CANDIDATE        = V4.8_GENERATION_MECHANISM_ISOLATION"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 520,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "GENERATION_MECHANISM_ISOLATION         = NOT_ESTABLISHED"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 528,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "NEXT_PRODUCT_DIAGNOSIS_CANDIDATE       = V4.8_GENERATION_MECHANISM_ISOLATION"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 103,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "| SHARED_GENERATION_MECHANISM_NAME | `shared_generation_mechanism_name` | `MATERIAL_INDEX_REPRESENTATION_BIAS…` | MECHANICALLY_EQUIVALENT（含长说明，前缀为规范名） | 同上 |"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 221,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "SHARED_GENERATION_MECHANISM                    = YES（MATERIAL_INDEX_REPRESENTATION_BIAS）"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 369,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "SHARED_GENERATION_MECHANISM            = YES（MATERIAL_INDEX_REPRESENTATION_BIAS）"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 389,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "candidate mechanism families            = M1 MATERIAL_INDEX_REPRESENTATION_BIAS"
+      },
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 519,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "SHARED_GENERATION_MECHANISM_NAME       = MATERIAL_INDEX_REPRESENTATION_BIAS"
+      },
+      {
+        "file": "docs/V4_7_DOCUMENT_IDENTITY_ROOT_CAUSE.md",
+        "line": 357,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "> `GENERATION_MECHANISM_ISOLATION = NOT_ESTABLISHED`：三个共现机制无法由只读诊断分离出“谁主导”；下一阶段必须先做窄范围 mechanism confirmation，再谈修复。"
+      },
+      {
+        "file": "docs/V4_7_DOCUMENT_IDENTITY_ROOT_CAUSE.md",
+        "line": 692,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "注意：GENERATION_MECHANISM_ISOLATION = NOT_ESTABLISHED"
+      },
+      {
+        "file": "docs/V4_7_DOCUMENT_IDENTITY_ROOT_CAUSE.md",
+        "line": 397,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "shared_generation_mechanism_name = MATERIAL_INDEX_REPRESENTATION_BIAS"
+      },
+      {
+        "file": "docs/V4_7_DOCUMENT_IDENTITY_ROOT_CAUSE.md",
+        "line": 516,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "shared_generation_mechanism_name                MATERIAL_INDEX_REPRESENTATION_BIAS"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 10,
+        "pattern": "V4.8",
+        "snippet": "> **下一候选诊断阶段**：`V4.8 — Generation / Prompt-Evidence Framing Mechanism Isolation`（candidate，**尚未授权执行**；`V4_8_EXECUTION_AUTHORIZED = NO`）。"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 775,
+        "pattern": "V4.8",
+        "snippet": "## Candidate V4.8 — Generation / Prompt-Evidence Framing Mechanism Isolation"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 780,
+        "pattern": "V4.8",
+        "snippet": "NEXT_PRODUCT_DIAGNOSIS_CANDIDATE        = V4.8_GENERATION_MECHANISM_ISOLATION"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 804,
+        "pattern": "V4.8",
+        "snippet": "具体是否允许在 V4.8 创建 diagnostic-only artifacts / scripts / tests，必须等待下一次独立授权定义。"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 859,
+        "pattern": "V4.8",
+        "snippet": "必须在 V4.8 mechanism isolation 与上游 History / Retrieval 收口后重新导出 failure set。"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 1026,
+        "pattern": "V4.8",
+        "snippet": "下一候选诊断阶段 = V4.8 — Generation / Prompt-Evidence Framing Mechanism Isolation（NOT AUTHORIZED）"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 1054,
+        "pattern": "V4.8",
+        "snippet": "Generation Mechanism Isolation       CANDIDATE NEXT（V4.8；NOT AUTHORIZED）"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 1072,
+        "pattern": "V4.8",
+        "snippet": "NEXT PRODUCT PHASE    = V4.8 GENERATION MECHANISM ISOLATION（CANDIDATE / NOT AUTHORIZED）"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 1101,
+        "pattern": "V4.8",
+        "snippet": "> 未重算指标，未创建新 baseline，未执行 V4.8，未做任何 publication。"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 806,
+        "pattern": "History Resolution",
+        "snippet": "## Candidate V4.9 — History Resolution"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 1054,
+        "pattern": "Generation Mechanism Isolation",
+        "snippet": "Generation Mechanism Isolation       CANDIDATE NEXT（V4.8；NOT AUTHORIZED）"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 632,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "GENERATION_MECHANISM_ISOLATION                 = NOT_ESTABLISHED"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 758,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "`GENERATION_MECHANISM_ISOLATION = NOT_ESTABLISHED`。"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 780,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "NEXT_PRODUCT_DIAGNOSIS_CANDIDATE        = V4.8_GENERATION_MECHANISM_ISOLATION"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 800,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "GENERATION_MECHANISM_ISOLATION = NOT_ESTABLISHED"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 631,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "SHARED_GENERATION_MECHANISM                    = YES（MATERIAL_INDEX_REPRESENTATION_BIAS）"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 757,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "`SHARED_GENERATION_MECHANISM = YES`（`MATERIAL_INDEX_REPRESENTATION_BIAS`）/"
+      },
+      {
+        "file": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+        "line": 790,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "M1 = MATERIAL_INDEX_REPRESENTATION_BIAS"
+      },
+      {
+        "file": "eval/v4_7_document_identity_root_cause.json",
+        "line": 3073,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "\"shared_generation_mechanism_name\": \"MATERIAL_INDEX_REPRESENTATION_BIAS: the prompt mandates a material-index (材料N) vocabulary and gives no document-title instr"
+      },
+      {
+        "file": "README.md",
+        "line": 19,
+        "pattern": "V4.8",
+        "snippet": "| 下一候选阶段 | `V4.8 — Generation / Prompt-Evidence Framing Mechanism Isolation`（candidate，**尚未授权执行**） |"
+      },
+      {
+        "file": "README.md",
+        "line": 149,
+        "pattern": "V4.8",
+        "snippet": "- **Generation / Prompt-Evidence Framing** — V4.7 认定的当前 Product root cause family（shared mechanism `MATERIAL_INDEX_REPRESENTATION_BIAS`）；`GENERATION_MECHANISM_I"
+      },
+      {
+        "file": "README.md",
+        "line": 149,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "- **Generation / Prompt-Evidence Framing** — V4.7 认定的当前 Product root cause family（shared mechanism `MATERIAL_INDEX_REPRESENTATION_BIAS`）；`GENERATION_MECHANISM_I"
+      },
+      {
+        "file": "README.md",
+        "line": 149,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "- **Generation / Prompt-Evidence Framing** — V4.7 认定的当前 Product root cause family（shared mechanism `MATERIAL_INDEX_REPRESENTATION_BIAS`）；`GENERATION_MECHANISM_I"
+      },
+      {
+        "file": "scripts/analyze_v4_7_document_identity.py",
+        "line": 1453,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "\"MATERIAL_INDEX_REPRESENTATION_BIAS: the prompt mandates a material-index \""
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 2,
+        "pattern": "V4.8",
+        "snippet": "\"\"\"V4.8 — Generation / Prompt-Evidence Framing Mechanism Isolation."
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 418,
+        "pattern": "V4.8",
+        "snippet": "patterns = [\"V4.8\", \"History Resolution\", \"Generation Mechanism Isolation\","
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 439,
+        "pattern": "V4.8",
+        "snippet": "if h[\"pattern\"] == \"History Resolution\" and \"V4.8\" in h[\"snippet\"]"
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 441,
+        "pattern": "V4.8",
+        "snippet": "# Files that legitimately RECORD the already-fixed V4.8 naming conflict (governance"
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 464,
+        "pattern": "V4.8",
+        "snippet": "\"docs/eval files that record the already-fixed V4.8 naming conflict \""
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 483,
+        "pattern": "V4.8",
+        "snippet": "\"phase\": \"V4.8\","
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 649,
+        "pattern": "V4.8",
+        "snippet": "\"phase\": \"V4.8\","
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 418,
+        "pattern": "History Resolution",
+        "snippet": "patterns = [\"V4.8\", \"History Resolution\", \"Generation Mechanism Isolation\","
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 439,
+        "pattern": "History Resolution",
+        "snippet": "if h[\"pattern\"] == \"History Resolution\" and \"V4.8\" in h[\"snippet\"]"
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 418,
+        "pattern": "Generation Mechanism Isolation",
+        "snippet": "patterns = [\"V4.8\", \"History Resolution\", \"Generation Mechanism Isolation\","
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 419,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "\"GENERATION_MECHANISM_ISOLATION\", \"MATERIAL_INDEX_REPRESENTATION_BIAS\"]"
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 825,
+        "pattern": "GENERATION_MECHANISM_ISOLATION",
+        "snippet": "print(f\"  GENERATION_MECHANISM_ISOLATION = {artifact['generation_mechanism_isolation']}\")"
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 419,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "\"GENERATION_MECHANISM_ISOLATION\", \"MATERIAL_INDEX_REPRESENTATION_BIAS\"]"
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 635,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "primary_by_case[case_id] = \"M1_MATERIAL_INDEX_REPRESENTATION_BIAS\""
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 724,
+        "pattern": "MATERIAL_INDEX_REPRESENTATION_BIAS",
+        "snippet": "\"M1_MATERIAL_INDEX_REPRESENTATION_BIAS\": m1,"
+      }
+    ],
+    "current_stale_reference": [],
+    "historical_reference_candidates_exempted": [
+      {
+        "file": "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "line": 259,
+        "pattern": "History Resolution",
+        "snippet": "| MASTER | §14 | 「Candidate V4.8 — History Resolution」 | §18/§21 要求 V4.8 = Generation Mechanism Isolation | A | EDIT | 命名真冲突 |"
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 418,
+        "pattern": "History Resolution",
+        "snippet": "patterns = [\"V4.8\", \"History Resolution\", \"Generation Mechanism Isolation\","
+      },
+      {
+        "file": "scripts/analyze_v4_8_generation_mechanism.py",
+        "line": 439,
+        "pattern": "History Resolution",
+        "snippet": "if h[\"pattern\"] == \"History Resolution\" and \"V4.8\" in h[\"snippet\"]"
+      }
+    ],
+    "exempt_files_reason": "docs/eval files that record the already-fixed V4.8 naming conflict (governance audit report, frozen V4.7 closure, historical V4.6 phase evidence)",
+    "classification": {
+      "CURRENT_STALE_REFERENCE": 0,
+      "HISTORICAL_REFERENCE": 3,
+      "NO_CONFLICT": 89
+    },
+    "cross_reference_edit_authorized": "NO",
+    "V4_8_CROSS_REFERENCE_AUDIT": "PASS"
+  },
+  "V4_8_CROSS_REFERENCE_AUDIT": "PASS",
+  "model_runtime_identity": {
+    "answer_model_requested": "qwen2.5:7b",
+    "model_digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "seed": "NOT_AVAILABLE (production does not set a seed; generation layer is stochastic)",
+    "generation_parameters": {
+      "temperature": 0,
+      "top_p": 1,
+      "top_k": 1,
+      "repeat_penalty": 1.15,
+      "num_predict": 800,
+      "num_ctx": 8192,
+      "keep_alive": "10m",
+      "stream": false
+    },
+    "resolved_model_tag": "qwen2.5:7b"
+  },
+  "generation_parameters": {
+    "temperature": 0,
+    "top_p": 1,
+    "top_k": 1,
+    "repeat_penalty": 1.15,
+    "num_predict": 800,
+    "num_ctx": 8192,
+    "keep_alive": "10m",
+    "stream": false
+  },
+  "target_cases": [
+    "md-004",
+    "md-009",
+    "md-015"
+  ],
+  "factor_definitions": {
+    "A0": "CURRENT PRODUCTION MATERIAL/EVIDENCE LABEL (材料N)",
+    "A1": "MATERIAL-LABEL SEMANTIC IDENTITY CUE NEUTRALIZED (证据块N; STRUCTURAL INDEX PRESERVED)",
+    "B0": "CURRENT PRODUCTION TASK/PROMPT INSTRUCTION",
+    "B1": "MINIMAL EXPLICIT CANONICAL-TITLE NAMING INSTRUCTION (frozen, case-invariant)"
+  },
+  "m1_operationalization": "the lexical / semantic document-identity cue introduced by the production '材料N' label, while preserving the structural numeric evidence index",
+  "structural_index_preserved": "YES",
+  "factor_freeze_manifest": {
+    "frozen_protocol": {
+      "FACTOR_A_TRANSFORMATION_RULE": "regex (?m)^\\[材料(\\d+)｜ -> [证据块\\1｜ ; applied ONLY to material-header lines of the USER message; the numeric index, the ｜ separator and every other byte are preserved",
+      "FACTOR_A_LABEL_REGEX": "^\\[材料(\\d+)｜",
+      "FACTOR_A_LABEL_REPLACEMENT": "[证据块\\1｜",
+      "FACTOR_B_INSTRUCTION_TEXT": "当问题要求指出哪些文档、哪份文档或文档身份时，请使用上下文中已经提供的真实文档标题回答。",
+      "FACTOR_B_FORBIDDEN_SEMANTICS": [
+        "材料编号不代表",
+        "证据编号不代表",
+        "不要回答材料",
+        "忽略材料编号",
+        "优先标题而不是材料编号"
+      ],
+      "TITLE_MATCH_NORMALIZATION_POLICY": [
+        "Unicode NFKC",
+        "collapse repeated whitespace to a single space",
+        "trim surrounding whitespace",
+        "drop presentation-only outer quote/book-title wrappers 《…》 (and “ ”)",
+        "no semantic alias expansion / fuzzy / embedding / LLM matching"
+      ],
+      "REPLICATION_POLICY": "1 valid run per cell; up to 3 control runs per case ONLY when the control phenotype is unstable; the same replication policy applies to all conditions",
+      "AUTHORIZED_INTERVENTION_FIELDS": [
+        "user_message.material_header_label",
+        "user_message.instruction_line"
+      ],
+      "M1_OPERATIONALIZATION": "the lexical / semantic document-identity cue introduced by the production '材料N' label, while preserving the structural numeric evidence index",
+      "STRUCTURAL_INDEX_PRESERVED": "YES"
+    },
+    "factor_freeze_digest": "8cd479b693f2313f423834c8a27decf6264aa90cfe679b0fd3da21003202d4a9",
+    "frozen_before_first_model_call": true,
+    "protocol_adaptation_after_outcome": "NO"
+  },
+  "conditions": {
+    "C0": "A0+B0",
+    "C1": "A1+B0",
+    "C2": "A0+B1",
+    "C3": "A1+B1"
+  },
+  "title_match_normalization_policy": [
+    "Unicode NFKC",
+    "collapse repeated whitespace to a single space",
+    "trim surrounding whitespace",
+    "drop presentation-only outer quote/book-title wrappers 《…》 (and “ ”)",
+    "no semantic alias expansion / fuzzy / embedding / LLM matching"
+  ],
+  "per_case_per_condition_input_identity": {
+    "md-004": {
+      "case_id": "md-004",
+      "per_condition_semantic_objects": {
+        "C0": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。",
+              "label": "材料"
+            },
+            {
+              "index": 2,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 3,
+              "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 4,
+              "location": "移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "139 如果各条路径加权系数为1，可视为等增益合并方式。 在实际系统中还可以采用最大比合并或最佳样点合并方式。 RAKE接收机利用多个并行相关器，获得各多径信号能量， 即利用多径信号，改善信噪比，提高了通信质量。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。 如果接收信号r(t)中包括多条路径，如图3-43所示。 图中每一个峰值对应一条多径， 每个峰值幅度的不同，是由每条路径的传输损耗不同引起的。 1支路 PN PN 2支路 PN PN M支路 T(M) PN PN Ts+4, Ts+4, Ts+4, 图3-42多径信号的分离图3-43RAKE接收机接输出波形为了将这些多径信号进行有效的合并，可将每一条多径通过延迟的方法使它们在同一时刻达到最大，按最大比的方式合并，就可以得到最佳的输出信号。 扩频信号的带宽远大于信道的相关带宽，信号频谱的衰落仅是一个小部分，因此也可以说信号的频谱扩展使信号获得了频率分集的好处。 另外，多径信号的分离接收，就是把先后到达接收机的携带同一信息的衰落独立的多个信号的能量充分加以利用，改善接收信号的质量，这也是一种时间分集。 习题与思考题 3 1.分集接收技术的指导思想是什么？ 什么是宏观分集和微观分集？ 在移动通信中常用哪些微观分集？ a=a +a+as 3.已知(8,4)线性分组码的监督方程组为： a=a +as+as a =a+as +as a=a+ag+as 试求：（1）监督矩阵； （2）生成矩阵； （3）当信息位是1001时，求整个码组； （4）接收到的码组为10110101时，求校正子S并说明它是否出错。 （5）求最小码距。 4.已知某(7,3)循环码的生成多项式为g(x)=x4+x3+x²+1，试求： （1）当信息位为101时，写出编码过程，并求出整个发送码组。",
+              "label": "材料"
+            },
+            {
+              "index": 5,
+              "location": "移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类",
+              "text": "3.1.1基本概念与分类 1.分集接收技术的基本概念在移动通信中为对抗衰落产生的影响，分集接收是常采用的有效措施之一。 在移动环境中，通过不同途径所接收到的多个信号其衰落情况是不同的，衰落是独立的。 所谓分集接收，是指接收端对它收到的多个衰落特性互相独立（携带同一信息）的信号进行特定的处理，以降低信号电平起伏的办法。 综合利用各信号分量，就有可能明显地改善接收信号的质量，这就是分集接收的基本思想。 分集接收的代价是增加接收机的复杂度，因为要对各径信号进行跟踪，及时对更多的信号分量进行处理，但它可以提高通信的可靠性，故被广泛用于移动通信。 分集有两重含义：一是分散传输，使接收端能获得多个统计独立的、携带同一信息的衰落信号； 二是集中处理，即接收机把收到的多个统计独立的衰落信号进行合并（包括选择与组合）以降低衰落的影响。 2.分集接收技术的分类移动无线信号的衰落包括两个方面：一个来自因地形地物造成的阴影衰落，它使接收的信号平均功率（或者信号的中值）在一个比较长的空间（或时间）区间内发生波动，这 度发生急剧的变化（但信号的平均功率不变），这是一种微观衰落。 针对这两种不同的衰落，常用的分集技术可以分为宏观分集和微观分集。 （1）宏观分集宏观分集主要用于蜂窝通信系统中，也称为多基站分集。 这是一种减小慢衰落影响的分集技术，其做法是把多个基站设置在不同的地理位置上，并使其在不同的方向上，这些基站同时和小区内的一个移动台进行通信（可以选用其中信号最好的一个基站进行通信）。 显然，只要在各个方向上的信号传播不是同时受到阴影效应或地形的影响而出现严重的慢衰落，这种办法就能保持通信不会中断。 软切换就是宏分集的典型应用。 刘（2）微观分集建德微观分集是一种减小快衰落影响的分集技术，在各种无线通信系统中都经常使用。",
+              "label": "材料"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [],
+          "question_line": "问题：分集接收在哪些文档中被提到？",
+          "message_count": 2
+        },
+        "C1": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。",
+              "label": "证据块"
+            },
+            {
+              "index": 2,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "证据块"
+            },
+            {
+              "index": 3,
+              "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "证据块"
+            },
+            {
+              "index": 4,
+              "location": "移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "139 如果各条路径加权系数为1，可视为等增益合并方式。 在实际系统中还可以采用最大比合并或最佳样点合并方式。 RAKE接收机利用多个并行相关器，获得各多径信号能量， 即利用多径信号，改善信噪比，提高了通信质量。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。 如果接收信号r(t)中包括多条路径，如图3-43所示。 图中每一个峰值对应一条多径， 每个峰值幅度的不同，是由每条路径的传输损耗不同引起的。 1支路 PN PN 2支路 PN PN M支路 T(M) PN PN Ts+4, Ts+4, Ts+4, 图3-42多径信号的分离图3-43RAKE接收机接输出波形为了将这些多径信号进行有效的合并，可将每一条多径通过延迟的方法使它们在同一时刻达到最大，按最大比的方式合并，就可以得到最佳的输出信号。 扩频信号的带宽远大于信道的相关带宽，信号频谱的衰落仅是一个小部分，因此也可以说信号的频谱扩展使信号获得了频率分集的好处。 另外，多径信号的分离接收，就是把先后到达接收机的携带同一信息的衰落独立的多个信号的能量充分加以利用，改善接收信号的质量，这也是一种时间分集。 习题与思考题 3 1.分集接收技术的指导思想是什么？ 什么是宏观分集和微观分集？ 在移动通信中常用哪些微观分集？ a=a +a+as 3.已知(8,4)线性分组码的监督方程组为： a=a +as+as a =a+as +as a=a+ag+as 试求：（1）监督矩阵； （2）生成矩阵； （3）当信息位是1001时，求整个码组； （4）接收到的码组为10110101时，求校正子S并说明它是否出错。 （5）求最小码距。 4.已知某(7,3)循环码的生成多项式为g(x)=x4+x3+x²+1，试求： （1）当信息位为101时，写出编码过程，并求出整个发送码组。",
+              "label": "证据块"
+            },
+            {
+              "index": 5,
+              "location": "移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类",
+              "text": "3.1.1基本概念与分类 1.分集接收技术的基本概念在移动通信中为对抗衰落产生的影响，分集接收是常采用的有效措施之一。 在移动环境中，通过不同途径所接收到的多个信号其衰落情况是不同的，衰落是独立的。 所谓分集接收，是指接收端对它收到的多个衰落特性互相独立（携带同一信息）的信号进行特定的处理，以降低信号电平起伏的办法。 综合利用各信号分量，就有可能明显地改善接收信号的质量，这就是分集接收的基本思想。 分集接收的代价是增加接收机的复杂度，因为要对各径信号进行跟踪，及时对更多的信号分量进行处理，但它可以提高通信的可靠性，故被广泛用于移动通信。 分集有两重含义：一是分散传输，使接收端能获得多个统计独立的、携带同一信息的衰落信号； 二是集中处理，即接收机把收到的多个统计独立的衰落信号进行合并（包括选择与组合）以降低衰落的影响。 2.分集接收技术的分类移动无线信号的衰落包括两个方面：一个来自因地形地物造成的阴影衰落，它使接收的信号平均功率（或者信号的中值）在一个比较长的空间（或时间）区间内发生波动，这 度发生急剧的变化（但信号的平均功率不变），这是一种微观衰落。 针对这两种不同的衰落，常用的分集技术可以分为宏观分集和微观分集。 （1）宏观分集宏观分集主要用于蜂窝通信系统中，也称为多基站分集。 这是一种减小慢衰落影响的分集技术，其做法是把多个基站设置在不同的地理位置上，并使其在不同的方向上，这些基站同时和小区内的一个移动台进行通信（可以选用其中信号最好的一个基站进行通信）。 显然，只要在各个方向上的信号传播不是同时受到阴影效应或地形的影响而出现严重的慢衰落，这种办法就能保持通信不会中断。 软切换就是宏分集的典型应用。 刘（2）微观分集建德微观分集是一种减小快衰落影响的分集技术，在各种无线通信系统中都经常使用。",
+              "label": "证据块"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [],
+          "question_line": "问题：分集接收在哪些文档中被提到？",
+          "message_count": 2
+        },
+        "C2": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。",
+              "label": "材料"
+            },
+            {
+              "index": 2,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 3,
+              "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 4,
+              "location": "移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "139 如果各条路径加权系数为1，可视为等增益合并方式。 在实际系统中还可以采用最大比合并或最佳样点合并方式。 RAKE接收机利用多个并行相关器，获得各多径信号能量， 即利用多径信号，改善信噪比，提高了通信质量。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。 如果接收信号r(t)中包括多条路径，如图3-43所示。 图中每一个峰值对应一条多径， 每个峰值幅度的不同，是由每条路径的传输损耗不同引起的。 1支路 PN PN 2支路 PN PN M支路 T(M) PN PN Ts+4, Ts+4, Ts+4, 图3-42多径信号的分离图3-43RAKE接收机接输出波形为了将这些多径信号进行有效的合并，可将每一条多径通过延迟的方法使它们在同一时刻达到最大，按最大比的方式合并，就可以得到最佳的输出信号。 扩频信号的带宽远大于信道的相关带宽，信号频谱的衰落仅是一个小部分，因此也可以说信号的频谱扩展使信号获得了频率分集的好处。 另外，多径信号的分离接收，就是把先后到达接收机的携带同一信息的衰落独立的多个信号的能量充分加以利用，改善接收信号的质量，这也是一种时间分集。 习题与思考题 3 1.分集接收技术的指导思想是什么？ 什么是宏观分集和微观分集？ 在移动通信中常用哪些微观分集？ a=a +a+as 3.已知(8,4)线性分组码的监督方程组为： a=a +as+as a =a+as +as a=a+ag+as 试求：（1）监督矩阵； （2）生成矩阵； （3）当信息位是1001时，求整个码组； （4）接收到的码组为10110101时，求校正子S并说明它是否出错。 （5）求最小码距。 4.已知某(7,3)循环码的生成多项式为g(x)=x4+x3+x²+1，试求： （1）当信息位为101时，写出编码过程，并求出整个发送码组。",
+              "label": "材料"
+            },
+            {
+              "index": 5,
+              "location": "移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类",
+              "text": "3.1.1基本概念与分类 1.分集接收技术的基本概念在移动通信中为对抗衰落产生的影响，分集接收是常采用的有效措施之一。 在移动环境中，通过不同途径所接收到的多个信号其衰落情况是不同的，衰落是独立的。 所谓分集接收，是指接收端对它收到的多个衰落特性互相独立（携带同一信息）的信号进行特定的处理，以降低信号电平起伏的办法。 综合利用各信号分量，就有可能明显地改善接收信号的质量，这就是分集接收的基本思想。 分集接收的代价是增加接收机的复杂度，因为要对各径信号进行跟踪，及时对更多的信号分量进行处理，但它可以提高通信的可靠性，故被广泛用于移动通信。 分集有两重含义：一是分散传输，使接收端能获得多个统计独立的、携带同一信息的衰落信号； 二是集中处理，即接收机把收到的多个统计独立的衰落信号进行合并（包括选择与组合）以降低衰落的影响。 2.分集接收技术的分类移动无线信号的衰落包括两个方面：一个来自因地形地物造成的阴影衰落，它使接收的信号平均功率（或者信号的中值）在一个比较长的空间（或时间）区间内发生波动，这 度发生急剧的变化（但信号的平均功率不变），这是一种微观衰落。 针对这两种不同的衰落，常用的分集技术可以分为宏观分集和微观分集。 （1）宏观分集宏观分集主要用于蜂窝通信系统中，也称为多基站分集。 这是一种减小慢衰落影响的分集技术，其做法是把多个基站设置在不同的地理位置上，并使其在不同的方向上，这些基站同时和小区内的一个移动台进行通信（可以选用其中信号最好的一个基站进行通信）。 显然，只要在各个方向上的信号传播不是同时受到阴影效应或地形的影响而出现严重的慢衰落，这种办法就能保持通信不会中断。 软切换就是宏分集的典型应用。 刘（2）微观分集建德微观分集是一种减小快衰落影响的分集技术，在各种无线通信系统中都经常使用。",
+              "label": "材料"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [
+            "当问题要求指出哪些文档、哪份文档或文档身份时，请使用上下文中已经提供的真实文档标题回答。"
+          ],
+          "question_line": "问题：分集接收在哪些文档中被提到？",
+          "message_count": 2
+        },
+        "C3": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。",
+              "label": "证据块"
+            },
+            {
+              "index": 2,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "证据块"
+            },
+            {
+              "index": 3,
+              "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "证据块"
+            },
+            {
+              "index": 4,
+              "location": "移动通信 (李兆玉) · PDF 第148页 · 正文第139页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "139 如果各条路径加权系数为1，可视为等增益合并方式。 在实际系统中还可以采用最大比合并或最佳样点合并方式。 RAKE接收机利用多个并行相关器，获得各多径信号能量， 即利用多径信号，改善信噪比，提高了通信质量。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。 如果接收信号r(t)中包括多条路径，如图3-43所示。 图中每一个峰值对应一条多径， 每个峰值幅度的不同，是由每条路径的传输损耗不同引起的。 1支路 PN PN 2支路 PN PN M支路 T(M) PN PN Ts+4, Ts+4, Ts+4, 图3-42多径信号的分离图3-43RAKE接收机接输出波形为了将这些多径信号进行有效的合并，可将每一条多径通过延迟的方法使它们在同一时刻达到最大，按最大比的方式合并，就可以得到最佳的输出信号。 扩频信号的带宽远大于信道的相关带宽，信号频谱的衰落仅是一个小部分，因此也可以说信号的频谱扩展使信号获得了频率分集的好处。 另外，多径信号的分离接收，就是把先后到达接收机的携带同一信息的衰落独立的多个信号的能量充分加以利用，改善接收信号的质量，这也是一种时间分集。 习题与思考题 3 1.分集接收技术的指导思想是什么？ 什么是宏观分集和微观分集？ 在移动通信中常用哪些微观分集？ a=a +a+as 3.已知(8,4)线性分组码的监督方程组为： a=a +as+as a =a+as +as a=a+ag+as 试求：（1）监督矩阵； （2）生成矩阵； （3）当信息位是1001时，求整个码组； （4）接收到的码组为10110101时，求校正子S并说明它是否出错。 （5）求最小码距。 4.已知某(7,3)循环码的生成多项式为g(x)=x4+x3+x²+1，试求： （1）当信息位为101时，写出编码过程，并求出整个发送码组。",
+              "label": "证据块"
+            },
+            {
+              "index": 5,
+              "location": "移动通信 (李兆玉) · PDF 第99页 · 正文第90页 · 第3章 抗衰落技术 · 3.1.1 基本概念与分类",
+              "text": "3.1.1基本概念与分类 1.分集接收技术的基本概念在移动通信中为对抗衰落产生的影响，分集接收是常采用的有效措施之一。 在移动环境中，通过不同途径所接收到的多个信号其衰落情况是不同的，衰落是独立的。 所谓分集接收，是指接收端对它收到的多个衰落特性互相独立（携带同一信息）的信号进行特定的处理，以降低信号电平起伏的办法。 综合利用各信号分量，就有可能明显地改善接收信号的质量，这就是分集接收的基本思想。 分集接收的代价是增加接收机的复杂度，因为要对各径信号进行跟踪，及时对更多的信号分量进行处理，但它可以提高通信的可靠性，故被广泛用于移动通信。 分集有两重含义：一是分散传输，使接收端能获得多个统计独立的、携带同一信息的衰落信号； 二是集中处理，即接收机把收到的多个统计独立的衰落信号进行合并（包括选择与组合）以降低衰落的影响。 2.分集接收技术的分类移动无线信号的衰落包括两个方面：一个来自因地形地物造成的阴影衰落，它使接收的信号平均功率（或者信号的中值）在一个比较长的空间（或时间）区间内发生波动，这 度发生急剧的变化（但信号的平均功率不变），这是一种微观衰落。 针对这两种不同的衰落，常用的分集技术可以分为宏观分集和微观分集。 （1）宏观分集宏观分集主要用于蜂窝通信系统中，也称为多基站分集。 这是一种减小慢衰落影响的分集技术，其做法是把多个基站设置在不同的地理位置上，并使其在不同的方向上，这些基站同时和小区内的一个移动台进行通信（可以选用其中信号最好的一个基站进行通信）。 显然，只要在各个方向上的信号传播不是同时受到阴影效应或地形的影响而出现严重的慢衰落，这种办法就能保持通信不会中断。 软切换就是宏分集的典型应用。 刘（2）微观分集建德微观分集是一种减小快衰落影响的分集技术，在各种无线通信系统中都经常使用。",
+              "label": "证据块"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [
+            "当问题要求指出哪些文档、哪份文档或文档身份时，请使用上下文中已经提供的真实文档标题回答。"
+          ],
+          "question_line": "问题：分集接收在哪些文档中被提到？",
+          "message_count": 2
+        }
+      },
+      "diffs": {
+        "C0_vs_C1": {
+          "changed_keys": [
+            "materials"
+          ],
+          "held_keys": [
+            "model",
+            "system_message",
+            "task_line",
+            "instruction_lines",
+            "question_line",
+            "message_count"
+          ]
+        },
+        "C0_vs_C2": {
+          "changed_keys": [
+            "instruction_lines"
+          ],
+          "held_keys": [
+            "model",
+            "system_message",
+            "materials",
+            "task_line",
+            "question_line",
+            "message_count"
+          ]
+        },
+        "C0_vs_C3": {
+          "changed_keys": [
+            "materials",
+            "instruction_lines"
+          ],
+          "held_keys": [
+            "model",
+            "system_message",
+            "task_line",
+            "question_line",
+            "message_count"
+          ]
+        }
+      },
+      "allowed_changed_keys": {
+        "C0_vs_C1": [
+          "materials"
+        ],
+        "C0_vs_C2": [
+          "task_line",
+          "instruction_lines"
+        ],
+        "C0_vs_C3": [
+          "materials",
+          "task_line",
+          "instruction_lines"
+        ]
+      },
+      "structural_checks": {
+        "evidence_text_unchanged": true,
+        "evidence_order_unchanged": true,
+        "canonical_title_content_and_position_unchanged": true,
+        "structural_numeric_index_preserved": true,
+        "material_labels_by_condition": {
+          "C0": [
+            "材料",
+            "材料",
+            "材料",
+            "材料",
+            "材料"
+          ],
+          "C1": [
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块"
+          ],
+          "C2": [
+            "材料",
+            "材料",
+            "材料",
+            "材料",
+            "材料"
+          ],
+          "C3": [
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块"
+          ]
+        }
+      }
+    },
+    "md-009": {
+      "case_id": "md-009",
+      "per_condition_semantic_objects": {
+        "C0": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "这都保证了对多径信号的分离与接收，提高了接收信号的质量。 相关器1 延时、加权输出相关器2 延时、加权合并器多径信号相关器M 延时、加权图3-41J RAKE接收机原理",
+              "label": "材料"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "3.3.5RAKE接收机在未采用扩频的移动通信系统，接收端只能对收到的多径信号进行矢量叠加，由于相位差和幅度不同导致信号呈现衰落。 在直扩通信系统中，采用自相关特性良好的扩频码， 在接收端进行相关解扩时可以有效地抑制不同步的其他多径信号分量，单独分离出主径分量，实现抗多径干扰的作用。 但是这些先后到达的不同步的其他多径信号分量，都携带相同的信息，都具有能量，若能够利用这些能量，则可以变害为利，改善接收信号的质量。 基于这种思想，Price和Green在1958年提出了多径分离接收的技术，这就是RAKE接收机。 利用RAKE接收机将被分离的各条路径信号相位校准、幅度加权，并将矢量和变成代数和。 三种不同的通信系统下，在接收端对信号的处理如图3-40所示。 第3径接收后的第2径合成失量分离出主径信号第1径第2径第3径第1径第1径接收后的合成矢量（代数和） (a)未采用扩频 (b)仅采用直扩 (c)直扩+RAKE 图3-40接收机对多径信号的处理所谓RAKE接收机，就是利用多个并行相关器检测多径信号，按照一定的准则合成一路信号供解调用的接收机。 RAKE接收机主要由一组相关器构成，其原理如图3-41所示。 假设每个相关器和多径 信号。 把这些输出信号适当的时延对齐，然后按某种方法合并。 如果各条路径加权系数为 1，称为等增益合并方式，在实际系统中还可以采用最大比合并或最佳样点合并方式。 该接收机利用多个并行相关器，可以增加信号的能量，改善信噪比，提高通信质量，所以RAKE 接收机具有搜集多径信号能量的能力，它的作用就像花园里用的耙子（rake），故取名为 RAKE接收机。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3 个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。",
+              "label": "材料"
+            },
+            {
+              "index": 3,
+              "location": "移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "199 的信道估计，通过低通滤波得到比较好的信道估计结果。 这种方法的缺点是由于非线性和非因果预测技术，使噪声比较大的时候，信道估计的准确度大大降低，而且还引入了较大的解码延迟。 延迟估计的主要部件是匹配滤波器，如图5-14所示。 匹配滤波器的功能是用输入的数据和不同相位的本地码字进行相关，取得不同码字相位的相关能量。 当串行输入的采样数据和本地的扩频码和扰码的相位一致时，其相关能量最大，在滤波器输出端有一个最大值。 根据相关能量，延迟估计器就可以得到多径的到达时间量。 本地的扩频码和扰码 N-1 串行输入的采样数据 N-1 图5-14 匹配滤波器的基本结构从实现的角度而言，RAKE接收机的处理包括码片级和符号级，码片级的处理有相关器、本地码产生器和匹配滤波器； 符号级的处理包括信道估计，相位旋转和合并相加。 码片级的处理一般用ASIC器件实现，而符号级的处理用DSP实现。 移动台和基站间的RAKE 接收机的实现方法和功能尽管有所不同，但其原理是完全一样的。 对于多个接收天线分集接收而言，多个接收天线接收的多径可以用上面的方法同样处理，RAKE接收机既可以接收来自同一天线的多径，也可以接收来自不同天线的多径，从 RAKE接收的角度来看，两种分集并没有本质的不同。 但是，在具体实现上由于多个天线的数据要进行分路的控制处理，增加了基带处理的复杂度。",
+              "label": "材料"
+            },
+            {
+              "index": 4,
+              "location": "移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "延迟估计的作用是通过匹配滤波器获取不同时间延迟位置上的信号能量分布（见图5-12 右下方的小图），识别具有较大能量的多径位置，并将它们的时间量分配到RAKE接收机的不同接收径上。 匹配滤波器的测量精度可以达到1/4或1/2码片，而RAKE接收机的不同接收径的间隔是一个码片。 在实现中，如果延迟估计的更新速度很快，比如几十毫秒一次，就可以无须迟早门的锁相环。",
+              "label": "材料"
+            },
+            {
+              "index": 5,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播",
+              "text": "RAKE 接收机可以合并多径能量，是 CDMA 系列系统的关键部件。",
+              "label": "材料"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [],
+          "question_line": "问题：哪些文档提到了 RAKE 接收机？",
+          "message_count": 2
+        },
+        "C1": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "这都保证了对多径信号的分离与接收，提高了接收信号的质量。 相关器1 延时、加权输出相关器2 延时、加权合并器多径信号相关器M 延时、加权图3-41J RAKE接收机原理",
+              "label": "证据块"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "3.3.5RAKE接收机在未采用扩频的移动通信系统，接收端只能对收到的多径信号进行矢量叠加，由于相位差和幅度不同导致信号呈现衰落。 在直扩通信系统中，采用自相关特性良好的扩频码， 在接收端进行相关解扩时可以有效地抑制不同步的其他多径信号分量，单独分离出主径分量，实现抗多径干扰的作用。 但是这些先后到达的不同步的其他多径信号分量，都携带相同的信息，都具有能量，若能够利用这些能量，则可以变害为利，改善接收信号的质量。 基于这种思想，Price和Green在1958年提出了多径分离接收的技术，这就是RAKE接收机。 利用RAKE接收机将被分离的各条路径信号相位校准、幅度加权，并将矢量和变成代数和。 三种不同的通信系统下，在接收端对信号的处理如图3-40所示。 第3径接收后的第2径合成失量分离出主径信号第1径第2径第3径第1径第1径接收后的合成矢量（代数和） (a)未采用扩频 (b)仅采用直扩 (c)直扩+RAKE 图3-40接收机对多径信号的处理所谓RAKE接收机，就是利用多个并行相关器检测多径信号，按照一定的准则合成一路信号供解调用的接收机。 RAKE接收机主要由一组相关器构成，其原理如图3-41所示。 假设每个相关器和多径 信号。 把这些输出信号适当的时延对齐，然后按某种方法合并。 如果各条路径加权系数为 1，称为等增益合并方式，在实际系统中还可以采用最大比合并或最佳样点合并方式。 该接收机利用多个并行相关器，可以增加信号的能量，改善信噪比，提高通信质量，所以RAKE 接收机具有搜集多径信号能量的能力，它的作用就像花园里用的耙子（rake），故取名为 RAKE接收机。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3 个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。",
+              "label": "证据块"
+            },
+            {
+              "index": 3,
+              "location": "移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "199 的信道估计，通过低通滤波得到比较好的信道估计结果。 这种方法的缺点是由于非线性和非因果预测技术，使噪声比较大的时候，信道估计的准确度大大降低，而且还引入了较大的解码延迟。 延迟估计的主要部件是匹配滤波器，如图5-14所示。 匹配滤波器的功能是用输入的数据和不同相位的本地码字进行相关，取得不同码字相位的相关能量。 当串行输入的采样数据和本地的扩频码和扰码的相位一致时，其相关能量最大，在滤波器输出端有一个最大值。 根据相关能量，延迟估计器就可以得到多径的到达时间量。 本地的扩频码和扰码 N-1 串行输入的采样数据 N-1 图5-14 匹配滤波器的基本结构从实现的角度而言，RAKE接收机的处理包括码片级和符号级，码片级的处理有相关器、本地码产生器和匹配滤波器； 符号级的处理包括信道估计，相位旋转和合并相加。 码片级的处理一般用ASIC器件实现，而符号级的处理用DSP实现。 移动台和基站间的RAKE 接收机的实现方法和功能尽管有所不同，但其原理是完全一样的。 对于多个接收天线分集接收而言，多个接收天线接收的多径可以用上面的方法同样处理，RAKE接收机既可以接收来自同一天线的多径，也可以接收来自不同天线的多径，从 RAKE接收的角度来看，两种分集并没有本质的不同。 但是，在具体实现上由于多个天线的数据要进行分路的控制处理，增加了基带处理的复杂度。",
+              "label": "证据块"
+            },
+            {
+              "index": 4,
+              "location": "移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "延迟估计的作用是通过匹配滤波器获取不同时间延迟位置上的信号能量分布（见图5-12 右下方的小图），识别具有较大能量的多径位置，并将它们的时间量分配到RAKE接收机的不同接收径上。 匹配滤波器的测量精度可以达到1/4或1/2码片，而RAKE接收机的不同接收径的间隔是一个码片。 在实现中，如果延迟估计的更新速度很快，比如几十毫秒一次，就可以无须迟早门的锁相环。",
+              "label": "证据块"
+            },
+            {
+              "index": 5,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播",
+              "text": "RAKE 接收机可以合并多径能量，是 CDMA 系列系统的关键部件。",
+              "label": "证据块"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [],
+          "question_line": "问题：哪些文档提到了 RAKE 接收机？",
+          "message_count": 2
+        },
+        "C2": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "这都保证了对多径信号的分离与接收，提高了接收信号的质量。 相关器1 延时、加权输出相关器2 延时、加权合并器多径信号相关器M 延时、加权图3-41J RAKE接收机原理",
+              "label": "材料"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "3.3.5RAKE接收机在未采用扩频的移动通信系统，接收端只能对收到的多径信号进行矢量叠加，由于相位差和幅度不同导致信号呈现衰落。 在直扩通信系统中，采用自相关特性良好的扩频码， 在接收端进行相关解扩时可以有效地抑制不同步的其他多径信号分量，单独分离出主径分量，实现抗多径干扰的作用。 但是这些先后到达的不同步的其他多径信号分量，都携带相同的信息，都具有能量，若能够利用这些能量，则可以变害为利，改善接收信号的质量。 基于这种思想，Price和Green在1958年提出了多径分离接收的技术，这就是RAKE接收机。 利用RAKE接收机将被分离的各条路径信号相位校准、幅度加权，并将矢量和变成代数和。 三种不同的通信系统下，在接收端对信号的处理如图3-40所示。 第3径接收后的第2径合成失量分离出主径信号第1径第2径第3径第1径第1径接收后的合成矢量（代数和） (a)未采用扩频 (b)仅采用直扩 (c)直扩+RAKE 图3-40接收机对多径信号的处理所谓RAKE接收机，就是利用多个并行相关器检测多径信号，按照一定的准则合成一路信号供解调用的接收机。 RAKE接收机主要由一组相关器构成，其原理如图3-41所示。 假设每个相关器和多径 信号。 把这些输出信号适当的时延对齐，然后按某种方法合并。 如果各条路径加权系数为 1，称为等增益合并方式，在实际系统中还可以采用最大比合并或最佳样点合并方式。 该接收机利用多个并行相关器，可以增加信号的能量，改善信噪比，提高通信质量，所以RAKE 接收机具有搜集多径信号能量的能力，它的作用就像花园里用的耙子（rake），故取名为 RAKE接收机。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3 个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。",
+              "label": "材料"
+            },
+            {
+              "index": 3,
+              "location": "移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "199 的信道估计，通过低通滤波得到比较好的信道估计结果。 这种方法的缺点是由于非线性和非因果预测技术，使噪声比较大的时候，信道估计的准确度大大降低，而且还引入了较大的解码延迟。 延迟估计的主要部件是匹配滤波器，如图5-14所示。 匹配滤波器的功能是用输入的数据和不同相位的本地码字进行相关，取得不同码字相位的相关能量。 当串行输入的采样数据和本地的扩频码和扰码的相位一致时，其相关能量最大，在滤波器输出端有一个最大值。 根据相关能量，延迟估计器就可以得到多径的到达时间量。 本地的扩频码和扰码 N-1 串行输入的采样数据 N-1 图5-14 匹配滤波器的基本结构从实现的角度而言，RAKE接收机的处理包括码片级和符号级，码片级的处理有相关器、本地码产生器和匹配滤波器； 符号级的处理包括信道估计，相位旋转和合并相加。 码片级的处理一般用ASIC器件实现，而符号级的处理用DSP实现。 移动台和基站间的RAKE 接收机的实现方法和功能尽管有所不同，但其原理是完全一样的。 对于多个接收天线分集接收而言，多个接收天线接收的多径可以用上面的方法同样处理，RAKE接收机既可以接收来自同一天线的多径，也可以接收来自不同天线的多径，从 RAKE接收的角度来看，两种分集并没有本质的不同。 但是，在具体实现上由于多个天线的数据要进行分路的控制处理，增加了基带处理的复杂度。",
+              "label": "材料"
+            },
+            {
+              "index": 4,
+              "location": "移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "延迟估计的作用是通过匹配滤波器获取不同时间延迟位置上的信号能量分布（见图5-12 右下方的小图），识别具有较大能量的多径位置，并将它们的时间量分配到RAKE接收机的不同接收径上。 匹配滤波器的测量精度可以达到1/4或1/2码片，而RAKE接收机的不同接收径的间隔是一个码片。 在实现中，如果延迟估计的更新速度很快，比如几十毫秒一次，就可以无须迟早门的锁相环。",
+              "label": "材料"
+            },
+            {
+              "index": 5,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播",
+              "text": "RAKE 接收机可以合并多径能量，是 CDMA 系列系统的关键部件。",
+              "label": "材料"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [
+            "当问题要求指出哪些文档、哪份文档或文档身份时，请使用上下文中已经提供的真实文档标题回答。"
+          ],
+          "question_line": "问题：哪些文档提到了 RAKE 接收机？",
+          "message_count": 2
+        },
+        "C3": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "这都保证了对多径信号的分离与接收，提高了接收信号的质量。 相关器1 延时、加权输出相关器2 延时、加权合并器多径信号相关器M 延时、加权图3-41J RAKE接收机原理",
+              "label": "证据块"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第147页 · 正文第138页 · 第3章 抗衰落技术 · 3.3.5 RAKE接收机在未采用扩频的移动通信系统，接收端只能",
+              "text": "3.3.5RAKE接收机在未采用扩频的移动通信系统，接收端只能对收到的多径信号进行矢量叠加，由于相位差和幅度不同导致信号呈现衰落。 在直扩通信系统中，采用自相关特性良好的扩频码， 在接收端进行相关解扩时可以有效地抑制不同步的其他多径信号分量，单独分离出主径分量，实现抗多径干扰的作用。 但是这些先后到达的不同步的其他多径信号分量，都携带相同的信息，都具有能量，若能够利用这些能量，则可以变害为利，改善接收信号的质量。 基于这种思想，Price和Green在1958年提出了多径分离接收的技术，这就是RAKE接收机。 利用RAKE接收机将被分离的各条路径信号相位校准、幅度加权，并将矢量和变成代数和。 三种不同的通信系统下，在接收端对信号的处理如图3-40所示。 第3径接收后的第2径合成失量分离出主径信号第1径第2径第3径第1径第1径接收后的合成矢量（代数和） (a)未采用扩频 (b)仅采用直扩 (c)直扩+RAKE 图3-40接收机对多径信号的处理所谓RAKE接收机，就是利用多个并行相关器检测多径信号，按照一定的准则合成一路信号供解调用的接收机。 RAKE接收机主要由一组相关器构成，其原理如图3-41所示。 假设每个相关器和多径 信号。 把这些输出信号适当的时延对齐，然后按某种方法合并。 如果各条路径加权系数为 1，称为等增益合并方式，在实际系统中还可以采用最大比合并或最佳样点合并方式。 该接收机利用多个并行相关器，可以增加信号的能量，改善信噪比，提高通信质量，所以RAKE 接收机具有搜集多径信号能量的能力，它的作用就像花园里用的耙子（rake），故取名为 RAKE接收机。 在CDMA/IS-95移动通信系统中，基站接收机有4个相关器，移动台有3 个相关器。 这都保证了对多径信号的分离与接收，提高了接收信号的质量。",
+              "label": "证据块"
+            },
+            {
+              "index": 3,
+              "location": "移动通信 (李兆玉) · PDF 第208页 · 正文第199页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "199 的信道估计，通过低通滤波得到比较好的信道估计结果。 这种方法的缺点是由于非线性和非因果预测技术，使噪声比较大的时候，信道估计的准确度大大降低，而且还引入了较大的解码延迟。 延迟估计的主要部件是匹配滤波器，如图5-14所示。 匹配滤波器的功能是用输入的数据和不同相位的本地码字进行相关，取得不同码字相位的相关能量。 当串行输入的采样数据和本地的扩频码和扰码的相位一致时，其相关能量最大，在滤波器输出端有一个最大值。 根据相关能量，延迟估计器就可以得到多径的到达时间量。 本地的扩频码和扰码 N-1 串行输入的采样数据 N-1 图5-14 匹配滤波器的基本结构从实现的角度而言，RAKE接收机的处理包括码片级和符号级，码片级的处理有相关器、本地码产生器和匹配滤波器； 符号级的处理包括信道估计，相位旋转和合并相加。 码片级的处理一般用ASIC器件实现，而符号级的处理用DSP实现。 移动台和基站间的RAKE 接收机的实现方法和功能尽管有所不同，但其原理是完全一样的。 对于多个接收天线分集接收而言，多个接收天线接收的多径可以用上面的方法同样处理，RAKE接收机既可以接收来自同一天线的多径，也可以接收来自不同天线的多径，从 RAKE接收的角度来看，两种分集并没有本质的不同。 但是，在具体实现上由于多个天线的数据要进行分路的控制处理，增加了基带处理的复杂度。",
+              "label": "证据块"
+            },
+            {
+              "index": 4,
+              "location": "移动通信 (李兆玉) · PDF 第206页 · 正文第197页 · 第5章 WCDMA移动通信系统 · 5.2.2 RAKE接收",
+              "text": "延迟估计的作用是通过匹配滤波器获取不同时间延迟位置上的信号能量分布（见图5-12 右下方的小图），识别具有较大能量的多径位置，并将它们的时间量分配到RAKE接收机的不同接收径上。 匹配滤波器的测量精度可以达到1/4或1/2码片，而RAKE接收机的不同接收径的间隔是一个码片。 在实现中，如果延迟估计的更新速度很快，比如几十毫秒一次，就可以无须迟早门的锁相环。",
+              "label": "证据块"
+            },
+            {
+              "index": 5,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 1. 多径传播",
+              "text": "RAKE 接收机可以合并多径能量，是 CDMA 系列系统的关键部件。",
+              "label": "证据块"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [
+            "当问题要求指出哪些文档、哪份文档或文档身份时，请使用上下文中已经提供的真实文档标题回答。"
+          ],
+          "question_line": "问题：哪些文档提到了 RAKE 接收机？",
+          "message_count": 2
+        }
+      },
+      "diffs": {
+        "C0_vs_C1": {
+          "changed_keys": [
+            "materials"
+          ],
+          "held_keys": [
+            "model",
+            "system_message",
+            "task_line",
+            "instruction_lines",
+            "question_line",
+            "message_count"
+          ]
+        },
+        "C0_vs_C2": {
+          "changed_keys": [
+            "instruction_lines"
+          ],
+          "held_keys": [
+            "model",
+            "system_message",
+            "materials",
+            "task_line",
+            "question_line",
+            "message_count"
+          ]
+        },
+        "C0_vs_C3": {
+          "changed_keys": [
+            "materials",
+            "instruction_lines"
+          ],
+          "held_keys": [
+            "model",
+            "system_message",
+            "task_line",
+            "question_line",
+            "message_count"
+          ]
+        }
+      },
+      "allowed_changed_keys": {
+        "C0_vs_C1": [
+          "materials"
+        ],
+        "C0_vs_C2": [
+          "task_line",
+          "instruction_lines"
+        ],
+        "C0_vs_C3": [
+          "materials",
+          "task_line",
+          "instruction_lines"
+        ]
+      },
+      "structural_checks": {
+        "evidence_text_unchanged": true,
+        "evidence_order_unchanged": true,
+        "canonical_title_content_and_position_unchanged": true,
+        "structural_numeric_index_preserved": true,
+        "material_labels_by_condition": {
+          "C0": [
+            "材料",
+            "材料",
+            "材料",
+            "材料",
+            "材料"
+          ],
+          "C1": [
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块"
+          ],
+          "C2": [
+            "材料",
+            "材料",
+            "材料",
+            "材料",
+            "材料"
+          ],
+          "C3": [
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块"
+          ]
+        }
+      }
+    },
+    "md-015": {
+      "case_id": "md-015",
+      "per_condition_semantic_objects": {
+        "C0": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "269 当f.为较大的频率时， cos[2元(fk + f,)t+k+p,Jdt~0, 因为正好是整数个(k一j)积分周期，所以 cos2元 +-dt=0，证毕。 普通的频分复用（FDM）调制，为了避免载波间干扰，要求各载波之间留有一定的保护间隔（GP）。 FDM信号的功率谱如图6-2所示。 图中f，表示载波中心频率，Af表示调制信号带宽，GP表示载波间隔。 如果不同的载波传输不同用户的数据，则形成FDMA多址方式。 GP GP Af 图6-2FDM信号功率谱 OFDM信号的功率谱如图6-3所示。 图中f，表示OFDM子载波频率。 从图中可以看出， OFDM各子载波之间是相互重叠的，没有保护间隔，和FDM调制相比，频谱利用率明显提高。 应该说OFDM各子载波间功率谱的重叠不是随机的，而是有规律的，即在任意子载波的中心频率处的其他子载波的功率为零，这正是各子载波间相互正交特性在功率谱上的体现。 图6-3OFDM信号功率谱但此时的OFDM多址接入技术在实际系统应用中还存在众多难以克服的困难，主要表现有：每个子载波需要单独的信号振荡器用于信号的生成和调制，这对于硬件要求比较高， 且由于信号振荡器间的非同步，容易造成子载波间干扰； 同时，由于子载波信号的单独调制和生成，在子载波数量比较大的情况下，基带信号处理计算复杂度也很高。 OFDM的两个重要实用化设计方案的提出，为OFDM的大规模应用铺平了道路。 一个是1971年Weinstein和Ebert提出的采用离散傅里叶变换（DFT，DiscreteFourierTransform） 进行OFDM信号的调制和解调，使得OFDM各子载波信号的生成只需要一个信号振荡器， 从而使得OFDM调制的实现更为简便。 另一个重要设计是，Peled和Ruiz在1980年提出了在OFDM各子载波符号中引入循环前缀（CP，CyclicPrefix）的设计，从而使得OFDM 各子载波调制信号在复杂的传输信道中仍然能够保证正交性。",
+              "label": "材料"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所示。 表中对TD-SCDMA、LTE和802.16e三种系统的传输方案进行了简要对比。 表6-1LTE基本传输方案 TD-SCDMA 3GPPLTE 802.16e 多址技术 CDMA 下行OFDMA：上行SC-FDMA OFDMA 双工方式 TDD FDD和TDD尽可能融合，FDD FDD、TDD和FDD半双工半双工顿结构 10ms无线顿分为2个顿长10ms，分为10个子顿， 规定了5ms、10ms和20ms等多种不 5ms子顿 20个时隙同的顿结构每个子顿分为7个正下行7或6个OFDM符号； 上每个顿分为下行子顿和上行子顿，两子顿结构常时隙和DwPTS、GP、 行7或6个OFDM符号者之间用适当的保护时隙分隔 UpPTS三个特殊时隙调制方式 QPSK、16QAM QPSK、16QAM和64QAM BPSK、QPSK、16QAM、64QAM 编码方式卷积编码和Turbo码以Turbo码为主，正在考虑有卷积码、卷积Turbo码和低密度奇 LDPC码偶校验码多天线技术智能天线基本MIMO模型：下行2×2，上支持MIMO（多入多出）和AAS（自行1×2个天线，考虑最多4×4配置适应天线阵）两种不同的多天线实现方式 Chase合并与增量亢余 Chase合并与增量穴余HARQ， 采用最为简单的停-等（SAW）机制， HARQ 正在考虑异步HARQ和自适应 HARQ的控制开销最小并且对发射和接 HARQ HARQ 收的缓存要求最小 6.1.4 OFDM基本原理 1.OFDM原理介绍 OFDM起源于20世纪40年代的第二次世界大战时期，早期用于美国军队的高频通信",
+              "label": "材料"
+            },
+            {
+              "index": 3,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 4,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 5,
+              "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [],
+          "question_line": "问题：哪份文档明确把 OFDMA 与 LTE 关联？",
+          "message_count": 2
+        },
+        "C1": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "269 当f.为较大的频率时， cos[2元(fk + f,)t+k+p,Jdt~0, 因为正好是整数个(k一j)积分周期，所以 cos2元 +-dt=0，证毕。 普通的频分复用（FDM）调制，为了避免载波间干扰，要求各载波之间留有一定的保护间隔（GP）。 FDM信号的功率谱如图6-2所示。 图中f，表示载波中心频率，Af表示调制信号带宽，GP表示载波间隔。 如果不同的载波传输不同用户的数据，则形成FDMA多址方式。 GP GP Af 图6-2FDM信号功率谱 OFDM信号的功率谱如图6-3所示。 图中f，表示OFDM子载波频率。 从图中可以看出， OFDM各子载波之间是相互重叠的，没有保护间隔，和FDM调制相比，频谱利用率明显提高。 应该说OFDM各子载波间功率谱的重叠不是随机的，而是有规律的，即在任意子载波的中心频率处的其他子载波的功率为零，这正是各子载波间相互正交特性在功率谱上的体现。 图6-3OFDM信号功率谱但此时的OFDM多址接入技术在实际系统应用中还存在众多难以克服的困难，主要表现有：每个子载波需要单独的信号振荡器用于信号的生成和调制，这对于硬件要求比较高， 且由于信号振荡器间的非同步，容易造成子载波间干扰； 同时，由于子载波信号的单独调制和生成，在子载波数量比较大的情况下，基带信号处理计算复杂度也很高。 OFDM的两个重要实用化设计方案的提出，为OFDM的大规模应用铺平了道路。 一个是1971年Weinstein和Ebert提出的采用离散傅里叶变换（DFT，DiscreteFourierTransform） 进行OFDM信号的调制和解调，使得OFDM各子载波信号的生成只需要一个信号振荡器， 从而使得OFDM调制的实现更为简便。 另一个重要设计是，Peled和Ruiz在1980年提出了在OFDM各子载波符号中引入循环前缀（CP，CyclicPrefix）的设计，从而使得OFDM 各子载波调制信号在复杂的传输信道中仍然能够保证正交性。",
+              "label": "证据块"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所示。 表中对TD-SCDMA、LTE和802.16e三种系统的传输方案进行了简要对比。 表6-1LTE基本传输方案 TD-SCDMA 3GPPLTE 802.16e 多址技术 CDMA 下行OFDMA：上行SC-FDMA OFDMA 双工方式 TDD FDD和TDD尽可能融合，FDD FDD、TDD和FDD半双工半双工顿结构 10ms无线顿分为2个顿长10ms，分为10个子顿， 规定了5ms、10ms和20ms等多种不 5ms子顿 20个时隙同的顿结构每个子顿分为7个正下行7或6个OFDM符号； 上每个顿分为下行子顿和上行子顿，两子顿结构常时隙和DwPTS、GP、 行7或6个OFDM符号者之间用适当的保护时隙分隔 UpPTS三个特殊时隙调制方式 QPSK、16QAM QPSK、16QAM和64QAM BPSK、QPSK、16QAM、64QAM 编码方式卷积编码和Turbo码以Turbo码为主，正在考虑有卷积码、卷积Turbo码和低密度奇 LDPC码偶校验码多天线技术智能天线基本MIMO模型：下行2×2，上支持MIMO（多入多出）和AAS（自行1×2个天线，考虑最多4×4配置适应天线阵）两种不同的多天线实现方式 Chase合并与增量亢余 Chase合并与增量穴余HARQ， 采用最为简单的停-等（SAW）机制， HARQ 正在考虑异步HARQ和自适应 HARQ的控制开销最小并且对发射和接 HARQ HARQ 收的缓存要求最小 6.1.4 OFDM基本原理 1.OFDM原理介绍 OFDM起源于20世纪40年代的第二次世界大战时期，早期用于美国军队的高频通信",
+              "label": "证据块"
+            },
+            {
+              "index": 3,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "证据块"
+            },
+            {
+              "index": 4,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "证据块"
+            },
+            {
+              "index": 5,
+              "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "证据块"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [],
+          "question_line": "问题：哪份文档明确把 OFDMA 与 LTE 关联？",
+          "message_count": 2
+        },
+        "C2": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "269 当f.为较大的频率时， cos[2元(fk + f,)t+k+p,Jdt~0, 因为正好是整数个(k一j)积分周期，所以 cos2元 +-dt=0，证毕。 普通的频分复用（FDM）调制，为了避免载波间干扰，要求各载波之间留有一定的保护间隔（GP）。 FDM信号的功率谱如图6-2所示。 图中f，表示载波中心频率，Af表示调制信号带宽，GP表示载波间隔。 如果不同的载波传输不同用户的数据，则形成FDMA多址方式。 GP GP Af 图6-2FDM信号功率谱 OFDM信号的功率谱如图6-3所示。 图中f，表示OFDM子载波频率。 从图中可以看出， OFDM各子载波之间是相互重叠的，没有保护间隔，和FDM调制相比，频谱利用率明显提高。 应该说OFDM各子载波间功率谱的重叠不是随机的，而是有规律的，即在任意子载波的中心频率处的其他子载波的功率为零，这正是各子载波间相互正交特性在功率谱上的体现。 图6-3OFDM信号功率谱但此时的OFDM多址接入技术在实际系统应用中还存在众多难以克服的困难，主要表现有：每个子载波需要单独的信号振荡器用于信号的生成和调制，这对于硬件要求比较高， 且由于信号振荡器间的非同步，容易造成子载波间干扰； 同时，由于子载波信号的单独调制和生成，在子载波数量比较大的情况下，基带信号处理计算复杂度也很高。 OFDM的两个重要实用化设计方案的提出，为OFDM的大规模应用铺平了道路。 一个是1971年Weinstein和Ebert提出的采用离散傅里叶变换（DFT，DiscreteFourierTransform） 进行OFDM信号的调制和解调，使得OFDM各子载波信号的生成只需要一个信号振荡器， 从而使得OFDM调制的实现更为简便。 另一个重要设计是，Peled和Ruiz在1980年提出了在OFDM各子载波符号中引入循环前缀（CP，CyclicPrefix）的设计，从而使得OFDM 各子载波调制信号在复杂的传输信道中仍然能够保证正交性。",
+              "label": "材料"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所示。 表中对TD-SCDMA、LTE和802.16e三种系统的传输方案进行了简要对比。 表6-1LTE基本传输方案 TD-SCDMA 3GPPLTE 802.16e 多址技术 CDMA 下行OFDMA：上行SC-FDMA OFDMA 双工方式 TDD FDD和TDD尽可能融合，FDD FDD、TDD和FDD半双工半双工顿结构 10ms无线顿分为2个顿长10ms，分为10个子顿， 规定了5ms、10ms和20ms等多种不 5ms子顿 20个时隙同的顿结构每个子顿分为7个正下行7或6个OFDM符号； 上每个顿分为下行子顿和上行子顿，两子顿结构常时隙和DwPTS、GP、 行7或6个OFDM符号者之间用适当的保护时隙分隔 UpPTS三个特殊时隙调制方式 QPSK、16QAM QPSK、16QAM和64QAM BPSK、QPSK、16QAM、64QAM 编码方式卷积编码和Turbo码以Turbo码为主，正在考虑有卷积码、卷积Turbo码和低密度奇 LDPC码偶校验码多天线技术智能天线基本MIMO模型：下行2×2，上支持MIMO（多入多出）和AAS（自行1×2个天线，考虑最多4×4配置适应天线阵）两种不同的多天线实现方式 Chase合并与增量亢余 Chase合并与增量穴余HARQ， 采用最为简单的停-等（SAW）机制， HARQ 正在考虑异步HARQ和自适应 HARQ的控制开销最小并且对发射和接 HARQ HARQ 收的缓存要求最小 6.1.4 OFDM基本原理 1.OFDM原理介绍 OFDM起源于20世纪40年代的第二次世界大战时期，早期用于美国军队的高频通信",
+              "label": "材料"
+            },
+            {
+              "index": 3,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 4,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            },
+            {
+              "index": 5,
+              "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "材料"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [
+            "当问题要求指出哪些文档、哪份文档或文档身份时，请使用上下文中已经提供的真实文档标题回答。"
+          ],
+          "question_line": "问题：哪份文档明确把 OFDMA 与 LTE 关联？",
+          "message_count": 2
+        },
+        "C3": {
+          "model": "qwen2.5:7b",
+          "system_message": "你是严谨的教材助教。只能使用用户给出的教材材料，不得补充外部常识或猜测。每个可验证的结论后必须标注对应材料编号，例如[1]；不能确定就明确说材料不足。说明材料未涵盖、未直接回答某内容时，不要给这句结论附引用编号；如需指明出处，用“材料[n]仅提出了该问题”这类句式单独说明。不得引入材料之外的理论框架或标准（如OSI模型）来解释，材料没有就明确说材料不足。对话历史只用于理解当前问题的指代，回答仍只依据本轮给出的材料。保留材料里的符号和单位，OCR疑似错误不要擅自纠正。回答使用简洁中文。",
+          "materials": [
+            {
+              "index": 1,
+              "location": "移动通信 (李兆玉) · PDF 第278页 · 正文第269页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "269 当f.为较大的频率时， cos[2元(fk + f,)t+k+p,Jdt~0, 因为正好是整数个(k一j)积分周期，所以 cos2元 +-dt=0，证毕。 普通的频分复用（FDM）调制，为了避免载波间干扰，要求各载波之间留有一定的保护间隔（GP）。 FDM信号的功率谱如图6-2所示。 图中f，表示载波中心频率，Af表示调制信号带宽，GP表示载波间隔。 如果不同的载波传输不同用户的数据，则形成FDMA多址方式。 GP GP Af 图6-2FDM信号功率谱 OFDM信号的功率谱如图6-3所示。 图中f，表示OFDM子载波频率。 从图中可以看出， OFDM各子载波之间是相互重叠的，没有保护间隔，和FDM调制相比，频谱利用率明显提高。 应该说OFDM各子载波间功率谱的重叠不是随机的，而是有规律的，即在任意子载波的中心频率处的其他子载波的功率为零，这正是各子载波间相互正交特性在功率谱上的体现。 图6-3OFDM信号功率谱但此时的OFDM多址接入技术在实际系统应用中还存在众多难以克服的困难，主要表现有：每个子载波需要单独的信号振荡器用于信号的生成和调制，这对于硬件要求比较高， 且由于信号振荡器间的非同步，容易造成子载波间干扰； 同时，由于子载波信号的单独调制和生成，在子载波数量比较大的情况下，基带信号处理计算复杂度也很高。 OFDM的两个重要实用化设计方案的提出，为OFDM的大规模应用铺平了道路。 一个是1971年Weinstein和Ebert提出的采用离散傅里叶变换（DFT，DiscreteFourierTransform） 进行OFDM信号的调制和解调，使得OFDM各子载波信号的生成只需要一个信号振荡器， 从而使得OFDM调制的实现更为简便。 另一个重要设计是，Peled和Ruiz在1980年提出了在OFDM各子载波符号中引入循环前缀（CP，CyclicPrefix）的设计，从而使得OFDM 各子载波调制信号在复杂的传输信道中仍然能够保证正交性。",
+              "label": "证据块"
+            },
+            {
+              "index": 2,
+              "location": "移动通信 (李兆玉) · PDF 第276页 · 正文第267页 · 第6章 LTE移动通信系统 · 6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所",
+              "text": "6.1.3 LTE基本传输方案 LTE的基本传输方案如表6-1所示。 表中对TD-SCDMA、LTE和802.16e三种系统的传输方案进行了简要对比。 表6-1LTE基本传输方案 TD-SCDMA 3GPPLTE 802.16e 多址技术 CDMA 下行OFDMA：上行SC-FDMA OFDMA 双工方式 TDD FDD和TDD尽可能融合，FDD FDD、TDD和FDD半双工半双工顿结构 10ms无线顿分为2个顿长10ms，分为10个子顿， 规定了5ms、10ms和20ms等多种不 5ms子顿 20个时隙同的顿结构每个子顿分为7个正下行7或6个OFDM符号； 上每个顿分为下行子顿和上行子顿，两子顿结构常时隙和DwPTS、GP、 行7或6个OFDM符号者之间用适当的保护时隙分隔 UpPTS三个特殊时隙调制方式 QPSK、16QAM QPSK、16QAM和64QAM BPSK、QPSK、16QAM、64QAM 编码方式卷积编码和Turbo码以Turbo码为主，正在考虑有卷积码、卷积Turbo码和低密度奇 LDPC码偶校验码多天线技术智能天线基本MIMO模型：下行2×2，上支持MIMO（多入多出）和AAS（自行1×2个天线，考虑最多4×4配置适应天线阵）两种不同的多天线实现方式 Chase合并与增量亢余 Chase合并与增量穴余HARQ， 采用最为简单的停-等（SAW）机制， HARQ 正在考虑异步HARQ和自适应 HARQ的控制开销最小并且对发射和接 HARQ HARQ 收的缓存要求最小 6.1.4 OFDM基本原理 1.OFDM原理介绍 OFDM起源于20世纪40年代的第二次世界大战时期，早期用于美国军队的高频通信",
+              "label": "证据块"
+            },
+            {
+              "index": 3,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "证据块"
+            },
+            {
+              "index": 4,
+              "location": "移动通信测试文档 · 移动通信测试文档 · 移动通信测试文档 / 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "证据块"
+            },
+            {
+              "index": 5,
+              "location": "第1章 移动通信测试文档 · 2. 抗衰落技术",
+              "text": "分集接收通过合并独立衰落的支路来对抗衰落。 均衡技术能够补偿信道失真，OFDMA 是 LTE 采用的多址方式。",
+              "label": "证据块"
+            }
+          ],
+          "task_line": "任务要求：直接回答概念、原理、条件或工程作用。",
+          "instruction_lines": [
+            "当问题要求指出哪些文档、哪份文档或文档身份时，请使用上下文中已经提供的真实文档标题回答。"
+          ],
+          "question_line": "问题：哪份文档明确把 OFDMA 与 LTE 关联？",
+          "message_count": 2
+        }
+      },
+      "diffs": {
+        "C0_vs_C1": {
+          "changed_keys": [
+            "materials"
+          ],
+          "held_keys": [
+            "model",
+            "system_message",
+            "task_line",
+            "instruction_lines",
+            "question_line",
+            "message_count"
+          ]
+        },
+        "C0_vs_C2": {
+          "changed_keys": [
+            "instruction_lines"
+          ],
+          "held_keys": [
+            "model",
+            "system_message",
+            "materials",
+            "task_line",
+            "question_line",
+            "message_count"
+          ]
+        },
+        "C0_vs_C3": {
+          "changed_keys": [
+            "materials",
+            "instruction_lines"
+          ],
+          "held_keys": [
+            "model",
+            "system_message",
+            "task_line",
+            "question_line",
+            "message_count"
+          ]
+        }
+      },
+      "allowed_changed_keys": {
+        "C0_vs_C1": [
+          "materials"
+        ],
+        "C0_vs_C2": [
+          "task_line",
+          "instruction_lines"
+        ],
+        "C0_vs_C3": [
+          "materials",
+          "task_line",
+          "instruction_lines"
+        ]
+      },
+      "structural_checks": {
+        "evidence_text_unchanged": true,
+        "evidence_order_unchanged": true,
+        "canonical_title_content_and_position_unchanged": true,
+        "structural_numeric_index_preserved": true,
+        "material_labels_by_condition": {
+          "C0": [
+            "材料",
+            "材料",
+            "材料",
+            "材料",
+            "材料"
+          ],
+          "C1": [
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块"
+          ],
+          "C2": [
+            "材料",
+            "材料",
+            "材料",
+            "材料",
+            "材料"
+          ],
+          "C3": [
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块",
+            "证据块"
+          ]
+        }
+      }
+    }
+  },
+  "model_visible_request_digests": {
+    "md-004": {
+      "C0": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "77fbd2ca2306f19518fd1c362543465bd7852e06b69627873df00a2baf728716",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      },
+      "C1": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "5c300ec953ce5fe8f3251569397a2ad702d45f74b738b714495829edce4a6322",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      },
+      "C2": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "325706c94e6bcd00e35ffa72db5cb602728cd37be79589f868df72b7e2f42209",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      },
+      "C3": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "ac50df0c0db6cbac362719625e8d4de06c46bcb5155c889426be60e38b6b6a01",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      }
+    },
+    "md-009": {
+      "C0": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "b9943d23c9960da1d5c51a2e2ce5a4b526972a529aa88dba0f0438b1f30319f9",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      },
+      "C1": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "567028dee6141768823c9cdc9bfeaaab07c80975c3b13bcf41655ae10104de0a",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      },
+      "C2": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "bfa183a1a8374ec2b3497fc29f0f6ff6738a9368a2e2689b5a34eb14aad08f63",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      },
+      "C3": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "a474b78d689a95b7374f2d82fb3fd363293838588de3669878b4237e1c535a6b",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      }
+    },
+    "md-015": {
+      "C0": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "d6cb157261f74d7482f161445af28f569d97f831466da1f0aef397a76a372791",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      },
+      "C1": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "f224120ad56823dccd2bbfb55a2e12a932d31b1cf97ce9f1dcbe280739f12603",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      },
+      "C2": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "2cdc573a9437ef8089315d2dbb55be53b29c1c74a8496509beb3d8a188c0f88c",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      },
+      "C3": {
+        "MODEL_VISIBLE_REQUEST_DIGEST": "9f6c10d0b2a54a29be5277274b159fb634c23c2c792ca08b0a6a8599b965146b",
+        "payload_keys": [
+          "keep_alive",
+          "messages",
+          "model",
+          "options",
+          "stream"
+        ],
+        "message_roles": [
+          "system",
+          "user"
+        ]
+      }
+    }
+  },
+  "variables_changed": {
+    "A": [
+      "user_message.material_header_label"
+    ],
+    "B": [
+      "user_message.instruction_line"
+    ]
+  },
+  "variables_held_constant": [
+    "query",
+    "history",
+    "scope",
+    "system_message",
+    "evidence_text",
+    "evidence_order",
+    "material_location_strings (canonical titles)",
+    "structural_numeric_index",
+    "citation_contract",
+    "task_hint",
+    "model",
+    "generation_parameters"
+  ],
+  "counterfactual_validity": {
+    "A1_title_salience_confounded": "NO",
+    "A1_structural_index_confounded": "NO",
+    "B1_case_invariant": "YES",
+    "B1_contains_anti_material_index_instruction": "NO",
+    "authorized_intervention_diff_only": "YES",
+    "citation_representation_confounded": "NO"
+  },
+  "per_case": {
+    "md-004": {
+      "query": "分集接收在哪些文档中被提到？",
+      "history": null,
+      "scope": "none",
+      "expected_documents": [
+        "移动通信 (李兆玉)",
+        "移动通信测试文档"
+      ],
+      "v47_raw_answer": "分集接收在材料1、材料2和材料3中被提及。[1][2][3]",
+      "conditions": {
+        "C0": {
+          "A": "A0",
+          "B": "B0",
+          "raw_answer": "分集接收在材料1、材料2和材料3中的文档中被提及。[1][2][3]",
+          "raw_answer_sha256": "2c3a90980e8c6467da45471237080927739be6ebd64219fec9bb3dc417d4a542",
+          "elapsed_ms": 3100,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "NO",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+            "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信 (李兆玉)",
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+          },
+          "Y": 0
+        },
+        "C1": {
+          "A": "A1",
+          "B": "B0",
+          "raw_answer": "分集接收在证据块1、证据块2和证据块3中的移动通信测试文档以及证据块4和证据块5中的《移动通信 (李兆玉)》一书中被提及。[1-5]",
+          "raw_answer_sha256": "d796dbb9a7c981d56b1a9f7f92daf19bcccf1bed6499b5ea0cd3c109b5502c69",
+          "elapsed_ms": 3232,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "YES",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "NO",
+            "O3_SOURCE_REFERENT_CORRECT": "YES",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "YES",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信 (李兆玉)",
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [
+              "移动通信 (李兆玉)",
+              "移动通信测试文档"
+            ],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "PASS",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "NO",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "NO"
+          },
+          "Y": 1
+        },
+        "C2": {
+          "A": "A0",
+          "B": "B1",
+          "raw_answer": "分集接收在以下文档中被提到：\n\n- 移动通信测试文档 [1]\n- 第1章移动通信测试文档 [3]\n- 移动通信 (李兆玉) [4]",
+          "raw_answer_sha256": "f7ecd60e9ebf1ac7b39d5701b7245498dfe3e6f4dcc519edffcbf33141432204",
+          "elapsed_ms": 3146,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "YES",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "NO",
+            "O3_SOURCE_REFERENT_CORRECT": "YES",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "YES",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "YES",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信 (李兆玉)",
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [
+              "移动通信 (李兆玉)",
+              "移动通信测试文档"
+            ],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "PASS",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "NO",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "NO"
+          },
+          "Y": 1
+        },
+        "C3": {
+          "A": "A1",
+          "B": "B1",
+          "raw_answer": "分集接收在以下文档中被提到：\n\n- 移动通信测试文档 [1]\n- 第1章移动通信测试文档 [2]\n- 移动通信 (李兆玉) [3]",
+          "raw_answer_sha256": "50dff8d79f5378dfcc49c90998bc31e5c1a43b3b6502799168dea533b898bb85",
+          "elapsed_ms": 3181,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "YES",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "NO",
+            "O3_SOURCE_REFERENT_CORRECT": "YES",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "YES",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "YES",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信 (李兆玉)",
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [
+              "移动通信 (李兆玉)",
+              "移动通信测试文档"
+            ],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "PASS",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "NO",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "NO"
+          },
+          "Y": 1
+        }
+      },
+      "CONTROL_FAILURE_REPRODUCED": "YES",
+      "Y": {
+        "C0": 0,
+        "C1": 1,
+        "C2": 1,
+        "C3": 1
+      },
+      "RUN_COUNT_PER_CELL": {
+        "C0": 1,
+        "C1": 1,
+        "C2": 1,
+        "C3": 1
+      },
+      "factorial_contrasts": {
+        "delta_A_given_B0": 1,
+        "delta_A_given_B1": 0,
+        "delta_B_given_A0": 1,
+        "delta_B_given_A1": 0,
+        "interaction": -1
+      },
+      "per_case_mechanism_support": {
+        "M1_CAUSAL_SUPPORT": "SUPPORTED",
+        "M1_ISOLATED": "NO",
+        "M2_CAUSAL_SUPPORT": "SUPPORTED",
+        "M2_ISOLATED": "NO",
+        "MULTIPLE_SUFFICIENT_INTERVENTIONS": "YES",
+        "MULTIPLE_CONTRIBUTING_FACTORS": "NOT_ESTABLISHED",
+        "M3_INTERACTION_EFFECT": "NOT_ESTABLISHED",
+        "INTERACTION_PATTERN": "SUBADDITIVE_BINARY_CEILING_COMPATIBLE",
+        "M4_PHASE_LOCAL_SUPPORT": "NOT_SUPPORTED",
+        "M4_GLOBAL_STATUS": "NOT_SUPPORTED",
+        "M5_RESIDUAL_OTHER_GENERATION_SUPPORT": "NOT_SUPPORTED",
+        "SPECIFIC_M5_MECHANISM_IDENTITY": "NOT_ESTABLISHED",
+        "SECONDARY_GROUPING_STATUS": "NOT_TESTED",
+        "MECHANISM_ISOLATION_STATUS": "NOT_ESTABLISHED",
+        "primary_mechanism": "MULTIPLE_SUFFICIENT_INTERVENTIONS",
+        "secondary_mechanisms": [
+          "SUBADDITIVE_BINARY_CEILING_COMPATIBLE"
+        ],
+        "all_four_conditions_failed": false,
+        "note": "either authorized factor alone restores canonical-title naming; A and B are not separable here"
+      }
+    },
+    "md-009": {
+      "query": "哪些文档提到了 RAKE 接收机？",
+      "history": null,
+      "scope": "none",
+      "expected_documents": [
+        "移动通信 (李兆玉)",
+        "移动通信测试文档"
+      ],
+      "v47_raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][5]",
+      "conditions": {
+        "C0": {
+          "A": "A0",
+          "B": "B0",
+          "raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][5]",
+          "raw_answer_sha256": "b113d5a153f2dab4b95f9e6339afd032a975862d9d1020a625f6969fdebf9e3c",
+          "elapsed_ms": 2776,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "NO",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+            "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信 (李兆玉)",
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+          },
+          "Y": 0
+        },
+        "C1": {
+          "A": "A1",
+          "B": "B0",
+          "raw_answer": "[证据块1]、[证据块2]和[证据块3]提到了RAKE接收机。",
+          "raw_answer_sha256": "ff67eeaf2af2d760e1dc46ef7ade2b0d4033484cd8d55772c9ecefaf56136b4b",
+          "elapsed_ms": 2773,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "NO",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+            "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信 (李兆玉)",
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+          },
+          "Y": 0
+        },
+        "C2": {
+          "A": "A0",
+          "B": "B1",
+          "raw_answer": "材料1、材料2和材料5都提到了RAKE接收机。[1][2][5]",
+          "raw_answer_sha256": "b113d5a153f2dab4b95f9e6339afd032a975862d9d1020a625f6969fdebf9e3c",
+          "elapsed_ms": 2767,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "NO",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+            "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信 (李兆玉)",
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+          },
+          "Y": 0
+        },
+        "C3": {
+          "A": "A1",
+          "B": "B1",
+          "raw_answer": "证据块1、证据块2和证据块5提到了RAKE接收机。[1][2][5]",
+          "raw_answer_sha256": "bc059072d4455292d935724e7bc2420fe251d56e17267d5061db373a50d7c794",
+          "elapsed_ms": 2747,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "NO",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+            "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信 (李兆玉)",
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+          },
+          "Y": 0
+        }
+      },
+      "CONTROL_FAILURE_REPRODUCED": "YES",
+      "Y": {
+        "C0": 0,
+        "C1": 0,
+        "C2": 0,
+        "C3": 0
+      },
+      "RUN_COUNT_PER_CELL": {
+        "C0": 1,
+        "C1": 1,
+        "C2": 1,
+        "C3": 1
+      },
+      "factorial_contrasts": {
+        "delta_A_given_B0": 0,
+        "delta_A_given_B1": 0,
+        "delta_B_given_A0": 0,
+        "delta_B_given_A1": 0,
+        "interaction": 0
+      },
+      "per_case_mechanism_support": {
+        "M1_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+        "M1_ISOLATED": "NO",
+        "M2_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+        "M2_ISOLATED": "NO",
+        "MULTIPLE_SUFFICIENT_INTERVENTIONS": "NO",
+        "MULTIPLE_CONTRIBUTING_FACTORS": "NOT_ESTABLISHED",
+        "M3_INTERACTION_EFFECT": "NOT_SUPPORTED",
+        "INTERACTION_PATTERN": "ADDITIVE_OR_NULL",
+        "M4_PHASE_LOCAL_SUPPORT": "SUPPORTED",
+        "M4_GLOBAL_STATUS": "NOT_ESTABLISHED",
+        "M5_RESIDUAL_OTHER_GENERATION_SUPPORT": "SUPPORTED",
+        "SPECIFIC_M5_MECHANISM_IDENTITY": "NOT_ESTABLISHED",
+        "SECONDARY_GROUPING_STATUS": "NOT_TESTED",
+        "MECHANISM_ISOLATION_STATUS": "NOT_ESTABLISHED",
+        "primary_mechanism": "M4_PHASE_LOCAL_RESIDUAL_FAILURE",
+        "secondary_mechanisms": [],
+        "all_four_conditions_failed": true,
+        "note": "both authorized framing interventions failed to restore canonical-title naming; the residual lies outside the two tested framing factors"
+      }
+    },
+    "md-015": {
+      "query": "哪份文档明确把 OFDMA 与 LTE 关联？",
+      "history": null,
+      "scope": "none",
+      "expected_documents": [
+        "移动通信测试文档"
+      ],
+      "v47_raw_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+      "conditions": {
+        "C0": {
+          "A": "A0",
+          "B": "B0",
+          "raw_answer": "材料1、2明确了OFDMA与LTE的关系[1][2]。其中，材料1指出“下行OFDMA：上行SC-FDMA”是LTE的一种传输方案；材料2则详细对比了TD-SCDMA、LTE和802.16e三种系统的传输方案，并明确表示LTE使用的是下行OFDMA和上行SC-FDMA的组合[2]。",
+          "raw_answer_sha256": "0ca171f63bb69488e65e76f70d4807d479c90d39e1f12ea9f3dcaec0590e6580",
+          "elapsed_ms": 3938,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "NO",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+            "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+          },
+          "Y": 0
+        },
+        "C1": {
+          "A": "A1",
+          "B": "B0",
+          "raw_answer": "证据块1、2明确提到了LTE使用了OFDMA作为其多址接入技术[1][2]。因此可以回答：\n\n证据块1和证据块2明确把OFDMA与LTE关联。[1][2]",
+          "raw_answer_sha256": "88286523b659bf55b43d85b2e8adee01a18bf0e266528ea53ca0275c754930b8",
+          "elapsed_ms": 3297,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "NO",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+            "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+          },
+          "Y": 0
+        },
+        "C2": {
+          "A": "A0",
+          "B": "B1",
+          "raw_answer": "材料1明确把 OFDMA 与 LTE 关联[1]。",
+          "raw_answer_sha256": "b653cc5267023bbd65e466fc144843c4beba416c806b5f9740943acf4c25e01e",
+          "elapsed_ms": 2556,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "NO",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+            "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+          },
+          "Y": 0
+        },
+        "C3": {
+          "A": "A1",
+          "B": "B1",
+          "raw_answer": "[证据块1]、[证据块2]、[证据块3]、[证据块4]和[证据块5]都提到了OFDMA是LTE采用的多址方式，但最直接关联的是[证据块2]。该文档明确指出：“表6-1LTE基本传输方案 TD-SCDMA 3GPPLTE 802.16e 多址技术 CDMA 下行OFDMA：上行SC-FDMA OFDMA” [2]",
+          "raw_answer_sha256": "7e32e506ee4189aa7a1a106d4ca4a9f0a9f9ca8fcc7c549928b520bf1c2d2fa1",
+          "elapsed_ms": 4466,
+          "observables": {
+            "O1_CANONICAL_TITLE_EMITTED": "NO",
+            "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+            "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+            "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+            "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+            "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+            "O7_ROLE_TERM_EMITTED": "NO",
+            "_expected_titles": [
+              "移动通信测试文档"
+            ],
+            "_emitted_titles": [],
+            "_invented_document_identities": [],
+            "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+            "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+            "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+          },
+          "Y": 0
+        }
+      },
+      "CONTROL_FAILURE_REPRODUCED": "YES",
+      "Y": {
+        "C0": 0,
+        "C1": 0,
+        "C2": 0,
+        "C3": 0
+      },
+      "RUN_COUNT_PER_CELL": {
+        "C0": 1,
+        "C1": 1,
+        "C2": 1,
+        "C3": 1
+      },
+      "factorial_contrasts": {
+        "delta_A_given_B0": 0,
+        "delta_A_given_B1": 0,
+        "delta_B_given_A0": 0,
+        "delta_B_given_A1": 0,
+        "interaction": 0
+      },
+      "per_case_mechanism_support": {
+        "M1_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+        "M1_ISOLATED": "NO",
+        "M2_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+        "M2_ISOLATED": "NO",
+        "MULTIPLE_SUFFICIENT_INTERVENTIONS": "NO",
+        "MULTIPLE_CONTRIBUTING_FACTORS": "NOT_ESTABLISHED",
+        "M3_INTERACTION_EFFECT": "NOT_SUPPORTED",
+        "INTERACTION_PATTERN": "ADDITIVE_OR_NULL",
+        "M4_PHASE_LOCAL_SUPPORT": "SUPPORTED",
+        "M4_GLOBAL_STATUS": "NOT_ESTABLISHED",
+        "M5_RESIDUAL_OTHER_GENERATION_SUPPORT": "SUPPORTED",
+        "SPECIFIC_M5_MECHANISM_IDENTITY": "NOT_ESTABLISHED",
+        "SECONDARY_GROUPING_STATUS": "NOT_TESTED",
+        "MECHANISM_ISOLATION_STATUS": "NOT_ESTABLISHED",
+        "primary_mechanism": "M4_PHASE_LOCAL_RESIDUAL_FAILURE",
+        "secondary_mechanisms": [],
+        "all_four_conditions_failed": true,
+        "note": "both authorized framing interventions failed to restore canonical-title naming; the residual lies outside the two tested framing factors"
+      }
+    }
+  },
+  "factorial_contrasts": {
+    "md-004": {
+      "delta_A_given_B0": 1,
+      "delta_A_given_B1": 0,
+      "delta_B_given_A0": 1,
+      "delta_B_given_A1": 0,
+      "interaction": -1
+    },
+    "md-009": {
+      "delta_A_given_B0": 0,
+      "delta_A_given_B1": 0,
+      "delta_B_given_A0": 0,
+      "delta_B_given_A1": 0,
+      "interaction": 0
+    },
+    "md-015": {
+      "delta_A_given_B0": 0,
+      "delta_A_given_B1": 0,
+      "delta_B_given_A0": 0,
+      "delta_B_given_A1": 0,
+      "interaction": 0
+    }
+  },
+  "product_observables": {
+    "md-004": {
+      "C0": {
+        "O1_CANONICAL_TITLE_EMITTED": "NO",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+        "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信 (李兆玉)",
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+      },
+      "C1": {
+        "O1_CANONICAL_TITLE_EMITTED": "YES",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "NO",
+        "O3_SOURCE_REFERENT_CORRECT": "YES",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "YES",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信 (李兆玉)",
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [
+          "移动通信 (李兆玉)",
+          "移动通信测试文档"
+        ],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "PASS",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "NO",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "NO"
+      },
+      "C2": {
+        "O1_CANONICAL_TITLE_EMITTED": "YES",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "NO",
+        "O3_SOURCE_REFERENT_CORRECT": "YES",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "YES",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "YES",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信 (李兆玉)",
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [
+          "移动通信 (李兆玉)",
+          "移动通信测试文档"
+        ],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "PASS",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "NO",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "NO"
+      },
+      "C3": {
+        "O1_CANONICAL_TITLE_EMITTED": "YES",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "NO",
+        "O3_SOURCE_REFERENT_CORRECT": "YES",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "YES",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "YES",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信 (李兆玉)",
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [
+          "移动通信 (李兆玉)",
+          "移动通信测试文档"
+        ],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "PASS",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "NO",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "NO"
+      }
+    },
+    "md-009": {
+      "C0": {
+        "O1_CANONICAL_TITLE_EMITTED": "NO",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+        "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信 (李兆玉)",
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+      },
+      "C1": {
+        "O1_CANONICAL_TITLE_EMITTED": "NO",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+        "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信 (李兆玉)",
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+      },
+      "C2": {
+        "O1_CANONICAL_TITLE_EMITTED": "NO",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+        "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信 (李兆玉)",
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+      },
+      "C3": {
+        "O1_CANONICAL_TITLE_EMITTED": "NO",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+        "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信 (李兆玉)",
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+      }
+    },
+    "md-015": {
+      "C0": {
+        "O1_CANONICAL_TITLE_EMITTED": "NO",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+        "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+      },
+      "C1": {
+        "O1_CANONICAL_TITLE_EMITTED": "NO",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+        "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+      },
+      "C2": {
+        "O1_CANONICAL_TITLE_EMITTED": "NO",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+        "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+      },
+      "C3": {
+        "O1_CANONICAL_TITLE_EMITTED": "NO",
+        "O2_GENERIC_MATERIAL_IDENTITY_USED": "YES",
+        "O3_SOURCE_REFERENT_CORRECT": "NOT_ESTABLISHED",
+        "O4_FACTUAL_CONTENT_PRESERVED": "YES",
+        "O5_DOCUMENT_SET_CORRECT": "NOT_ESTABLISHED",
+        "O6_DUPLICATE_DOCUMENT_IDENTITY_EMITTED": "NO",
+        "O7_ROLE_TERM_EMITTED": "NO",
+        "_expected_titles": [
+          "移动通信测试文档"
+        ],
+        "_emitted_titles": [],
+        "_invented_document_identities": [],
+        "DOCUMENT_IDENTITY_RESPONSE_SUCCESS": "FAIL",
+        "GENERIC_EVIDENCE_IDENTITY_ONLY_RESPONSE": "YES",
+        "MATERIAL_INDEX_ONLY_RESPONSE": "YES"
+      }
+    }
+  },
+  "control_reproducibility": {
+    "per_case": {
+      "md-004": "YES",
+      "md-009": "YES",
+      "md-015": "YES"
+    },
+    "CONTROL_REPRODUCIBILITY": "ESTABLISHED"
+  },
+  "mechanism_support": {
+    "M1_MATERIAL_INDEX_REPRESENTATION_BIAS": "PARTIAL",
+    "M1_ISOLATED": "NO",
+    "M2_PROMPT_FRAMING": "PARTIAL",
+    "M2_ISOLATED": "NO",
+    "M3_INTERACTION_EFFECT": "NOT_ESTABLISHED",
+    "M4_PURE_GENERATION_SYNTHESIS_FAILURE": "PARTIAL",
+    "M5_RESIDUAL_OTHER_GENERATION_SUPPORT": "SUPPORTED",
+    "SPECIFIC_M5_MECHANISM_IDENTITY": "NOT_ESTABLISHED",
+    "MULTIPLE_SUFFICIENT_INTERVENTIONS": "PARTIAL",
+    "MULTIPLE_CONTRIBUTING_FACTORS": "NOT_ESTABLISHED",
+    "legacy_note": "the former key M5_OTHER_GENERATION_FAMILY_MECHANISM is renamed to M5_RESIDUAL_OTHER_GENERATION_SUPPORT because it never identified a specific mechanism"
+  },
+  "per_case_primary_mechanism": {
+    "md-004": "MULTIPLE_SUFFICIENT_INTERVENTIONS",
+    "md-009": "M4_PHASE_LOCAL_RESIDUAL_FAILURE",
+    "md-015": "M4_PHASE_LOCAL_RESIDUAL_FAILURE"
+  },
+  "shared_causal_mechanism": "NOT_ESTABLISHED",
+  "mixed_generation_mechanisms": "NOT_ESTABLISHED",
+  "secondary_chunk_to_document_aggregation": "NOT_TESTED",
+  "additional_grouping_intervention_required": "YES",
+  "generation_mechanism_isolation": "NOT_ESTABLISHED",
+  "product_remediation_authorized": "NO",
+  "ready_for_separate_remediation_authorization": "NO",
+  "generation_remediation_scope_ready_machine_fact": "YES",
+  "remediation_scope_ready_definition_source": "NOT_AVAILABLE",
+  "remediation_scope_ready_semantics": "NOT_FURTHER_INTERPRETED",
+  "historical_claim_boundary": {
+    "HISTORICAL_SOURCE_ANCHOR_AVAILABLE": "NO",
+    "RELEVANT_PIPELINE_EQUIVALENCE": "NOT_ESTABLISHED",
+    "HISTORICAL_FAILURE_COMPATIBILITY": "STRONGLY_SUPPORTED",
+    "HISTORICAL_V4_6_DOCUMENT_IDENTITY_ATTRIBUTION": "STRONGLY_CHALLENGED"
+  },
+  "measurement_boundary": {
+    "MEASUREMENT_SEMANTIC_ISSUE": "SUPPORTED",
+    "MEASUREMENT_TRACK": "DEFERRED_SEPARATE_TRACK"
+  },
+  "production_mutation_audit": {
+    "PRODUCT_CODE_MODIFIED": "NO",
+    "PRODUCTION_PROMPT_MODIFIED": "NO",
+    "RETRIEVAL_MODIFIED": "NO",
+    "RANKING_MODIFIED": "NO",
+    "RUNTIME_DB_MODIFIED": "NO",
+    "EMBEDDINGS_MODIFIED": "NO",
+    "GOLDEN_MODIFIED": "NO",
+    "EVALUATOR_MODIFIED": "NO",
+    "CITATION_SEMANTICS_MODIFIED": "NO"
+  },
+  "V4_8_PROTOCOL_EXECUTION": "PASS",
+  "timestamp": "2026-09-13T00:52:27",
+  "per_case_mechanism_support": {
+    "md-004": {
+      "M1_CAUSAL_SUPPORT": "SUPPORTED",
+      "M1_ISOLATED": "NO",
+      "M2_CAUSAL_SUPPORT": "SUPPORTED",
+      "M2_ISOLATED": "NO",
+      "MULTIPLE_SUFFICIENT_INTERVENTIONS": "YES",
+      "MULTIPLE_CONTRIBUTING_FACTORS": "NOT_ESTABLISHED",
+      "M3_INTERACTION_EFFECT": "NOT_ESTABLISHED",
+      "INTERACTION_PATTERN": "SUBADDITIVE_BINARY_CEILING_COMPATIBLE",
+      "M4_PHASE_LOCAL_SUPPORT": "NOT_SUPPORTED",
+      "M4_GLOBAL_STATUS": "NOT_SUPPORTED",
+      "M5_RESIDUAL_OTHER_GENERATION_SUPPORT": "NOT_SUPPORTED",
+      "SPECIFIC_M5_MECHANISM_IDENTITY": "NOT_ESTABLISHED",
+      "SECONDARY_GROUPING_STATUS": "NOT_TESTED",
+      "MECHANISM_ISOLATION_STATUS": "NOT_ESTABLISHED",
+      "primary_mechanism": "MULTIPLE_SUFFICIENT_INTERVENTIONS",
+      "secondary_mechanisms": [
+        "SUBADDITIVE_BINARY_CEILING_COMPATIBLE"
+      ],
+      "all_four_conditions_failed": false,
+      "note": "either authorized factor alone restores canonical-title naming; A and B are not separable here"
+    },
+    "md-009": {
+      "M1_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "M1_ISOLATED": "NO",
+      "M2_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "M2_ISOLATED": "NO",
+      "MULTIPLE_SUFFICIENT_INTERVENTIONS": "NO",
+      "MULTIPLE_CONTRIBUTING_FACTORS": "NOT_ESTABLISHED",
+      "M3_INTERACTION_EFFECT": "NOT_SUPPORTED",
+      "INTERACTION_PATTERN": "ADDITIVE_OR_NULL",
+      "M4_PHASE_LOCAL_SUPPORT": "SUPPORTED",
+      "M4_GLOBAL_STATUS": "NOT_ESTABLISHED",
+      "M5_RESIDUAL_OTHER_GENERATION_SUPPORT": "SUPPORTED",
+      "SPECIFIC_M5_MECHANISM_IDENTITY": "NOT_ESTABLISHED",
+      "SECONDARY_GROUPING_STATUS": "NOT_TESTED",
+      "MECHANISM_ISOLATION_STATUS": "NOT_ESTABLISHED",
+      "primary_mechanism": "M4_PHASE_LOCAL_RESIDUAL_FAILURE",
+      "secondary_mechanisms": [],
+      "all_four_conditions_failed": true,
+      "note": "both authorized framing interventions failed to restore canonical-title naming; the residual lies outside the two tested framing factors"
+    },
+    "md-015": {
+      "M1_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "M1_ISOLATED": "NO",
+      "M2_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "M2_ISOLATED": "NO",
+      "MULTIPLE_SUFFICIENT_INTERVENTIONS": "NO",
+      "MULTIPLE_CONTRIBUTING_FACTORS": "NOT_ESTABLISHED",
+      "M3_INTERACTION_EFFECT": "NOT_SUPPORTED",
+      "INTERACTION_PATTERN": "ADDITIVE_OR_NULL",
+      "M4_PHASE_LOCAL_SUPPORT": "SUPPORTED",
+      "M4_GLOBAL_STATUS": "NOT_ESTABLISHED",
+      "M5_RESIDUAL_OTHER_GENERATION_SUPPORT": "SUPPORTED",
+      "SPECIFIC_M5_MECHANISM_IDENTITY": "NOT_ESTABLISHED",
+      "SECONDARY_GROUPING_STATUS": "NOT_TESTED",
+      "MECHANISM_ISOLATION_STATUS": "NOT_ESTABLISHED",
+      "primary_mechanism": "M4_PHASE_LOCAL_RESIDUAL_FAILURE",
+      "secondary_mechanisms": [],
+      "all_four_conditions_failed": true,
+      "note": "both authorized framing interventions failed to restore canonical-title naming; the residual lies outside the two tested framing factors"
+    }
+  },
+  "grouping_observation": {
+    "definition": "answer forms a document-level referent (该文档/这份文档/…) without naming it",
+    "per_case_conditions_with_referent": {
+      "md-004": [],
+      "md-009": [],
+      "md-015": [
+        "C3"
+      ]
+    },
+    "any_signal": true
+  },
+  "additional_grouping_intervention_rule": "§37: grouping may only be REQUIRED when GROUPING_RESIDUAL_EVIDENCE = SUPPORTED; the inference 'A/B failed so grouping must be next' is rejected",
+  "prerun_simplified_grouping_rule_value": "YES",
+  "recompute": {
+    "mode": "FROZEN_EVIDENCE_REANALYSIS_NO_MODEL_CALLS",
+    "V4_8_RAW_EVIDENCE_REUSED": "YES",
+    "NEW_MODEL_CALLS": 0,
+    "NEW_COUNTERFACTUAL_RUNS": 0,
+    "NEW_RETRIEVAL_RUNS": 0,
+    "reason": "classification-closure: observable extraction, per-case/aggregate support enums, M4 local/global semantics, heterogeneity-vs-mixed semantics and the grouping residual gate were corrected to the predeclared scientific policy; raw answers, request digests and intervention audits are preserved verbatim",
+    "DERIVED_STATE_CHANGE_REASON": "aggregate support enums corrected to the frozen §21 semantics (M1/M2 SHARED_SUPPORT NOT_ESTABLISHED -> PARTIAL; M4 shared -> PARTIAL); M4 split into PHASE_LOCAL_SUPPORT / GLOBAL_STATUS; M5 renamed to M5_RESIDUAL_OTHER_GENERATION_SUPPORT with SPECIFIC_M5_MECHANISM_IDENTITY = NOT_ESTABLISHED; MIXED_GENERATION_MECHANISMS and SHARED_CAUSAL_MECHANISM downgraded YES/NO -> NOT_ESTABLISHED; HETEROGENEOUS_RESPONSE_PROFILE added; MULTIPLE_SUFFICIENT_INTERVENTIONS separated from MULTIPLE_CONTRIBUTING_FACTORS; interaction reported as SUBADDITIVE_BINARY_CEILING_COMPATIBLE with M3 = NOT_ESTABLISHED; additional grouping guidance replaced by the §36 grouping-residual evidence audit",
+    "timestamp": "2026-09-13T01:29:14"
+  },
+  "derived_analysis_refinements": {
+    "O5_DOCUMENT_SET_CORRECT": "tightened to the predeclared §34 full-set coverage (every expected document must be covered); measured to change no cell",
+    "title_matching": "the post-run whitespace-insensitive refinement is now SENSITIVITY-ONLY; the primary Y matrix is computed under the PREDECLARED policy and is unchanged",
+    "O7_ROLE_TERM_EMITTED": "measured on the residual after removing canonical titles (the title 移动通信测试文档 contains the role-like substring 测试文档); SUPPORTING_ONLY, never feeds primary Y",
+    "first_execution_Y": {
+      "md-004": {
+        "C0": 0,
+        "C1": 1,
+        "C2": 1,
+        "C3": 1
+      },
+      "md-009": {
+        "C0": 0,
+        "C1": 0,
+        "C2": 0,
+        "C3": 0
+      },
+      "md-015": {
+        "C0": 0,
+        "C1": 0,
+        "C2": 0,
+        "C3": 0
+      }
+    },
+    "Y_unchanged_by_refinements": "YES"
+  },
+  "aggregate_support_semantics": {
+    "YES": "supported in all applicable target cases with sufficient valid evidence",
+    "PARTIAL": "supported in at least one but not all applicable target cases with sufficient valid evidence",
+    "NO": "all applicable target cases have sufficient valid evidence and none support the mechanism",
+    "NOT_ESTABLISHED": "insufficient, confounded, or unresolved evidence prevents reliable aggregate classification"
+  },
+  "AGGREGATE_SUPPORT_SEMANTICS": "FROZEN",
+  "aggregate_mechanisms": {
+    "M1_SHARED_SUPPORT": "PARTIAL",
+    "M2_SHARED_SUPPORT": "PARTIAL",
+    "M3_SHARED_SUPPORT": "NOT_ESTABLISHED",
+    "M4_SHARED_PHASE_LOCAL_SUPPORT": "PARTIAL",
+    "M4_SHARED_GLOBAL_STATUS": "NOT_ESTABLISHED",
+    "M1_ISOLATED_ALL_CASES": "NO",
+    "M2_ISOLATED_ALL_CASES": "NO",
+    "MULTIPLE_SUFFICIENT_INTERVENTIONS": "PARTIAL",
+    "MULTIPLE_CONTRIBUTING_FACTORS": "NOT_ESTABLISHED",
+    "M5_RESIDUAL_OTHER_GENERATION_SUPPORT": "SUPPORTED",
+    "SPECIFIC_M5_MECHANISM_IDENTITY": "NOT_ESTABLISHED",
+    "HETEROGENEOUS_RESPONSE_PROFILE": "YES",
+    "MIXED_GENERATION_MECHANISMS": "NOT_ESTABLISHED",
+    "SHARED_CAUSAL_MECHANISM": "NOT_ESTABLISHED",
+    "GENERATION_MECHANISM_ISOLATION": "NOT_ESTABLISHED"
+  },
+  "mechanism_isolation_status": {
+    "md-004": "NOT_ESTABLISHED",
+    "md-009": "NOT_ESTABLISHED",
+    "md-015": "NOT_ESTABLISHED"
+  },
+  "heterogeneous_response_profile": "YES",
+  "grouping_residual_evidence": {
+    "definition": "grouping-specific mechanical evidence drawn ONLY from frozen V4.7/V4.8 evidence; the inference 'A/B failed so grouping must be next' is explicitly rejected",
+    "per_case": {
+      "md-004": {
+        "sent_material_count": 5,
+        "distinct_sent_document_count": 4,
+        "1_multiple_chunks_map_to_fewer_documents": true,
+        "2_serialization_is_chunk_centric": true,
+        "3_document_membership_across_chunks_is_implicit": true,
+        "4_question_requires_document_level_identity": true,
+        "5_failed_answer_tracks_evidence_units": false,
+        "6_duplicate_chunk_structure_blocks_document_synthesis": "NOT_ESTABLISHED",
+        "counter_signal_document_level_referent": []
+      },
+      "md-009": {
+        "sent_material_count": 5,
+        "distinct_sent_document_count": 2,
+        "1_multiple_chunks_map_to_fewer_documents": true,
+        "2_serialization_is_chunk_centric": true,
+        "3_document_membership_across_chunks_is_implicit": true,
+        "4_question_requires_document_level_identity": true,
+        "5_failed_answer_tracks_evidence_units": true,
+        "6_duplicate_chunk_structure_blocks_document_synthesis": "NOT_ESTABLISHED",
+        "counter_signal_document_level_referent": []
+      },
+      "md-015": {
+        "sent_material_count": 5,
+        "distinct_sent_document_count": 4,
+        "1_multiple_chunks_map_to_fewer_documents": true,
+        "2_serialization_is_chunk_centric": true,
+        "3_document_membership_across_chunks_is_implicit": true,
+        "4_question_requires_document_level_identity": true,
+        "5_failed_answer_tracks_evidence_units": true,
+        "6_duplicate_chunk_structure_blocks_document_synthesis": "NOT_ESTABLISHED",
+        "counter_signal_document_level_referent": [
+          "C3"
+        ]
+      }
+    },
+    "residual_cases": [
+      "md-009",
+      "md-015"
+    ],
+    "GROUPING_RESIDUAL_EVIDENCE_ITEMS": [
+      {
+        "item": "1_multiple_chunks_map_to_fewer_documents",
+        "scope": "residual_cases",
+        "residual_cases": [
+          "md-009",
+          "md-015"
+        ],
+        "observed": {
+          "md-009": true,
+          "md-015": true
+        },
+        "holds": true
+      },
+      {
+        "item": "2_serialization_is_chunk_centric",
+        "scope": "residual_cases",
+        "residual_cases": [
+          "md-009",
+          "md-015"
+        ],
+        "observed": {
+          "md-009": true,
+          "md-015": true
+        },
+        "holds": true
+      },
+      {
+        "item": "3_document_membership_across_chunks_is_implicit",
+        "scope": "residual_cases",
+        "residual_cases": [
+          "md-009",
+          "md-015"
+        ],
+        "observed": {
+          "md-009": true,
+          "md-015": true
+        },
+        "holds": true
+      },
+      {
+        "item": "4_question_requires_document_level_identity",
+        "scope": "residual_cases",
+        "residual_cases": [
+          "md-009",
+          "md-015"
+        ],
+        "observed": {
+          "md-009": true,
+          "md-015": true
+        },
+        "holds": true
+      },
+      {
+        "item": "5_failed_answer_tracks_evidence_units",
+        "scope": "residual_cases",
+        "residual_cases": [
+          "md-009",
+          "md-015"
+        ],
+        "observed": {
+          "md-009": true,
+          "md-015": true
+        },
+        "holds": true
+      }
+    ],
+    "structural_preconditions_supported": true,
+    "causal_blocking_established": "NOT_ESTABLISHED",
+    "counter_signal": "at least one residual-case answer forms an explicit document-level referent (该文档) without naming the document, i.e. document-level aggregation was performed but not named",
+    "GROUPING_RESIDUAL_EVIDENCE": "SUPPORTED"
+  },
+  "GROUPING_RESIDUAL_EVIDENCE": "SUPPORTED",
+  "ADDITIONAL_GROUPING_INTERVENTION_REQUIRED": "YES",
+  "next_phase_numbering_audit": {
+    "patterns": [
+      "V4.8.1",
+      "V4.9",
+      "V4.10",
+      "V4.11",
+      "V4.12",
+      "V4.13"
+    ],
+    "occurrences": {
+      "V4.8.1": [],
+      "V4.9": [
+        "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md"
+      ],
+      "V4.10": [
+        "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md"
+      ],
+      "V4.11": [
+        "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md"
+      ],
+      "V4.12": [
+        "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md"
+      ],
+      "V4.13": [
+        "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md",
+        "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md"
+      ]
+    },
+    "V4_8_1_unoccupied": true,
+    "NEXT_PHASE_NUMBERING_AUDIT": "PASS",
+    "NEXT_DIAGNOSTIC_PHASE_NUMBER": "V4.8.1"
+  },
+  "next_diagnostic_candidate": "V4.8.1_RESIDUAL_GENERATION_MECHANISM_ISOLATION",
+  "primary_residual_hypothesis": "CHUNK_TO_DOCUMENT_AGGREGATION",
+  "NEXT_DIAGNOSTIC_EXECUTION_AUTHORIZED": "NO",
+  "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+  "title_match_policy_sensitivity": {
+    "predeclared_policy_primary": [
+      "Unicode NFKC",
+      "collapse repeated whitespace to a single space",
+      "trim surrounding whitespace",
+      "drop presentation-only outer quote/book-title wrappers 《…》 (and “ ”)",
+      "no semantic alias expansion / fuzzy / embedding / LLM matching"
+    ],
+    "post_run_refinement_sensitivity_only": [
+      "whitespace-insensitive comparison (whitespace inside a title is presentation-only); this implements §32's own example 《移动通信（李兆玉）》 vs canonical 移动通信 (李兆玉)",
+      "applied after execution; verified to change none of the 12 cell outcomes"
+    ],
+    "Y_under_predeclared_policy": {
+      "md-004": {
+        "C0": 0,
+        "C1": 1,
+        "C2": 1,
+        "C3": 1
+      },
+      "md-009": {
+        "C0": 0,
+        "C1": 0,
+        "C2": 0,
+        "C3": 0
+      },
+      "md-015": {
+        "C0": 0,
+        "C1": 0,
+        "C2": 0,
+        "C3": 0
+      }
+    },
+    "Y_under_post_run_refined_policy": {
+      "md-004": {
+        "C0": 0,
+        "C1": 1,
+        "C2": 1,
+        "C3": 1
+      },
+      "md-009": {
+        "C0": 0,
+        "C1": 0,
+        "C2": 0,
+        "C3": 0
+      },
+      "md-015": {
+        "C0": 0,
+        "C1": 0,
+        "C2": 0,
+        "C3": 0
+      }
+    },
+    "REPORTED_Y_MATCHES_PREDECLARED_POLICY": "YES",
+    "PRIMARY_Y_CHANGED": "NO",
+    "PER_CASE_CLASSIFICATION_CHANGED": "NO",
+    "AGGREGATE_CLASSIFICATION_CHANGED": "NO",
+    "note": "the primary Y matrix in this artifact is computed under the PREDECLARED title-matching policy (NFKC + whitespace collapse + wrapper stripping, intra-title whitespace significant). The post-run whitespace-insensitive refinement is retained only as a sensitivity variant and changes no cell."
+  },
+  "policy_provenance_audit": {
+    "frozen_protocol_matches_artifact": true,
+    "factor_freeze_digest_stored": "8cd479b693f2313f423834c8a27decf6264aa90cfe679b0fd3da21003202d4a9",
+    "factor_freeze_digest_now": "8cd479b693f2313f423834c8a27decf6264aa90cfe679b0fd3da21003202d4a9",
+    "factor_freeze_digest_matches": true,
+    "policies": [
+      {
+        "policy_name": "FACTOR_A_POLICY",
+        "source": "artifact.factor_freeze_manifest.frozen_protocol",
+        "source_identity": "FACTOR_A_TRANSFORMATION_RULE / FACTOR_A_LABEL_REGEX / FACTOR_A_LABEL_REPLACEMENT",
+        "temporal_binding": "written by the process that issued the model calls; digest equals the pre-call dry-run digest",
+        "policy_text_or_machine_state": "regex (?m)^\\[材料(\\d+)｜ -> [证据块\\1｜ ; applied ONLY to material-header lines of the USER message; the numeric index, the ｜ separator and every other byte are preserved",
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "FACTOR_B_POLICY",
+        "source": "artifact.factor_freeze_manifest.frozen_protocol",
+        "source_identity": "FACTOR_B_INSTRUCTION_TEXT / FACTOR_B_FORBIDDEN_SEMANTICS",
+        "temporal_binding": "written by the process that issued the model calls",
+        "policy_text_or_machine_state": "当问题要求指出哪些文档、哪份文档或文档身份时，请使用上下文中已经提供的真实文档标题回答。",
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "M1_OPERATIONALIZATION",
+        "source": "artifact.m1_operationalization + frozen_protocol",
+        "source_identity": "M1_OPERATIONALIZATION",
+        "temporal_binding": "written by the process that issued the model calls",
+        "policy_text_or_machine_state": "the lexical / semantic document-identity cue introduced by the production '材料N' label, while preserving the structural numeric evidence index",
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "CONDITIONS_POLICY",
+        "source": "artifact.conditions",
+        "source_identity": "C0=A0+B0 / C1=A1+B0 / C2=A0+B1 / C3=A1+B1",
+        "temporal_binding": "written by the process that issued the model calls",
+        "policy_text_or_machine_state": {
+          "C0": "A0+B0",
+          "C1": "A1+B0",
+          "C2": "A0+B1",
+          "C3": "A1+B1"
+        },
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "TITLE_MATCH_DECLARED_POLICY",
+        "source": "artifact.title_match_normalization_policy + frozen_protocol",
+        "source_identity": "TITLE_MATCH_NORMALIZATION_POLICY",
+        "temporal_binding": "declared before the model calls; unchanged since",
+        "policy_text_or_machine_state": [
+          "Unicode NFKC",
+          "collapse repeated whitespace to a single space",
+          "trim surrounding whitespace",
+          "drop presentation-only outer quote/book-title wrappers 《…》 (and “ ”)",
+          "no semantic alias expansion / fuzzy / embedding / LLM matching"
+        ],
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "TITLE_MATCH_IMPLEMENTATION_REFINEMENT",
+        "source": "post-run implementation detail",
+        "source_identity": "TITLE_MATCH_NORMALIZATION_POLICY_REFINEMENT",
+        "temporal_binding": "NOT_PREDECLARED — introduced after the model calls",
+        "policy_text_or_machine_state": [
+          "whitespace-insensitive comparison (whitespace inside a title is presentation-only); this implements §32's own example 《移动通信（李兆玉）》 vs canonical 移动通信 (李兆玉)",
+          "applied after execution; verified to change none of the 12 cell outcomes"
+        ],
+        "strength": "NOT_ESTABLISHED",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE (mechanically verified Y-invariant; primary Y uses the predeclared policy)"
+      },
+      {
+        "policy_name": "OBSERVABLE_POLICY_O5",
+        "source": "V4.8 authorization §34 + post-run implementation tightening",
+        "source_identity": "O5_DOCUMENT_SET_CORRECT = full expected-document-set coverage",
+        "temporal_binding": "§34 rule predeclared in the authorization; implementation tightened to it post-run",
+        "policy_text_or_machine_state": "full-set coverage",
+        "strength": "PARTIAL",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE (all 12 cells unchanged)"
+      },
+      {
+        "policy_name": "OBSERVABLE_POLICY_O7",
+        "source": "post-run implementation correction",
+        "source_identity": "O7_ROLE_TERM_EMITTED measured on the title-stripped residual",
+        "temporal_binding": "NOT_PREDECLARED — introduced after the model calls",
+        "policy_text_or_machine_state": "role term measured after removing canonical titles",
+        "strength": "NOT_ESTABLISHED",
+        "criticality": "SUPPORTING_ONLY",
+        "effect_on_primary_Y": "NONE (O7 never feeds primary Y)"
+      },
+      {
+        "policy_name": "DOCUMENT_IDENTITY_RESPONSE_SUCCESS_POLICY",
+        "source": "V4.8 authorization §34",
+        "source_identity": "O1 emitted + document set correct + no invented identity",
+        "temporal_binding": "predeclared in the authorization text",
+        "policy_text_or_machine_state": "§34 success definition",
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "FACTORIAL_CONTRAST_POLICY",
+        "source": "V4.8 authorization §37",
+        "source_identity": "delta_A_given_B0 / delta_A_given_B1 / delta_B_given_A0 / delta_B_given_A1 / interaction",
+        "temporal_binding": "predeclared in the authorization text; unchanged",
+        "policy_text_or_machine_state": "factorial contrast definitions",
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "REPLICATION_POLICY",
+        "source": "artifact.factor_freeze_manifest.frozen_protocol",
+        "source_identity": "REPLICATION_POLICY",
+        "temporal_binding": "written by the process that issued the model calls",
+        "policy_text_or_machine_state": "1 valid run per cell; up to 3 control runs per case ONLY when the control phenotype is unstable; the same replication policy applies to all conditions",
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "COUNTERFACTUAL_VALIDITY_POLICY",
+        "source": "artifact.counterfactual_validity",
+        "source_identity": "authorized-intervention-diff-only + no title-salience/structural-index confound",
+        "temporal_binding": "written by the process that issued the model calls",
+        "policy_text_or_machine_state": {
+          "A1_title_salience_confounded": "NO",
+          "A1_structural_index_confounded": "NO",
+          "B1_case_invariant": "YES",
+          "B1_contains_anti_material_index_instruction": "NO",
+          "authorized_intervention_diff_only": "YES",
+          "citation_representation_confounded": "NO"
+        },
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "MECHANISM_CLASSIFICATION_POLICY",
+        "source": "predeclared 2x2 rule set",
+        "source_identity": "M1/M2/M3/M4 per-case rules",
+        "temporal_binding": "predeclared in the authorization text",
+        "policy_text_or_machine_state": "M1/M2/M3/M4 decision rules",
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "INTERACTION_POLICY",
+        "source": "V4.8 authorization §26",
+        "source_identity": "binary negative interaction at ceiling is NOT mechanistic antagonism",
+        "temporal_binding": "predeclared in the authorization text",
+        "policy_text_or_machine_state": "§26 interaction rule",
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "M4_POLICY",
+        "source": "V4.8 authorization §42 / §28",
+        "source_identity": "M4 phase-local rule + phase-local/global separation",
+        "temporal_binding": "predeclared in the authorization text",
+        "policy_text_or_machine_state": "four-fail + title-visible + valid + reproducible",
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "AGGREGATE_SUPPORT_SEMANTICS",
+        "source": "V4.8 authorization §21",
+        "source_identity": "YES / PARTIAL / NO / NOT_ESTABLISHED aggregate semantics",
+        "temporal_binding": "predeclared in the authorization text",
+        "policy_text_or_machine_state": {
+          "YES": "supported in all applicable target cases with sufficient valid evidence",
+          "PARTIAL": "supported in at least one but not all applicable target cases with sufficient valid evidence",
+          "NO": "all applicable target cases have sufficient valid evidence and none support the mechanism",
+          "NOT_ESTABLISHED": "insufficient, confounded, or unresolved evidence prevents reliable aggregate classification"
+        },
+        "strength": "STRONG",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE"
+      },
+      {
+        "policy_name": "MULTIPLE_CONTRIBUTING_FACTORS_POLICY",
+        "source": "no predeclared per-case rule found",
+        "source_identity": "MULTIPLE_CONTRIBUTING_FACTORS",
+        "temporal_binding": "NOT_PREDECLARED as a per-case rule",
+        "policy_text_or_machine_state": "not established by the predeclared policy",
+        "strength": "NOT_ESTABLISHED",
+        "criticality": "PRIMARY_CAUSAL",
+        "effect_on_primary_Y": "NONE (reported as NOT_ESTABLISHED, no post-hoc upgrade)"
+      },
+      {
+        "policy_name": "GROUPING_POLICY",
+        "source": "V4.8 authorization §35-§37 + §44",
+        "source_identity": "grouping-residual evidence gate",
+        "temporal_binding": "§44 predeclared; pre-run implementation simplified",
+        "policy_text_or_machine_state": "grouping requires grouping-specific evidence",
+        "strength": "PARTIAL",
+        "criticality": "SUPPORTING_ONLY",
+        "effect_on_primary_Y": "NONE"
+      }
+    ],
+    "PRIMARY_CAUSAL_POLICY_PROVENANCE": "PARTIAL",
+    "SUPPORTING_POLICY_PROVENANCE": "PARTIAL",
+    "PREDECLARED_POLICY_PROVENANCE_STATUS": "PARTIAL",
+    "note": "post-run code cannot prove its own pre-run policy; the temporal binding used here is the factor-freeze manifest written by the process that issued the model calls, whose digest equals the digest produced by the pre-call dry run, plus the predeclared rules stated in the V4.8 authorization text. Every post-run implementation change is enumerated and its effect on the primary Y matrix is verified to be NONE."
+  },
+  "raw_evidence_digests": {
+    "digest_algorithm": "sha256 over canonical JSON (UTF-8, sorted keys, compact separators, stable order)",
+    "V4_8_RAW_EVIDENCE_DIGEST_BEFORE": "da57114b1acc737ddeadb0355598bc3962a18f0f4ba71ba28e4975e1b31af829",
+    "V4_8_RAW_EVIDENCE_DIGEST_AFTER": "da57114b1acc737ddeadb0355598bc3962a18f0f4ba71ba28e4975e1b31af829",
+    "RAW_EVIDENCE_CHANGED": "NO",
+    "V4_8_DERIVED_STATE_DIGEST_BEFORE": "NOT_AVAILABLE_PRECLOSURE_DERIVED_DIGEST_OVERWRITTEN",
+    "V4_8_DERIVED_STATE_DIGEST_BEFORE_THIS_RUN": "e239ab48cbee2113cd72c66d0d84a8ab2b5a49e931a2ec3627a112ea2f7ce2bb",
+    "V4_8_DERIVED_STATE_DIGEST_ORIGINAL_PRECLOSURE": "NOT_AVAILABLE_PRECLOSURE_DERIVED_DIGEST_OVERWRITTEN",
+    "V4_8_DERIVED_STATE_DIGEST_AFTER": "e239ab48cbee2113cd72c66d0d84a8ab2b5a49e931a2ec3627a112ea2f7ce2bb",
+    "DERIVED_STATE_CHANGED": "YES",
+    "DERIVED_STATE_CHANGED_BASIS": "CLOSURE_CHANGE_REASON_RECORDED — the numeric pre-closure derived digest was overwritten by an intermediate idempotent re-run before the preservation guard was added, so the exact BEFORE value is not recoverable; the enumerated DERIVED_STATE_CHANGE_REASON and the pre-change artifact file SHA-256 83e1ceae3779829de1c10abcfd35a58961864fd4678097654d43c03df248d402 are the audit trail",
+    "DERIVED_STATE_IDEMPOTENCE_DIGEST_RUN1": "e239ab48cbee2113cd72c66d0d84a8ab2b5a49e931a2ec3627a112ea2f7ce2bb",
+    "DERIVED_STATE_IDEMPOTENCE_DIGEST_RUN2": "e239ab48cbee2113cd72c66d0d84a8ab2b5a49e931a2ec3627a112ea2f7ce2bb",
+    "V4_8_CLASSIFICATION_GENERATOR_IDEMPOTENT": "YES"
+  }
+}

@@ -1,0 +1,611 @@
+{
+  "artifact_type": "WS13_CITATION_FRESH_ATTRIBUTION_PREFLIGHT",
+  "checkpoint": "WS13_G0_PREFLIGHT_AND_SCOPE_BINDING",
+  "mode": "READ-ONLY PREFLIGHT + SCOPE BINDING WITH ONE CONDITIONAL GOVERNED ARTIFACT WRITE",
+  "artifact_stage": "PRE_WRITE_GATES_PASSED_PENDING_POST_WRITE_VALIDATION",
+  "workspace_role_binding": {
+    "active_v4_workspace": "E:\\Project_ws\\Local Database Q&A System\\Local Database Q&A System本地版v4",
+    "all_paths_in_this_artifact_are_relative_to": "ACTIVE V4 workspace root",
+    "v3_workspace": "FROZEN / READ-ONLY / UNTOUCHED",
+    "publish_workspace": "READ-ONLY / NO SYNC / NO GIT MUTATION",
+    "git_init_commit_push_tag_release": "NOT_PERFORMED"
+  },
+  "g0_rerun_context": {
+    "rerun_of": "WS13_G0_PREFLIGHT_AND_SCOPE_BINDING (Attempt 1)",
+    "attempt_1_outcome": "BLOCKED_PRE_WRITE",
+    "attempt_1_block_reason": "PROMPT_RUNTIME_DB_IDENTITY_REFERENCE_TYPO",
+    "attempt_1_facts": {
+      "g0_artifact_created": "NO",
+      "actual_changed_paths": [],
+      "runtime_db_drift": "NO",
+      "governed_state_drift": "NO"
+    },
+    "superseded_prompt_reference": "10698752:c6bc9b3eb63ae3e6",
+    "superseded_prompt_reference_classification": "SUPERSEDED_PROMPT_REFERENCE_TYPO",
+    "superseded_reference_note": "the superseded reference is not a historical, current, baseline or accepted checkpoint DB identity and is never used as an expected value",
+    "correct_governed_runtime_db_identity": "10698752:c6bc9b3eb63ae4e6",
+    "rerun_is_same_checkpoint_clean_rerun": "YES"
+  },
+  "source_identities": {
+    "verification_method": "raw sha256 recomputed mechanically in the ACTIVE V4 workspace before the conditional governed write",
+    "current_master": {
+      "path": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+      "expected_raw_sha256": "f29d4df55cdabfd03eba02c5cb68ea086c990c45bb92f121cc08399b82d40702",
+      "observed_raw_sha256": "f29d4df55cdabfd03eba02c5cb68ea086c990c45bb92f121cc08399b82d40702",
+      "identity_match": "YES"
+    },
+    "historical_priority_review_era_master": {
+      "raw_sha256": "2db9292d8785ce138f74d2e2e7d250ec95ec60b1cdeb2b39a08d3c8b9b804800",
+      "role": "HISTORICAL_PROVENANCE_ONLY_NOT_CURRENT_PIN"
+    },
+    "priority_machine_artifact": {
+      "path": "eval/v4_post_v4_8_2_next_workstream_priority_review.json",
+      "expected_raw_sha256": "d80053040f4bbb55f48a95050528f5f3933e408a079888ee6d962e7113752670",
+      "observed_raw_sha256": "d80053040f4bbb55f48a95050528f5f3933e408a079888ee6d962e7113752670",
+      "identity_match": "YES"
+    },
+    "priority_human_report": {
+      "path": "docs/V4_POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW.md",
+      "expected_raw_sha256": "da463797e160210e507be3980207eb3a3f69a8a5f401e288b7bef7d91879fc6d",
+      "observed_raw_sha256": "da463797e160210e507be3980207eb3a3f69a8a5f401e288b7bef7d91879fc6d",
+      "identity_match": "YES"
+    },
+    "priority_harness": {
+      "path": "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+      "expected_raw_sha256": "2ec9219df3774251b3e7e0e4a292c7d7bc16524f4d65ae73eb4598d17cca7471",
+      "observed_raw_sha256": "2ec9219df3774251b3e7e0e4a292c7d7bc16524f4d65ae73eb4598d17cca7471",
+      "identity_match": "YES",
+      "historical_r4s_close_anchor_sha256": "3bab1662bf19fa7f084f88431c0ec852ded79c51195a1f2d720edca7510983e2",
+      "historical_r4s_close_anchor_role": "HISTORICAL_ONLY_NEVER_RE_PINNED_AS_CURRENT"
+    },
+    "priority_tests": {
+      "path": "tests/test_v4_post_v4_8_2_priority_review.py",
+      "expected_raw_sha256": "e235097900581710a0958cd8bc4292295568040f318aa1bb5367e6878293d173",
+      "observed_raw_sha256": "e235097900581710a0958cd8bc4292295568040f318aa1bb5367e6878293d173",
+      "identity_match": "YES",
+      "historical_pre_prr_fc1_test_sha256": "17a79f6376ac944674f61eb98c8561e126bba787de5186d5cfce791b3ebd1474",
+      "historical_pre_prr_fc1_role": "HISTORICAL_PRE_PRR_FC1_TEST_SHA256_NOT_CURRENT_PIN"
+    },
+    "design_amendments_a001_to_a009": {
+      "001": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+        "accepted_raw_sha256": "11c7caa096637d13c62abefc1fce65b1e13978ab5a6850ed365368ffebe1ee8f",
+        "observed_raw_sha256": "11c7caa096637d13c62abefc1fce65b1e13978ab5a6850ed365368ffebe1ee8f",
+        "match": "YES"
+      },
+      "002": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json",
+        "accepted_raw_sha256": "48a6c8eca47ca969d536929f927fea7f684803c79a4b6945c51686b496a1325b",
+        "observed_raw_sha256": "48a6c8eca47ca969d536929f927fea7f684803c79a4b6945c51686b496a1325b",
+        "match": "YES"
+      },
+      "003": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json",
+        "accepted_raw_sha256": "2e8e20d411edd10bd071c0534553d2bec825a9ed3bfd684ad95d73b24607a88b",
+        "observed_raw_sha256": "2e8e20d411edd10bd071c0534553d2bec825a9ed3bfd684ad95d73b24607a88b",
+        "match": "YES"
+      },
+      "004": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_004.json",
+        "accepted_raw_sha256": "2e2da080775dc2a79b23e7b2abb80987d2f8650cf4b90eed0e5088d3d8cc6df2",
+        "observed_raw_sha256": "2e2da080775dc2a79b23e7b2abb80987d2f8650cf4b90eed0e5088d3d8cc6df2",
+        "match": "YES"
+      },
+      "005": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json",
+        "accepted_raw_sha256": "c036aba9e5f2a773c4c73219242ffc13d2fee756e4fa890769f13045377c573e",
+        "observed_raw_sha256": "c036aba9e5f2a773c4c73219242ffc13d2fee756e4fa890769f13045377c573e",
+        "match": "YES"
+      },
+      "006": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_006.json",
+        "accepted_raw_sha256": "94601281c3d02b2c07fd1e8ff7fd7d31360a14edca1de880d74be492212c7eef",
+        "observed_raw_sha256": "94601281c3d02b2c07fd1e8ff7fd7d31360a14edca1de880d74be492212c7eef",
+        "match": "YES"
+      },
+      "007": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_007.json",
+        "accepted_raw_sha256": "e9787de99ffba69e4ad4172bd65d8fecc7b4461fc740aaa24ccacc72020adae6",
+        "observed_raw_sha256": "e9787de99ffba69e4ad4172bd65d8fecc7b4461fc740aaa24ccacc72020adae6",
+        "match": "YES"
+      },
+      "008": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_008.json",
+        "accepted_raw_sha256": "4678036cbab70e2a18a97d814977fb3f02b7f9878fed18ced64c12c4b7d3fc3f",
+        "observed_raw_sha256": "4678036cbab70e2a18a97d814977fb3f02b7f9878fed18ced64c12c4b7d3fc3f",
+        "match": "YES"
+      },
+      "009": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_009.json",
+        "accepted_raw_sha256": "78a936b4922394071686137e4ed506bef33f8a1cae2b1e93b0aa166525a15410",
+        "observed_raw_sha256": "78a936b4922394071686137e4ed506bef33f8a1cae2b1e93b0aa166525a15410",
+        "match": "YES"
+      },
+      "a001_to_a009_identity_check": "ALL_MATCH_9_OF_9"
+    }
+  },
+  "prr_fc1": {
+    "checkpoint": "POST_PRIORITY_REVIEW_LIVE_MANIFEST_FUTURE_COMPATIBILITY_CORRECTION",
+    "short_id": "PRR_FC1",
+    "status": "FINAL_ACCEPTED",
+    "changed_scope": "closed Priority Review test-contract future compatibility only",
+    "current_priority_test_sha256": "e235097900581710a0958cd8bc4292295568040f318aa1bb5367e6878293d173",
+    "historical_pre_prr_fc1_test_sha256": "17a79f6376ac944674f61eb98c8561e126bba787de5186d5cfce791b3ebd1474",
+    "workspace_provenance_evidence_level": "ACCEPTED_AGENT_REPORTED_CHECKPOINT_PROVENANCE",
+    "reported_post_change_workspace_manifest_entry_count": 19664,
+    "reported_post_change_workspace_manifest_digest": "1e949f088f51cbf3c72e8fe2f0bdf93249dc8a84b79fdecd20f153856c57880a",
+    "provenance_note": "the two reported values are checkpoint-start provenance / drift guard only and are not a future permanent workspace invariant"
+  },
+  "product_state": {
+    "current_release": "v4.0.0-alpha.2",
+    "current_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+    "current_baseline_source": "eval/v4_baseline_lineage.json#/current_baseline_id",
+    "product_metrics_source": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+    "product_metrics_source_evidence": "eval/v4_6_2_hash_portability_baseline.json#/measurement_provenance/metrics_source (metrics_recomputed_in_stage = false)",
+    "canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "production_hash_contract": "sha256-path-content-v2-canonical-lf",
+    "pre_write_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "pre_write_production_hash_match": "YES",
+    "pre_write_production_hash_computation": "read-only recomputation via the governed harness replication of the frozen production hash over core/desktop/web",
+    "new_product_baseline": "NO",
+    "baseline_advancement": "NO",
+    "release_advancement": "NO",
+    "product_code_change": "NO"
+  },
+  "priority_review_state": {
+    "status": "FINAL_ACCEPTED",
+    "review_id": "POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW",
+    "closing_checkpoint": "R6_FINAL_HUMAN_REPORT_AND_GOVERNANCE_CLOSURE (R6-C final validation 247/247 PASS)",
+    "unique_leader": "WS-13",
+    "unique_leader_established_at": "P5",
+    "recommended_next_workstream": "WS-13",
+    "recommendation_support": "WEAK",
+    "support_resolution_step": "S2",
+    "ws13_readiness": "R3",
+    "ws13_next_permissible_action": "FRESH_ATTRIBUTION",
+    "frozen_priority_surface_digest": "8c6c17cec9d902b31dce3c5fc4f93f201284639dd79b5fcdea47eb6b741b1b08",
+    "frozen_priority_surface_digest_verification": "recomputed read-only from the machine artifact with the governed frozen-surface rule; matches the frozen value",
+    "priority_decision_digest": "0126975a018e65fc839b989349a1f13f276f90aeecd4cb1ad2c92bae65c59662",
+    "priority_decision_digest_verification": "read directly from the machine artifact field priority_decision_digest",
+    "comparator_rerun_performed": "NO",
+    "recommendation_support_classifier_rerun_performed": "NO",
+    "renarration_guard": "P1-P7 comparator was not executed to re-recommend a workstream; the recommendation-support classifier was not re-run to manufacture a new governance conclusion",
+    "ws13_case_state_evidence": {
+      "source": "eval/v4_post_v4_8_2_next_workstream_priority_review.json",
+      "p5_record_path": "#/criterion_records/P5/EVIDENCE_TRACE/PER_WORKSTREAM/WS-13",
+      "p5_current_action_target_case_ids": [
+        "cit-001"
+      ],
+      "p5_current_action_target_case_count": 1,
+      "p5_current_action_target_source": "FROZEN_R3_DOMAIN_ELIGIBLE_CASE_IDS",
+      "p5_rule_id": "P5_PURPOSE_SCOPED_TARGET_SET_COMPARATOR",
+      "p5_winning_value": 1,
+      "p5_output_survivors": [
+        "WS-13"
+      ],
+      "support_eval_path": "#/recommendation_support_evaluation",
+      "leader_historical_evidence_sources": [
+        "LEADER_HAS_NO_CURRENT_CONFIRMED_CASES",
+        "LEADER_HISTORICAL_OR_STALE_CASE_COUNT=1",
+        "DECISIVE_CRITERION_TARGET_DOMAIN_REASON_CODES=HISTORICAL_CITATION_EVIDENCE"
+      ],
+      "leader_latest_attribution_source": "eval/v4_6_post_routing_attribution.json#/canonical_failure_set.rows / cases (historical citation-family per-case attribution)",
+      "leader_latest_attribution_freshness": "NOT_ESTABLISHED",
+      "leader_materially_depends_on_stale_or_historical_evidence": "YES",
+      "leader_readiness_class": "R3"
+    },
+    "ws13_domain_eligible_case_ids": [
+      "cit-001"
+    ],
+    "ws13_current_confirmed_cases": [],
+    "ws13_historical_or_stale_cases": [
+      "cit-001"
+    ],
+    "ws13_domain_state_derivation": "derived from the frozen machine artifact records listed above (P5 purpose-scoped target set + support evaluation); no R3 matrix/bucket was recomputed in G0",
+    "r3_frozen_digest_consistency": {
+      "workstream_domain_digest": "b9711ac2d683cb4aa79640bb580e8d4e951fadb586eefa7b2e80e8e8aab650fc",
+      "workstream_bucket_digest": "1bb9fd79734a348c68ab26134867b1276bc67da95e9594df95b78a71c7cd7fa8",
+      "all_five_digests_unchanged": "YES",
+      "source": "eval/v4_post_v4_8_2_next_workstream_priority_review.json#/r3_frozen_state"
+    }
+  },
+  "target_scope": {
+    "primary_target_case_ids": [
+      "cit-001"
+    ],
+    "control_case_ids": [],
+    "target_source": "eval/v4_post_v4_8_2_next_workstream_priority_review.json#/criterion_records/P5/EVIDENCE_TRACE/PER_WORKSTREAM/WS-13/CURRENT_ACTION_TARGET_CASE_IDS (CURRENT_ACTION_TARGET_SOURCE = FROZEN_R3_DOMAIN_ELIGIBLE_CASE_IDS)",
+    "target_expansion_performed": "NO",
+    "target_execution_in_g0": "NOT_PERFORMED"
+  },
+  "cit_001_historical_source_trail": [
+    {
+      "relative_path": "eval/v3_final_golden.json",
+      "artifact_role": "CANONICAL_EVALUATION_GOLDEN (metric source / ground truth)",
+      "field_or_section": "#/cases[165] (0-based) / #/cases row 166 (1-based); eligible-index 124 of 144 (0-based)",
+      "historical_or_current_semantic_level": "CURRENT_CANONICAL_FROZEN_CASE_DEFINITION",
+      "relevant_value": "id=cit-001, category=citation_negative, query=\"GSM 使用 GMSK 调制，请指出出处。\", expected_route=qa, expected_refusal=false, expected_answer_facts=[\"GMSK\"], expected_entities=[\"GSM\",\"GMSK\"], notes=\"验证 citation validity + support\""
+    },
+    {
+      "relative_path": "eval/v4_attribution_evidence.json",
+      "artifact_role": "V4.3 FROZEN PRE-REMEDIATION PER-CASE EVIDENCE (pre-patch actual route)",
+      "field_or_section": "#/cases[] entry id=cit-001",
+      "historical_or_current_semantic_level": "HISTORICAL (pre-V4.4/V4.5 state)",
+      "relevant_value": "actual_route=locate, route_matches=false (expected qa); routing over-trigger via LOCATION_WORDS substring \"出处\""
+    },
+    {
+      "relative_path": "eval/v4_failure_attribution.json",
+      "artifact_role": "V4.3/V4.4 FAILURE ATTRIBUTION + PRIORITY + CASE-SET ARITHMETIC",
+      "field_or_section": "#/cases[] id=cit-001; #/priority/Priority 2; #/citation_case_sets; #/backlog_cardinality/PURE_PRODUCT_CASES",
+      "historical_or_current_semantic_level": "HISTORICAL ATTRIBUTION (superseded by later stages, retained as provenance)",
+      "relevant_value": "route actual=locate vs expected=qa (mismatch); Priority 2 = C ROUTING_FAILURE (LOCATION_WORDS over-trigger, cases cit-001/cit-007/md-004/md-019); cit-001 present in OLD_F2_V3_REPORT_CASES (144) and PURE_PRODUCT_CASES (14)"
+    },
+    {
+      "relative_path": "eval/v4_routing_remediation.json",
+      "artifact_role": "V4.5 ROUTING REMEDIATION STAGE EVIDENCE (remediation state)",
+      "field_or_section": "#/target_cases[] cit-001; #/residual_failures/cases[] cit-001; #/gate_results/G4_cit_001_over_trigger_removed",
+      "historical_or_current_semantic_level": "HISTORICAL_STAGE (accepted V4.5 remediation state)",
+      "relevant_value": "matched_location_words=[\"出处\"]; route_before=locate -> route_after=qa; G4_cit_001_over_trigger_removed=true; residual_cause=\"GENERATION residual: the answer does not restate the asserted term\"; answer_after fact 0/1 (missing GMSK)"
+    },
+    {
+      "relative_path": "eval/v4_6_post_routing_evidence.json",
+      "artifact_role": "V4.6 POST-ROUTING EVIDENCE (re-observation after routing remediation)",
+      "field_or_section": "#/cases[] id=cit-001",
+      "historical_or_current_semantic_level": "HISTORICAL (V4.6-era current-at-that-time observation)",
+      "relevant_value": "route.actual=qa / matches=true (reason DEFAULT_QA); 5 contexts; concept_in_answer=false; term GMSK in final context"
+    },
+    {
+      "relative_path": "eval/v4_6_post_routing_attribution.json",
+      "artifact_role": "V4.6 PER-CASE ATTRIBUTION (the Priority Review LEADER_LATEST_ATTRIBUTION_SOURCE: historical citation-family per-case attribution)",
+      "field_or_section": "#/cit_001_analysis; #/canonical_failure_set/rows[] cit-001",
+      "historical_or_current_semantic_level": "HISTORICAL PER-CASE ATTRIBUTION (not refreshed since V4.6; freshness NOT_ESTABLISHED)",
+      "relevant_value": "v43_historical: primary ROUTING_FAILURE (secondary none, PRODUCT_FAILURE); current-at-V4.6: primary=GENERATION_SYNTHESIS_FAILURE, secondary=[CITATION_ALIGNMENT_FAILURE]; raw_answer=\"[材料1]\" (degenerate bare citation marker); GMSK verdict=EVIDENCE_DELIVERED (in final context, not in answer); citation report f2-v4: factual 1 / cited 0 / coverage 0.0 / unsupported 1; why=\"citation-request phrasing (请指出出处) likely drives the model to emit only a citation\""
+    },
+    {
+      "relative_path": "eval/v4_6_1_embedding_identity_formalization.json",
+      "artifact_role": "V4.6.1 EMBEDDING IDENTITY STAGE EVIDENCE",
+      "field_or_section": "#/routing_invariance (cit-001 appears only as a routing-invariance sample)",
+      "historical_or_current_semantic_level": "HISTORICAL_STAGE (no case-level semantic refresh)",
+      "relevant_value": "cit-001 carries no case-level citation/product attribution change in this stage"
+    },
+    {
+      "relative_path": "eval/v4_7_document_identity_root_cause.json",
+      "artifact_role": "V4.7 DOCUMENT IDENTITY ROOT-CAUSE DIAGNOSIS",
+      "field_or_section": "case set of the artifact (target cases md-004 / md-009 / md-015 only)",
+      "historical_or_current_semantic_level": "LATER CASE-LEVEL PRODUCT EVIDENCE - NOT PRESENT FOR cit-001",
+      "relevant_value": "cit-001 ABSENT -> no later case-level Product(doc-identity) evidence for cit-001"
+    },
+    {
+      "relative_path": "eval/v4_8_generation_mechanism_isolation.json / eval/v4_8_1_residual_generation_mechanism_isolation.json / eval/v4_8_2_residual_differential_attribution.json",
+      "artifact_role": "V4.8 / V4.8.1 / V4.8.2 GENERATION DIAGNOSIS STAGES",
+      "field_or_section": "case sets of the artifacts",
+      "historical_or_current_semantic_level": "LATER CASE-LEVEL GENERATION/PRODUCT EVIDENCE - NOT PRESENT FOR cit-001",
+      "relevant_value": "cit-001 ABSENT from all three -> no later case-level Generation-family evidence and no later case-level Product refresh for cit-001"
+    },
+    {
+      "relative_path": "eval/v4_post_v4_8_2_next_workstream_priority_review.json",
+      "artifact_role": "PRIORITY REVIEW MACHINE ARTIFACT (current governance state)",
+      "field_or_section": "#/criterion_records/P5/EVIDENCE_TRACE/PER_WORKSTREAM/WS-13; #/recommendation_support_evaluation",
+      "historical_or_current_semantic_level": "CURRENT GOVERNANCE (frozen, accepted)",
+      "relevant_value": "WS-13 domain-eligible target set = [cit-001]; LEADER_HAS_NO_CURRENT_CONFIRMED_CASES; LEADER_HISTORICAL_OR_STALE_CASE_COUNT=1; DECISIVE_CRITERION_TARGET_DOMAIN_REASON_CODES=HISTORICAL_CITATION_EVIDENCE"
+    },
+    {
+      "relative_path": "docs/V4_POST_ROUTING_ATTRIBUTION.md",
+      "artifact_role": "ACCEPTED PHASE HUMAN REPORT (V4.6 attribution)",
+      "field_or_section": "§H cit-001 Deep Audit (post-routing)",
+      "historical_or_current_semantic_level": "HISTORICAL EVIDENCE PROSE (accepted phase evidence)",
+      "relevant_value": "route=qa (已修正), facts 0/1, answer=\"[材料1]\"; GMSK EVIDENCE_DELIVERED in final context; primary=GENERATION_SYNTHESIS_FAILURE, secondary=CITATION"
+    },
+    {
+      "relative_path": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+      "artifact_role": "CURRENT MASTER (navigation / governance state)",
+      "field_or_section": "§13 / §14.1 (WS-13 / V4.13 candidate) and V4.5 remediation section",
+      "historical_or_current_semantic_level": "CURRENT GOVERNANCE PROSE",
+      "relevant_value": "RECOMMENDED_NEXT_WORKSTREAM=WS-13, RECOMMENDATION_SUPPORT=WEAK, WS_13_READINESS=R3, WS_13_NEXT_PERMISSIBLE_ACTION=FRESH_ATTRIBUTION; decisive target cit-001; NEXT_WORKSTREAM_EXECUTION_AUTHORIZED=NO"
+    },
+    {
+      "relative_path": "data/eval_cache/ (runtime answer caches)",
+      "artifact_role": "RUNTIME ANSWER CACHES (generation-layer artifacts)",
+      "field_or_section": "cache files v4_baseline_*_prod{dc35c6eb|c36d61a1|7216c885|4b4e60b1}_*.json and legacy answer_6e18ee4ee9669bef.json",
+      "historical_or_current_semantic_level": "HISTORICAL RUNTIME ARTIFACTS (older production hashes; no cache exists for the current production hash 108fb167)",
+      "relevant_value": "historical cit-001 rows exist only under superseded production hashes; the current production hash has NO cached cit-001 row"
+    },
+    {
+      "relative_path": "docs/V4_FAILURE_ATTRIBUTION.md / docs/V4_ROUTING_REMEDIATION.md",
+      "artifact_role": "ACCEPTED PHASE HUMAN REPORTS (V4.3/V4.5)",
+      "field_or_section": "failure attribution priority table / routing remediation gate table",
+      "historical_or_current_semantic_level": "HISTORICAL EVIDENCE PROSE (accepted phase evidence)",
+      "relevant_value": "cit-001 recorded as Priority 2 LOCATION_WORDS over-trigger target and later as removed-from-locate routing remediation target"
+    }
+  ],
+  "cit_001_source_semantic_summary": {
+    "historical_routing_state": "WRONG_ROUTE_LOCATE (via LOCATION_WORDS substring \"出处\") - HISTORICAL",
+    "routing_remediation_state": "ROUTE_REMEDIATED_TO_QA (V4.5) - HISTORICAL_STAGE",
+    "historical_product_family_attribution": "ROUTING_FAILURE (v43_historical primary) - HISTORICAL",
+    "historical_generation_signal": "GENERATION_SYNTHESIS_FAILURE (primary at V4.6, with the degenerate answer \"[材料1]\") - HISTORICAL",
+    "historical_citation_family_attribution": "CITATION_ALIGNMENT_FAILURE (secondary at V4.6; coverage 0.0 on the degenerate answer) - HISTORICAL",
+    "later_case_level_product_evidence": "NONE (absent from V4.7 / V4.8 / V4.8.1 / V4.8.2 case sets)",
+    "later_case_level_citation_evidence": "NONE (no later governed citation attribution exists for cit-001)",
+    "priority_review_ws13_domain_membership": "DOMAIN_ELIGIBLE (reason evidence class: HISTORICAL_CITATION_EVIDENCE)",
+    "priority_review_bucket_placement": "HISTORICAL_OR_STALE_CASES (count 1; CURRENT_CONFIRMED_CASES empty)",
+    "current_confirmed_citation_cases_for_ws13": [],
+    "historical_or_stale_citation_cases_for_ws13": [
+      "cit-001"
+    ],
+    "current_citation_defect_from_history_alone": "NOT_ESTABLISHED"
+  },
+  "canonical_case_binding": {
+    "case_id": "cit-001",
+    "canonical_input_source": "eval/v3_final_golden.json",
+    "canonical_input_source_sha256_raw": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+    "canonical_input_source_sha256_canonical_lf": "872cf0604d0e31dce02ee8d9f7be02a6c63f671a443496194d9b5f056f9e1171",
+    "canonical_input_source_binding_evidence": "scripts/eval_v4_baseline.py#GOLDEN = ROOT_DIR / \"eval\" / \"v3_final_golden.json\" (the single canonical evaluation case source; no alternative candidate source exists on the canonical path) + eval/v4_6_2_hash_portability_baseline.json#/golden_identity/path",
+    "canonical_case_row_index": 165,
+    "canonical_case_row_index_basis": "0-based index into #/cases of eval/v3_final_golden.json (185 cases total)",
+    "canonical_case_eligible_index": 124,
+    "canonical_case_eligible_index_basis": "0-based index among the 144 answer-eligible cases (expected_refusal == false) actually iterated by the canonical evaluator",
+    "canonical_query": "GSM 使用 GMSK 调制，请指出出处。",
+    "canonical_history": null,
+    "canonical_history_basis": "the case carries no history member; the canonical evaluator passes case.get(\"history\") -> None",
+    "golden_source": "eval/v3_final_golden.json",
+    "golden_version": "f4-v1",
+    "golden_sha256_raw": "31a68507456714c9a4a55a2aeefaa8ac68dd567ff343b49dfe688cb7791a83fb",
+    "golden_sha256_canonical_lf": "872cf0604d0e31dce02ee8d9f7be02a6c63f671a443496194d9b5f056f9e1171",
+    "golden_cases_sha256": "0837e83333c858c6fe0229a06f9e0a3efb25505b03bab5acc3148a6b0af2ad5e",
+    "golden_locator": "#/cases[165] (id=cit-001); total_cases=185; answer_eligible=144",
+    "expected_fact_contract": {
+      "expected_answer_facts": [
+        "GMSK"
+      ],
+      "expected_route": "qa",
+      "expected_refusal": false,
+      "expected_entities": [
+        "GSM",
+        "GMSK"
+      ],
+      "category": "citation_negative",
+      "notes": "验证 citation validity + support",
+      "fact_matcher_semantics": "exact substring membership (f in answer) in scripts/eval_v4_baseline.py#_build_row"
+    },
+    "canonical_case_input_source_identified": "YES"
+  },
+  "current_pipeline_binding": {
+    "method": "static / read-only tracing of the current implementation; no model call, no production retrieval run, no monkeypatching, no prompt change",
+    "scope": {
+      "relative_path": "core/engine_v2.py + core/library_store.py + core/query_scope.py",
+      "symbols": [
+        "StructuredQAEngine.answer -> self.library.resolve_scope(scope) (engine_v2.py:366)",
+        "LibraryStore.resolve_scope (library_store.py:463)",
+        "LibraryStore.effective_allowed_ids (library_store.py:445)",
+        "core/query_scope.py QueryScope (query_scope.py:42) / ScopeResolution (query_scope.py:116) / resolve_scope (query_scope.py:136)"
+      ],
+      "role": "resolve the effective document scope before any routing or retrieval",
+      "used_by_canonical_cit_001_path": "YES",
+      "mechanical_evidence": "cit-001 observation records scope.out_of_scope=false / scope_conflict=false / confidence=high (eval/v4_6_post_routing_attribution.json#/cit_001_analysis); the call chain is the canonical engine entry"
+    },
+    "routing": {
+      "relative_path": "core/query_router.py",
+      "symbols": [
+        "QueryRouter.route (query_router.py:532)",
+        "classify_route (query_router.py:283)",
+        "is_location_intent (query_router.py:259)",
+        "RouteDecision (query_router.py:212)"
+      ],
+      "role": "deterministic rule-first routing; cit-001 has no history -> follow_up=False -> Resolution(none) -> classify_route -> qa, reason DEFAULT_QA",
+      "used_by_canonical_cit_001_path": "YES",
+      "mechanical_evidence": "engine_v2.py:178 (router.route called in prepare); cit-001 reason_code=DEFAULT_QA / route_matches=true (eval/v4_6_post_routing_attribution.json#/cit_001_analysis)"
+    },
+    "history_or_rewrite": {
+      "relative_path": "core/query_router.py",
+      "symbols": [
+        "QueryRouter._resolve_followup (query_router.py:573)",
+        "looks_like_follow_up (query_router.py:237)",
+        "normalize_history (query_router.py:137)"
+      ],
+      "role": "follow-up / rewrite resolution; NOT used for cit-001 because history=null makes the case non-follow-up (normalized_question == original query)",
+      "used_by_canonical_cit_001_path": "NO",
+      "mechanical_evidence": "cit-001 canonical_history=null; recorded resolution_status=none / reason_code=DEFAULT_QA (no +resolution suffix)"
+    },
+    "retrieval": {
+      "relative_path": "core/engine_v2.py + core/library_store.py + core/hybrid_retriever.py + core/vector_store.py + core/ollama_http.py",
+      "symbols": [
+        "StructuredQAEngine.prepare (engine_v2.py:169) -> self.library.retrieve(retrieval_query, query_vector, top_k=5, include_front_matter=True, scope) (engine_v2.py:231-237)",
+        "query embedding: self.ollama.embed(..., model=self.library.embedding_model) (engine_v2.py:224)",
+        "LibraryStore.retrieve delegate (library_store.py:410) -> HybridRetriever.retrieve (hybrid_retriever.py:74)",
+        "HybridRetriever._fuse (hybrid_retriever.py:281) / _lexical_strength (hybrid_retriever.py:324)",
+        "lexical path: LibraryStore._fts_search (library_store.py:636)",
+        "dense path: create_vector_store (vector_store.py:272) -> SQLiteVectorStore (sqlite brute force, default backend)"
+      ],
+      "role": "hybrid lexical (FTS5) + dense (bge-m3) retrieval with scope gating and deterministic selection walk",
+      "used_by_canonical_cit_001_path": "YES",
+      "mechanical_evidence": "cit-001 observed retrieval_mode=hybrid, 5 contexts, GMSK EVIDENCE_DELIVERED (eval/v4_6_post_routing_attribution.json#/cit_001_analysis; eval/v4_6_post_routing_evidence.json#/cases[] cit-001)"
+    },
+    "context_serialization": {
+      "relative_path": "core/engine_v2.py",
+      "symbols": [
+        "build_messages (engine_v2.py:662) - materials serialized as \"[材料N｜location]\" headers under the token budget; returns (messages, sent_contexts)"
+      ],
+      "role": "model-visible context serialization + system prompt + task hint; only the contexts actually sent are valid citation targets (engine_v2.py:423-427)",
+      "used_by_canonical_cit_001_path": "YES",
+      "mechanical_evidence": "engine_v2.py:423 (messages, sent_contexts = build_messages(...)); the observed degenerate answer \"[材料1]\" is expressed in exactly this material numbering"
+    },
+    "generation": {
+      "relative_path": "core/engine_v2.py + core/ollama_http.py + core/config.py",
+      "symbols": [
+        "StructuredQAEngine.answer -> self.ollama.chat(messages, model=self.answer_model) (engine_v2.py:445) / chat_stream (engine_v2.py:438)",
+        "OllamaClient (core/ollama_http.py)",
+        "config.ANSWER_MODEL (config.py:31, default qwen2.5:7b)"
+      ],
+      "role": "answer-model invocation with the serialized model-visible context",
+      "used_by_canonical_cit_001_path": "YES",
+      "mechanical_evidence": "canonical evaluator calls engine.answer(case[\"query\"], history=case.get(\"history\")) (scripts/eval_v4_baseline.py:652)"
+    },
+    "citation": {
+      "relative_path": "core/engine_v2.py + core/library_store.py + core/citation_completion.py",
+      "symbols": [
+        "ChunkRecord.citation (library_store.py:257)",
+        "normalize_citations (engine_v2.py:717)",
+        "citation_support_verified (engine_v2.py:758)",
+        "renumber_citations (engine_v2.py:785)",
+        "complete_citations (core/citation_completion.py:133)"
+      ],
+      "role": "citation generation / rendering / extraction; normalize + entity-support check + renumbering are on the canonical path. citation_completion.complete_citations is NOT referenced by any production or canonical module (only by tests/test_citation_completion.py) and is therefore NOT on the canonical cit-001 path",
+      "used_by_canonical_cit_001_path": "PARTIAL (normalize / support-check / renumber YES; citation_completion NO)",
+      "mechanical_evidence": "engine_v2.py:452-457 and 476-477; workspace-wide reference scan: complete_citations( appears only in core/citation_completion.py and tests/test_citation_completion.py"
+    },
+    "citation_verifier": {
+      "relative_path": "core/citation_verifier.py",
+      "symbols": [
+        "CITATION_VERIFIER_VERSION = \"f2-v4\" (citation_verifier.py:38)",
+        "DeterministicCitationVerifier.verify (citation_verifier.py:418)",
+        "CitationReport.to_dict (citation_verifier.py:299)"
+      ],
+      "role": "deterministic claim-level citation verification (supported/unsupported/uncertain, invalid citation, scope violation, coverage)",
+      "used_by_canonical_cit_001_path": "YES",
+      "mechanical_evidence": "engine_v2.py:485-491 (verifier invoked on the pre-renumber answer with evidence texts); the report is returned as AnswerResultV2.citation_report and recorded per case by the canonical evaluator"
+    },
+    "fact_matcher": {
+      "relative_path": "scripts/eval_v4_baseline.py + scripts/eval_refusal.py",
+      "symbols": [
+        "_build_row (eval_v4_baseline.py:490) - present = [f for f in facts if f in answer]",
+        "classify_answer_state (eval_refusal.py:77) / is_answered / is_refused"
+      ],
+      "role": "evaluator-side expected-fact matching (exact substring) and answer-state classification",
+      "used_by_canonical_cit_001_path": "YES",
+      "mechanical_evidence": "cit-001 historical rows record fact_present=0 / fact_total=1 (missing GMSK) and answer_state=ANSWERED"
+    },
+    "evaluator": {
+      "relative_path": "scripts/eval_v4_baseline.py",
+      "symbols": [
+        "GOLDEN (line 61) / eligibility filter (line 627) / engine.answer loop (lines 639-659) / compute_metrics (line 291) / build_artifact (line 514) / main (line 607)",
+        "EVALUATOR_VERSION = \"v4-baseline-v1\""
+      ],
+      "role": "canonical evaluator (Full-144 full run; cache-resume based; --report-only recomputes metrics without calling the model)",
+      "used_by_canonical_cit_001_path": "YES",
+      "mechanical_evidence": "eval/v4_6_2_hash_portability_baseline.json#/evaluator_identity (evaluator_version v4-baseline-v1, citation_verifier_version f2-v4, answer_model qwen2.5:7b, library_path data\\library\\documents.sqlite3)"
+    }
+  },
+  "runtime_identities": {
+    "answer_model": "qwen2.5:7b",
+    "answer_model_evidence": "core/config.py#ANSWER_MODEL default \"qwen2.5:7b\"; eval/v4_6_2_hash_portability_baseline.json#/evaluator_identity/answer_model",
+    "embedding_model": "bge-m3",
+    "embedding_model_evidence": "core/config.py#EMBEDDING_MODEL default \"bge-m3\"; read-only runtime DB metadata embedding_model=\"bge-m3\"",
+    "embedding_dimension": 1024,
+    "embedding_dimension_evidence": "core/library_store.py#EMBEDDING_PROFILES[\"bge-m3\"].dimension=1024; read-only runtime DB metadata embedding_dimension=\"1024\"; startup identity validation validate_embedding_identity (library_store.py:126)",
+    "vector_backend": "sqlite",
+    "vector_backend_evidence": "core/config.py#VECTOR_BACKEND default \"sqlite\"; core/vector_store.py#create_vector_store dispatches sqlite -> SQLiteVectorStore; qdrant is opt-in only with no silent fallback; runtime DB journal_mode=delete",
+    "runtime_db_path": "data/library/documents.sqlite3",
+    "runtime_db_path_evidence": "scripts/eval_v4_baseline.py#--library default ROOT_DIR/data/library/documents.sqlite3 (line 609); eval/v4_6_2_hash_portability_baseline.json#/evaluator_identity/library_path",
+    "runtime_db_size": 10698752,
+    "runtime_db_schema_version": 5,
+    "runtime_db_documents": 6,
+    "runtime_db_chunks": 637,
+    "runtime_db_inspection_mode": "STRICT_READ_ONLY (sqlite3 URI mode=ro; no VACUUM / checkpoint / migration / insert / update / delete / reindex / journal write / WAL write)",
+    "expected_governed_runtime_db_identity": "10698752:c6bc9b3eb63ae4e6",
+    "runtime_db_identity_before": "10698752:c6bc9b3eb63ae4e6",
+    "runtime_db_full_sha256_before": "c6bc9b3eb63ae4e6d96caf859a2b0c5f2f1e5a5b6f438e81aa0bbc3cf4084c97",
+    "runtime_db_identity_before_matches_expected": "YES",
+    "superseded_reference_note": "\"10698752:c6bc9b3eb63ae3e6\" is a SUPERSEDED_PROMPT_REFERENCE_TYPO and is never treated as an expected / historical / baseline / current identity"
+  },
+  "canonical_replay_feasibility": {
+    "canonical_narrow_replay_technically_possible": "YES",
+    "canonical_entrypoint": "StructuredQAEngine.answer (core/engine_v2.py:356) as invoked by the canonical evaluator scripts/eval_v4_baseline.py:652 (eligible-case loop); no dedicated narrow-replay CLI exists today - the canonical evaluator is cache-resume based over the 144 eligible cases",
+    "how_cit_001_input_could_later_be_supplied": "case object from eval/v3_final_golden.json#/cases[165] (query=\"GSM 使用 GMSK 调制，请指出出处。\", history=None) with library=data/library/documents.sqlite3; no prompt change and no production semantic change is required to supply the input",
+    "model_call_required_later": "YES",
+    "retrieval_required_later": "YES",
+    "cache_write_risk": "YES",
+    "cache_write_risk_detail": "scripts/eval_v4_baseline.py#save_cache (line 261) writes data/eval_cache/v4_baseline_{lib8}_{cases16}_prod{hash8}_..._f2-v4.json after each newly generated row; no cache file exists for the current production hash 108fb167 (observed cache set covers only superseded hashes: dc35c6eb / c36d61a1 / 7216c885 / 4b4e60b1 and the legacy 6e18ee4ee9669bef cache)",
+    "workspace_mutation_risk": "YES",
+    "workspace_mutation_risk_detail": "(a) engine telemetry append: core/engine_v2.py#write_telemetry (line 63) appends data/logs/qa_log.jsonl on every answer() call while config.TELEMETRY_ENABLED (default on, config.py:38) - the file is an existing governed workspace path; (b) eval cache creation as above; (c) the evaluator's own artifact write (args.out, line 679) - redirectable or avoidable in a purpose-built governed observation path",
+    "runtime_db_mutation_risk": "NO",
+    "runtime_db_mutation_risk_detail": "LibraryStore opens the runtime DB strictly read-only (library_store.py:567-574, sqlite3 URI mode=ro); the dense backend only reads; no query-path code writes the DB",
+    "evaluator_or_verifier_writes_governed_state": "YES (cache + artifact writes by the evaluator runner; the citation verifier itself performs no file IO)",
+    "observation_capture_possible_without_known_mandatory_semantic_mutation": "YES",
+    "observation_capture_evidence": "all required observation fields are already exposed as return values / data objects of unmodified canonical functions: RouteDecision (routing), PreparedAnswer.contexts / SearchResult (retrieval), build_messages returns (messages, sent_contexts) (model-visible context), the raw answer string (model output), AnswerResultV2.answer + citation_report (citation output + verifier output). Precedent read-only tracers exist: scripts/trace_v4_retrieval.py (engine.library + store.retrieve read-only trace) and scripts/eval_v4_routing_remediation.py (engine.prepare()-based scope/OOS regression without generation)",
+    "limiting_facts": [
+      "no dedicated narrow-replay entrypoint exists; the canonical evaluator is full-144 cache-resume oriented",
+      "a canonical replay generation step requires the local Ollama services (embedding bge-m3 + answer qwen2.5:7b) to be available at G4 time - service availability is runtime-dependent",
+      "generation layer is stochastic (no fixed seed), so a future replay produces a NEW sample, not a byte-identical reproduction of historical rows; historical cit-001 rows came from superseded production hashes",
+      "the default telemetry append makes a naive engine.answer() call a governed workspace mutation; a future governed replay must explicitly decide the telemetry/appended-path question (authorized write or documented QA_TELEMETRY=0 configuration) - this is a governance decision, not a semantic mutation",
+      "the cache write path must be governed (either authorized, redirected, or replaced by an in-memory observer design in G2)"
+    ],
+    "g0_implementation_statement": "G0 does not implement an observer, does not freeze the observer design and does not execute any replay"
+  },
+  "observation_equivalence_preflight": {
+    "design_path_identified": "YES",
+    "design_path_status_basis": "the canonical path is identified (scope -> routing -> history-not-applicable -> retrieval -> context serialization -> generation -> citation -> verifier -> evaluator) and every required observation field (retrieval result, model-visible context, raw answer, citation output, verifier output) is already exposed as a return value or data object of an unmodified canonical function; therefore at least one observation/instrumentation design path exists that does not obviously change production semantics (external read-only capture around the canonical calls)",
+    "design_path_is_not_equivalence_proof": "final observer equivalence contract (G1), observer implementation and tests (G2) and the full observation-equivalence proof remain OUT_OF_SCOPE_IN_G0 and are not established here",
+    "known_structural_barrier": "NONE_IDENTIFIED",
+    "structural_barrier_scan": {
+      "canonical_production_path_identifiable": "YES",
+      "required_observation_points_locatable": "YES",
+      "future_observer_requires_known_production_semantic_mutation": "NO"
+    },
+    "forbidden_observer_dependencies": [
+      "diagnostic prompt injection",
+      "temporary citation instruction",
+      "retrieval override",
+      "synthetic citation completion",
+      "postprocessor replacement",
+      "fallback path not used by canonical production"
+    ],
+    "limiting_facts": [
+      "capturing the raw answer requires an actual (stochastic) model invocation, so the observation step itself needs a future governed execution authorization",
+      "the telemetry append side effect must be explicitly governed at observation time (authorized write or documented configuration), as it is not a semantic mutation but is a governed-state write",
+      "G0 provides architecture facts only; the equivalence contract details (exact capture points, data schema, non-interference proof) are G1/G2 obligations"
+    ],
+    "observation_equivalence_design_path_not_established_does_not_apply": "the design path was established (YES), so no automatic BLOCKED_OBSERVATION_EQUIVALENCE_STRUCTURAL_BARRIER is formed"
+  },
+  "scientific_boundary": {
+    "current_citation_status": "NOT_EVALUATED_IN_G0",
+    "scientific_attribution_performed": "NO",
+    "not_concluded_in_g0": [
+      "CURRENT_CONFIRMED_CITATION_DEFECT",
+      "NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+      "citation root cause",
+      "remediation target",
+      "remediation recommendation"
+    ],
+    "scope_statement": "this artifact binds scope, sources, identities and feasibility only; it contains no citation scientific conclusion"
+  },
+  "execution_counts": {
+    "model_calls": 0,
+    "production_retrieval_runs": 0,
+    "counterfactual_runs": 0,
+    "full_144_runs": 0,
+    "priority_comparator_executions": 0,
+    "recommendation_support_classifier_executions": 0,
+    "pre_write_unit_tests_executed": 247,
+    "runtime_db_inspections": 1,
+    "runtime_db_inspection_mode": "READ_ONLY_IDENTITY_AND_METADATA_ONLY"
+  },
+  "integrity": {
+    "pre_g0_workspace_manifest_entry_count": 19664,
+    "pre_g0_workspace_manifest_entry_count_basis": "recomputed from the live ACTIVE workspace with the governed harness workspace_manifest() rule (deterministic across two calls)",
+    "pre_g0_workspace_manifest_digest": "1e949f088f51cbf3c72e8fe2f0bdf93249dc8a84b79fdecd20f153856c57880a",
+    "pre_g0_workspace_manifest_rule": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "matches_accepted_prr_fc1_reported_workspace_state": "YES",
+    "pre_write_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "runtime_db_identity_before": "10698752:c6bc9b3eb63ae4e6",
+    "pre_write_unit_tests": "PASS 247 / OK (python -B -m unittest tests.test_v4_post_v4_8_2_priority_review -v)",
+    "total_test_methods_ast": 247,
+    "unique_test_method_names_ast": 247,
+    "authorized_write_paths": [
+      "eval/v4_ws13_citation_fresh_attribution_preflight.json"
+    ],
+    "expected_changed_paths": [
+      "eval/v4_ws13_citation_fresh_attribution_preflight.json"
+    ],
+    "authorized_write_path_count": 1,
+    "post_write_integrity_verification": "EXTERNAL_TO_THIS_ARTIFACT"
+  },
+  "authorization_after_g0": {
+    "g1_execution_authorized": "NO",
+    "next_workstream_execution_authorized": "NO",
+    "next_diagnostic_execution_authorized": "NO",
+    "product_remediation_authorized": "NO",
+    "citation_remediation_authorized": "NO",
+    "next_stage_automatically_authorized": "NO"
+  },
+  "blockers": []
+}

@@ -1,0 +1,633 @@
+{
+  "artifact_type": "ANALYSIS_DESIGN_AMENDMENT",
+  "amendment_id": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_006",
+  "review_id": "POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW",
+  "checkpoint": "R1F_PRIORITY_COMPARATOR_OPERATIONALIZATION_AMENDMENT",
+  "mode": "GOVERNANCE / DESIGN-AMENDMENT ONLY",
+  "amendment_status": "ACTIVE_FOR_FUTURE_GOVERNED_R4_PRIORITY_DECISION_UNDER_AMENDMENTS_001_002_003_004_005_006",
+  "AMENDMENT_IS_PROSPECTIVE": "YES",
+  "RETROACTIVE_REWRITE": "NO",
+  "is_product_baseline": false,
+  "is_product_remediation": false,
+  "is_scientific_experiment": false,
+  "new_evidence_added": false,
+  "MODEL_CALLS": 0,
+  "PRODUCTION_RETRIEVAL_RUNS": 0,
+  "COUNTERFACTUAL_RUNS": 0,
+  "FULL_144_RUNS": 0,
+  "AMENDMENT_REASON": "LEXICOGRAPHIC_PRIORITY_CRITERIA_REQUIRE_MECHANICAL_COMPARATORS_AND_FAIL_CLOSED_HALT_RULES",
+  "PARENT_PREFLIGHT_PATH": "eval/v4_post_v4_8_2_priority_review_preflight.json",
+  "PARENT_PREFLIGHT_SHA256": "c24ebc94b504ccb9e3ff492616ebe1f29461ec1c5d7c8e632fd5c2c2031f4bf2",
+  "PARENT_AMENDMENT_ID": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_005",
+  "PARENT_AMENDMENT_PATH": "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json",
+  "PARENT_AMENDMENT_SHA256": "c036aba9e5f2a773c4c73219242ffc13d2fee756e4fa890769f13045377c573e",
+  "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "417e912f46c16ec6e1f8a27fc927b3bf0b9213402fa85faab22a72995a40f59e",
+  "defect_record": {
+    "defect_class": "LEXICOGRAPHIC_PRIORITY_CRITERIA_NOT_MECHANICALLY_OPERATIONALIZED_AND_NOT_FAIL_CLOSED_AT_R4",
+    "defect_impact_scope": "R4_PRIORITY_DECISION_COMPARATOR_SEMANTICS_ONLY",
+    "governance_verdict_being_resolved": {
+      "R3_FINAL_ACCEPTED": "YES",
+      "P3_READINESS": "FULL_TIE",
+      "R4_PRIORITY_DECISION": "NOT_EXECUTABLE_PENDING_COMPARATOR_OPERATIONALIZATION",
+      "READY_FOR_R4": "NO"
+    },
+    "ambiguous_field_locations": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/priority_decision_rules (the frozen P1-P7 lexicographic order names the criteria but defines no mechanical per-criterion comparator, no survivor/elimination mechanics and no halt rule for a criterion that cannot be mechanically evaluated)",
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/priority_lexicographic_rules (same frozen order duplicated; still single-criterion-name granularity only)",
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/priority_decision_rules/missing_cross_workstream_fresh_attribution_outcome (the special outcome FRESH_CROSS_WORKSTREAM_ATTRIBUTION_ONLY is named but its preconditions and anti-abuse guards are not frozen)",
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/workstream_matrix_schema/required_fields/TARGET_SET_MECHANICALLY_DEFINABLE (purpose-free legacy target-set field must never serve as the P5 comparator surface)",
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/quality_gate_link_rules (DIRECT_LINK is frozen as a link type but no P4 counting/weighting prohibition is frozen, so link counts or gate-specific gap magnitudes could be over-read as priority weights)"
+    ],
+    "resolution_in_this_amendment": "freeze (1) the global lexicographic survivor algorithm with its comparator-status vocabulary and its fail-closed halt rules, (2) the mechanical comparator semantics of P1 to P7 one by one, (3) the prohibition set that forbids every non-mechanical weighting device explicitly, and (4) the exact semantics and anti-abuse guards of the FRESH_CROSS_WORKSTREAM_ATTRIBUTION_ONLY special outcome; the frozen P1-P7 order, the candidate workstreams, the case state, the domains, the buckets, the dependency graph, the readiness results, the NEXT_PERMISSIBLE_ACTION mapping, the quality-gate link types, the recommendation support rules and the authorization boundary are retained verbatim",
+    "reinterpretation_of_this_reason": "PROHIBITED"
+  },
+  "amendment_scope": {
+    "adds_prospectively": [
+      "the global lexicographic algorithm PRIORITY_METHOD = LEXICOGRAPHIC_ONLY with the frozen survivor/elimination mechanics",
+      "the CRITERION status vocabulary EVALUATED / TIED / NOT_MECHANICALLY_OPERATIONALIZED / CONFLICT",
+      "the per-criterion required output record (CRITERION_ID / INPUT_SURVIVORS / COMPARATOR_STATUS / PER_WORKSTREAM_VALUE / WINNING_VALUE / OUTPUT_SURVIVORS / ELIMINATED_WORKSTREAMS / EVIDENCE_TRACE)",
+      "the P1 mechanical eligibility comparator and its NOT_AUTHORIZED-is-not-INELIGIBLE rule",
+      "the P2 action-scoped hard-precedence comparator over the accepted action-scoped dependency graph",
+      "the P3 readiness comparator over the frozen readiness order and the accepted readiness classes",
+      "the P4 binary HAS_DIRECT_LINK comparator over currently failing quality gates",
+      "the P5 purpose-scoped current-action target-set comparator",
+      "the P6 frozen latest-attribution-freshness ordinal comparator",
+      "the P7 SCOPE_ISOLATABLE-only cross-subsystem confound comparator",
+      "the fail-closed halt rule for a non-operationalized or conflicting first criterion",
+      "the frozen FRESH_CROSS_WORKSTREAM_ATTRIBUTION_ONLY special-outcome semantics with its proof obligation and anti-abuse guards"
+    ],
+    "supersedes_prospectively": [
+      "the reading of the frozen P1-P7 criterion names as self-executing comparators (the names and the order are retained verbatim; only the mechanical comparator semantics are added by this amendment)",
+      "the reading of the missing_cross_workstream_fresh_attribution_outcome value as an unconditional fallback (it becomes usable only under the frozen proof obligation)"
+    ],
+    "does_not_change": [
+      "P1-P7 lexicographic order (priority_decision_rules / priority_lexicographic_rules)",
+      "the frozen candidate workstreams (WS-09 / WS-10 / WS-11 / WS-12 / WS-13)",
+      "the 42-case multi-axis case state (Amendment 001)",
+      "workstream domains and domain eligibility (Amendment 004)",
+      "the A003 bucket projection core",
+      "the accepted action-scoped dependency graph semantics (Amendment 005), including APPLIES_TO_ACTION",
+      "the accepted readiness R4-R0 definitions, the fail-closed C1-C6 classification resolution order and the accepted READINESS_CLASS results",
+      "the NEXT_PERMISSIBLE_ACTION mapping (Amendment 005)",
+      "quality-gate link types (quality_gate_link_rules.allowed_link_types)",
+      "recommendation support enum and rules (recommendation_support_rules)",
+      "the authorization boundary",
+      "the frozen tie outcome and the gap-size-must-not-be-used-as-priority-weight rule"
+    ],
+    "priority_order_changed": "NO",
+    "comparator_semantics_changed": "YES (additions only)",
+    "original_snapshot_immutable": "YES",
+    "in_place_edit_of_parent_snapshot_or_amendment_001_002_003_004_005": "PROHIBITED",
+    "existing_r3_harness_and_tests": "UNCHANGED / NOT AUTHORIZED TO MODIFY IN THIS CHECKPOINT",
+    "r4_must_use_effective_design": "YES"
+  },
+  "accepted_state_reference": {
+    "accepted_checkpoint_state": "R3_FINAL_ACCEPTED = YES",
+    "R0": "PASS",
+    "R1": "PASS",
+    "A001": "ACCEPTED",
+    "A002": "ACCEPTED",
+    "A003": "ACCEPTED",
+    "A004": "ACCEPTED",
+    "A005": "ACCEPTED",
+    "R2_MULTI_AXIS_CASE_STATE": "FULLY_ACCEPTED",
+    "R3_DOMAIN": "FULLY_ACCEPTED",
+    "R3_BUCKET": "FULLY_ACCEPTED",
+    "R3_ACTION_SCOPED_DEPENDENCY": "FULLY_ACCEPTED",
+    "R3_READINESS": "FULLY_ACCEPTED",
+    "accepted_workstream_attribution": {
+      "WS-09": "R3 / FRESH_ATTRIBUTION",
+      "WS-10": "R3 / FRESH_ATTRIBUTION",
+      "WS-11": "R3 / FRESH_ATTRIBUTION",
+      "WS-12": "R3 / FRESH_ATTRIBUTION",
+      "WS-13": "R3 / FRESH_ATTRIBUTION"
+    },
+    "P3_READINESS_STATE": "FULL_TIE",
+    "R3_ANALYTICAL_DIGESTS": {
+      "MULTI_AXIS_CASE_STATE_DIGEST": "17edfe2ce93f30e3370f80d2d32ce7e18ac637bfdcd223be1947f23987ba61b2",
+      "WORKSTREAM_DOMAIN_DIGEST": "b9711ac2d683cb4aa79640bb580e8d4e951fadb586eefa7b2e80e8e8aab650fc",
+      "WORKSTREAM_BUCKET_DIGEST": "1bb9fd79734a348c68ab26134867b1276bc67da95e9594df95b78a71c7cd7fa8",
+      "ACTION_SCOPED_DEPENDENCY_GRAPH_DIGEST": "162a5806ad6c32afe154653b98d0e6eecab87d75236a1583639cdecf9a51dc4d",
+      "WORKSTREAM_READINESS_DIGEST": "41747bf3b0b59248ed091b9f4ef3042cb26d2db1ad424a555224ab4ad4448e5d"
+    },
+    "r3_harness_path": "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+    "r3_harness_sha256": "43a9ce33c8b1db78604f4db8e18a33ffa4109346a35613562aa7092fdd8e39be",
+    "r3_test_path": "tests/test_v4_post_v4_8_2_priority_review.py",
+    "r3_test_sha256": "a8ab4973cadc91628c1926941e1dcbc1b6d5b47b6168828625b29f0be42a1d5c",
+    "note": "this block is a read-only reference to the accepted state; this amendment consumes it and recomputes nothing from it. In particular the accepted R3 full tie at P3 is a freeze, not a ranking."
+  },
+  "priority_comparator_operationalization": {
+    "schema_version": "v4-post-v4-8-2-priority-review-priority-comparator-operationalization-v1",
+    "PROSPECTIVE_ONLY": "YES",
+    "APPLIES_TO": "the future governed R4 priority decision; no priority ranking, no top workstream, no recommended next workstream and no recommendation support is computed in this checkpoint",
+    "candidate_workstreams_are_the_candidate_set": "YES",
+    "GLOBAL_LEXICOGRAPHIC_ALGORITHM": {
+      "rule_id": "PRIORITY_LEXICOGRAPHIC_SURVIVOR_ELIMINATION",
+      "PRIORITY_METHOD": "LEXICOGRAPHIC_ONLY",
+      "INITIAL_SURVIVORS": "all frozen candidate workstreams",
+      "CRITERION_SEQUENCE": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7"
+      ],
+      "CRITERION_SEQUENCE_IS_STRICT": "YES",
+      "PROCESSING": "process the criteria in the frozen sequence; each criterion consumes the survivor set produced by the previous criterion",
+      "PER_CRITERION_REQUIRED_OUTPUT": [
+        "CRITERION_ID",
+        "INPUT_SURVIVORS",
+        "COMPARATOR_STATUS",
+        "PER_WORKSTREAM_VALUE",
+        "WINNING_VALUE",
+        "OUTPUT_SURVIVORS",
+        "ELIMINATED_WORKSTREAMS",
+        "EVIDENCE_TRACE"
+      ],
+      "COMPARATOR_STATUS_VOCABULARY": [
+        "EVALUATED",
+        "TIED",
+        "NOT_MECHANICALLY_OPERATIONALIZED",
+        "CONFLICT"
+      ],
+      "EVALUATED": "a mechanical comparator distinguishes at least one survivor; retain only the best-valued survivors (all survivors that share the winning value)",
+      "TIED": "all mechanically comparable survivors share an equal value; continue to the next criterion",
+      "NOT_MECHANICALLY_OPERATIONALIZED": "STOP the ranking immediately",
+      "CONFLICT": "STOP the ranking immediately",
+      "UNIQUE_LEADER_RULE": "if the survivor count is exactly 1, UNIQUE_LEADER = that workstream and the remaining P criteria are not evaluated",
+      "UNIQUE_LEADER_IS_THE_ONLY_LEADER_CONSTRUCTION_MECHANISM": "YES",
+      "EVIDENCE_TRACE_REQUIREMENT": "every per-workstream value and every elimination must carry a mechanical, frozen-evidence traceable basis; a value without a trace is NOT_ESTABLISHED and a criterion resting on it is NOT_MECHANICALLY_OPERATIONALIZED",
+      "NO_INTERMEDIATE_SCORE_IS_PRODUCED": "YES",
+      "RANKING_EXECUTED_IN_THIS_CHECKPOINT": "NO"
+    },
+    "NO_HIGHER_CRITERION_MAY_BE_SKIPPED": {
+      "rule_id": "UNRESOLVED_HIGHER_CRITERION_MAY_NOT_BE_SKIPPED",
+      "UNRESOLVED_HIGHER_CRITERION_MAY_BE_SKIPPED": "NO",
+      "RULE": "if any Pn is NOT_MECHANICALLY_OPERATIONALIZED or CONFLICT, the criteria P(n+1)..P7 may never be used to manufacture a leader",
+      "COROLLARY": "a lower criterion cannot resolve an unresolved higher-priority criterion",
+      "MANUAL_TIE_BREAK_ALLOWED": "NO",
+      "SUBJECTIVE_INTERPRETATION_ALLOWED": "NO",
+      "WEIGHTED_SCORING_ALLOWED": "NO",
+      "PERCENTAGE_WEIGHTS_ALLOWED": "NO",
+      "GAP_SIZE_WEIGHTING_ALLOWED": "NO",
+      "FORBIDDEN_TRANSFORMATION": "no later conversion into percentage weights such as quality impact / effort / risk percentages"
+    },
+    "P1_PARENT_GOVERNANCE_ELIGIBILITY": {
+      "rule_id": "P1_PARENT_GOVERNANCE_ELIGIBILITY_COMPARATOR",
+      "CRITERION_ID": "P1",
+      "CRITERION_QUESTION": "is the current candidate workstream still a governance-admissible candidate?",
+      "MECHANICAL_VALUE_DOMAIN": [
+        "ELIGIBLE",
+        "INELIGIBLE"
+      ],
+      "ELIGIBLE_REQUIRES_ALL_OF": [
+        "the workstream is inside the frozen candidate set",
+        "PARENT_GOVERNANCE_BLOCKER = NO",
+        "no parent evidence disproves the workstream as a whole"
+      ],
+      "NOT_AUTHORIZED_IS_NOT_INELIGIBLE": {
+        "CURRENT_AUTHORIZATION_STATUS = NOT_AUTHORIZED": "does not equal INELIGIBLE",
+        "basis": "recommendation != execution authorization"
+      },
+      "BLOCKED_SPECIFIC_PATH_SCOPE_RULE": {
+        "a specific causal or remediation path being blocked": "does not automatically make the whole workstream INELIGIBLE",
+        "INELIGIBLE_REQUIRES": "parent evidence that explicitly blocks every lawful next action of that workstream"
+      },
+      "COMPARATOR": "ELIGIBLE > INELIGIBLE",
+      "STATUS_RULES": {
+        "EVALUATED": "at least one survivor is INELIGIBLE (or at least one is ELIGIBLE while another is INELIGIBLE)",
+        "TIED": "all survivors share the same P1 value",
+        "NOT_MECHANICALLY_OPERATIONALIZED": "a survivor's PARENT_GOVERNANCE_BLOCKER or whole-workstream disproval status is not mechanically derivable from frozen evidence"
+      },
+      "FORBIDDEN": [
+        "treating NOT_AUTHORIZED as INELIGIBLE",
+        "treating a blocked specific path as whole-workstream ineligibility",
+        "introducing any new governance blocker not carried by frozen parent evidence"
+      ],
+      "EVIDENCE_TRACE_REQUIRED": [
+        "freeze status of the candidate set",
+        "PARENT_GOVERNANCE_BLOCKER value and its parent evidence location"
+      ]
+    },
+    "P2_DEPENDENCY_PRECEDENCE": {
+      "rule_id": "P2_DEPENDENCY_PRECEDENCE_COMPARATOR",
+      "CRITERION_ID": "P2",
+      "GRAPH_SOURCE": "the already accepted action-scoped dependency graph (Amendment 005 semantics)",
+      "HARD_PRECEDENCE_EDGE_TYPES": [
+        "MUST_PRECEDE",
+        "BLOCKED_BY"
+      ],
+      "SOFT_EDGE_TYPES_THAT_MUST_NOT_ELIMINATE_A_SURVIVOR": [
+        "CAN_PRECEDE",
+        "INDEPENDENT",
+        "NOT_ESTABLISHED"
+      ],
+      "EDGE_APPLICABILITY_REQUIREMENT": "an edge may be used only when its APPLIES_TO_ACTION covers the compared workstreams' current NEXT_PERMISSIBLE_ACTION, or is ALL_ACTIONS",
+      "DIRECTION_SEMANTICS": {
+        "FROM=A, TO=B, EDGE_TYPE=MUST_PRECEDE": "A precedes B",
+        "FROM=A, TO=B, EDGE_TYPE=BLOCKED_BY": "A is blocked by B, therefore B precedes A"
+      },
+      "ACTION_SCOPE_DISCIPLINE": {
+        "SEPARATE_EXECUTION scoped edge used for FRESH_ATTRIBUTION": "FORBIDDEN",
+        "EDGE_WITHOUT_ESTABLISHED_ACTION_SCOPE": "blocks no action and establishes no hard precedence"
+      },
+      "MECHANICAL_RULE": {
+        "no applicable hard precedence inside the survivor subgraph": "P2 = TIED",
+        "acyclic applicable hard precedence exists": "retain the workstreams that are not deferred by another surviving workstream (eliminate every survivor that has an applicable hard-precedence predecessor inside the survivor set)",
+        "cycle or contradictory hard precedence": "P2 = CONFLICT; STOP"
+      },
+      "COMPARATOR": "deferred survivor is eliminated; non-deferred survivor is retained",
+      "STATUS_RULES": {
+        "EVALUATED": "at least one survivor is eliminated by applicable hard precedence",
+        "TIED": "no survivor is eliminated",
+        "CONFLICT": "a cycle or contradictory hard precedence"
+      },
+      "FORBIDDEN": [
+        "using CAN_PRECEDE / INDEPENDENT / NOT_ESTABLISHED to eliminate a survivor",
+        "using a SEPARATE_EXECUTION scoped edge for FRESH_ATTRIBUTION",
+        "inferring an edge that the accepted action-scoped graph does not carry",
+        "re-resolving edge action scope in this or any later checkpoint"
+      ],
+      "EVIDENCE_TRACE_REQUIRED": [
+        "edge identity (FROM / TO / EDGE_TYPE)",
+        "APPLIES_TO_ACTION value",
+        "the accepted action-scoped dependency graph digest"
+      ]
+    },
+    "P3_READINESS": {
+      "rule_id": "P3_READINESS_COMPARATOR",
+      "CRITERION_ID": "P3",
+      "FROZEN_READINESS_ORDER": "R4 > R3 > R2 > R1 > R0",
+      "CONSUMES_ONLY": "the already accepted READINESS_CLASS per workstream",
+      "RECLASSIFICATION_ALLOWED": "NO",
+      "C1_C6_REEVALUATION_ALLOWED": "NO",
+      "CURRENT_ACCEPTED_STATE": {
+        "WS-09": "R3",
+        "WS-10": "R3",
+        "WS-11": "R3",
+        "WS-12": "R3",
+        "WS-13": "R3"
+      },
+      "COMPARATOR": "retain only the survivors holding the highest readiness class among the input survivors",
+      "STATUS_RULES": {
+        "EVALUATED": "the survivor readiness classes are not all equal",
+        "TIED": "all survivor readiness classes are equal",
+        "NOT_MECHANICALLY_OPERATIONALIZED": "a survivor readiness class is missing or not single-valued"
+      },
+      "ACTUAL_RANKING_PERFORMED_IN_THIS_CHECKPOINT": "NO",
+      "NOTE": "this amendment freezes the comparator only; it does not and may not derive any actual P3 survivor set"
+    },
+    "P4_DIRECT_LINKAGE_TO_CURRENTLY_FAILING_QUALITY_GATES": {
+      "rule_id": "P4_DIRECT_LINK_COMPARATOR",
+      "CRITERION_ID": "P4",
+      "CURRENTLY_FAILING_GATES": [
+        "CASE_EXACT",
+        "FACT_RECALL",
+        "CITATION_COVERAGE"
+      ],
+      "MECHANICAL_VALUE_DOMAIN": [
+        "YES",
+        "NO"
+      ],
+      "YES_IFF": "the workstream carries at least one link with LINK_TYPE = DIRECT_LINK whose FAILING_GATE is inside the currently failing-gate set and which carries a lawful evidence trace",
+      "COMPARATOR": "YES > NO",
+      "STATUS_RULES": {
+        "EVALUATED": "at least one survivor has HAS_DIRECT_LINK = NO (or values differ across survivors)",
+        "TIED": "all survivors have HAS_DIRECT_LINK = YES",
+        "NOT_MECHANICALLY_OPERATIONALIZED": "a survivor's direct-link status is not mechanically derivable from frozen evidence"
+      },
+      "FORBIDDEN": [
+        "counting the number of DIRECT_LINKs",
+        "CASE_EXACT direct link > FACT_RECALL direct link",
+        "CITATION_COVERAGE direct link > other direct links",
+        "quality-gap magnitude weighting",
+        "0.3343 > 0.0708 > 0.0465 priority inference",
+        "INDIRECT_LINK treated as DIRECT_LINK",
+        "DEPENDENCY_LINK treated as DIRECT_LINK",
+        "a link without an evidence trace"
+      ],
+      "MULTIPLE_YES_OUTCOME": "P4 = TIED; do not count links"
+    },
+    "P5_NARROW_MECHANICALLY_DEFINABLE_TARGET_SET": {
+      "rule_id": "P5_PURPOSE_SCOPED_TARGET_SET_COMPARATOR",
+      "CRITERION_ID": "P5",
+      "COMPARED_SURFACE": "the purpose-scoped target of the CURRENT NEXT PERMISSIBLE ACTION of each survivor",
+      "LEGACY_PURPOSE_FREE_FIELD_USE": {
+        "field": "TARGET_SET_MECHANICALLY_DEFINABLE",
+        "may_be_used_as_the_P5_comparator": "NO"
+      },
+      "REQUIRED_DERIVATION_PER_SURVIVOR": [
+        "CURRENT_ACTION_TARGET_SET_DEFINABLE = YES / NO / NOT_ESTABLISHED",
+        "CURRENT_ACTION_TARGET_CASE_IDS = [...]",
+        "CURRENT_ACTION_TARGET_CASE_COUNT = integer / NOT_ESTABLISHED",
+        "CURRENT_ACTION_TARGET_SOURCE = <mechanical source>"
+      ],
+      "FRESH_ATTRIBUTION_TARGET_SOURCE_RULE": {
+        "applies_to": "READINESS = R3 and NEXT_PERMISSIBLE_ACTION = FRESH_ATTRIBUTION",
+        "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE = YES": "and the accepted R3 derivation explicitly adopts the stable DOMAIN_ELIGIBLE_CASE_IDS as the fresh-attribution target -> CURRENT_ACTION_TARGET_CASE_IDS = DOMAIN_ELIGIBLE_CASE_IDS",
+        "status": "this is the lawful target-set source of the current R3"
+      },
+      "OTHER_ACTION_TARGET_SOURCE_RULE": {
+        "applies_to": [
+          "SEPARATE_EXECUTION",
+          "EVIDENCE_RECONCILIATION"
+        ],
+        "comparable_only_when": "an explicit mechanically traceable case-ID target exists",
+        "DOMAIN_ELIGIBLE_CASE_COUNT_AS_UNIVERSAL_TARGET_SIZE_PROXY": "FORBIDDEN"
+      },
+      "COMPARATOR": "lower positive integer wins (smaller positive target-case count = NARROWER = better at P5)",
+      "SCOPE": "applies when all surviving workstreams share CURRENT_ACTION_TARGET_SET_DEFINABLE = YES and a common target unit (case IDs)",
+      "STATUS_RULES": {
+        "EVALUATED": "comparable target-case counts distinguish at least one survivor",
+        "TIED": "all comparable target-case counts are equal",
+        "NOT_MECHANICALLY_OPERATIONALIZED": "the target units do not agree, or target IDs cannot be mechanically formed, or at least one survivor target cardinality is NOT_ESTABLISHED"
+      },
+      "HALT_RULE": "NOT_MECHANICALLY_OPERATIONALIZED -> STOP; never proceed to P6",
+      "FORBIDDEN": [
+        "effort estimate",
+        "implementation size estimate",
+        "code-line estimate",
+        "subjective complexity",
+        "estimated benefit"
+      ]
+    },
+    "P6_LATEST_STATE_EVIDENCE_FRESHNESS": {
+      "rule_id": "P6_ATTRIBUTION_FRESHNESS_COMPARATOR",
+      "CRITERION_ID": "P6",
+      "CONSUMES_ONLY": "the LATEST_ATTRIBUTION_FRESHNESS mechanically derived by the accepted workstream matrix",
+      "CASE_EVIDENCE_REINTERPRETATION_ALLOWED": "NO",
+      "FROZEN_FRESHNESS_ORDINAL": [
+        "CURRENT",
+        "PARTIALLY_CURRENT",
+        "HISTORICAL_STALE",
+        "NOT_ESTABLISHED",
+        "NO_DOMAIN_CASES"
+      ],
+      "CURRENT_MEANING": "current-state compatible workstream evidence already exists",
+      "NOT_ESTABLISHED_RULE": "NOT_ESTABLISHED is never automatically upgraded to HISTORICAL_STALE",
+      "PRODUCTION_HASH_RULE": "a production hash difference alone still does not constitute freshness",
+      "COMPARATOR": "retain only the survivors at the best (earliest) ordinal position among the input survivors",
+      "STATUS_RULES": {
+        "EVALUATED": "the survivor freshness ordinals are not all equal",
+        "TIED": "all survivor freshness ordinals are equal",
+        "NOT_MECHANICALLY_OPERATIONALIZED": "a survivor cannot obtain a single-valued traceable LATEST_ATTRIBUTION_FRESHNESS"
+      },
+      "HALT_RULE": "NOT_MECHANICALLY_OPERATIONALIZED -> STOP; no subjective aggregation",
+      "FROZEN_FRESHNESS_ORDINAL_IS_TOTAL": "YES"
+    },
+    "P7_LOWER_CROSS_SUBSYSTEM_CONFOUND": {
+      "rule_id": "P7_SCOPE_ISOLATABLE_COMPARATOR",
+      "CRITERION_ID": "P7",
+      "NEW_CONFOUND_SCORE_ESTABLISHED": "NO",
+      "ONLY_COMPARATOR_SURFACE": "SCOPE_ISOLATABLE",
+      "MECHANICAL_VALUE_DOMAIN": [
+        "YES",
+        "NO"
+      ],
+      "MEANING": "single primary subsystem mechanically identifiable -> lower cross-subsystem confound",
+      "COMPARATOR": "YES > NO",
+      "STATUS_RULES": {
+        "EVALUATED": "at least one survivor has SCOPE_ISOLATABLE = NO (or values differ)",
+        "TIED": "SCOPE_ISOLATABLE is identical across all survivors"
+      },
+      "FORBIDDEN": [
+        "counting historical root-cause families",
+        "penalizing Product + Measurement coexistence by itself",
+        "inventing confound percentages",
+        "inventing subsystem weights",
+        "manual judgement that one subsystem is cleaner"
+      ]
+    },
+    "FINAL_TIE": {
+      "rule_id": "FINAL_TIE_OUTCOME",
+      "CONDITION": "SURVIVOR_COUNT > 1 after P7 completes",
+      "RECOMMENDED_NEXT_WORKSTREAM": "NOT_ESTABLISHED",
+      "basis": "the frozen tie outcome of priority_decision_rules.tie_outcome",
+      "MANUAL_SELECTION_OF_ONE_SURVIVOR": "FORBIDDEN"
+    },
+    "HALT_MECHANICS": {
+      "rule_id": "NOT_MECHANICALLY_OPERATIONALIZED_HALT",
+      "TRIGGER": "the first higher criterion Pn whose COMPARATOR_STATUS is NOT_MECHANICALLY_OPERATIONALIZED",
+      "PRIORITY_DECISION_HALTED_AT": "Pn",
+      "LOWER_CRITERIA_EVALUATED": "NO",
+      "COMPARATOR_GUESSING": "FORBIDDEN",
+      "DEFAULT_OUTCOME": "RECOMMENDED_NEXT_WORKSTREAM = NOT_ESTABLISHED",
+      "EXCEPTION": "only when the section-16 special outcome is strictly satisfied",
+      "CONFLICT_BEHAVIOR": "COMPARATOR_STATUS = CONFLICT also stops the ranking immediately"
+    },
+    "FRESH_CROSS_WORKSTREAM_ATTRIBUTION_ONLY": {
+      "rule_id": "FRESH_CROSS_WORKSTREAM_ATTRIBUTION_ONLY_SPECIAL_OUTCOME",
+      "PRECONDITIONS_ALL_OF": [
+        "no unique workstream leader has been mechanically established",
+        "all surviving workstreams have READINESS_CLASS = R3",
+        "all surviving workstreams have NEXT_PERMISSIBLE_ACTION = FRESH_ATTRIBUTION",
+        "no applicable hard dependency resolves their ordering",
+        "the first unresolved / non-operationalized distinction requires comparative current-state attribution across multiple surviving workstreams before a unique workstream can be mechanically selected"
+      ],
+      "VALUE": "FRESH_CROSS_WORKSTREAM_ATTRIBUTION_ONLY",
+      "SEMANTICS": "perform cross-workstream attribution",
+      "SEMANTICS_IS_NOT": [
+        "execute V4.9 / V4.10 / V4.11 / V4.12 / V4.13"
+      ],
+      "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+      "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+      "PROOF_OBLIGATION": "the artifact must mechanically demonstrate that the missing comparative fresh attribution is precisely what prevents a unique leader",
+      "ANTI_ABUSE": {
+        "usable_when_the_proof_obligation_cannot_be_mechanically_established": "NO",
+        "fallback_when_not_provable": "NOT_ESTABLISHED",
+        "conditional_downgrade_path": "a not-mechanically-operationalized or conflicting criterion may only fall back to NOT_ESTABLISHED unless the proof obligation is strictly satisfied",
+        "special_outcome_is_never_a_universal_stand_in_for_P5_P6_P7": "YES"
+      },
+      "RECOMMENDATION_SUPPORT": "NOT_ESTABLISHED",
+      "RECOMMENDATION_SUPPORT_BASIS": "there is no unique workstream leader",
+      "STRONG_WORKSTREAM_RECOMMENDATION_PACKAGING": "FORBIDDEN",
+      "SPECIAL_OUTCOME_SEMANTICS_FROZEN": "YES"
+    },
+    "RECOMMENDATION_SUPPORT_RULES_UNCHANGED": {
+      "rule_id": "RECOMMENDATION_SUPPORT_RULES_UNCHANGED",
+      "ENUM_UNCHANGED": [
+        "STRONG",
+        "MODERATE",
+        "WEAK",
+        "NOT_ESTABLISHED"
+      ],
+      "EVALUATION_GATE": "workstream recommendation support is evaluated only after a unique workstream leader has been mechanically established",
+      "NO_UNIQUE_LEADER": "RECOMMENDATION_SUPPORT = NOT_ESTABLISHED",
+      "SPECIAL_OUTCOME_SUPPORT": "RECOMMENDATION_SUPPORT = NOT_ESTABLISHED (no unique workstream leader)",
+      "RECOMMENDATION_IS_NOT_AUTHORIZATION": "YES"
+    },
+    "NO_ACTUAL_PRIORITY_DECISION_IN_THIS_CHECKPOINT": {
+      "rule_id": "R1F_NO_PRIORITY_COMPUTATION",
+      "P1_SURVIVOR_SET": "NOT_EVALUATED_IN_R1F",
+      "P2_SURVIVOR_SET": "NOT_EVALUATED_IN_R1F",
+      "P3_SURVIVOR_SET": "NOT_EVALUATED_IN_R1F",
+      "P4_SURVIVOR_SET": "NOT_EVALUATED_IN_R1F",
+      "P5_WINNER": "NOT_EVALUATED_IN_R1F",
+      "P6_WINNER": "NOT_EVALUATED_IN_R1F",
+      "P7_WINNER": "NOT_EVALUATED_IN_R1F",
+      "TOP_WORKSTREAM": "NOT_EVALUATED_IN_R1F",
+      "RECOMMENDED_NEXT_WORKSTREAM": "NOT_EVALUATED_IN_R1F",
+      "RECOMMENDATION_SUPPORT": "NOT_EVALUATED_IN_R1F",
+      "CONSTRAINT": "this checkpoint freezes comparators only; it computes no survivor set, no winner and no recommendation"
+    }
+  },
+  "effective_analysis_design_definition": {
+    "EFFECTIVE_ANALYSIS_DESIGN": "R1 original frozen design + Amendment 001 + Amendment 002 + Amendment 003 + Amendment 004 + Amendment 005 + Amendment 006",
+    "payload_construction": "payload = {key: parent_preflight[key] for key in parent_preflight.analysis_design_digest_spec.extracted_keys}; payload['case_classification_schema'] = amendment_001.amended_case_state_schema; payload['effective_analysis_design_additions'] = amendment_001.effective_analysis_design_additions; payload['workstream_axis_mapping'] = amendment_002.workstream_axis_mapping; payload['workstream_bucket_projection'] = amendment_003.workstream_bucket_projection; payload['workstream_bucket_projection']['DOMAIN_ELIGIBILITY_BEFORE_PROJECTION'] = amendment_004.workstream_domain_eligibility; payload['readiness_resolution_and_action_scoped_dependency'] = amendment_005.readiness_resolution_and_action_scoped_dependency; payload['priority_comparator_operationalization'] = amendment_006.priority_comparator_operationalization; digest = sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8'))",
+    "canonicalization": "UTF-8; json.dumps(ensure_ascii=False, sort_keys=True, separators=(',', ':'))",
+    "excluded_content": [
+      "timestamps",
+      "machine paths",
+      "file SHA metadata",
+      "manifest digests"
+    ],
+    "superseded_payload_keys": [],
+    "added_payload_keys": [
+      "priority_comparator_operationalization"
+    ],
+    "overridden_payload_key_paths": [],
+    "prior_payload_keys_preserved_verbatim": "YES",
+    "payload_keys_added_by_this_amendment": 1,
+    "parent_effective_digest_computable_from_this_amendments_declared_construction": "YES (the construction is cumulative and each parent amendment contributes exactly the key it declares; removing the last added key reproduces the parent digest)",
+    "parent_payload_keys_from_amendment_001": [
+      "case_classification_schema (superseded by amended_case_state_schema)",
+      "effective_analysis_design_additions"
+    ],
+    "parent_payload_keys_from_amendment_002": [
+      "workstream_axis_mapping"
+    ],
+    "parent_payload_keys_from_amendment_003": [
+      "workstream_bucket_projection"
+    ],
+    "parent_payload_keys_from_amendment_004": [
+      "workstream_domain_eligibility (value-level override at workstream_bucket_projection.DOMAIN_ELIGIBILITY_BEFORE_PROJECTION)"
+    ],
+    "parent_payload_keys_from_amendment_005": [
+      "readiness_resolution_and_action_scoped_dependency"
+    ],
+    "recomputation_inputs": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json (frozen parent)",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_004.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_006.json (this artifact)"
+    ],
+    "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "417e912f46c16ec6e1f8a27fc927b3bf0b9213402fa85faab22a72995a40f59e",
+    "recomputation_must_reproduce_embedded_digest": "YES"
+  },
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "f414338697f8840ca05e4c4e134c2edfff4e9d19116585ff9c5b7e922813907d",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DETERMINISTIC": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DIFFERS_FROM_PARENT": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_RECOMPUTATION_1": "f414338697f8840ca05e4c4e134c2edfff4e9d19116585ff9c5b7e922813907d",
+  "integrity": {
+    "PRE_CHANGE_WORKSPACE_MANIFEST_DIGEST": "da99257972a3de1843369affcb9376c60e78f24593e7bd3fb7d1ce9573213f60",
+    "PRE_CHANGE_WORKSPACE_MANIFEST_ENTRY_COUNT": 19658,
+    "PRE_CHANGE_WORKSPACE_MANIFEST_RULE": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "PRE_CHANGE_PRODUCTION_HASH": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "EXPECTED_POST_CHANGE_DELTA": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_006.json (added)"
+    ],
+    "ORIGINAL_PREFLIGHT_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_001_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_002_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_003_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_004_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_005_EXPECTED_UNCHANGED": "YES",
+    "R3_HARNESS_EXPECTED_UNCHANGED": "YES",
+    "R3_TEST_EXPECTED_UNCHANGED": "YES",
+    "MASTER_EXPECTED_UNCHANGED": "YES",
+    "PARENT_ARTIFACTS_EXPECTED_UNCHANGED": "YES",
+    "PRODUCT_BASELINE_GOLDEN_EVALUATOR_RUNTIME_DB_EXPECTED_UNCHANGED": "YES",
+    "POST_MANIFEST_MINUS_A006_MUST_EQUAL_PRE_MANIFEST": "YES",
+    "POST_WRITE_VERIFICATION_LOCATION": "R1F final console (this checkpoint)",
+    "no_scratch_files_written": "YES",
+    "cache_writes": 0,
+    "computation_mode": "IN_MEMORY_ONLY",
+    "AMENDMENT_FINALIZATION": "the amendment is created on the single authorized path; the two effective-design digest fields are then recomputed from this very artifact and finalized in place on the same single authorized path; no other path is written at any time and no temporary or scratch file is created"
+  },
+  "authorization_boundary": {
+    "ACTIVE_V4_WRITE_PATHS_THIS_CHECKPOINT": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_006.json"
+    ],
+    "OTHER_ACTIVE_V4_WRITES_AUTHORIZED": "NO",
+    "V3_WORKSPACE": "FROZEN / READ-ONLY / UNTOUCHED",
+    "PUBLISH_WORKSPACE": "READ-ONLY / NO SYNC / NO WRITE / NO GIT MUTATION",
+    "GIT_INIT_PERFORMED": "NO",
+    "PRIORITY_RANKING_PERFORMED_HERE": "NO",
+    "PRIORITY_TIER_COMPUTED_HERE": "NO",
+    "RECOMMENDATION_EVALUATED_HERE": "NO",
+    "R3_RERUN_PERFORMED_HERE": "NO",
+    "R3_HARNESS_MODIFIED": "NO",
+    "R3_TEST_MODIFIED": "NO",
+    "R3_ANALYTICAL_DIGESTS_MODIFIED": "NO",
+    "DEPENDENCY_GRAPH_RECOMPUTED_HERE": "NO",
+    "WORKSTREAM_READINESS_RECOMPUTED_HERE": "NO",
+    "HARNESS_MODIFICATION_AUTHORIZED": "NO",
+    "TEST_MODIFICATION_AUTHORIZED": "NO",
+    "MACHINE_RESULT_CREATED": "NO",
+    "HUMAN_REPORT_CREATED": "NO",
+    "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+    "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+    "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO"
+  },
+  "r1f_execution_declarations": {
+    "MODEL_CALLS": 0,
+    "PRODUCTION_RETRIEVAL_RUNS": 0,
+    "COUNTERFACTUAL_RUNS": 0,
+    "FULL_144_RUNS": 0,
+    "PYTEST_RUNS": 0,
+    "RUFF_RUNS": 0,
+    "PY_COMPILE_OR_COMPILEALL_RUNS": 0,
+    "BYTECODE_OR_PYCACHE_WRITES": 0,
+    "CACHE_WRITES": 0,
+    "TEMPORARY_FILES_CREATED": 0,
+    "SCRATCH_FILES_WRITTEN": 0,
+    "IDENTITY_SHA256_VERIFIED_PRE_WRITE": 18,
+    "PRIORITY_COMPUTATION_PERFORMED": "NO",
+    "RECOMMENDATION_COMPUTED": "NO"
+  },
+  "r1f_declarations": {
+    "PRIORITY_METHOD": "LEXICOGRAPHIC_ONLY",
+    "P1_COMPARATOR_FROZEN": "YES",
+    "P2_COMPARATOR_FROZEN": "YES",
+    "P3_COMPARATOR_FROZEN": "YES",
+    "P4_COMPARATOR_FROZEN": "YES",
+    "P5_COMPARATOR_FROZEN": "YES",
+    "P6_COMPARATOR_FROZEN": "YES",
+    "P7_COMPARATOR_FROZEN": "YES",
+    "P4_DIRECT_LINK_COUNT_USED": "NO",
+    "QUALITY_GAP_MAGNITUDE_USED_AS_WEIGHT": "NO",
+    "P5_CURRENT_ACTION_TARGET_PURPOSE_SCOPED": "YES",
+    "P6_FRESHNESS_ORDINAL_FROZEN": "YES",
+    "P7_CONFUND_SCORE_INVENTED": "NO",
+    "HIGHER_UNOPERATIONALIZED_CRITERION_MAY_BE_SKIPPED": "NO",
+    "MANUAL_TIE_BREAK_ALLOWED": "NO",
+    "FRESH_CROSS_WORKSTREAM_ATTRIBUTION_ONLY_SEMANTICS_FROZEN": "YES",
+    "P1_NOT_AUTHORIZED_TREATED_AS_INELIGIBLE": "NO",
+    "P2_SOFT_EDGE_ELIMINATES_SURVIVOR": "NO",
+    "P2_SEPARATE_EXECUTION_EDGE_USED_FOR_FRESH_ATTRIBUTION": "NO",
+    "P3_RECLASSIFICATION_PERFORMED": "NO",
+    "P5_NOT_ESTABLISHED_CARDINALITY_SKIPPED_TO_P6": "NO",
+    "P6_FRESHNESS_REINTERPRETED_FROM_CASE_EVIDENCE": "NO",
+    "RECOMMENDATION_SUPPORT_ON_SPECIAL_OUTCOME": "NOT_ESTABLISHED",
+    "R3_ANALYTICAL_STATE_MODIFIED": "NO",
+    "R3_HARNESS_MODIFIED": "NO",
+    "R3_TEST_MODIFIED": "NO"
+  },
+  "next_authorized_checkpoint": "R4_PRIORITY_DECISION_UNDER_AMENDMENTS_001_002_003_004_005_006",
+  "READY_FOR_R4": "YES",
+  "READY_FOR_R4_BASIS": "the governance blocking condition (the frozen P1-P7 lexicographic criteria had no mechanical comparator semantics and no fail-closed halt rule) is prospectively closed by this amendment; R4 remains subject to governance acceptance of Amendment 006 and is not automatically authorized",
+  "PRIORITY_DECISION": "NOT_EVALUATED_IN_R1F",
+  "RECOMMENDED_NEXT_WORKSTREAM": "NOT_EVALUATED_IN_R1F",
+  "RECOMMENDATION_SUPPORT": "NOT_EVALUATED_IN_R1F",
+  "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+  "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+  "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO",
+  "STOP": "YES",
+  "WAIT_FOR_GOVERNANCE_REVIEWER": "YES",
+  "timestamp": "2026-09-15T13:41:28"
+}

@@ -19,6 +19,7 @@ htmlcov/
 Thumbs.db
 
 # Private source documents and generated knowledge bases
+private_inputs/
 *.pdf
 !tests/fixtures/documents/sample.pdf
 data/pdf/**
@@ -35,6 +36,7 @@ build/
 dist/
 release/
 runtime/
+current_local_candidate.json
 
 # Reranker sidecar runtime (Phase B): isolated env and model cache
 reranker_service/.venv/

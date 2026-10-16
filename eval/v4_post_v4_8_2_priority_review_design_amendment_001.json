@@ -1,0 +1,413 @@
+{
+  "artifact_type": "ANALYSIS_DESIGN_AMENDMENT",
+  "amendment_id": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_001",
+  "review_id": "POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW",
+  "checkpoint": "R1A_MULTI_AXIS_CASE_STATE_DESIGN_AMENDMENT",
+  "mode": "GOVERNANCE / DESIGN-AMENDMENT ONLY",
+  "amendment_status": "ACTIVE_FOR_FUTURE_GOVERNED_R2_REDERIVATION_UNDER_AMENDMENT_001",
+  "AMENDMENT_IS_PROSPECTIVE": "YES",
+  "RETROACTIVE_REWRITE": "NO",
+  "is_product_baseline": false,
+  "is_product_remediation": false,
+  "is_scientific_experiment": false,
+  "new_evidence_added": false,
+  "MODEL_CALLS": 0,
+  "PRODUCTION_RETRIEVAL_RUNS": 0,
+  "COUNTERFACTUAL_RUNS": 0,
+  "FULL_144_RUNS": 0,
+  "AMENDMENT_REASON": "MUTUALLY_EXCLUSIVE_CASE_CLASSIFICATION_CANNOT_REPRESENT_ORTHOGONAL_PRODUCT_MEASUREMENT_CITATION_AND_BLOCKED_PATH_STATES",
+  "PARENT_PREFLIGHT_PATH": "eval/v4_post_v4_8_2_priority_review_preflight.json",
+  "PARENT_PREFLIGHT_SHA256": "c24ebc94b504ccb9e3ff492616ebe1f29461ec1c5d7c8e632fd5c2c2031f4bf2",
+  "PARENT_ANALYSIS_DESIGN_DIGEST": "e1507ccad455251c3866d1d0a7f8c2861cd1b136d621288aa0e3fa8ad9cb5d53",
+  "defect_record": {
+    "defect_class": "MUTUALLY_EXCLUSIVE_SINGLE_CASE_CLASSIFICATION",
+    "defect_impact_scope": "CASE_STATE_AND_ATTRIBUTION_FRESHNESS_REPRESENTATION_ONLY",
+    "frozen_case_classification_schema_location": "eval/v4_post_v4_8_2_priority_review_preflight.json#/case_classification_schema",
+    "coexisting_states_that_must_be_representable": [
+      "PRODUCT DEFECT",
+      "MEASUREMENT ISSUE",
+      "BLOCKED DOCUMENT-IDENTITY PATH"
+    ],
+    "governed_evidence_example": {
+      "cases": [
+        "md-004",
+        "md-009",
+        "md-015"
+      ],
+      "product_root_cause_family": {
+        "value": "GENERATION",
+        "evidence": [
+          "eval/v4_7_document_identity_root_cause.json#/per_case/md-004/root_cause_family = GENERATION",
+          "eval/v4_7_document_identity_root_cause.json#/per_case/md-009/root_cause_family = GENERATION",
+          "eval/v4_7_document_identity_root_cause.json#/per_case/md-015/root_cause_family = GENERATION",
+          "eval/v4_7_document_identity_root_cause.json#/current_pipeline_root_cause = GENERATION"
+        ]
+      },
+      "measurement_semantic_issue": {
+        "md-004": "SUPPORTED",
+        "md-009": "SUPPORTED",
+        "md-015": "NOT_OBSERVED",
+        "evidence": [
+          "eval/v4_7_document_identity_root_cause.json#/measurement_semantic_issue_per_case"
+        ]
+      },
+      "document_identity_path": {
+        "state": "BLOCKED / DISPROVEN",
+        "evidence": [
+          "eval/v4_7_document_identity_root_cause.json#/current_pipeline_document_identity_loss = DISPROVEN",
+          "eval/v4_7_document_identity_root_cause.json#/document_identity_root_cause = NOT_PROVEN",
+          "eval/v4_post_v4_8_2_priority_review_preflight.json#/frozen_parent_scientific_state/DOCUMENT_IDENTITY_REMEDIATION = BLOCKED / NOT AUTHORIZED"
+        ]
+      },
+      "why_single_classification_is_insufficient": "the three states above are independent facts about one case: a mutually exclusive single classification can only record one of them, so governed evidence would be lossy or mis-stated"
+    },
+    "stale_trigger_defect": {
+      "defect_class": "PRODUCTION_HASH_DIFFERENCE_ALONE_TAKEN_AS_STALENESS_TRIGGER",
+      "resolution": "staleness requires a RELEVANT later Product or diagnostic change on a case / subsystem basis"
+    },
+    "reinterpretation_of_this_reason": "PROHIBITED"
+  },
+  "amendment_scope": {
+    "supersedes_prospectively": [
+      "case_classification_schema.classification_enum (single mutually exclusive classification)",
+      "case_classification_schema.record_required_fields single-axis case-state fields",
+      "single-axis attribution freshness representation"
+    ],
+    "does_not_supersede": [
+      "candidate_workstreams",
+      "readiness R4-R0 semantics (readiness_rules)",
+      "dependency edge types (dependency_rules.allowed_edge_types)",
+      "quality-gate link types (quality_gate_link_rules.allowed_link_types)",
+      "P1-P7 lexicographic priority order (priority_decision_rules)",
+      "recommendation-support levels (recommendation_support_rules)",
+      "authorization boundaries"
+    ],
+    "original_snapshot_immutable": "YES",
+    "in_place_edit_of_parent_snapshot": "PROHIBITED",
+    "existing_r2_harness_and_tests": "UNCHANGED / NOT AUTHORIZED TO MODIFY IN THIS CHECKPOINT",
+    "r2_rerun_must_use_effective_design": "YES"
+  },
+  "amended_case_state_schema": {
+    "schema_version": "v4-post-v4-8-2-priority-review-case-state-multiaxis-v1",
+    "supersedes": [
+      "case_classification_schema.classification_enum",
+      "case_classification_schema.record_required_fields",
+      "single mutually exclusive case classification",
+      "single-axis attribution freshness representation"
+    ],
+    "supersession_is_prospective": "YES",
+    "retroactive_reclassification_of_frozen_evidence": "NO",
+    "unit_of_review": "current actionable residual per case, not historical case prefix",
+    "minimum_fields_per_case": [
+      "CASE_ID",
+      "INVENTORY_ORIGIN",
+      "LATEST_SOURCES",
+      "SOURCE_LEVELS"
+    ],
+    "record_required_fields": [
+      "CASE_ID",
+      "INVENTORY_ORIGIN",
+      "LATEST_SOURCES",
+      "SOURCE_LEVELS",
+      "PRODUCT_STATUS",
+      "PRODUCT_ROOT_CAUSE_FAMILIES",
+      "PRODUCT_MULTI_CAUSE",
+      "PRODUCT_CONFIDENCE",
+      "MEASUREMENT_STATUS",
+      "MEASUREMENT_CONFIDENCE",
+      "CITATION_STATUS",
+      "CITATION_CONFIDENCE",
+      "BLOCKED_OR_DISPROVEN_PATHS",
+      "ATTRIBUTION_FRESHNESS",
+      "RELEVANT_LATER_CHANGE",
+      "RELEVANT_LATER_CHANGE_EVIDENCE",
+      "LATEST_PRODUCT_STATE_COMPATIBLE",
+      "SUPPORTING_EVIDENCE",
+      "LIMITING_EVIDENCE",
+      "NOTES"
+    ],
+    "LATEST_SOURCES_rule": "list of per-axis governed source references {axis, path, field_or_section}; every axis value must be traceable to its own entry; a single collapsed source field is prohibited",
+    "SOURCE_LEVELS_rule": "source levels (S1..S4) corresponding to LATEST_SOURCES entries under the frozen hierarchy S1 > S2 > S3 > S4",
+    "axis_independence_rule": "PRODUCT_STATUS, MEASUREMENT_STATUS and CITATION_STATUS are independent; no axis may be forced to a value by another axis",
+    "product_axis": {
+      "PRODUCT_STATUS_ENUM": [
+        "CURRENT_CONFIRMED_PRODUCT_DEFECT",
+        "STALE_ATTRIBUTION_REQUIRES_REFRESH",
+        "RESOLVED_OR_CLOSED",
+        "NOT_ESTABLISHED"
+      ],
+      "PRODUCT_ROOT_CAUSE_FAMILIES_rule": "list of root-cause families supported by the current governing Product evidence; zero or more entries; each entry requires a traceable evidence reference",
+      "PRODUCT_ROOT_CAUSE_FAMILY_VOCABULARY": [
+        "HISTORY",
+        "RETRIEVAL",
+        "GENERATION",
+        "MEASUREMENT",
+        "CITATION",
+        "SCOPE_OOS",
+        "ROUTING",
+        "DOCUMENT_IDENTITY",
+        "MULTI_CAUSE",
+        "NOT_ESTABLISHED"
+      ],
+      "PRODUCT_ROOT_CAUSE_FAMILY_VOCABULARY_SOURCE": "same governed vocabulary already consumed by the R2 harness ROOT_CAUSE_FAMILY_ENUM; this amendment does not change it",
+      "PRODUCT_MULTI_CAUSE_ENUM": [
+        "YES",
+        "NO",
+        "NOT_ESTABLISHED"
+      ],
+      "PRODUCT_MULTI_CAUSE_SCOPE_RULE": "PRODUCT_MULTI_CAUSE concerns Product root-cause families only; Measurement or Citation states must never make it YES",
+      "PRODUCT_CONFIDENCE_ENUM": [
+        "MECHANICALLY_ESTABLISHED",
+        "SUPPORTED",
+        "HISTORICAL_ONLY",
+        "NOT_ESTABLISHED"
+      ],
+      "PRODUCT_CONFIDENCE_SEMANTICS": "strength of the governing Product-axis evidence; independent of Measurement / Citation confidence",
+      "PRODUCT_FAMILY_PERSISTENCE_RULE": "a current Product root-cause family may only be erased or downgraded by a later governed artifact that explicitly does so; later mechanism-level constraints may narrow mechanism/support without erasing the family"
+    },
+    "measurement_axis": {
+      "MEASUREMENT_STATUS_ENUM": [
+        "CURRENT_CONFIRMED_MEASUREMENT_DEFECT",
+        "NO_CURRENT_MEASUREMENT_DEFECT_OBSERVED",
+        "STALE_ATTRIBUTION_REQUIRES_REFRESH",
+        "RESOLVED_OR_CLOSED",
+        "NOT_ESTABLISHED"
+      ],
+      "MEASUREMENT_INDEPENDENCE_RULE": "measurement state must remain independent of Product state; a case may simultaneously carry current Product generation-family evidence and a supported or observed measurement semantic issue",
+      "MEASUREMENT_EVIDENCE_RULE": "a metric shortfall alone does not establish a measurement defect; measurement defect status requires mechanical proof",
+      "MEASUREMENT_CONFIDENCE_ENUM": [
+        "MECHANICALLY_ESTABLISHED",
+        "SUPPORTED",
+        "HISTORICAL_ONLY",
+        "NOT_ESTABLISHED"
+      ],
+      "MEASUREMENT_CONFIDENCE_SEMANTICS": "strength of the governing measurement-axis evidence",
+      "MEASUREMENT_SEMANTIC_ISSUE_RECORDING_CONVENTION": "a governed per-case measurement semantic-issue signal of SUPPORTED (V4.7 evidence) is recorded as MEASUREMENT_STATUS = CURRENT_CONFIRMED_MEASUREMENT_DEFECT with MEASUREMENT_CONFIDENCE = SUPPORTED; a signal of NOT_OBSERVED is recorded as MEASUREMENT_STATUS = NO_CURRENT_MEASUREMENT_DEFECT_OBSERVED; the two states must remain distinguishable"
+    },
+    "citation_axis": {
+      "CITATION_STATUS_ENUM": [
+        "CURRENT_CONFIRMED_CITATION_DEFECT",
+        "NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+        "STALE_ATTRIBUTION_REQUIRES_REFRESH",
+        "RESOLVED_OR_CLOSED",
+        "NOT_ESTABLISHED"
+      ],
+      "CITATION_COVERAGE_GAP_RULE": "citation coverage gap alone cannot establish a case defect; CURRENT_CONFIRMED_CITATION_DEFECT requires citation-specific mechanical evidence",
+      "CITATION_INDEPENDENCE_RULE": "citation state is independent of Product and Measurement states",
+      "CITATION_CONFIDENCE_ENUM": [
+        "MECHANICALLY_ESTABLISHED",
+        "SUPPORTED",
+        "HISTORICAL_ONLY",
+        "NOT_ESTABLISHED"
+      ],
+      "CITATION_CONFIDENCE_SEMANTICS": "strength of the governing citation-axis evidence"
+    },
+    "blocked_or_disproven_paths": {
+      "FIELD": "BLOCKED_OR_DISPROVEN_PATHS",
+      "value_shape": "list of specific causal / remediation path families, each with a traceable governing evidence reference",
+      "example_path_family": "DOCUMENT_IDENTITY",
+      "path_vocabulary": "governed root-cause family vocabulary entries; free-text or invented path names are prohibited",
+      "scope_rule": "blocks the specified causal / remediation path only and does NOT automatically classify the entire case as blocked",
+      "non_interference_rule": "a blocked / disproven path must not erase, downgrade or override PRODUCT_STATUS, MEASUREMENT_STATUS or CITATION_STATUS",
+      "representable_coexistence": "PRODUCT_STATUS = current generation-family evidence + BLOCKED_OR_DISPROVEN_PATHS = [DOCUMENT_IDENTITY] + MEASUREMENT_STATUS = supported issue may coexist for one case"
+    },
+    "attribution_freshness": {
+      "ATTRIBUTION_FRESHNESS_ENUM": [
+        "CURRENT",
+        "PARTIALLY_CURRENT",
+        "HISTORICAL_STALE",
+        "NOT_ESTABLISHED"
+      ],
+      "INDEPENDENCE_RULE": "freshness is separate from Product / Measurement / Citation state and must not override them",
+      "TRIGGER_RULE": "HISTORICAL_STALE and PARTIALLY_CURRENT require RELEVANT_LATER_CHANGE = YES with traceable relevance evidence; production hash difference alone is not sufficient",
+      "definition_CURRENT": "the governing attribution is compatible with the latest product state for the reviewed axis",
+      "definition_PARTIALLY_CURRENT": "the relevant later change affects only part of the case / subsystem, or only some axes remain refreshed",
+      "definition_HISTORICAL_STALE": "a relevant later Product or diagnostic change supersedes the historical attribution for this case / subsystem",
+      "definition_NOT_ESTABLISHED": "freshness cannot be mechanically determined"
+    },
+    "retained_enum_vocabulary": {
+      "CONFIDENCE_ENUM": [
+        "MECHANICALLY_ESTABLISHED",
+        "SUPPORTED",
+        "HISTORICAL_ONLY",
+        "NOT_ESTABLISHED"
+      ],
+      "SOURCE_LEVEL_ENUM": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "LATEST_PRODUCT_STATE_COMPATIBLE_ENUM": [
+        "YES",
+        "NO",
+        "NOT_ESTABLISHED"
+      ],
+      "note": "vocabulary retained verbatim from the parent preflight; per-axis confidence fields draw from CONFIDENCE_ENUM"
+    },
+    "retained_frozen_rules_verbatim": [
+      "historical case prefix != current root cause",
+      "no case may be classified as a current confirmed defect without latest-product-state-compatible evidence",
+      "stale attribution cannot be promoted to current confirmed without fresh evidence",
+      "a case whose conflicting sources cannot be mechanically reconciled must be recorded as STALE_ATTRIBUTION_REQUIRES_REFRESH or NOT_ESTABLISHED, not resolved by prose",
+      "every record must carry a traceable source and field or section, otherwise it is NOT_ESTABLISHED"
+    ],
+    "axis_scoped_restatements": {
+      "current_confirmed_gate": "no axis may carry a CURRENT_CONFIRMED_* status without latest-product-state-compatible evidence for that axis",
+      "stale_promotion_gate": "a stale / historical axis attribution cannot be promoted to a current confirmed state without fresh evidence",
+      "unreconciled_conflict_gate": "conflicting per-axis sources that cannot be mechanically reconciled must be recorded as STALE_ATTRIBUTION_REQUIRES_REFRESH or NOT_ESTABLISHED, not resolved by prose",
+      "traceability_gate": "every axis value must carry a traceable source and field or section, otherwise it is NOT_ESTABLISHED",
+      "prefix_gate": "historical case prefix != current root cause"
+    },
+    "superseded_classification_enum_coverage_mapping": {
+      "CURRENT_CONFIRMED_PRODUCT_DEFECT": "PRODUCT_STATUS = CURRENT_CONFIRMED_PRODUCT_DEFECT",
+      "CURRENT_CONFIRMED_MEASUREMENT_DEFECT": "MEASUREMENT_STATUS = CURRENT_CONFIRMED_MEASUREMENT_DEFECT",
+      "CURRENT_CONFIRMED_CITATION_DEFECT": "CITATION_STATUS = CURRENT_CONFIRMED_CITATION_DEFECT",
+      "CURRENT_MULTI_CAUSE": "two or more axes simultaneously current-confirmed; PRODUCT_MULTI_CAUSE = YES only for multiple Product root-cause families",
+      "STALE_ATTRIBUTION_REQUIRES_REFRESH": "any axis at STALE_ATTRIBUTION_REQUIRES_REFRESH and/or ATTRIBUTION_FRESHNESS in {PARTIALLY_CURRENT, HISTORICAL_STALE}",
+      "RESOLVED_OR_CLOSED": "per-axis RESOLVED_OR_CLOSED",
+      "BLOCKED_BY_PARENT_EVIDENCE": "BLOCKED_OR_DISPROVEN_PATHS contains the specific path/family; the entire case is NOT automatically blocked",
+      "NOT_ESTABLISHED": "per-axis NOT_ESTABLISHED"
+    },
+    "no_entire_case_blocked_rule": "a blocked / disproven path family must never collapse the whole case into a single blocked classification; the remaining axes stay independently carriable and representable"
+  },
+  "effective_analysis_design_additions": {
+    "relevant_change_rule": {
+      "rule_id": "RELEVANT_CHANGE_STALENESS_RULE",
+      "FROZEN_RULE": "PRODUCTION_HASH_DIFFERENCE_ALONE_IS_NOT_SUFFICIENT_TO_MARK_ATTRIBUTION_STALE",
+      "definition": "a historical attribution may become stale only when there is mechanically traceable evidence that a later Product or diagnostic change is relevant to that case or root-cause family / subsystem",
+      "required_fields": [
+        "RELEVANT_LATER_CHANGE",
+        "RELEVANT_LATER_CHANGE_EVIDENCE"
+      ],
+      "RELEVANT_LATER_CHANGE_ENUM": [
+        "YES",
+        "NO",
+        "NOT_ESTABLISHED"
+      ],
+      "RELEVANT_LATER_CHANGE_EVIDENCE_shape": "list of traceable entries {change_or_diagnosis, governing_artifact_path, field_or_section}",
+      "admissible_relevance_evidence_examples": [
+        "later routing remediation affecting the case",
+        "later scope remediation affecting the case",
+        "embedding / retrieval change capable of changing evidence delivery for the case",
+        "later current-state diagnosis that explicitly supersedes the historical attribution"
+      ],
+      "forbidden_sole_evidence": [
+        "old hash != current hash",
+        "production identity change alone",
+        "batch identity difference alone"
+      ],
+      "hash_portability_note": "the V4.6.2 hash-portability normalization itself is not a Product behaviour change and cannot serve as relevance evidence",
+      "scope": "case / subsystem basis",
+      "consequence": "ATTRIBUTION_FRESHNESS may only be HISTORICAL_STALE or PARTIALLY_CURRENT when RELEVANT_LATER_CHANGE = YES; otherwise the attribution remains CURRENT or NOT_ESTABLISHED"
+    },
+    "frozen_current_state_anchors": {
+      "CURRENT_PIPELINE_DOCUMENT_IDENTITY_LOSS": "DISPROVEN",
+      "DOCUMENT_IDENTITY_ROOT_CAUSE": "NOT_PROVEN",
+      "DOCUMENT_IDENTITY_REMEDIATION": "BLOCKED / NOT AUTHORIZED",
+      "GENERATION_MECHANISM_ISOLATION": "NOT_ESTABLISHED",
+      "SHARED_RESIDUAL_HYPOTHESIS": "NOT_ESTABLISHED",
+      "CAUSAL_MECHANISM_ESTABLISHED": "NO",
+      "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+      "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+      "TOP_CANDIDATE_HYPOTHESIS": null,
+      "AMENDMENT_MUST_NOT_INVENT_GENERATION_MECHANISM": "YES"
+    },
+    "rederivation_consistency_requirements": {
+      "R1": "md-004 / md-009 / md-015 must not be classified as 'entire case BLOCKED' solely because Document Identity is disproven",
+      "R2": "V4.7 current evidence must be representable as: Product axis = GENERATION-family current evidence; Document Identity path = blocked / disproven",
+      "R3": "independently: md-004 / md-009 measurement issue SUPPORTED; md-015 measurement issue NOT_OBSERVED; the two must not be collapsed",
+      "R4": "later V4.8-V4.8.2 evidence may constrain mechanism / support but must not erase a higher-level current Product root-cause family unless a later governed artifact explicitly does so",
+      "rederivation_performed_in_this_checkpoint": "NO"
+    },
+    "workstream_matrix_case_count_derivation": {
+      "note": "derivation mapping only; workstream_matrix_schema field names and types remain verbatim under the effective design",
+      "CURRENT_CONFIRMED_CASES": "cases with a current-confirmed axis state relevant to the workstream",
+      "STALE_OR_HISTORICAL_CASES": "cases whose relevant axis state is STALE_ATTRIBUTION_REQUIRES_REFRESH or ATTRIBUTION_FRESHNESS in {PARTIALLY_CURRENT, HISTORICAL_STALE}",
+      "RESOLVED_CASES": "cases whose relevant axis state is RESOLVED_OR_CLOSED",
+      "NOT_ESTABLISHED_CASES": "cases with no mechanically established relevant axis state",
+      "PRODUCT_DEFECT_ESTABLISHED": "derived from PRODUCT_STATUS / PRODUCT_CONFIDENCE",
+      "MEASUREMENT_DEFECT_ESTABLISHED": "derived from MEASUREMENT_STATUS / MEASUREMENT_CONFIDENCE",
+      "axis_scoped_non_exclusive": "a case may contribute to multiple count fields across different axes; the former implicit mutual-exclusion assumption is superseded by the multi-axis case state"
+    }
+  },
+  "effective_analysis_design_definition": {
+    "EFFECTIVE_ANALYSIS_DESIGN": "original frozen semantic design + Amendment 001 overrides / additions",
+    "payload_construction": "payload = {key: parent_preflight[key] for key in parent_preflight.analysis_design_digest_spec.extracted_keys}; payload['case_classification_schema'] = this_artifact.amended_case_state_schema; payload['effective_analysis_design_additions'] = this_artifact.effective_analysis_design_additions",
+    "canonicalization": "json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':')) -> UTF-8 bytes -> sha256",
+    "excluded_content": [
+      "timestamp",
+      "machine path",
+      "manifest digest",
+      "file SHA metadata"
+    ],
+    "payload_covered_keys": [
+      "source_of_truth_hierarchy",
+      "candidate_workstreams",
+      "case_classification_schema (superseded by amended_case_state_schema at this key path)",
+      "workstream_matrix_schema",
+      "readiness_rules",
+      "dependency_rules",
+      "quality_gate_link_rules",
+      "priority_decision_rules",
+      "recommendation_support_rules",
+      "effective_analysis_design_additions"
+    ],
+    "superseded_payload_keys": [
+      "case_classification_schema"
+    ],
+    "added_payload_keys": [
+      "effective_analysis_design_additions"
+    ],
+    "recomputation_inputs": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json (frozen parent)",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json (this artifact)"
+    ],
+    "digest_not_embedded_in_parent_snapshot": "YES",
+    "parent_design_digest_unchanged": "YES"
+  },
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "e48e83e7ab68c004b0332085ad035ccf812cf320c5fb82a8b46acf53125f0e7b",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DETERMINISTIC": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DIFFERS_FROM_PARENT": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_RECOMPUTATION_1": "e48e83e7ab68c004b0332085ad035ccf812cf320c5fb82a8b46acf53125f0e7b",
+  "integrity": {
+    "PRE_CHANGE_WORKSPACE_MANIFEST_DIGEST": "40ad77ad462615a113ad581e3c07fc176a2e9822ac3133975c90e99a6f4dfa8d",
+    "PRE_CHANGE_WORKSPACE_MANIFEST_ENTRY_COUNT": 19653,
+    "PRE_CHANGE_WORKSPACE_MANIFEST_RULE": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "PRE_CHANGE_PRODUCTION_HASH": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "EXPECTED_POST_CHANGE_DELTA": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json (added)"
+    ],
+    "ORIGINAL_PREFLIGHT_EXPECTED_UNCHANGED": "YES",
+    "R2_HARNESS_EXPECTED_UNCHANGED": "YES",
+    "R2_TEST_EXPECTED_UNCHANGED": "YES",
+    "MASTER_EXPECTED_UNCHANGED": "YES",
+    "PARENT_ARTIFACTS_EXPECTED_UNCHANGED": "YES",
+    "PRODUCT_AND_BASELINE_EXPECTED_UNCHANGED": "YES",
+    "POST_WRITE_VERIFICATION_LOCATION": "R1A final console (this checkpoint)",
+    "no_scratch_files_written": "YES",
+    "computation_mode": "IN_MEMORY_ONLY"
+  },
+  "authorization_boundary": {
+    "ACTIVE_V4_WRITE_PATHS_THIS_CHECKPOINT": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json"
+    ],
+    "OTHER_ACTIVE_V4_WRITES_AUTHORIZED": "NO",
+    "V3_WORKSPACE": "FROZEN / READ-ONLY / UNTOUCHED",
+    "PUBLISH_WORKSPACE": "READ-ONLY / NO SYNC / NO WRITE / NO GIT MUTATION",
+    "R2_REDERIVATION_PERFORMED_HERE": "NO",
+    "R3_PERFORMED_HERE": "NO",
+    "HARNESS_MODIFICATION_AUTHORIZED": "NO",
+    "TEST_MODIFICATION_AUTHORIZED": "NO",
+    "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+    "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+    "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO"
+  },
+  "next_authorized_checkpoint": "R2_REDERIVATION_UNDER_AMENDMENT_001",
+  "READY_FOR_R2_REDERIVATION": "YES",
+  "READY_FOR_R3": "NO",
+  "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO",
+  "STOP": "YES",
+  "WAIT_FOR_GOVERNANCE_REVIEWER": "YES",
+  "timestamp": "2026-09-14T23:57:25"
+}

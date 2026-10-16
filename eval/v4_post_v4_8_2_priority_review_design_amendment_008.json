@@ -1,0 +1,644 @@
+{
+  "artifact_type": "ANALYSIS_DESIGN_AMENDMENT",
+  "amendment_id": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_008",
+  "review_id": "POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW",
+  "checkpoint": "R1H_RECOMMENDATION_SUPPORT_RESOLUTION_AMENDMENT",
+  "mode": "GOVERNANCE / DESIGN-AMENDMENT ONLY",
+  "amendment_status": "ACTIVE_FOR_FUTURE_GOVERNED_RECOMMENDATION_SUPPORT_RESOLUTION_UNDER_AMENDMENTS_001_002_003_004_005_006_007_008",
+  "AMENDMENT_IS_PROSPECTIVE": "YES",
+  "RETROACTIVE_REWRITE": "NO",
+  "is_product_baseline": false,
+  "is_product_remediation": false,
+  "is_scientific_experiment": false,
+  "new_evidence_added": false,
+  "MODEL_CALLS": 0,
+  "PRODUCTION_RETRIEVAL_RUNS": 0,
+  "COUNTERFACTUAL_RUNS": 0,
+  "FULL_144_RUNS": 0,
+  "AMENDMENT_REASON": "RECOMMENDATION_SUPPORT_PREDICATES_REQUIRE_MECHANICAL_MUTUALLY_EXCLUSIVE_FAIL_CLOSED_RESOLUTION",
+  "PARENT_PREFLIGHT_PATH": "eval/v4_post_v4_8_2_priority_review_preflight.json",
+  "PARENT_PREFLIGHT_SHA256": "c24ebc94b504ccb9e3ff492616ebe1f29461ec1c5d7c8e632fd5c2c2031f4bf2",
+  "PARENT_AMENDMENT_ID": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_007",
+  "PARENT_AMENDMENT_PATH": "eval/v4_post_v4_8_2_priority_review_design_amendment_007.json",
+  "PARENT_AMENDMENT_SHA256": "e9787de99ffba69e4ad4172bd65d8fecc7b4461fc740aaa24ccacc72020adae6",
+  "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "057902cf942f65d2e0211da5434022dc95e6bf2650fc7b60902c10537d492909",
+  "defect_record": {
+    "defect_class": "RECOMMENDATION_SUPPORT_PREDICATES_NOT_MECHANICALLY_MUTUALLY_EXCLUSIVE_AND_NOT_FAIL_CLOSED",
+    "defect_impact_scope": "RECOMMENDATION_SUPPORT_CLASSIFICATION_SURFACE_ONLY",
+    "governance_verdict_being_resolved": {
+      "R4_PRIORITY_CHAIN": "ACCEPTED",
+      "P1": "ACCEPTED",
+      "P2": "ACCEPTED",
+      "P3": "ACCEPTED",
+      "P4": "ACCEPTED",
+      "P5": "ACCEPTED",
+      "UNIQUE_LEADER": "WS-13",
+      "UNIQUE_LEADER_ESTABLISHED_AT": "P5",
+      "RECOMMENDED_NEXT_WORKSTREAM": "WS-13",
+      "R4_RECOMMENDATION_SUPPORT": "NOT_ACCEPTED_PENDING_SUPPORT_CLASSIFICATION_CLOSURE",
+      "READY_FOR_R5": "NO"
+    },
+    "ambiguous_field_locations": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/recommendation_support_rules/STRONG_requires_all_of (four natural-language conditions with no declared treatment when the latest-state condition fails while the leader identity, the readiness class and the dependency state remain mechanically established)",
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/recommendation_support_rules/MODERATE_requires (\"exactly one non-blocking ambiguity remains\" with no mechanical definition of non-blocking ambiguity and no declared outcome when the ambiguity count is not mechanically determinable)",
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/recommendation_support_rules/WEAK_applies_when (the second disjunct \"small evidence changes may alter the ordering\" carries no mechanical proof obligation and is therefore subjectively assertable)",
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/recommendation_support_rules/NOT_ESTABLISHED_applies_when (\"critical evidence is missing\" and \"the dependency graph is unresolved\" were not mechanically separated from a merely absent latest-state confirmation or from the lawful non-blocking dependency states)",
+      "eval/v4_post_v4_8_2_priority_review_preflight.json#/recommendation_support_rules (no declared resolution order and no declared overlap treatment when two or more predicates read as satisfied, so a single-valued support could not be mechanically derived)"
+    ],
+    "resolution_in_this_amendment": "freeze one mechanical, mutually exclusive, exhaustive and fail-closed single-value support classifier over the existing frozen support enum: the mechanical definitions of CRITICAL_EVIDENCE_MISSING, DEPENDENCY_GRAPH_UNRESOLVED and SMALL_EVIDENCE_CHANGE_SENSITIVITY, the S0-S5 resolution order, the WEAK-over-MODERATE overlap rule, the fail-closed fallback to NOT_ESTABLISHED and the anti-abuse prohibitions; every original predicate keeps its meaning verbatim and no support level is added, removed or redefined",
+    "reinterpretation_of_this_reason": "PROHIBITED"
+  },
+  "amendment_scope": {
+    "adds_prospectively": [
+      "the prospective payload key recommendation_support_resolution",
+      "the mechanical definition of CRITICAL_EVIDENCE_MISSING with its exhaustive five-item determinability test",
+      "the mechanical definition of DEPENDENCY_GRAPH_UNRESOLVED with its exhaustive YES / not-YES partitions",
+      "the mechanical definition of SMALL_EVIDENCE_CHANGE_SENSITIVITY and its mandatory mechanical sensitivity-proof obligation",
+      "the fail-closed single-value support resolution order S0 / S1 / S2 / S3 / S4 / S5",
+      "the WEAK-over-MODERATE overlap rule for a simultaneously satisfied WEAK and MODERATE predicate"
+    ],
+    "supersedes_prospectively": [],
+    "does_not_change": [
+      "the frozen support enum STRONG / MODERATE / WEAK / NOT_ESTABLISHED (no level added, removed, renamed or re-scored)",
+      "the meaning of every original preflight support predicate (STRONG_requires_all_of / MODERATE_requires / WEAK_applies_when / NOT_ESTABLISHED_applies_when)",
+      "the P1-P7 priority chain, the priority lexicographic rules and the comparator-status partition",
+      "the survivor chain and every survivor-set transition of the executed R4 priority decision",
+      "the accepted unique leader WS-13 and the criterion at which it was established (P5)",
+      "the accepted recommended next workstream WS-13",
+      "the accepted R4 priority chain P1 / P2 / P3 / P4 / P5",
+      "the accepted R3 state (42-case multi-axis case state / domain / bucket / action-scoped dependency graph / readiness)",
+      "the Amendment 006 special-outcome semantics (FRESH_CROSS_WORKSTREAM_ATTRIBUTION_ONLY) and its anti-abuse guards",
+      "the recommendation_support evaluation gate (support is evaluated only after a unique workstream leader is mechanically established)",
+      "the authorization boundary (no support value, no ranking, no recommendation and no execution is authorized by this amendment)"
+    ],
+    "support_enum_changed": "NO",
+    "support_predicate_meaning_changed": "NO",
+    "support_resolution_procedure_added": "YES",
+    "priority_order_changed": "NO",
+    "unique_leader_changed": "NO",
+    "recommended_next_workstream_changed": "NO",
+    "original_snapshot_immutable": "YES",
+    "in_place_edit_of_parent_snapshot_or_amendment_001_002_003_004_005_006_007": "PROHIBITED",
+    "existing_r4_harness_machine_artifact_and_tests": "UNCHANGED / NOT AUTHORIZED TO MODIFY IN THIS CHECKPOINT",
+    "future_support_resolution_must_use_effective_design": "YES"
+  },
+  "accepted_state_reference": {
+    "accepted_checkpoint_state": "R4_PRIORITY_CHAIN_ACCEPTED = YES",
+    "R0": "PASS",
+    "R1": "PASS",
+    "A001": "ACCEPTED",
+    "A002": "ACCEPTED",
+    "A003": "ACCEPTED",
+    "A004": "ACCEPTED",
+    "A005": "ACCEPTED",
+    "A006": "ACCEPTED_WITH_STATUS_PARTITION_FINDING",
+    "A007": "ACCEPTED",
+    "R2_MULTI_AXIS_CASE_STATE": "FULLY_ACCEPTED",
+    "R3_DOMAIN": "FULLY_ACCEPTED",
+    "R3_BUCKET": "FULLY_ACCEPTED",
+    "R3_ACTION_SCOPED_DEPENDENCY": "FULLY_ACCEPTED",
+    "R3_READINESS": "FULLY_ACCEPTED",
+    "R4_PRIORITY_DECISION": "EXECUTED_AND_ACCEPTED",
+    "R4_PRIORITY_CHAIN_ACCEPTED": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+    ],
+    "R4_P6_P7": "NOT_REACHED_UNIQUE_LEADER_ALREADY_ESTABLISHED_AT_P5",
+    "P3_READINESS_STATE": "FULL_TIE",
+    "accepted_workstream_attribution": {
+      "WS-09": "R3 / FRESH_ATTRIBUTION",
+      "WS-10": "R3 / FRESH_ATTRIBUTION",
+      "WS-11": "R3 / FRESH_ATTRIBUTION",
+      "WS-12": "R3 / FRESH_ATTRIBUTION",
+      "WS-13": "R3 / FRESH_ATTRIBUTION"
+    },
+    "R3_ANALYTICAL_DIGESTS": {
+      "MULTI_AXIS_CASE_STATE_DIGEST": "17edfe2ce93f30e3370f80d2d32ce7e18ac637bfdcd223be1947f23987ba61b2",
+      "WORKSTREAM_DOMAIN_DIGEST": "b9711ac2d683cb4aa79640bb580e8d4e951fadb586eefa7b2e80e8e8aab650fc",
+      "WORKSTREAM_BUCKET_DIGEST": "1bb9fd79734a348c68ab26134867b1276bc67da95e9594df95b78a71c7cd7fa8",
+      "ACTION_SCOPED_DEPENDENCY_GRAPH_DIGEST": "162a5806ad6c32afe154653b98d0e6eecab87d75236a1583639cdecf9a51dc4d",
+      "WORKSTREAM_READINESS_DIGEST": "41747bf3b0b59248ed091b9f4ef3042cb26d2db1ad424a555224ab4ad4448e5d"
+    },
+    "r4_machine_artifact_path": "eval/v4_post_v4_8_2_next_workstream_priority_review.json",
+    "r4_machine_artifact_sha256": "b3f0a45605de713c8f658a8a56b381005377be2ba4b7a7cdb42fadd198831044",
+    "r4_harness_path": "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+    "r4_harness_sha256": "b1a9a8a4f38643950a80be4d68f170b27f4e4a75768e47048958d5a1865c9072",
+    "r4_test_path": "tests/test_v4_post_v4_8_2_priority_review.py",
+    "r4_test_sha256": "a8ab4973cadc91628c1926941e1dcbc1b6d5b47b6168828625b29f0be42a1d5c",
+    "provisional_priority_decision_digest": "e19389da6dca89ce4971aa024b1be0343d539e1c7d099cf372785e68f55c128d",
+    "note": "this block is a read-only reference to the accepted R3 state and to the accepted R4 priority chain; this amendment consumes it and recomputes nothing from it. The five R3 analytical digests, the R4 harness / machine-artifact / test identities and the provisional priority-decision digest were re-verified pre-write by an explicitly read-only, non-mutating rederivation; R3_ANALYTICAL_STATE_MODIFIED = NO, R4_HARNESS_MODIFIED = NO, R4_MACHINE_ARTIFACT_MODIFIED = NO, TEST_MODIFIED = NO, PRIORITY_RANKING_RERUN = NO."
+  },
+  "recommendation_support_resolution": {
+    "schema_version": "v4-post-v4-8-2-priority-review-recommendation-support-resolution-v1",
+    "PROSPECTIVE_ONLY": "YES",
+    "APPLIES_TO": "the future governed recommendation-support resolution under Amendments 001-008; no support value, no survivor set, no unique leader, no top workstream and no recommended next workstream is computed in this checkpoint",
+    "OPERATIONALIZES": "recommendation_support_rules of the frozen R1 preflight (eval/v4_post_v4_8_2_priority_review_preflight.json); the predicate meanings are preserved verbatim and only the mechanical resolution procedure is added",
+    "defect_record": {
+      "defect_class": "RECOMMENDATION_SUPPORT_PREDICATES_NOT_MECHANICALLY_MUTUALLY_EXCLUSIVE_AND_NOT_FAIL_CLOSED",
+      "defect_impact_scope": "RECOMMENDATION_SUPPORT_CLASSIFICATION_SURFACE_ONLY",
+      "governance_finding": {
+        "FROZEN_PREDICATES": "STRONG_requires_all_of / MODERATE_requires / WEAK_applies_when / NOT_ESTABLISHED_applies_when",
+        "GAP_1": "no declared resolution order existed when more than one predicate read as satisfied, so the classification was not single-valued",
+        "GAP_2": "LATEST_STATE_EVIDENCE_NOT_MECHANICALLY_TRACEABLE and CRITICAL_EVIDENCE_MISSING were not mechanically separated, although STRONG explicitly requires latest-state traceability while WEAK explicitly exists for a leader materially dependent on historical/stale evidence",
+        "GAP_3": "DEPENDENCY_GRAPH_UNRESOLVED was not mechanically separated from the lawful non-blocking dependency states, so a lawful non-blocking edge could be misread as an unresolved graph",
+        "GAP_4": "the WEAK sensitivity disjunct (small evidence changes may alter the ordering) had no mechanical proof obligation",
+        "GAP_5": "the MODERATE predicate (exactly one non-blocking ambiguity remains) had no declared outcome when the ambiguity count is not mechanically determinable"
+      },
+      "resolution_in_this_amendment": "freeze one mutually exclusive, exhaustive and fail-closed single-value support classifier with mechanical definitions for CRITICAL_EVIDENCE_MISSING, DEPENDENCY_GRAPH_UNRESOLVED and SMALL_EVIDENCE_CHANGE_SENSITIVITY, the S0-S5 resolution order, the WEAK-over-MODERATE overlap rule and a fail-closed final fallback to NOT_ESTABLISHED",
+      "reinterpretation_of_this_reason": "PROHIBITED"
+    },
+    "SUPPORT_ENUM_UNCHANGED": {
+      "rule_id": "SUPPORT_ENUM_UNCHANGED",
+      "ENUM_UNCHANGED": [
+        "STRONG",
+        "MODERATE",
+        "WEAK",
+        "NOT_ESTABLISHED"
+      ],
+      "SUPPORT_ENUM_UNCHANGED": "YES",
+      "NEW_LEVEL_ADDED": "NO",
+      "LEVEL_REMOVED": "NO",
+      "LEVEL_RENAMED": "NO",
+      "SEVERITY_SCORE_INTRODUCED": "NO",
+      "WEIGHTED_SUPPORT_ALLOWED": "NO",
+      "SUPPORT_IS_A_SINGLE_FROZEN_ENUM_MEMBER": "YES",
+      "RECOMMENDATION_IS_NOT_AUTHORIZATION": "YES",
+      "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED_REGARDLESS_OF_SUPPORT": "NO"
+    },
+    "FROZEN_ORIGINAL_PREDICATES": {
+      "rule_id": "FROZEN_ORIGINAL_SUPPORT_PREDICATES_PRESERVED_VERBATIM",
+      "PREDICATE_MEANINGS_CHANGED": "NO",
+      "SOURCE": "eval/v4_post_v4_8_2_priority_review_preflight.json#/recommendation_support_rules",
+      "STRONG_requires_all_of": [
+        "a unique dominant workstream under the frozen lexicographic rules",
+        "readiness >= R3",
+        "no unresolved dependency capable of reversing the recommendation",
+        "latest-state evidence mechanically traceable"
+      ],
+      "STRONG_SUBCHECK_IDS": [
+        "UNIQUE_DOMINANT_WORKSTREAM_UNDER_FROZEN_LEXICOGRAPHIC_RULES",
+        "LEADER_READINESS_AT_LEAST_R3",
+        "NO_UNRESOLVED_DEPENDENCY_CAPABLE_OF_REVERSING_THE_RECOMMENDATION",
+        "LATEST_STATE_EVIDENCE_MECHANICALLY_TRACEABLE"
+      ],
+      "MODERATE_requires": [
+        "a unique leader",
+        "exactly one non-blocking ambiguity remains"
+      ],
+      "WEAK_applies_when": [
+        "the leader materially depends on stale or historical evidence",
+        "or small evidence changes may alter the ordering"
+      ],
+      "NOT_ESTABLISHED_applies_when": [
+        "there is no unique leader",
+        "or critical evidence is missing",
+        "or the dependency graph is unresolved"
+      ],
+      "EVALUATION_GATE": "support is evaluated only after a unique workstream leader has been mechanically established",
+      "NO_UNIQUE_LEADER": "RECOMMENDATION_SUPPORT = NOT_ESTABLISHED",
+      "PREDICATE_TEXT_IS_NOT_REWORDED": "YES",
+      "PREDICATE_EXTENSION_BY_THIS_AMENDMENT": "NO",
+      "ONLY_MECHANICAL_RESOLUTION_PROCEDURE_ADDED": "YES"
+    },
+    "MECHANICAL_VOCABULARY": {
+      "rule_id": "SUPPORT_MECHANICAL_VOCABULARY",
+      "MECHANICALLY_DETERMINABLE": "a value is derivable as a single, traceable value from frozen parent evidence by a declared rule, with no subjective judgement and no ungoverned input",
+      "MECHANICALLY_ESTABLISHED_PREDICATE": "a predicate whose truth value is mechanically determinable from frozen evidence by the declared rule",
+      "NOT_MECHANICALLY_ESTABLISHED_PREDICATE": "a predicate whose truth value is not mechanically determinable; such a predicate NEVER counts as satisfied and NEVER counts as a mechanically established non-blocking ambiguity",
+      "FAIL_CLOSED": "an indeterminate or conflicting input may only reduce the support level; it can never raise it",
+      "SUBJECTIVE_JUDGEMENT": "PROHIBITED",
+      "GAP_SIZE_AS_SUPPORT_DEVICE": "PROHIBITED",
+      "PROXIMITY_BETWEEN_COMPARATOR_VALUES_AS_SUPPORT_DEVICE": "PROHIBITED"
+    },
+    "CRITICAL_EVIDENCE_MISSING_DEFINITION": {
+      "rule_id": "CRITICAL_EVIDENCE_MISSING_MECHANICAL_DEFINITION",
+      "CRITICAL_EVIDENCE_MISSING_IS_YES_ONLY_IF": "the missing evidence makes at least one of the following NOT mechanically determinable",
+      "EXHAUSTIVE_DETERMINABILITY_TEST": [
+        "unique leader identity",
+        "leader readiness class",
+        "dependency reversibility status",
+        "historical/stale dependence status",
+        "support predicate evaluation itself"
+      ],
+      "OTHERWISE": "CRITICAL_EVIDENCE_MISSING = NO",
+      "DETERMINABILITY_IS_MEASURED_PER_ITEM": "YES",
+      "AT_LEAST_ONE_ITEM_NOT_MECHANICALLY_DETERMINABLE": "CRITICAL_EVIDENCE_MISSING = YES",
+      "ALL_FIVE_ITEMS_MECHANICALLY_DETERMINABLE": "CRITICAL_EVIDENCE_MISSING = NO",
+      "LATEST_STATE_EVIDENCE_NOT_MECHANICALLY_TRACEABLE_IMPLIES_CRITICAL_EVIDENCE_MISSING": "NO",
+      "LATEST_STATE_TRACEABILITY_MISSING_AUTOMATICALLY_MEANS_CRITICAL_EVIDENCE_MISSING": "NO",
+      "BASIS_OF_THE_SEPARATION": "STRONG explicitly requires latest-state evidence to be mechanically traceable, while WEAK explicitly exists for a leader that materially depends on historical/stale evidence; therefore an absent current/latest-state confirmation is by itself a support-lowering condition, not automatically a critical-evidence-missing condition",
+      "RESIDUAL_RULE": {
+        "CONDITION": "only the current/latest-state confirmation is missing, while the leader identity, the historical/stale dependence and the dependency state are each mechanically established",
+        "EFFECT": "the missing evidence MAY lower the support level (it prevents STRONG and it may keep MODERATE at exactly one non-blocking ambiguity) but it does NOT by itself force RECOMMENDATION_SUPPORT = NOT_ESTABLISHED",
+        "MAY_LOWER_SUPPORT": "YES",
+        "AUTOMATICALLY_FORCES_NOT_ESTABLISHED": "NO"
+      },
+      "FORBIDDEN_INFERENCE": [
+        "LATEST_STATE_EVIDENCE_NOT_MECHANICALLY_TRACEABLE -> CRITICAL_EVIDENCE_MISSING (forbidden)",
+        "an absent current-state confirmation alone -> NOT_ESTABLISHED (forbidden)",
+        "treating an unrecorded value as a critical-evidence-missing condition without the five-item determinability test (forbidden)"
+      ]
+    },
+    "DEPENDENCY_GRAPH_UNRESOLVED_DEFINITION": {
+      "rule_id": "DEPENDENCY_GRAPH_UNRESOLVED_MECHANICAL_DEFINITION",
+      "DEPENDENCY_GRAPH_UNRESOLVED_IS_YES_ONLY_IF": [
+        "the accepted action-scoped dependency graph itself is CONFLICT or NOT_MECHANICALLY_OPERATIONALIZED",
+        "OR an unresolved applicable hard dependency could reverse the leader"
+      ],
+      "OTHERWISE": "DEPENDENCY_GRAPH_UNRESOLVED = NO",
+      "NOT_EQUAL_TO_UNRESOLVED": [
+        "no applicable hard dependency exists",
+        "a soft CAN_PRECEDE edge",
+        "an INDEPENDENT edge",
+        "a NOT_ESTABLISHED edge that does not block the current action",
+        "a SEPARATE_EXECUTION edge while the current action is FRESH_ATTRIBUTION"
+      ],
+      "ACCEPTED_GRAPH_IS_CONFLICT": "YES -> DEPENDENCY_GRAPH_UNRESOLVED = YES",
+      "ACCEPTED_GRAPH_IS_NOT_MECHANICALLY_OPERATIONALIZED": "YES -> DEPENDENCY_GRAPH_UNRESOLVED = YES",
+      "UNRESOLVED_APPLICABLE_HARD_DEPENDENCY_COULD_REVERSE_THE_LEADER": "YES -> DEPENDENCY_GRAPH_UNRESOLVED = YES",
+      "GRAPH_RERESOLVED_IN_THIS_CHECKPOINT": "NO",
+      "EDGE_SEMANTICS_CHANGED": "NO",
+      "ACTION_SCOPE_DISCIPLINE_UNCHANGED": "YES",
+      "FORBIDDEN_INFERENCE": [
+        "CAN_PRECEDE / INDEPENDENT used as an unresolved-graph condition (forbidden)",
+        "a non-blocking NOT_ESTABLISHED edge used as an unresolved-graph condition (forbidden)",
+        "a SEPARATE_EXECUTION scoped edge used as an unresolved-graph condition while the current action is FRESH_ATTRIBUTION (forbidden)",
+        "inferring an edge that the accepted action-scoped graph does not carry (forbidden)"
+      ]
+    },
+    "SMALL_EVIDENCE_CHANGE_SENSITIVITY_DEFINITION": {
+      "rule_id": "SMALL_EVIDENCE_CHANGE_SENSITIVITY_MECHANICAL_DEFINITION",
+      "SMALL_EVIDENCE_CHANGE_SENSITIVITY_REQUIRES_MECHANICAL_PROOF": "YES",
+      "SMALL_EVIDENCE_CHANGE_SENSITIVITY": "YES only when a mechanically traceable sensitivity proof shows that a small admissible evidence change can alter the lexicographic leader",
+      "WITHOUT_SUCH_GOVERNED_PROOF": "SMALL_EVIDENCE_CHANGE_SENSITIVITY = NOT_ESTABLISHED",
+      "SUBJECTIVE_ASSERTION_OF_THE_WEAK_SENSITIVITY_PREDICATE": "PROHIBITED",
+      "MECHANICAL_PROOF_OBLIGATION": {
+        "P1": "name the criterion at which the leader is decided",
+        "P2": "name the single recorded criterion value that changes and its admissible replacement from the frozen value domain of that criterion",
+        "P3": "show, by replaying the frozen comparator rules and the frozen comparator-status partition on the frozen survivor chain, that the resulting leader changes",
+        "P4": "record the proof with a lawful evidence trace referencing frozen parent artifacts only"
+      },
+      "SMALL_ADMISSIBLE_EVIDENCE_CHANGE": "a single admissible value change within the frozen value domain of one criterion of the frozen survivor chain, requiring no new evidence acquisition, no case-state re-derivation and no new measurement run",
+      "NEW_EVIDENCE_ACQUISITION_COUNTS_AS_SMALL_EVIDENCE_CHANGE": "NO",
+      "PROOF_MUST_BE_TRACEABLE": "YES",
+      "PROOF_MUST_BE_REPLAYABLE": "YES",
+      "FORBIDDEN_BASES_FOR_YES": [
+        "the comparator values look close",
+        "an unquantified statement that the decision is sensitive",
+        "the gap size between comparator values",
+        "a change requiring new evidence acquisition",
+        "a change outside the frozen value domain of the criterion"
+      ]
+    },
+    "SUPPORT_RESOLUTION_ORDER": {
+      "rule_id": "FAIL_CLOSED_SINGLE_VALUE_SUPPORT_CLASSIFIER",
+      "TYPE": "single-valued classification resolution order (not a severity score, not a weighted ordering)",
+      "STRONG_IS_NOT_A_SEVERITY_SCORE": "YES",
+      "WEIGHTED_ORDERING": "NO",
+      "MANUAL_SUPPORT_SELECTION": "PROHIBITED",
+      "S0": {
+        "CONDITION": "NO UNIQUE LEADER",
+        "RESULT": "NOT_ESTABLISHED"
+      },
+      "S1": {
+        "CONDITION": "CRITICAL_EVIDENCE_MISSING = YES OR DEPENDENCY_GRAPH_UNRESOLVED = YES",
+        "RESULT": "NOT_ESTABLISHED"
+      },
+      "S2": {
+        "CONDITION": "all STRONG conditions satisfied",
+        "ALL_STRONG_CONDITIONS": [
+          "UNIQUE_DOMINANT_WORKSTREAM_UNDER_FROZEN_LEXICOGRAPHIC_RULES = YES",
+          "LEADER_READINESS_AT_LEAST_R3 = YES",
+          "NO_UNRESOLVED_DEPENDENCY_CAPABLE_OF_REVERSING_THE_RECOMMENDATION = YES",
+          "LATEST_STATE_EVIDENCE_MECHANICALLY_TRACEABLE = YES"
+        ],
+        "RESULT": "STRONG"
+      },
+      "S3": {
+        "CONDITION": "any mechanically established WEAK predicate satisfied",
+        "WEAK_PREDICATES": [
+          "the leader materially depends on stale or historical evidence (mechanically established)",
+          "a mechanically traceable sensitivity proof shows that a small admissible evidence change can alter the lexicographic leader"
+        ],
+        "RESULT": "WEAK"
+      },
+      "S4": {
+        "CONDITION": "the MODERATE predicate satisfied (a unique leader AND exactly one mechanically established non-blocking ambiguity)",
+        "NON_BLOCKING_AMBIGUITY": "a mechanically established open item that neither satisfies S1 nor could reverse the leader",
+        "AMBIGUITY_COUNT_NOT_MECHANICALLY_DETERMINABLE": "the MODERATE predicate is not satisfied and the resolution continues to S5",
+        "RESULT": "MODERATE"
+      },
+      "S5": {
+        "CONDITION": "otherwise",
+        "RESULT": "NOT_ESTABLISHED"
+      },
+      "ORDER": [
+        "S0",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "CONSOLE_FORM": "NO_UNIQUE_LEADER > CRITICAL_EVIDENCE_OR_UNRESOLVED_DEPENDENCY > STRONG > WEAK > MODERATE > NOT_ESTABLISHED_FALLBACK",
+      "SINGLE_VALUE_OUTPUT_GUARANTEED": "YES",
+      "MUTUALLY_EXCLUSIVE": "YES",
+      "EXHAUSTIVE": "YES",
+      "FAIL_CLOSED": "YES",
+      "FIRST_MATCHING_STEP_WINS": "YES",
+      "LOWER_STEP_MAY_NOT_RAISE_A_HIGHER_STEP_DECISION": "YES",
+      "SUPPORT_RESOLUTION_ORDER_FROZEN": "YES"
+    },
+    "WEAK_MODERATE_OVERLAP_RULE": {
+      "rule_id": "WEAK_PRECEDES_MODERATE_OVERLAP_RULE",
+      "CONDITION": "the WEAK predicate and the MODERATE predicate are both satisfied",
+      "RESULT": "WEAK",
+      "BASIS": "a mechanically established material dependence on stale/historical evidence is the more limiting support condition",
+      "IS_A_RANKING_TIE_BREAK": "NO",
+      "CLASSIFIES_RECOMMENDATION_SUPPORT_ONLY": "YES",
+      "WEAK_AND_MODERATE_BOTH_SATISFIED": "WEAK",
+      "OVERLAP_RULE_FROZEN": "YES"
+    },
+    "ANTI_ABUSE": {
+      "rule_id": "SUPPORT_RESOLUTION_ANTI_ABUSE",
+      "SUPPORT_MAY_NOT_BE_RAISED_BY_IGNORING_AN_ESTABLISHED_LIMITING_PREDICATE": "YES",
+      "MISSING_EVIDENCE_MAY_ONLY_LOWER_SUPPORT": "YES",
+      "SUPPORT_VALUE_MUST_BE_DERIVED_BEFORE_ANY_RECOMMENDATION_STATEMENT": "YES",
+      "SUPPORT_VALUE_IS_NOT_AN_AUTHORIZATION": "YES",
+      "SPECIAL_OUTCOME_SUPPORT_REMAINS_NOT_ESTABLISHED": "YES",
+      "SPECIAL_OUTCOME_SUPPORT_BASIS": "the Amendment 006 special outcome has no unique workstream leader, so S0 applies",
+      "SUPPORT_PACKAGING_AS_STRONG_WITHOUT_ALL_FOUR_STRONG_SUBCHECKS": "FORBIDDEN"
+    },
+    "NO_SUPPORT_REDERIVATION_IN_THIS_CHECKPOINT": {
+      "rule_id": "R1H_NO_SUPPORT_REDERIVATION",
+      "CURRENT_R4_SUPPORT_REDERIVATION": "NOT_EVALUATED_IN_R1H",
+      "RECOMMENDATION_SUPPORT_COMPUTED_HERE": "NO",
+      "WS13_SUPPORT_ASSERTED_HERE": "NO",
+      "PRIORITY_RANKING_RERUN_HERE": "NO",
+      "P1_P7_COMPARATOR_EXECUTED_HERE": "NO",
+      "PRIORITY_DECISION_DIGEST_RECOMPUTED_HERE": "NO",
+      "CONSTRAINT": "this checkpoint freezes the support resolution rules only; it computes no support value and re-derives no priority decision, even though the frozen rules could prospectively be applied to the current accepted data",
+      "CURRENT_ACCEPTED_REFERENCE_IS_READ_ONLY": "YES"
+    },
+    "IMMUTABLE_PRIORITY_RESULT_REFERENCE": {
+      "rule_id": "R4_PRIORITY_RESULT_IMMUTABLE_IN_THIS_AMENDMENT",
+      "P1_P5_PRIORITY_CHAIN_CHANGED": "NO",
+      "UNIQUE_LEADER_CHANGED": "NO",
+      "RECOMMENDED_NEXT_WORKSTREAM_CHANGED": "NO",
+      "CURRENT_ACCEPTED_UNIQUE_LEADER_REFERENCE": "WS-13",
+      "CURRENT_ACCEPTED_UNIQUE_LEADER_ESTABLISHED_AT_REFERENCE": "P5",
+      "CURRENT_ACCEPTED_RECOMMENDED_NEXT_WORKSTREAM_REFERENCE": "WS-13",
+      "REFERENCE_IS_READ_ONLY": "YES",
+      "PRIORITY_DECISION_REEVALUATED_HERE": "NO",
+      "R4_MACHINE_ARTIFACT_MODIFIED_HERE": "NO"
+    },
+    "SUPERSEDE_DECLARATIONS": {
+      "supersedes_prospectively": [],
+      "adds_prospectively": [
+        "the prospective payload key recommendation_support_resolution",
+        "the mechanical CRITICAL_EVIDENCE_MISSING definition and its five-item determinability test",
+        "the mechanical DEPENDENCY_GRAPH_UNRESOLVED definition and its non-blocking partitions",
+        "the mechanical SMALL_EVIDENCE_CHANGE_SENSITIVITY definition and its sensitivity-proof obligation",
+        "the fail-closed single-value support resolution order S0-S5",
+        "the WEAK-over-MODERATE overlap rule"
+      ],
+      "does_not_change": [
+        "the support enum",
+        "the meaning of every original support predicate",
+        "the priority chain and the comparator-status partition",
+        "the accepted unique leader and recommended next workstream",
+        "the accepted R3 state",
+        "the Amendment 006 special-outcome semantics",
+        "the authorization boundary"
+      ],
+      "support_enum_changed": "NO",
+      "support_predicate_meaning_changed": "NO",
+      "support_resolution_procedure_changed": "YES (missing procedure added only)",
+      "original_snapshot_immutable": "YES",
+      "in_place_edit_of_parent_snapshot_or_amendment_001_002_003_004_005_006_007": "PROHIBITED",
+      "r4_must_use_effective_design": "YES"
+    },
+    "FROZEN_FLAGS": {
+      "SUPPORT_ENUM_UNCHANGED": "YES",
+      "SUPPORT_PREDICATE_MEANING_UNCHANGED": "YES",
+      "CRITICAL_EVIDENCE_MISSING_SEMANTICS_FROZEN": "YES",
+      "LATEST_STATE_TRACEABILITY_MISSING_AUTOMATICALLY_MEANS_CRITICAL_EVIDENCE_MISSING": "NO",
+      "DEPENDENCY_GRAPH_UNRESOLVED_SEMANTICS_FROZEN": "YES",
+      "SMALL_EVIDENCE_CHANGE_SENSITIVITY_REQUIRES_MECHANICAL_PROOF": "YES",
+      "SUPPORT_RESOLUTION_ORDER_FROZEN": "YES",
+      "SUPPORT_RESOLUTION_SINGLE_VALUED": "YES",
+      "SUPPORT_RESOLUTION_MUTUALLY_EXCLUSIVE": "YES",
+      "SUPPORT_RESOLUTION_EXHAUSTIVE": "YES",
+      "SUPPORT_RESOLUTION_FAIL_CLOSED": "YES",
+      "WEAK_AND_MODERATE_OVERLAP": "WEAK",
+      "SUBJECTIVE_SUPPORT_INFERENCE": "PROHIBITED",
+      "WEIGHTED_SUPPORT": "PROHIBITED",
+      "CURRENT_R4_SUPPORT_REDERIVATION": "NOT_EVALUATED_IN_R1H"
+    }
+  },
+  "effective_analysis_design_definition": {
+    "EFFECTIVE_ANALYSIS_DESIGN": "R1 original frozen design + Amendment 001 + Amendment 002 + Amendment 003 + Amendment 004 + Amendment 005 + Amendment 006 + Amendment 007 + Amendment 008",
+    "payload_construction": "payload = {key: parent_preflight[key] for key in parent_preflight.analysis_design_digest_spec.extracted_keys}; payload['case_classification_schema'] = amendment_001.amended_case_state_schema; payload['effective_analysis_design_additions'] = amendment_001.effective_analysis_design_additions; payload['workstream_axis_mapping'] = amendment_002.workstream_axis_mapping; payload['workstream_bucket_projection'] = amendment_003.workstream_bucket_projection; payload['workstream_bucket_projection']['DOMAIN_ELIGIBILITY_BEFORE_PROJECTION'] = amendment_004.workstream_domain_eligibility; payload['readiness_resolution_and_action_scoped_dependency'] = amendment_005.readiness_resolution_and_action_scoped_dependency; payload['priority_comparator_operationalization'] = amendment_006.priority_comparator_operationalization; payload['priority_comparator_status_partition_correction'] = amendment_007.priority_comparator_status_partition_correction; payload['recommendation_support_resolution'] = amendment_008.recommendation_support_resolution; digest = sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8'))",
+    "canonicalization": "UTF-8; json.dumps(ensure_ascii=False, sort_keys=True, separators=(',', ':'))",
+    "excluded_content": [
+      "timestamps",
+      "machine paths",
+      "file SHA metadata",
+      "manifest digests"
+    ],
+    "superseded_payload_keys": [],
+    "added_payload_keys": [
+      "recommendation_support_resolution"
+    ],
+    "overridden_payload_key_paths": [],
+    "prior_payload_keys_preserved_verbatim": "YES",
+    "payload_keys_added_by_this_amendment": 1,
+    "parent_effective_digest_computable_from_this_amendments_declared_construction": "YES (the construction is cumulative and each parent amendment contributes exactly the key it declares; removing the last added key reproduces the parent digest)",
+    "parent_payload_keys_from_amendment_001": [
+      "case_classification_schema (superseded by amended_case_state_schema)",
+      "effective_analysis_design_additions"
+    ],
+    "parent_payload_keys_from_amendment_002": [
+      "workstream_axis_mapping"
+    ],
+    "parent_payload_keys_from_amendment_003": [
+      "workstream_bucket_projection"
+    ],
+    "parent_payload_keys_from_amendment_004": [
+      "workstream_domain_eligibility (value-level override at workstream_bucket_projection.DOMAIN_ELIGIBILITY_BEFORE_PROJECTION)"
+    ],
+    "parent_payload_keys_from_amendment_005": [
+      "readiness_resolution_and_action_scoped_dependency"
+    ],
+    "parent_payload_keys_from_amendment_006": [
+      "priority_comparator_operationalization"
+    ],
+    "parent_payload_keys_from_amendment_007": [
+      "priority_comparator_status_partition_correction"
+    ],
+    "recomputation_inputs": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json (frozen parent)",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_004.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_006.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_007.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_008.json (this artifact)"
+    ],
+    "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "057902cf942f65d2e0211da5434022dc95e6bf2650fc7b60902c10537d492909",
+    "recomputation_must_reproduce_embedded_digest": "YES"
+  },
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "e3939407f01ec58ecd3405e57a4f4d5f40ce3b95d0ece563fd786766f08c29fa",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DETERMINISTIC": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DIFFERS_FROM_PARENT": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_RECOMPUTATION_1": "e3939407f01ec58ecd3405e57a4f4d5f40ce3b95d0ece563fd786766f08c29fa",
+  "integrity": {
+    "PRE_CHANGE_WORKSPACE_MANIFEST_DIGEST": "cdcd4f7f310998b3bec36ff2b2257111f860c2700d3f2c3185294e84581f52f6",
+    "PRE_CHANGE_WORKSPACE_MANIFEST_ENTRY_COUNT": 19661,
+    "PRE_CHANGE_WORKSPACE_MANIFEST_RULE": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "PRE_CHANGE_WORKSPACE_SCOPE": "ACTIVE_V4 workspace only (Local Database Q&A System本地版v4)",
+    "PARENT_A007_DECLARED_PRE_CHANGE_MANIFEST_ENTRY_COUNT": 19659,
+    "ENTRY_COUNT_DELTA_VS_PARENT_DECLARATION": 2,
+    "ENTRY_COUNT_DELTA_DISPOSITION": "recorded as a parent-side counting difference against the same frozen workspace rule; the ACTIVE_V4 workspace gained no new path after the A007 write (the only two files with a later modification time are the R4 harness at 2026-09-15 17:41:21 and the R4 machine artifact at 2026-09-15 17:41:52, both modified in place by the previously authorized R4 execution), so the delta is not attributable to any addition by this checkpoint; the A008 change boundary is therefore verified by a same-rule PRE / POST recomputation of this workspace, not against the parent declaration; flagged for governance reconciliation and NOT amended here",
+    "PRE_CHANGE_PRODUCTION_HASH": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "PRE_CHANGE_PRODUCTION_HASH_VERIFIED_LIVE": "YES",
+    "EXPECTED_POST_CHANGE_DELTA": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_008.json (added)"
+    ],
+    "ORIGINAL_PREFLIGHT_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_001_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_002_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_003_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_004_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_005_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_006_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_007_EXPECTED_UNCHANGED": "YES",
+    "R4_HARNESS_EXPECTED_UNCHANGED": "YES",
+    "R4_MACHINE_ARTIFACT_EXPECTED_UNCHANGED": "YES",
+    "R4_TEST_EXPECTED_UNCHANGED": "YES",
+    "MASTER_EXPECTED_UNCHANGED": "YES",
+    "PARENT_ARTIFACTS_EXPECTED_UNCHANGED": "YES",
+    "PRODUCT_BASELINE_GOLDEN_EVALUATOR_RUNTIME_DB_EXPECTED_UNCHANGED": "YES",
+    "POST_MANIFEST_MINUS_A008_MUST_EQUAL_PRE_MANIFEST": "YES",
+    "POST_WRITE_VERIFICATION_LOCATION": "R1H final console (this checkpoint)",
+    "no_scratch_files_written": "YES",
+    "cache_writes": 0,
+    "computation_mode": "IN_MEMORY_ONLY",
+    "AMENDMENT_FINALIZATION": "the amendment is created on the single authorized path; the effective-design digest fields are then recomputed from this very artifact and finalized in place on the same single authorized path; no other path is written at any time and no temporary or scratch file is created"
+  },
+  "authorization_boundary": {
+    "ACTIVE_V4_WRITE_PATHS_THIS_CHECKPOINT": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_008.json"
+    ],
+    "OTHER_ACTIVE_V4_WRITES_AUTHORIZED": "NO",
+    "V3_WORKSPACE": "FROZEN / READ-ONLY / UNTOUCHED",
+    "PUBLISH_WORKSPACE": "READ-ONLY / NO SYNC / NO WRITE / NO GIT MUTATION",
+    "GIT_INIT_PERFORMED": "NO",
+    "PRIORITY_RANKING_PERFORMED_HERE": "NO",
+    "PRIORITY_RERANKING_PERFORMED_HERE": "NO",
+    "SUPPORT_REDERIVATION_PERFORMED_HERE": "NO",
+    "SUPPORT_VALUE_COMPUTED_HERE": "NO",
+    "RECOMMENDATION_REEVALUATED_HERE": "NO",
+    "R4_EXECUTED_HERE": "NO",
+    "R4_MACHINE_ARTIFACT_MODIFIED": "NO",
+    "R4_HARNESS_MODIFIED": "NO",
+    "TEST_MODIFIED": "NO",
+    "R3_RERUN_PERFORMED_FOR_ANALYTICAL_PURPOSE": "NO",
+    "R3_ANALYTICAL_STATE_MODIFIED": "NO",
+    "R3_ANALYTICAL_DIGESTS_MODIFIED": "NO",
+    "A001_TO_A007_MODIFIED": "NO",
+    "DEPENDENCY_GRAPH_RECOMPUTED_HERE": "NO",
+    "WORKSTREAM_READINESS_RECOMPUTED_HERE": "NO",
+    "HARNESS_MODIFICATION_AUTHORIZED": "NO",
+    "TEST_MODIFICATION_AUTHORIZED": "NO",
+    "HUMAN_REPORT_CREATED": "NO",
+    "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+    "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+    "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO",
+    "R5_ENTERED": "NO"
+  },
+  "r1h_execution_declarations": {
+    "MODEL_CALLS": 0,
+    "PRODUCTION_RETRIEVAL_RUNS": 0,
+    "COUNTERFACTUAL_RUNS": 0,
+    "FULL_144_RUNS": 0,
+    "PYTEST_RUNS": 0,
+    "RUFF_RUNS": 0,
+    "PY_COMPILE_OR_COMPILEALL_RUNS": 0,
+    "BYTECODE_OR_PYCACHE_WRITES": 0,
+    "CACHE_WRITES": 0,
+    "TEMPORARY_FILES_CREATED": 0,
+    "SCRATCH_FILES_WRITTEN": 0,
+    "IDENTITY_SHA256_VERIFIED_PRE_WRITE": 5,
+    "DERIVED_DIGEST_IDENTITIES_VERIFIED_PRE_WRITE": 6,
+    "R4_HARNESS_IDENTITY_VERIFIED_PRE_WRITE": "YES",
+    "R4_MACHINE_ARTIFACT_IDENTITY_VERIFIED_PRE_WRITE": "YES",
+    "R4_TEST_IDENTITY_VERIFIED_PRE_WRITE": "YES",
+    "A007_IDENTITY_VERIFIED_PRE_WRITE": "YES",
+    "PARENT_EFFECTIVE_DESIGN_DIGEST_REPRODUCED_PRE_WRITE": "YES",
+    "R3_FROZEN_DIGESTS_VERIFIED_READ_ONLY": "ALL_MATCH",
+    "PROVISIONAL_PRIORITY_DECISION_DIGEST_VERIFIED_READ_ONLY": "MATCH",
+    "LIVE_PRODUCTION_HASH_VERIFIED_READ_ONLY": "MATCH",
+    "WRITE_FIREWALL_ACTIVE": "YES",
+    "R3_ANALYTICAL_STATE_MODIFIED": "NO",
+    "R4_MACHINE_ARTIFACT_MODIFIED": "NO",
+    "R4_HARNESS_MODIFIED": "NO",
+    "TEST_MODIFIED": "NO",
+    "SUPPORT_VALUE_COMPUTED": "NO",
+    "PRIORITY_RANKING_RERUN": "NO",
+    "RECOMMENDATION_COMPUTED": "NO"
+  },
+  "r1h_declarations": {
+    "SUPPORT_ENUM_UNCHANGED": "YES",
+    "SUPPORT_PREDICATE_MEANING_UNCHANGED": "YES",
+    "CRITICAL_EVIDENCE_MISSING_SEMANTICS_FROZEN": "YES",
+    "LATEST_STATE_TRACEABILITY_MISSING_AUTOMATICALLY_MEANS_CRITICAL_EVIDENCE_MISSING": "NO",
+    "DEPENDENCY_GRAPH_UNRESOLVED_SEMANTICS_FROZEN": "YES",
+    "SMALL_EVIDENCE_CHANGE_SENSITIVITY_REQUIRES_MECHANICAL_PROOF": "YES",
+    "SUPPORT_RESOLUTION_ORDER_FROZEN": "YES",
+    "SUPPORT_RESOLUTION_ORDER": "NO_UNIQUE_LEADER > CRITICAL_EVIDENCE_OR_UNRESOLVED_DEPENDENCY > STRONG > WEAK > MODERATE > NOT_ESTABLISHED_FALLBACK",
+    "SUPPORT_RESOLUTION_SINGLE_VALUED": "YES",
+    "SUPPORT_RESOLUTION_MUTUALLY_EXCLUSIVE": "YES",
+    "SUPPORT_RESOLUTION_EXHAUSTIVE": "YES",
+    "SUPPORT_RESOLUTION_FAIL_CLOSED": "YES",
+    "WEAK_AND_MODERATE_OVERLAP": "WEAK",
+    "P1_P5_PRIORITY_CHAIN_CHANGED": "NO",
+    "UNIQUE_LEADER_CHANGED": "NO",
+    "RECOMMENDED_NEXT_WORKSTREAM_CHANGED": "NO",
+    "CURRENT_ACCEPTED_UNIQUE_LEADER_REFERENCE": "WS-13",
+    "CURRENT_ACCEPTED_RECOMMENDED_NEXT_WORKSTREAM_REFERENCE": "WS-13",
+    "CURRENT_R4_SUPPORT_REDERIVATION": "NOT_EVALUATED_IN_R1H",
+    "PRIORITY_RANKING_PERFORMED_HERE": "NO",
+    "R4_EXECUTED_HERE": "NO",
+    "R4_MACHINE_ARTIFACT_MODIFIED": "NO",
+    "R4_HARNESS_MODIFIED": "NO",
+    "TEST_MODIFIED": "NO",
+    "ACCEPTED_R3_STATE_MODIFIED": "NO",
+    "PRODUCTION_HASH_CHANGED": "NO",
+    "MODEL_CALLS": 0,
+    "PRODUCTION_RETRIEVAL_RUNS": 0,
+    "COUNTERFACTUAL_RUNS": 0,
+    "FULL_144_RUNS": 0,
+    "SCRATCH_FILES_WRITTEN": 0,
+    "CACHE_WRITES": 0,
+    "R1H_DESIGN_AMENDMENT": "PASS"
+  },
+  "next_authorized_checkpoint": "R4_SUPPORT_REDERIVATION_UNDER_AMENDMENTS_001_002_003_004_005_006_007_008 (subject to governance acceptance of Amendment 008 and to an explicitly authorized support-resolution alignment)",
+  "READY_FOR_R4_SUPPORT_REDERIVATION": "NO",
+  "READY_FOR_R4_SUPPORT_REDERIVATION_BASIS": "design-side blocking condition CLOSED (the frozen support predicates now have a mechanical, mutually exclusive, exhaustive, fail-closed single-value resolution procedure with mechanical definitions for CRITICAL_EVIDENCE_MISSING, DEPENDENCY_GRAPH_UNRESOLVED and SMALL_EVIDENCE_CHANGE_SENSITIVITY); execution-side prerequisites OPEN: (1) governance acceptance of Amendment 008, (2) the support resolution is not executed in R1H by explicit instruction, (3) an A008-conformant mechanical resolution requires an explicitly authorized implementation of the frozen S0-S5 classifier, which is not authorized and not performed in this checkpoint (R4 harness and R4 machine artifact are unmodified); therefore the rederivation is NOT ready and NOT authorized here, and the answer flips to YES only after those prerequisites are closed by governance",
+  "READY_FOR_R5": "NO",
+  "PRIORITY_DECISION": "NOT_EVALUATED_IN_R1H",
+  "RECOMMENDED_NEXT_WORKSTREAM": "NOT_EVALUATED_IN_R1H",
+  "RECOMMENDATION_SUPPORT": "NOT_EVALUATED_IN_R1H",
+  "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+  "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+  "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO",
+  "STOP": "YES",
+  "WAIT_FOR_GOVERNANCE_REVIEWER": "YES",
+  "timestamp": "2026-09-15T17:54:49"
+}

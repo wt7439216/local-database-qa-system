@@ -15,7 +15,7 @@ reproducible offline.  Exit code 1 when any Phase E threshold is missed.
 
 from __future__ import annotations
 
-from contextlib import closing
+from contextlib import closing, contextmanager
 import json
 import sqlite3
 import sys
@@ -28,6 +28,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from core.engine_v2 import StructuredQAEngine  # noqa: E402
+from core import config  # noqa: E402
 from core.library_service import LibraryService  # noqa: E402
 from core.query_router import QueryRouter  # noqa: E402
 from core.query_scope import QueryScope  # noqa: E402
@@ -184,13 +185,27 @@ def markdown(title: str, body: str) -> str:
     return f"# {title}\n\n## 内容\n{body}\n"
 
 
+@contextmanager
+def isolated_fixture_logs(log_dir: Path):
+    """Both the importer and library service belong to this offline fixture."""
+    previous = config.LOG_DIR
+    config.LOG_DIR = log_dir
+    try:
+        yield
+    finally:
+        config.LOG_DIR = previous
+
+
 def run_engine_scope_leakage_check() -> dict:
     """Engine-level check: a rewrite may mention an out-of-scope document,
     but retrieval and the prepared contexts must never leak it."""
-    with tempfile.TemporaryDirectory() as temp:
+    with tempfile.TemporaryDirectory() as temp, isolated_fixture_logs(Path(temp) / "logs"):
         root = Path(temp)
         library = root / "managed.sqlite3"
-        service = LibraryService(library, embedding_model="test-embed", ollama=FakeEmbedder())
+        service = LibraryService(
+            library, embedding_model="test-embed", ollama=FakeEmbedder(),
+            log_dir=root / "logs",
+        )
         kb_a = service.create_knowledge_base("kb-a")["knowledge_base_id"]
         kb_b = service.create_knowledge_base("kb-b")["knowledge_base_id"]
         source_a = root / "doc_a.md"

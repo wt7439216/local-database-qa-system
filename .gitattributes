@@ -19,3 +19,9 @@
 *.jpg binary
 *.jpeg binary
 *.ico binary
+
+# Frozen evidence carries raw-byte SHA commitments. Keep these bytes exact;
+# ordinary source files above still use canonical line endings on checkout.
+eval/*.json -text
+tests/fixtures/**/*.json -text
+PUBLICATION_EVIDENCE.json -text

@@ -1,0 +1,280 @@
+{
+  "phase": "V4.8.1",
+  "phase_title": "Residual Generation / Explicit Document-Membership Representation Isolation",
+  "mode": "SINGLE_FACTOR_MEMBERSHIP_DIAGNOSIS",
+  "artifact_type": "DIAGNOSTIC_ONLY",
+  "is_product_baseline": false,
+  "snapshot_role": "IMMUTABLE_PREFLIGHT_SNAPSHOT",
+  "snapshot_written_before": [
+    "diagnostic harness creation",
+    "diagnostic test creation",
+    "diagnostic generator run",
+    "first model call"
+  ],
+  "PRESTATE_LOCKED": "YES",
+  "DO_NOT_MODIFY": "YES",
+  "hash_representation": "sha256_prefix16 (first 16 hex characters, mechanically measured read-only)",
+  "timestamp": "2026-09-13T00:00:00+08:00",
+
+  "production_hash_before": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "CANONICAL_PRODUCTION_HASH": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+  "CANONICAL_PRODUCTION_HASH_full": true,
+  "runtime_db_identity_before": {
+    "path": "data\\library\\documents.sqlite3",
+    "identity": "10698752:c6bc9b3eb63ae4e6",
+    "sha256": "c6bc9b3eb63ae4e6d96caf859a2b0c5f2f1e5a5b6f438e81aa0bbc3cf4084c97"
+  },
+  "pre_change_workspace_manifest_entry_count": 300,
+  "pre_change_workspace_manifest_digest_note": "digest recorded in eval/v4_8_1_residual_generation_mechanism_isolation.json under pre_change_integrity",
+
+  "current_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+  "product_metrics_source": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+  "current_release": "v4.0.0-alpha.2",
+  "product_quality_dod": "NOT_YET_PASS",
+  "v4_final": "NO",
+
+  "remote_main_head_expected": "1efc74f1c5aa4021766ed443f68ef8c5046116e4",
+
+  "parent_V4_8_artifact_hashes": {
+    "eval/v4_8_generation_mechanism_isolation.json": "sha256_prefix16:72eaa33f024f9e7f",
+    "docs/V4_8_GENERATION_MECHANISM_ISOLATION.md": "sha256_prefix16:fbb68911e32509be",
+    "scripts/analyze_v4_8_generation_mechanism.py": "sha256_prefix16:28a5316fa95533f9",
+    "tests/test_v4_8_generation_mechanism_diagnosis.py": "sha256_prefix16:7a89b59fdcb9c5f5"
+  },
+  "V4_7_artifact_hashes": {
+    "eval/v4_7_document_identity_root_cause.json": "sha256_prefix16:effcbdfd18a93b2a",
+    "docs/V4_7_DOCUMENT_IDENTITY_ROOT_CAUSE.md": "sha256_prefix16:7073a64a7b1a537a",
+    "docs/V4_7_CLOSURE_GOVERNANCE_ALIGNMENT.md": "sha256_prefix16:9e33894038faa88a"
+  },
+  "baseline_artifact_hashes": {
+    "eval/v4_baseline_lineage.json": "sha256_prefix16:18ca7ccb445d46c2",
+    "eval/v4_6_2_hash_portability_baseline.json": "sha256_prefix16:414e5a711d6bfbf0",
+    "eval/v4_6_1_embedding_identity_baseline.json": "sha256_prefix16:2c7b9d0beca0af94"
+  },
+  "Golden_hash": {
+    "eval/v3_final_golden.json": "sha256_prefix16:31a68507456714c9"
+  },
+  "V4_6_historical_artifact_hashes": {
+    "eval/v4_6_post_routing_attribution.json": "sha256_prefix16:5a644a3fe9a9b280",
+    "docs/V4_POST_ROUTING_ATTRIBUTION.md": "sha256_prefix16:fbac1e51ca621d93"
+  },
+
+  "PARENT_V4_8_PROTOCOL_PROVENANCE_CONFIDENCE": "PARTIAL",
+  "PARENT_V4_8_PRIMARY_OUTCOME_INVARIANT_TO_MATCHER_BROADENING": "YES",
+  "PARENT_V4_8_PRECLOSURE_DERIVED_SEMANTIC_DIGEST": "NOT_AVAILABLE_PRECLOSURE_DERIVED_DIGEST_OVERWRITTEN",
+  "PARENT_V4_8_ACCEPTED_STATE": {
+    "md-004": {
+      "M1_CAUSAL_SUPPORT": "SUPPORTED",
+      "M2_CAUSAL_SUPPORT": "SUPPORTED",
+      "M1_ISOLATED": "NO",
+      "M2_ISOLATED": "NO",
+      "MULTIPLE_SUFFICIENT_INTERVENTIONS": "YES",
+      "M3_INTERACTION_EFFECT": "NOT_ESTABLISHED",
+      "INTERACTION_PATTERN": "SUBADDITIVE_BINARY_CEILING_COMPATIBLE"
+    },
+    "md-009": {
+      "M1_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "M2_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "M4_PHASE_LOCAL_SUPPORT": "SUPPORTED",
+      "M4_GLOBAL_STATUS": "NOT_ESTABLISHED"
+    },
+    "md-015": {
+      "M1_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "M2_CAUSAL_SUPPORT": "NOT_SUPPORTED",
+      "M4_PHASE_LOCAL_SUPPORT": "SUPPORTED",
+      "M4_GLOBAL_STATUS": "NOT_ESTABLISHED"
+    },
+    "aggregate": {
+      "M1_SHARED_SUPPORT": "PARTIAL",
+      "M2_SHARED_SUPPORT": "PARTIAL",
+      "M4_SHARED_PHASE_LOCAL_SUPPORT": "PARTIAL",
+      "HETEROGENEOUS_RESPONSE_PROFILE": "YES",
+      "MIXED_GENERATION_MECHANISMS": "NOT_ESTABLISHED",
+      "SHARED_CAUSAL_MECHANISM": "NOT_ESTABLISHED",
+      "GENERATION_MECHANISM_ISOLATION": "NOT_ESTABLISHED",
+      "GROUPING_RESIDUAL_EVIDENCE": "SUPPORTED"
+    }
+  },
+
+  "historical_claim_freeze": {
+    "HISTORICAL_SOURCE_ANCHOR_AVAILABLE": "NO",
+    "RELEVANT_PIPELINE_EQUIVALENCE": "NOT_ESTABLISHED",
+    "HISTORICAL_FAILURE_COMPATIBILITY": "STRONGLY_SUPPORTED",
+    "HISTORICAL_V4_6_DOCUMENT_IDENTITY_ATTRIBUTION": "STRONGLY_CHALLENGED"
+  },
+
+  "target_cases": ["md-009", "md-015"],
+  "control_reference_case": "md-004",
+  "control_reference_role": "NON_PRIMARY_CONTROL_REFERENCE",
+  "control_reference_policy": "CONDITIONAL_EXECUTION_ONLY",
+  "primary_target_count": 2,
+
+  "factor_definitions_frozen": {
+    "A": "A0 (production-equivalent material representation; FROZEN, NOT MANIPULATED)",
+    "B": "B0 (production-equivalent task instruction; FROZEN, NOT MANIPULATED)",
+    "G": "EXPLICIT_DOCUMENT_MEMBERSHIP_REPRESENTATION"
+  },
+
+  "factor_G_operationalization": {
+    "G_OPERATIONALIZATION": "EXPLICIT_MEMBERSHIP_METADATA_ONLY",
+    "definition": "add opaque same-document membership metadata mechanically derived from the frozen document_id, without changing existing chunks, chunk order, chunk text, canonical titles, material labels, production task instruction or citation contract",
+    "PHYSICAL_CHUNK_REGROUPING": "NO",
+    "CHUNK_REORDERING": "NO",
+    "DOCUMENT_SUMMARIZATION": "NO"
+  },
+  "G0_definition": "CURRENT PRODUCTION-EQUIVALENT CHUNK-CENTRIC REPRESENTATION = A0 + B0 + NO explicit cross-chunk document-membership metadata",
+  "G1_definition": "DIAGNOSTIC-ONLY EXPLICIT DOCUMENT-MEMBERSHIP REPRESENTATION = G0 + exactly one membership-metadata block",
+
+  "G1_template": {
+    "exact_template": "[同源关系]\n组<TOKEN>: 材料<i>, 材料<j>, ...\n组<TOKEN>: 材料<k>\n...",
+    "rendered_block_md-009": "[同源关系]\n组A: 材料1, 材料2, 材料3, 材料4\n组B: 材料5",
+    "rendered_block_md-015": "[同源关系]\n组A: 材料1, 材料2\n组B: 材料3\n组C: 材料4\n组D: 材料5",
+    "rendering_rule": "one line per group token in first-occurrence order; token label = 组 + A/B/C/...; members listed as 材料<n> in ascending material index order, separated by ', '",
+    "header_line": "[同源关系]",
+    "forbidden_additions": [
+      "请按组回答",
+      "同一组请合并",
+      "组A 是某文档",
+      "这些是文档标题",
+      "请输出标题"
+    ],
+    "no_extra_explanation": "YES"
+  },
+  "G1_insertion_rule": {
+    "rule": "insert the membership block as one additional block AFTER the complete evidence/context serialization (i.e. immediately after the last material block) and BEFORE the final question/task suffix line",
+    "mechanical_form": "pieces = user_content.split('\\n\\n'); new_content = '\\n\\n'.join(pieces[:-1] + [membership_block] + [pieces[-1]])",
+    "SAME_INSERTION_RULE_ACROSS_CASES": "YES",
+    "case_specific_placement": "NO",
+    "absolute_character_offset_invariance_claimed": "NO",
+    "note": "inserting metadata necessarily shifts later absolute character offsets; this is NOT used as a gate. Only relative position within the existing evidence sequence is preserved."
+  },
+  "group_token_assignment_rule": {
+    "rule": "first unique document encountered in original chunk order -> 组A, second -> 组B, third -> 组C, ...",
+    "basis": "frozen document_id from the V4.7 per-case material_to_chunk_to_document_map",
+    "token_does_not_leak_document_id": "YES",
+    "manual_assignment": "NO",
+    "alphabetical_title_sorting": "NO",
+    "database_iteration_order": "NO",
+    "hash_ordering": "NO",
+    "case_specific_tuning": "NO"
+  },
+  "GROUP_TOKEN_MAPPING": {
+    "md-009": {
+      "material_chunk_count": 5,
+      "unique_document_count": 2,
+      "group_sizes": [4, 1],
+      "group_tokens": {"组A": [1, 2, 3, 4], "组B": [5]}
+    },
+    "md-015": {
+      "material_chunk_count": 5,
+      "unique_document_count": 4,
+      "group_sizes": [2, 1, 1, 1],
+      "group_tokens": {"组A": [1, 2], "组B": [3], "组C": [4], "组D": [5]}
+    }
+  },
+
+  "group_information_firewall": {
+    "allowed_content": "which existing material/chunk labels share the same underlying document",
+    "forbidden_content": [
+      "canonical title",
+      "raw document_id",
+      "source_name",
+      "filename",
+      "path",
+      "page-derived answer clue",
+      "semantic role",
+      "Golden token",
+      "expected answer",
+      "importance / ranking"
+    ]
+  },
+
+  "Product_outcome_policy": {
+    "primary_Y": "DOCUMENT_IDENTITY_RESPONSE_SUCCESS",
+    "definition": "PASS iff O1_CANONICAL_TITLE_EMITTED == YES AND O5_DOCUMENT_SET_CORRECT == YES AND no invented document identity",
+    "O5_DEFINITION": "full expected-document-set coverage (every expected document covered)",
+    "O7_ROLE_TERM_EMITTED": "SUPPORTING_ONLY (never feeds primary Y)",
+    "success_values": {"PASS": 1, "FAIL": 0},
+    "source": "V4.8 closure frozen outcome policy (reused unchanged)"
+  },
+  "title_match_policy_identity": {
+    "TITLE_MATCH_NORMALIZATION_POLICY": [
+      "Unicode NFKC",
+      "collapse repeated whitespace to a single space",
+      "trim surrounding whitespace",
+      "drop presentation-only outer quote/book-title wrappers 《》 (and “ ”)",
+      "no semantic alias expansion / fuzzy / embedding / LLM matching"
+    ],
+    "predeclared_policy_is_primary": "YES",
+    "matcher_must_equal_frozen_v4_8_matcher": "YES",
+    "matcher_modification_authorized": "NO"
+  },
+
+  "replication_policy": {
+    "default": "1 G0/G1 pair per eligible primary case",
+    "trigger_for_extension": "G0 and G1 differ in primary Y, or an explicit stochasticity signal exists",
+    "max_paired_runs_per_case": 3,
+    "symmetry_rule_once_triggered": "NUMBER_OF_VALID_G0_RUNS == NUMBER_OF_VALID_G1_RUNS",
+    "forbidden": [
+      "only repeat successful side",
+      "only repeat failed side",
+      "add runs until desired conclusion appears"
+    ]
+  },
+  "call_order_policy": {
+    "CALL_ORDER_POLICY": "G0_THEN_G1",
+    "order_change_after_outcomes": "NO"
+  },
+  "residual_failure_gate": {
+    "target_phenotype": "DOCUMENT_IDENTITY_RESPONSE_SUCCESS(G0) == FAIL",
+    "max_G0_baseline_checks_if_unexpected_PASS": 3,
+    "if_not_reproducible": "RESIDUAL_FAILURE_REPRODUCIBILITY = NOT_ESTABLISHED and no G1 repair claim for that case"
+  },
+  "statelessness_policy": {
+    "CROSS_CALL_GENERATED_STATE": "NONE",
+    "each_request_is_independent": "YES",
+    "history_field_source": "frozen V4.7 case history (production-equivalent), never a prior generated answer"
+  },
+
+  "aggregate_support_semantics": {
+    "YES": "both primary cases have sufficient valid evidence and both SUPPORT the mechanism/state",
+    "PARTIAL": "at least one primary case SUPPORTS it, while the other is NOT_SUPPORTED or NOT_ESTABLISHED",
+    "NO": "both primary cases have sufficient valid evidence and both are NOT_SUPPORTED",
+    "NOT_ESTABLISHED": "no primary case provides sufficient positive support AND at least one primary case lacks sufficient valid evidence, so neither YES nor NO can be mechanically established"
+  },
+  "AGGREGATE_SUPPORT_SEMANTICS": "FROZEN",
+
+  "grouping_information_nontriviality_gate": {
+    "requires": ["UNIQUE_DOCUMENT_COUNT < CHUNK_COUNT", "at least one GROUP_SIZE >= 2"],
+    "checked_per_case_before_any_primary_model_call": "YES"
+  },
+
+  "runtime_freeze": {
+    "answer_model_requested": "qwen2.5:7b",
+    "generation_parameters": {
+      "temperature": 0,
+      "top_p": 1,
+      "top_k": 1,
+      "repeat_penalty": 1.15,
+      "num_predict": 800,
+      "num_ctx": 8192,
+      "keep_alive": "10m",
+      "stream": false
+    },
+    "seed": "NOT_AVAILABLE"
+  },
+
+  "authorized_paths": [
+    "eval/v4_8_1_preflight_snapshot.json",
+    "eval/v4_8_1_residual_generation_mechanism_isolation.json",
+    "docs/V4_8_1_RESIDUAL_GENERATION_MECHANISM_ISOLATION.md",
+    "scripts/analyze_v4_8_1_residual_generation.py",
+    "tests/test_v4_8_1_residual_generation_diagnosis.py"
+  ],
+  "frozen_parent_paths": [
+    "eval/v4_8_generation_mechanism_isolation.json",
+    "docs/V4_8_GENERATION_MECHANISM_ISOLATION.md",
+    "scripts/analyze_v4_8_generation_mechanism.py",
+    "tests/test_v4_8_generation_mechanism_diagnosis.py"
+  ]
+}

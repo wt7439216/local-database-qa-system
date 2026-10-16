@@ -51,16 +51,17 @@ class TestRuleTableIsPortable(unittest.TestCase):
         self.assertTrue(scanner.PATTERNS["token-equals"].search("token=abc"))
         self.assertTrue(scanner.PATTERNS["secret"].search("secret"))
 
-    def test_scan_scope_unchanged(self):
+    def test_scan_scope_matches_actual_publication_inventory(self):
         self.assertEqual(
             scanner.TARGET_TREES,
-            ("core", "desktop", "scripts", "tests", "web", "docs", "reranker_service", ".github"),
+            ("core", "desktop", "scripts", "tests", "web", "docs", "eval", "reranker_service"),
         )
-        # eval/ and data/ are frozen provenance / generated logs: never scanned.
-        self.assertNotIn("eval", scanner.TARGET_TREES)
+        # Historical evidence is published and inspected; local data is excluded.
+        self.assertIn("eval", scanner.TARGET_TREES)
         self.assertNotIn("data", scanner.TARGET_TREES)
-        self.assertEqual(scanner.SKIP_PARTS, {"__pycache__", ".venv", ".ruff_cache"})
-        self.assertEqual(scanner.SKIP_SUFFIXES, {".pyc", ".pyo"})
+        self.assertNotIn(".github", scanner.TARGET_TREES)
+        self.assertTrue({"__pycache__", ".venv", ".ruff_cache", "models", "runtime"} <= scanner.SKIP_PARTS)
+        self.assertTrue({".pyc", ".pyo", ".sqlite3", ".onnx"} <= scanner.SKIP_SUFFIXES)
 
     def test_changelog_is_a_scanned_and_synced_root_asset(self):
         # CHANGELOG.md is linked from README / docs/INDEX / V4_RELEASE_SNAPSHOT, so

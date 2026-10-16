@@ -1,0 +1,482 @@
+{
+  "artifact_type": "WS13_G1_A001_ARTIFACT_BOUNDARY_CORRECTION",
+  "checkpoint": "WS13_G1_A001_ARTIFACT_BOUNDARY_CORRECTION",
+  "short_id": "G1_A001_FC1",
+  "artifact_stage": "BOUNDARY_CORRECTION_FROZEN_PENDING_POST_WRITE_VALIDATION",
+  "artifact_stage_note": "this artifact is finalized before its own post-write validation and stores no final checkpoint status, no PASS / FAIL marker, no self sha256 and no post-write values; the post-write console status is external to this artifact",
+  "parent_g1_a001": {
+    "path": "eval/v4_ws13_citation_fresh_attribution_design_amendment_001.json",
+    "raw_sha256": "1e237a44c587fcd431ed77a8746277a8242f8f841156b32fcdf24709a684e901",
+    "amendment_semantic_digest": "eb0837a5d47712ec13a93c914ae072d95c34b0f6ff8bb984471d6ef7c2487043",
+    "new_effective_ws13_design_digest": "646d354284fe6a419e144ead01ffd879c7cd426a05346d523c350be178b2ea94",
+    "parent_artifact_stage": "AMENDMENT_FROZEN_PENDING_POST_WRITE_VALIDATION"
+  },
+  "parent_g1_base": {
+    "path": "eval/v4_ws13_citation_fresh_attribution_design.json",
+    "raw_sha256": "67a9ee245bc80520a7c02463215d1e00cdeb1e1b0b97c088ec7adb976e6c943d",
+    "base_effective_ws13_design_digest": "fe69ea63cf67e571355da68a4d8f1490771bf90ca821354161eb4e4159771021",
+    "status": "PRESERVED_PROVISIONAL_BASE_NOT_FINAL_ACCEPTED"
+  },
+  "parent_g0": {
+    "path": "eval/v4_ws13_citation_fresh_attribution_preflight.json",
+    "raw_sha256": "fc84f0205008f3b505722ab1a73fded1e6ebced123bc5bb69319fd5d744e1556",
+    "status": "FINAL_ACCEPTED"
+  },
+  "source_identities": {
+    "verification_method": "raw sha256 recomputed mechanically in the ACTIVE V4 workspace before the FC1 write",
+    "current_master": {
+      "path": "docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md",
+      "expected_raw_sha256": "f29d4df55cdabfd03eba02c5cb68ea086c990c45bb92f121cc08399b82d40702",
+      "observed_raw_sha256": "f29d4df55cdabfd03eba02c5cb68ea086c990c45bb92f121cc08399b82d40702",
+      "identity_match": "YES"
+    },
+    "priority_machine_artifact": {
+      "path": "eval/v4_post_v4_8_2_next_workstream_priority_review.json",
+      "expected_raw_sha256": "d80053040f4bbb55f48a95050528f5f3933e408a079888ee6d962e7113752670",
+      "observed_raw_sha256": "d80053040f4bbb55f48a95050528f5f3933e408a079888ee6d962e7113752670",
+      "identity_match": "YES"
+    },
+    "priority_human_report": {
+      "path": "docs/V4_POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW.md",
+      "expected_raw_sha256": "da463797e160210e507be3980207eb3a3f69a8a5f401e288b7bef7d91879fc6d",
+      "observed_raw_sha256": "da463797e160210e507be3980207eb3a3f69a8a5f401e288b7bef7d91879fc6d",
+      "identity_match": "YES"
+    },
+    "priority_harness": {
+      "path": "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+      "expected_raw_sha256": "2ec9219df3774251b3e7e0e4a292c7d7bc16524f4d65ae73eb4598d17cca7471",
+      "observed_raw_sha256": "2ec9219df3774251b3e7e0e4a292c7d7bc16524f4d65ae73eb4598d17cca7471",
+      "identity_match": "YES"
+    },
+    "priority_tests": {
+      "path": "tests/test_v4_post_v4_8_2_priority_review.py",
+      "expected_raw_sha256": "e235097900581710a0958cd8bc4292295568040f318aa1bb5367e6878293d173",
+      "observed_raw_sha256": "e235097900581710a0958cd8bc4292295568040f318aa1bb5367e6878293d173",
+      "identity_match": "YES"
+    },
+    "design_amendments_a001_to_a009": {
+      "001": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+        "accepted_raw_sha256": "11c7caa096637d13c62abefc1fce65b1e13978ab5a6850ed365368ffebe1ee8f",
+        "observed_raw_sha256": "11c7caa096637d13c62abefc1fce65b1e13978ab5a6850ed365368ffebe1ee8f",
+        "match": "YES"
+      },
+      "002": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json",
+        "accepted_raw_sha256": "48a6c8eca47ca969d536929f927fea7f684803c79a4b6945c51686b496a1325b",
+        "observed_raw_sha256": "48a6c8eca47ca969d536929f927fea7f684803c79a4b6945c51686b496a1325b",
+        "match": "YES"
+      },
+      "003": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json",
+        "accepted_raw_sha256": "2e8e20d411edd10bd071c0534553d2bec825a9ed3bfd684ad95d73b24607a88b",
+        "observed_raw_sha256": "2e8e20d411edd10bd071c0534553d2bec825a9ed3bfd684ad95d73b24607a88b",
+        "match": "YES"
+      },
+      "004": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_004.json",
+        "accepted_raw_sha256": "2e2da080775dc2a79b23e7b2abb80987d2f8650cf4b90eed0e5088d3d8cc6df2",
+        "observed_raw_sha256": "2e2da080775dc2a79b23e7b2abb80987d2f8650cf4b90eed0e5088d3d8cc6df2",
+        "match": "YES"
+      },
+      "005": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json",
+        "accepted_raw_sha256": "c036aba9e5f2a773c4c73219242ffc13d2fee756e4fa890769f13045377c573e",
+        "observed_raw_sha256": "c036aba9e5f2a773c4c73219242ffc13d2fee756e4fa890769f13045377c573e",
+        "match": "YES"
+      },
+      "006": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_006.json",
+        "accepted_raw_sha256": "94601281c3d02b2c07fd1e8ff7fd7d31360a14edca1de880d74be492212c7eef",
+        "observed_raw_sha256": "94601281c3d02b2c07fd1e8ff7fd7d31360a14edca1de880d74be492212c7eef",
+        "match": "YES"
+      },
+      "007": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_007.json",
+        "accepted_raw_sha256": "e9787de99ffba69e4ad4172bd65d8fecc7b4461fc740aaa24ccacc72020adae6",
+        "observed_raw_sha256": "e9787de99ffba69e4ad4172bd65d8fecc7b4461fc740aaa24ccacc72020adae6",
+        "match": "YES"
+      },
+      "008": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_008.json",
+        "accepted_raw_sha256": "4678036cbab70e2a18a97d814977fb3f02b7f9878fed18ced64c12c4b7d3fc3f",
+        "observed_raw_sha256": "4678036cbab70e2a18a97d814977fb3f02b7f9878fed18ced64c12c4b7d3fc3f",
+        "match": "YES"
+      },
+      "009": {
+        "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_009.json",
+        "accepted_raw_sha256": "78a936b4922394071686137e4ed506bef33f8a1cae2b1e93b0aa166525a15410",
+        "observed_raw_sha256": "78a936b4922394071686137e4ed506bef33f8a1cae2b1e93b0aa166525a15410",
+        "match": "YES"
+      }
+    },
+    "a001_to_a009_identity_check": "ALL_MATCH_9_OF_9"
+  },
+  "product_runtime_identities": {
+    "current_release": "v4.0.0-alpha.2",
+    "current_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+    "product_metrics_source": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+    "canonical_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "production_hash_recomputed_live": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "production_hash_live_match": "YES",
+    "answer_model": "qwen2.5:7b",
+    "embedding_model": "bge-m3",
+    "embedding_dimension": 1024,
+    "vector_backend": "sqlite",
+    "runtime_db_path": "data/library/documents.sqlite3",
+    "runtime_db_identity_before": "10698752:c6bc9b3eb63ae4e6",
+    "runtime_db_identity_before_matches_expected": "YES",
+    "runtime_db_full_sha256_before": "c6bc9b3eb63ae4e6d96caf859a2b0c5f2f1e5a5b6f438e81aa0bbc3cf4084c97",
+    "runtime_db_inspection_mode": "STRICT_READ_ONLY_BYTE_HASH_AND_STAT_ONLY (no sqlite connection, no VACUUM, no checkpoint, no migration, no insert/update/delete, no reindex, no journal write, no WAL write)",
+    "new_product_baseline": "NO",
+    "baseline_advancement": "NO",
+    "release_advancement": "NO",
+    "product_code_change": "NO"
+  },
+  "pre_fc1_workspace_provenance": {
+    "pre_fc1_workspace_manifest_entry_count": 19667,
+    "pre_fc1_workspace_manifest_digest": "0536628973e54602992cacb2809f9da7b12c1723f80b297957c3f25fc11762f2",
+    "pre_fc1_manifest_excluding_fc1_digest": "0536628973e54602992cacb2809f9da7b12c1723f80b297957c3f25fc11762f2",
+    "g1_a001_reported_post_write_entry_count": 19667,
+    "g1_a001_reported_post_write_manifest_digest": "0536628973e54602992cacb2809f9da7b12c1723f80b297957c3f25fc11762f2",
+    "matches_g1_a001_reported_post_write_state": "YES",
+    "match_evidence_level": "CURRENT_WORKSPACE_CONSISTENT_WITH_AGENT_REPORTED_POST_G1_A001_STATE",
+    "explicit_boundary_note": "this match proves only that the CURRENT workspace equals the Agent-reported post-G1_A001 state; it does NOT independently reconstruct the historical write instant; the Agent-reported values remain AGENT_REPORTED_EXTERNAL_POST_WRITE_PROVENANCE",
+    "workspace_manifest_rule": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "live_recomputation_count_before_fc1_write": 1,
+    "role": "CHECKPOINT_START_DRIFT_GUARD_ONLY"
+  },
+  "boundary_defect": {
+    "defect_count": 2,
+    "defect_class": "PRE_POST_VALIDATION_ARTIFACT_STORED_FUTURE_DECLARATIONS_AS_ESTABLISHED_FACTS",
+    "defect_scope": "temporal / provenance authority of two parent stored fields only; the underlying events are not disputed and are not claimed absent",
+    "parent_field_1": {
+      "locator": "execution_counts.post_write_unit_tests_executed",
+      "value": 247,
+      "classification": "PREMATURE_NONAUTHORITATIVE_DECLARATION",
+      "reason": "the parent artifact was finalized by a single write BEFORE the post-write 247-test run; at the instant the supposedly final pre-post-validation bytes were written, the post-write test run had not yet occurred",
+      "authority_effect": "the stored value cannot serve as authoritative evidence that the post-write test run had already occurred; it neither establishes nor invalidates the later external post-write test result",
+      "enters_parent_amendment_semantic_payload": "NO"
+    },
+    "parent_field_2": {
+      "locator": "integrity.transient_builder_outside_workspace_removed",
+      "value": "YES",
+      "classification": "PREMATURE_NONAUTHORITATIVE_DECLARATION",
+      "reason": "per the parent reported execution order the transient builder was removed AFTER the single final parent artifact write; the stored YES is a future declaration relative to those artifact bytes",
+      "authority_effect": "the stored value cannot serve as authoritative evidence of the deletion having already occurred at parent-write time",
+      "enters_parent_amendment_semantic_payload": "NO"
+    },
+    "classification_meaning": "the classifications do NOT mean the two events did not occur; they mean only that the values stored inside the pre-post-validation parent artifact cannot be authoritative evidence that those future events had already occurred"
+  },
+  "corrected_authority_model": {
+    "evidence_class_A_parent_artifact_internal_pre_write_facts": {
+      "description": "facts mechanically established before the parent final write remain usable according to their actual timing",
+      "examples": [
+        "parent G0 / G1 base / G1_A001 raw identities",
+        "pre-write unit tests recorded on the parent",
+        "pre-write workspace manifest recorded on the parent",
+        "the five design corrections",
+        "the amendment semantic digest and the effective design chain digest computed in memory"
+      ]
+    },
+    "nonauthoritative_parent_future_declarations": {
+      "fields": [
+        "execution_counts.post_write_unit_tests_executed",
+        "integrity.transient_builder_outside_workspace_removed"
+      ],
+      "classification": "PREMATURE_NONAUTHORITATIVE_DECLARATION",
+      "authority_scope": "TEMPORAL_AND_PROVENANCE_AUTHORITY_ONLY",
+      "design_semantics_effect": "NONE",
+      "note": "the two fields do not enter the parent amendment_semantic_payload and therefore do not alter the already reviewed five design corrections or the effective design digest"
+    },
+    "evidence_class_B_agent_reported_historical_external_post_write_provenance": {
+      "evidence_level": "AGENT_REPORTED_HISTORICAL_EXTERNAL_POST_WRITE_PROVENANCE",
+      "parent_console_labels": {
+        "g1_a001_post_write_workspace_manifest_entry_count": "POST_WRITE_WORKSPACE_MANIFEST_ENTRY_COUNT",
+        "g1_a001_post_write_workspace_manifest_digest": "POST_WRITE_WORKSPACE_MANIFEST_DIGEST",
+        "g1_a001_post_tests_workspace_manifest_digest": "POST_TESTS_WORKSPACE_MANIFEST_DIGEST"
+      },
+      "g1_a001_post_write_workspace_manifest_entry_count": 19667,
+      "g1_a001_post_write_workspace_manifest_digest": "0536628973e54602992cacb2809f9da7b12c1723f80b297957c3f25fc11762f2",
+      "g1_a001_post_tests_workspace_manifest_digest": "0536628973e54602992cacb2809f9da7b12c1723f80b297957c3f25fc11762f2",
+      "g1_a001_post_write_priority_review_tests": "PASS 247 / OK",
+      "g1_a001_amendment_artifact_sha_after_tests": "1e237a44c587fcd431ed77a8746277a8242f8f841156b32fcdf24709a684e901",
+      "g1_a001_amendment_artifact_sha_stable": "YES",
+      "g1_a001_actual_changed_paths": [
+        "eval/v4_ws13_citation_fresh_attribution_design_amendment_001.json"
+      ],
+      "provenance_boundary": "recorded as historical external post-write provenance only; NOT upgraded to an FC1 independent reconstruction of the historical execution"
+    },
+    "evidence_class_C_fc1_current_mechanical_revalidation": {
+      "description": "new current mechanical evidence computed in THIS checkpoint",
+      "current_parent_g1_a001_raw_sha256": "1e237a44c587fcd431ed77a8746277a8242f8f841156b32fcdf24709a684e901",
+      "current_amendment_semantic_digest_recompute_match": "YES",
+      "current_new_effective_design_digest_recompute_match": "YES",
+      "current_base_g1_design_digest_recompute_match": "YES",
+      "current_pre_fc1_workspace_manifest_entry_count": 19667,
+      "current_pre_fc1_workspace_manifest_digest": "0536628973e54602992cacb2809f9da7b12c1723f80b297957c3f25fc11762f2",
+      "current_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+      "current_runtime_db_identity": "10698752:c6bc9b3eb63ae4e6",
+      "current_pre_write_priority_review_tests": "PASS 247 / OK",
+      "evidence_scope": "establishes present integrity / compatibility only; it does NOT establish the precise historical timing of the original post-write events"
+    },
+    "premature_field_authority": {
+      "post_write_unit_tests_executed": "IGNORED_FOR_TEMPORAL_AUTHORITY_ONLY",
+      "transient_builder_outside_workspace_removed": "IGNORED_FOR_TEMPORAL_AUTHORITY_ONLY",
+      "design_or_semantic_consequence": "NONE"
+    }
+  },
+  "execution_deviation_record": {
+    "G1_A001_EXECUTION_DEVIATION_001": "TRANSIENT_BUILDER_OUTSIDE_GOVERNED_WORKSPACE",
+    "description": "the parent Agent externally reported building the amendment artifact via a transient builder located outside ACTIVE V4 (due to command-length limits) and deleting it after the amendment write",
+    "GOVERNED_WORKSPACE_EXTRA_CHANGED_PATH": "NO",
+    "PRODUCT_STATE_MUTATION": "NO",
+    "DESIGN_SEMANTICS_MUTATION": "NO",
+    "CLASSIFICATION": "NONBLOCKING_EXECUTION_BOUNDARY_DEVIATION",
+    "BUILDER_DELETION_HISTORICAL_EVIDENCE_LEVEL": "AGENT_REPORTED_EXTERNAL_PROVENANCE",
+    "BUILDER_DELETION_RETROACTIVELY_MACHINE_PROVABLE_FROM_CURRENT_GOVERNED_WORKSPACE": "NO",
+    "absence_now_does_not_prove_historical_deletion_timing": "YES"
+  },
+  "design_nonmutation_contract": {
+    "design_semantics_changed": "NO",
+    "amendment_semantic_digest_changed": "NO",
+    "new_effective_design_digest_changed": "NO",
+    "operative_new_effective_ws13_design_digest": "646d354284fe6a419e144ead01ffd879c7cd426a05346d523c350be178b2ea94",
+    "required_design_fix_count": 5,
+    "five_fix_design_review": "PASS",
+    "design_amendment_002_created": "NO",
+    "design_re_opened": "NO",
+    "unchanged_design_surfaces": [
+      "C1 semantics",
+      "C2 action-scoped resolver",
+      "classification semantic digest contract",
+      "sent-evidence contract",
+      "G5 -> A003/A005 projection / confidence translation",
+      "PRIMARY_TARGET_CASE_IDS = [cit-001]",
+      "CONTROL_CASE_IDS = []",
+      "3-run budget / seed discipline",
+      "truth table / aggregate rule / G5 vocabulary",
+      "dependency graph",
+      "authorization boundary"
+    ],
+    "cause_of_nonmutation": "the two premature parent fields do not enter the parent amendment_semantic_payload and this FC1 artifact creates no new effective WS13 design digest"
+  },
+  "future_governance_binding": {
+    "after_reviewer_acceptance": "REQUIRED_EXTERNAL_GOVERNANCE_BINDING",
+    "concrete_fc1_artifact_sha256": "EXTERNAL_BINDING_NOT_STORED_IN_SELF",
+    "binding_role": "FC1 is a non-semantic artifact-integrity correction; its concrete raw sha256 is an external binding value supplied by the Governance Reviewer, never stored inside this artifact and never a WS13 design digest",
+    "creates_new_effective_ws13_design_digest": "NO",
+    "integrity_digest_only": "YES"
+  },
+  "scientific_boundary": {
+    "current_citation_status": "NOT_EVALUATED_IN_G1_A001_FC1",
+    "scientific_attribution_performed": "NO",
+    "target_observation_performed": "NO",
+    "not_concluded_in_g1_a001_fc1": [
+      "CURRENT_CONFIRMED_CITATION_DEFECT",
+      "NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+      "citation root cause",
+      "citation defect mechanism",
+      "remediation target",
+      "remediation recommendation"
+    ],
+    "scope_statement": "this boundary-correction artifact corrects only the temporal / provenance authority of two parent stored fields; it contains no citation scientific conclusion and no product verdict"
+  },
+  "pre_write_correction_assertions": {
+    "PARENT_G1_A001_RAW_SHA_MATCH": "YES",
+    "PARENT_AMENDMENT_SEMANTIC_DIGEST_RECOMPUTE_MATCH": "YES",
+    "PARENT_NEW_EFFECTIVE_DESIGN_DIGEST_RECOMPUTE_MATCH": "YES",
+    "PARENT_BASE_G1_DESIGN_DIGEST_RECOMPUTE_MATCH": "YES",
+    "BOUNDARY_DEFECT_COUNT": 2,
+    "POST_WRITE_TEST_FIELD_PREMATURE": "YES",
+    "BUILDER_REMOVAL_FIELD_PREMATURE": "YES",
+    "POST_WRITE_TEST_FIELD_CLASSIFIED_NONAUTHORITATIVE": "YES",
+    "BUILDER_REMOVAL_FIELD_CLASSIFIED_NONAUTHORITATIVE": "YES",
+    "FIVE_FIX_DESIGN_SEMANTICS_UNCHANGED": "YES",
+    "AMENDMENT_SEMANTIC_DIGEST_UNCHANGED": "YES",
+    "NEW_EFFECTIVE_WS13_DESIGN_DIGEST_UNCHANGED": "YES",
+    "DESIGN_AMENDMENT_002_CREATED": "NO",
+    "AGENT_REPORTED_HISTORICAL_PROVENANCE_DISTINGUISHED_FROM_CURRENT_REVALIDATION": "YES",
+    "CURRENT_REVALIDATION_NOT_CLAIMED_AS_RETROACTIVE_PROOF": "YES",
+    "TRANSIENT_BUILDER_DEVIATION_RECORDED": "YES",
+    "BUILDER_DELETION_NOT_CLAIMED_RETROACTIVELY_MACHINE_PROVEN": "YES",
+    "G2_AUTHORIZED": "NO"
+  },
+  "execution_counts": {
+    "model_calls": 0,
+    "embedding_calls": 0,
+    "production_retrieval_runs": 0,
+    "target_observation_runs": 0,
+    "counterfactual_runs": 0,
+    "full_144_runs": 0,
+    "pre_write_current_revalidation_tests_executed": 247
+  },
+  "integrity": {
+    "authorized_write_paths": [
+      "eval/v4_ws13_citation_fresh_attribution_design_amendment_001_boundary_correction.json"
+    ],
+    "expected_changed_paths": [
+      "eval/v4_ws13_citation_fresh_attribution_design_amendment_001_boundary_correction.json"
+    ],
+    "authorized_write_path_count": 1,
+    "existing_file_modifications": "NONE",
+    "new_path_count": 1,
+    "parent_g1_a001_sha256_before": "1e237a44c587fcd431ed77a8746277a8242f8f841156b32fcdf24709a684e901",
+    "pre_write_workspace_manifest_entry_count": 19667,
+    "pre_write_workspace_manifest_digest": "0536628973e54602992cacb2809f9da7b12c1723f80b297957c3f25fc11762f2",
+    "pre_write_workspace_manifest_rule": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "pre_write_manifest_excluding_fc1_digest": "0536628973e54602992cacb2809f9da7b12c1723f80b297957c3f25fc11762f2",
+    "pre_write_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "runtime_db_identity_before": "10698752:c6bc9b3eb63ae4e6",
+    "runtime_db_full_sha256_before": "c6bc9b3eb63ae4e6d96caf859a2b0c5f2f1e5a5b6f438e81aa0bbc3cf4084c97",
+    "pre_write_current_revalidation_tests": "PASS 247 / OK (python -B -m unittest tests.test_v4_post_v4_8_2_priority_review -v)",
+    "total_test_methods_ast": 247,
+    "unique_test_method_names_ast": 247,
+    "single_final_write_rule": "exactly one final write; no Part A/B/C, no append, no patch, no reopen/edit after write",
+    "post_write_integrity_verification": "EXTERNAL_TO_THIS_ARTIFACT"
+  },
+  "authorization_after_fc1": {
+    "g1_final_accepted": "NO",
+    "g2_execution_authorized": "NO",
+    "g3_execution_authorized": "NO",
+    "g4_execution_authorized": "NO",
+    "product_remediation_authorized": "NO",
+    "citation_remediation_authorized": "NO",
+    "next_stage_automatically_authorized": "NO"
+  },
+  "boundary_correction_payload": {
+    "boundary_defect": {
+      "defect_count": 2,
+      "defect_class": "PRE_POST_VALIDATION_ARTIFACT_STORED_FUTURE_DECLARATIONS_AS_ESTABLISHED_FACTS",
+      "defect_scope": "temporal / provenance authority of two parent stored fields only; the underlying events are not disputed and are not claimed absent",
+      "parent_field_1": {
+        "locator": "execution_counts.post_write_unit_tests_executed",
+        "value": 247,
+        "classification": "PREMATURE_NONAUTHORITATIVE_DECLARATION",
+        "reason": "the parent artifact was finalized by a single write BEFORE the post-write 247-test run; at the instant the supposedly final pre-post-validation bytes were written, the post-write test run had not yet occurred",
+        "authority_effect": "the stored value cannot serve as authoritative evidence that the post-write test run had already occurred; it neither establishes nor invalidates the later external post-write test result",
+        "enters_parent_amendment_semantic_payload": "NO"
+      },
+      "parent_field_2": {
+        "locator": "integrity.transient_builder_outside_workspace_removed",
+        "value": "YES",
+        "classification": "PREMATURE_NONAUTHORITATIVE_DECLARATION",
+        "reason": "per the parent reported execution order the transient builder was removed AFTER the single final parent artifact write; the stored YES is a future declaration relative to those artifact bytes",
+        "authority_effect": "the stored value cannot serve as authoritative evidence of the deletion having already occurred at parent-write time",
+        "enters_parent_amendment_semantic_payload": "NO"
+      },
+      "classification_meaning": "the classifications do NOT mean the two events did not occur; they mean only that the values stored inside the pre-post-validation parent artifact cannot be authoritative evidence that those future events had already occurred"
+    },
+    "corrected_authority_model": {
+      "evidence_class_A_parent_artifact_internal_pre_write_facts": {
+        "description": "facts mechanically established before the parent final write remain usable according to their actual timing",
+        "examples": [
+          "parent G0 / G1 base / G1_A001 raw identities",
+          "pre-write unit tests recorded on the parent",
+          "pre-write workspace manifest recorded on the parent",
+          "the five design corrections",
+          "the amendment semantic digest and the effective design chain digest computed in memory"
+        ]
+      },
+      "nonauthoritative_parent_future_declarations": {
+        "fields": [
+          "execution_counts.post_write_unit_tests_executed",
+          "integrity.transient_builder_outside_workspace_removed"
+        ],
+        "classification": "PREMATURE_NONAUTHORITATIVE_DECLARATION",
+        "authority_scope": "TEMPORAL_AND_PROVENANCE_AUTHORITY_ONLY",
+        "design_semantics_effect": "NONE",
+        "note": "the two fields do not enter the parent amendment_semantic_payload and therefore do not alter the already reviewed five design corrections or the effective design digest"
+      },
+      "evidence_class_B_agent_reported_historical_external_post_write_provenance": {
+        "evidence_level": "AGENT_REPORTED_HISTORICAL_EXTERNAL_POST_WRITE_PROVENANCE",
+        "parent_console_labels": {
+          "g1_a001_post_write_workspace_manifest_entry_count": "POST_WRITE_WORKSPACE_MANIFEST_ENTRY_COUNT",
+          "g1_a001_post_write_workspace_manifest_digest": "POST_WRITE_WORKSPACE_MANIFEST_DIGEST",
+          "g1_a001_post_tests_workspace_manifest_digest": "POST_TESTS_WORKSPACE_MANIFEST_DIGEST"
+        },
+        "g1_a001_post_write_workspace_manifest_entry_count": 19667,
+        "g1_a001_post_write_workspace_manifest_digest": "0536628973e54602992cacb2809f9da7b12c1723f80b297957c3f25fc11762f2",
+        "g1_a001_post_tests_workspace_manifest_digest": "0536628973e54602992cacb2809f9da7b12c1723f80b297957c3f25fc11762f2",
+        "g1_a001_post_write_priority_review_tests": "PASS 247 / OK",
+        "g1_a001_amendment_artifact_sha_after_tests": "1e237a44c587fcd431ed77a8746277a8242f8f841156b32fcdf24709a684e901",
+        "g1_a001_amendment_artifact_sha_stable": "YES",
+        "g1_a001_actual_changed_paths": [
+          "eval/v4_ws13_citation_fresh_attribution_design_amendment_001.json"
+        ],
+        "provenance_boundary": "recorded as historical external post-write provenance only; NOT upgraded to an FC1 independent reconstruction of the historical execution"
+      },
+      "evidence_class_C_fc1_current_mechanical_revalidation": {
+        "description": "new current mechanical evidence computed in THIS checkpoint",
+        "current_parent_g1_a001_raw_sha256": "1e237a44c587fcd431ed77a8746277a8242f8f841156b32fcdf24709a684e901",
+        "current_amendment_semantic_digest_recompute_match": "YES",
+        "current_new_effective_design_digest_recompute_match": "YES",
+        "current_base_g1_design_digest_recompute_match": "YES",
+        "current_pre_fc1_workspace_manifest_entry_count": 19667,
+        "current_pre_fc1_workspace_manifest_digest": "0536628973e54602992cacb2809f9da7b12c1723f80b297957c3f25fc11762f2",
+        "current_production_hash": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+        "current_runtime_db_identity": "10698752:c6bc9b3eb63ae4e6",
+        "current_pre_write_priority_review_tests": "PASS 247 / OK",
+        "evidence_scope": "establishes present integrity / compatibility only; it does NOT establish the precise historical timing of the original post-write events"
+      },
+      "premature_field_authority": {
+        "post_write_unit_tests_executed": "IGNORED_FOR_TEMPORAL_AUTHORITY_ONLY",
+        "transient_builder_outside_workspace_removed": "IGNORED_FOR_TEMPORAL_AUTHORITY_ONLY",
+        "design_or_semantic_consequence": "NONE"
+      }
+    },
+    "execution_deviation_record": {
+      "G1_A001_EXECUTION_DEVIATION_001": "TRANSIENT_BUILDER_OUTSIDE_GOVERNED_WORKSPACE",
+      "description": "the parent Agent externally reported building the amendment artifact via a transient builder located outside ACTIVE V4 (due to command-length limits) and deleting it after the amendment write",
+      "GOVERNED_WORKSPACE_EXTRA_CHANGED_PATH": "NO",
+      "PRODUCT_STATE_MUTATION": "NO",
+      "DESIGN_SEMANTICS_MUTATION": "NO",
+      "CLASSIFICATION": "NONBLOCKING_EXECUTION_BOUNDARY_DEVIATION",
+      "BUILDER_DELETION_HISTORICAL_EVIDENCE_LEVEL": "AGENT_REPORTED_EXTERNAL_PROVENANCE",
+      "BUILDER_DELETION_RETROACTIVELY_MACHINE_PROVABLE_FROM_CURRENT_GOVERNED_WORKSPACE": "NO",
+      "absence_now_does_not_prove_historical_deletion_timing": "YES"
+    },
+    "design_nonmutation_contract": {
+      "design_semantics_changed": "NO",
+      "amendment_semantic_digest_changed": "NO",
+      "new_effective_design_digest_changed": "NO",
+      "operative_new_effective_ws13_design_digest": "646d354284fe6a419e144ead01ffd879c7cd426a05346d523c350be178b2ea94",
+      "required_design_fix_count": 5,
+      "five_fix_design_review": "PASS",
+      "design_amendment_002_created": "NO",
+      "design_re_opened": "NO",
+      "unchanged_design_surfaces": [
+        "C1 semantics",
+        "C2 action-scoped resolver",
+        "classification semantic digest contract",
+        "sent-evidence contract",
+        "G5 -> A003/A005 projection / confidence translation",
+        "PRIMARY_TARGET_CASE_IDS = [cit-001]",
+        "CONTROL_CASE_IDS = []",
+        "3-run budget / seed discipline",
+        "truth table / aggregate rule / G5 vocabulary",
+        "dependency graph",
+        "authorization boundary"
+      ],
+      "cause_of_nonmutation": "the two premature parent fields do not enter the parent amendment_semantic_payload and this FC1 artifact creates no new effective WS13 design digest"
+    },
+    "future_governance_binding": {
+      "after_reviewer_acceptance": "REQUIRED_EXTERNAL_GOVERNANCE_BINDING",
+      "concrete_fc1_artifact_sha256": "EXTERNAL_BINDING_NOT_STORED_IN_SELF",
+      "binding_role": "FC1 is a non-semantic artifact-integrity correction; its concrete raw sha256 is an external binding value supplied by the Governance Reviewer, never stored inside this artifact and never a WS13 design digest",
+      "creates_new_effective_ws13_design_digest": "NO",
+      "integrity_digest_only": "YES"
+    },
+    "authorization_after_fc1": {
+      "g1_final_accepted": "NO",
+      "g2_execution_authorized": "NO",
+      "g3_execution_authorized": "NO",
+      "g4_execution_authorized": "NO",
+      "product_remediation_authorized": "NO",
+      "citation_remediation_authorized": "NO",
+      "next_stage_automatically_authorized": "NO"
+    }
+  },
+  "boundary_correction_digest": "9b243ce2517e0e8b113f7775219259225bece2ae8a1e31addb3881f0f6c679d5",
+  "blockers": []
+}

@@ -35,6 +35,7 @@ if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 
 import eval_v4_baseline as baseline  # noqa: E402
+from product_revision import pre_product_tree, validate_live_product  # noqa: E402
 
 _LINEAGE = _ROOT / "eval" / "v4_baseline_lineage.json"
 
@@ -72,8 +73,9 @@ class TestLiveProductionHashGuard(unittest.TestCase):
         self.assertTrue(callable(baseline.production_source_hash))
         self.assertEqual(baseline.CANONICAL_HASH_ALGORITHM, "sha256-path-content-v2-canonical-lf")
 
-    def test_current_pointer_is_the_hash_portability_baseline(self):
-        self.assertEqual(self.current_id, "V4_6_2_HASH_PORTABILITY_BASELINE")
+    def test_current_pointer_is_the_latest_registered_product(self):
+        self.assertEqual(self.current_id, self.lineage["baselines"][-1]["baseline_id"])
+        self.assertEqual(validate_live_product()["baseline_id"], self.current_id)
 
     def test_lineage_entry_matches_its_current_artifact(self):
         recorded = self.artifact["artifact_hashes"]["production_source_sha256"]
@@ -92,8 +94,10 @@ class TestLiveProductionHashGuard(unittest.TestCase):
             "a NEW stage baseline artifact, not applied silently.",
         )
 
-    def test_live_hash_is_canonical(self):
-        self.assertEqual(baseline.production_source_hash(), _CANONICAL_PRODUCTION_HASH)
+    def test_historical_hash_portability_state_is_preserved(self):
+        with pre_product_tree() as historical:
+            self.assertEqual(baseline.production_source_hash(historical),
+                             _CANONICAL_PRODUCTION_HASH)
 
     def test_v4_6_1_raw_hash_is_preserved_as_history(self):
         by_id = {b["baseline_id"]: b for b in self.lineage["baselines"]}

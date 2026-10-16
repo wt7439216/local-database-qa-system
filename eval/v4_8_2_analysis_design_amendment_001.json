@@ -1,0 +1,813 @@
+{
+  "phase": "V4.8.2",
+  "phase_title": "V4.8.2 Residual Failure Differential Attribution & Hypothesis Formation - Analysis-Design Amendment 001",
+  "mode": "GOVERNANCE WRITE / ANALYSIS-DESIGN AMENDMENT ONLY",
+  "artifact_type": "ANALYSIS_DESIGN_AMENDMENT",
+  "amendment_id": "V4_8_2_ANALYSIS_DESIGN_AMENDMENT_001",
+  "amendment_status": "ACTIVE_FOR_FUTURE_GOVERNED_V4_8_2_DERIVATION",
+  "amendment_scope": "DIFFERENTIAL_PATTERN_CLASSIFICATION_ONLY",
+  "amendment_option": "C_COLLAPSE_HISTORICAL_ALIAS",
+  "is_product_baseline": false,
+  "scientific_evidence_added": false,
+  "new_diagnostic_model_calls": 0,
+  "new_counterfactual_runs": 0,
+  "new_production_retrieval_runs": 0,
+  "AMENDMENT_IS_PROSPECTIVE": "YES",
+  "RETROACTIVE_REWRITE": "NO",
+  "amendment_note": "This amendment is PROSPECTIVE: it does NOT claim the original snapshot already contained this change. The original snapshot is immutable; this artifact defines the effective analysis design for all FUTURE governed V4.8.2 derivation only.",
+  "original_design_identity": {
+    "original_snapshot_path": "eval/v4_8_2_preflight_snapshot.json",
+    "original_snapshot_sha256": "96c4f84228121f8bae58f94a69089c55423e3c56bc5d8a2c8afe84945b8c4785",
+    "original_prestate_locked": "YES",
+    "original_design_immutable": "YES",
+    "ORIGINAL_ANALYSIS_DESIGN_DIGEST": "NOT_ESTABLISHED",
+    "original_digest_not_established_reason": "No frozen mechanical digest definition for the V4.8.2 analysis design exists in the workspace: the V4.8.2 Master Protocol is conversational authority, and the preflight snapshot records the design fields but records neither a design digest value nor a digest algorithm for V4.8.2. Reconstructing one now would require guessing the field subset and serialization contract, which is forbidden. The original snapshot is therefore NOT modified."
+  },
+  "defect_record": {
+    "original_responsive_only_source": "/differential_pattern_rules/RESPONSIVE_ONLY",
+    "original_nonresponder_shared_source": "/differential_pattern_rules/NONRESPONDER_SHARED",
+    "original_responsive_only_rule": "canonical(md004) != canonical(md009) AND canonical(md009) == canonical(md015) AND all three available",
+    "original_nonresponder_shared_rule": "canonical(md009) == canonical(md015) AND canonical(md004) != canonical(md009) AND all three available",
+    "rules_logically_equivalent": true,
+    "logical_equivalence_basis": "Both rules are conjunctions of the identical three atomic predicates: canonical(md009) == canonical(md015), canonical(md004) != canonical(md009), all three available. Conjunction order carries no semantics.",
+    "frozen_precedence_rule_present": false,
+    "frozen_multi_label_rule_present": false,
+    "defect_class": "DUPLICATE_EQUIVALENT_PATTERN_RULE",
+    "defect_impact_scope": "PARTIALLY_PROPAGATED",
+    "defect_impact_dependencies": {
+      "residual_similarity_score": "NONE dependency on pattern label",
+      "responsive_difference_score": "NONE",
+      "candidate_generation": "NONE",
+      "candidate_support": "NONE",
+      "shared_residual_hypothesis": "DIRECT dependency on NONRESPONDER_SHARED"
+    },
+    "intent_inference_from_label_names": "NONE"
+  },
+  "authorized_amendment": {
+    "option": "C_COLLAPSE_HISTORICAL_ALIAS",
+    "canonical_label_retained": "NONRESPONDER_SHARED",
+    "canonical_label_selection_basis": "NONRESPONDER_SHARED is the only direct pattern-label consumer of the frozen shared_residual_rule in the snapshot; the canonical-name choice derives from this frozen dependency, not from label-name semantic speculation.",
+    "historical_alias": "RESPONSIVE_ONLY -> NONRESPONDER_SHARED",
+    "mechanical_consumer_evidence": {
+      "RESPONSIVE_ONLY_consumers_in_snapshot": [
+        "differential_pattern_enum",
+        "differential_pattern_rules"
+      ],
+      "NONRESPONDER_SHARED_consumers_in_snapshot": [
+        "differential_pattern_enum",
+        "differential_pattern_rules",
+        "shared_residual_rule"
+      ]
+    }
+  },
+  "effective_pattern_design": {
+    "effective_differential_pattern_enum": [
+      "NONRESPONDER_SHARED",
+      "ALL_SAME",
+      "MD009_ONLY",
+      "MD015_ONLY",
+      "MIXED",
+      "NOT_AVAILABLE"
+    ],
+    "effective_differential_pattern_rules": {
+      "NONRESPONDER_SHARED": "canonical(md009) == canonical(md015) AND canonical(md004) != canonical(md009) AND all three available",
+      "ALL_SAME": "canonical(md004) == canonical(md009) == canonical(md015) AND all three available",
+      "MD009_ONLY": "canonical(md009) != canonical(md004) AND canonical(md009) != canonical(md015) AND canonical(md004) == canonical(md015)",
+      "MD015_ONLY": "canonical(md015) != canonical(md004) AND canonical(md015) != canonical(md009) AND canonical(md004) == canonical(md009)",
+      "MIXED": "all three values pairwise different",
+      "NOT_AVAILABLE": "at least one case value is NOT_AVAILABLE"
+    },
+    "effective_pattern_output_cardinality": "EXACTLY_ONE_CANONICAL_PATTERN_PER_FEATURE",
+    "responsive_only_status": "HISTORICAL_ALIAS_ONLY",
+    "responsive_only_must_not_be_emitted_as_canonical_pattern": true,
+    "historical_alias_normalization": "RESPONSIVE_ONLY (historical/transient label) normalizes to NONRESPONDER_SHARED; dual-label output is forbidden.",
+    "nonresponder_shared_rule_unchanged_from_snapshot": true,
+    "other_pattern_rules_verbatim_from_snapshot": true
+  },
+  "shared_residual_rule_record": {
+    "shared_residual_rule": "SHARED_RESIDUAL_HYPOTHESIS = YES only if a candidate supports both md-009 and md-015 and is based on NONRESPONDER_SHARED differential evidence; NO if md-009 and md-015 require materially different candidate evidence; NOT_ESTABLISHED otherwise",
+    "SHARED_RESIDUAL_RULE_SEMANTICS_CHANGED": "NO",
+    "reason": "The canonical retained label is NONRESPONDER_SHARED, which the rule already references; its predicate semantics are unchanged."
+  },
+  "strictly_unchanged_design_surface": [
+    "45-feature schema",
+    "all feature extraction rules",
+    "evidence admissibility hierarchy",
+    "traceability requirements",
+    "feature value types",
+    "feature canonicalization rules",
+    "NOT_AVAILABLE semantics",
+    "residual similarity formula",
+    "residual similarity thresholds",
+    "responsive-vs-residual difference formula",
+    "responsive-vs-residual thresholds",
+    "candidate generation rule",
+    "candidate support levels",
+    "candidate support thresholds",
+    "candidate ranking order",
+    "candidate tie rule",
+    "previously-tested hypothesis exclusions",
+    "parent V4.8 scientific state",
+    "parent V4.8.1 scientific state",
+    "historical claim freeze",
+    "Product / Measurement separation"
+  ],
+  "effective_analysis_design_semantic_payload": {
+    "payload_version": "v4_8_2_effective_analysis_design_semantic_payload_v1",
+    "target_cases": [
+      "md-004",
+      "md-009",
+      "md-015"
+    ],
+    "responsive_reference_case": "md-004",
+    "responsive_reference_role": "DIFFERENTIAL_REFERENCE_CASE (not a new experimental control, not a true negative control, not a new primary target)",
+    "residual_nonresponders": [
+      "md-009",
+      "md-015"
+    ],
+    "evidence_admissibility_hierarchy": {
+      "E1": "frozen raw request / semantic request object / raw model output / raw output hash / request digest",
+      "E2": "frozen machine artifact mechanically derived fields",
+      "E3": "frozen human report statements directly traceable to E1/E2",
+      "E4": "current production implementation, used only to interpret serialization/mechanics",
+      "E5": "Golden / measurement metadata, supporting-only",
+      "forbidden": [
+        "E5 redefine Product success",
+        "E4 reconstruct missing historical request content",
+        "human prose override raw evidence",
+        "inference fill missing raw fields"
+      ],
+      "missing_rule": "if a feature cannot be mechanically established from E1-E4: FEATURE_VALUE = NOT_AVAILABLE"
+    },
+    "differential_domains": [
+      {
+        "id": "D1_QUERY_STRUCTURE",
+        "description": "raw query text and mechanically detectable query-structure markers"
+      },
+      {
+        "id": "D2_PRODUCT_OUTPUT_STRUCTURAL_REQUIREMENT",
+        "description": "required number/identity of documents in the frozen Product outcome definition"
+      },
+      {
+        "id": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "description": "frozen retrieved chunk structure, document grouping, positions and text-volume distribution"
+      },
+      {
+        "id": "D4_CANONICAL_TITLE_REPRESENTATION",
+        "description": "canonical title strings, variants, occurrence counts and positions in the frozen request"
+      },
+      {
+        "id": "D5_TITLE_TO_CHUNK_BINDING_STRUCTURE",
+        "description": "how titles bind to chunks / document ids in the frozen serialization"
+      },
+      {
+        "id": "D6_DOCUMENT_MEMBERSHIP_STRUCTURE",
+        "description": "chunk-to-document membership shape (duplication, adjacency); explicit-metadata operationalization already tested in V4.8.1"
+      },
+      {
+        "id": "D7_MODEL_VISIBLE_REQUEST_STRUCTURE",
+        "description": "message roles/count, evidence and instruction placement, character lengths"
+      },
+      {
+        "id": "D8_RAW_FAILURE_PHENOTYPE",
+        "description": "mechanically tagged properties of frozen raw outputs (parent matcher/normalization reused; no new matcher)"
+      },
+      {
+        "id": "D9_INTERVENTION_SENSITIVITY_PROFILE",
+        "description": "frozen A / B / A+B / G outcome profiles (reused, never rerun)"
+      }
+    ],
+    "feature_schema": [
+      {
+        "id": "Q_RAW_TEXT",
+        "name": "Raw query text",
+        "domain": "D1_QUERY_STRUCTURE",
+        "value_type": "STR",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "eval/v4_8_generation_mechanism_isolation.json#/per_case/{case}/query"
+      },
+      {
+        "id": "Q_CHAR_COUNT",
+        "name": "Query character count",
+        "domain": "D1_QUERY_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "len(per_case.query)"
+      },
+      {
+        "id": "Q_HAS_PLURAL_MARKER",
+        "name": "Query contains plural document marker 哪些",
+        "domain": "D1_QUERY_STRUCTURE",
+        "value_type": "BOOL",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "'哪些' in per_case.query"
+      },
+      {
+        "id": "Q_HAS_SINGULAR_MARKER",
+        "name": "Query contains singular document marker 哪份",
+        "domain": "D1_QUERY_STRUCTURE",
+        "value_type": "BOOL",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "'哪份' in per_case.query"
+      },
+      {
+        "id": "Q_HAS_EXPLICIT_CERTAINTY_MODIFIER",
+        "name": "Query contains explicit certainty modifier 明确",
+        "domain": "D1_QUERY_STRUCTURE",
+        "value_type": "BOOL",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "'明确' in per_case.query"
+      },
+      {
+        "id": "R_EXPECTED_DOCUMENT_COUNT",
+        "name": "Expected document count",
+        "domain": "D2_PRODUCT_OUTPUT_STRUCTURAL_REQUIREMENT",
+        "value_type": "INT",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "len(per_case.expected_documents)"
+      },
+      {
+        "id": "R_REQUIRES_MULTI_DOCUMENT_OUTPUT",
+        "name": "Outcome requires more than one document identity",
+        "domain": "D2_PRODUCT_OUTPUT_STRUCTURAL_REQUIREMENT",
+        "value_type": "BOOL",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "len(expected_documents) >= 2"
+      },
+      {
+        "id": "R_EXPECTED_TITLE_STRINGS",
+        "name": "Expected title strings (frozen order)",
+        "domain": "D2_PRODUCT_OUTPUT_STRUCTURAL_REQUIREMENT",
+        "value_type": "LIST_STR",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "per_case.expected_documents (list kept in frozen order)"
+      },
+      {
+        "id": "E_CHUNK_COUNT",
+        "name": "Retrieved material chunk count",
+        "domain": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "len(v4_7 per_case_layer_trace[case].material_to_chunk_to_document_map)"
+      },
+      {
+        "id": "E_UNIQUE_DOCUMENT_COUNT",
+        "name": "Unique document_id count in retrieved chunks",
+        "domain": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "len(set(document_id)) over material map"
+      },
+      {
+        "id": "E_GROUP_SIZES",
+        "name": "Group sizes in first-occurrence order",
+        "domain": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "value_type": "LIST_INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "chunks grouped by document_id; groups ordered by first occurrence in material order; value = chunk count per group"
+      },
+      {
+        "id": "E_MAX_GROUP_SIZE",
+        "name": "Largest same-document chunk group",
+        "domain": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "max(group sizes)"
+      },
+      {
+        "id": "E_DOCUMENT_TRANSITIONS_IN_CHUNK_ORDER",
+        "name": "Document transitions in chunk order",
+        "domain": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "count of adjacent chunk pairs (i, i+1) whose document_id differs"
+      },
+      {
+        "id": "E_EXPECTED_DOCUMENT_CHUNK_COUNT",
+        "name": "Chunks carrying an expected document identity",
+        "domain": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "chunk counts as expected iff its document_title contains at least one expected title string as literal substring (same literal substring semantics as the frozen Product title matcher); count of expected chunks"
+      },
+      {
+        "id": "E_NON_EXPECTED_DOCUMENT_CHUNK_COUNT",
+        "name": "Chunks NOT carrying an expected document identity",
+        "domain": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "chunk count minus E_EXPECTED_DOCUMENT_CHUNK_COUNT"
+      },
+      {
+        "id": "E_FIRST_CHUNK_BELONGS_TO_EXPECTED_DOCUMENT",
+        "name": "First chunk is an expected-document chunk",
+        "domain": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "value_type": "BOOL",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "material_index 1 chunk satisfies the expected-document substring rule"
+      },
+      {
+        "id": "E_LAST_CHUNK_TEXT_LENGTH",
+        "name": "Character length of last material text",
+        "domain": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "len(semantic C0 materials[-1].text)"
+      },
+      {
+        "id": "E_EXPECTED_DOCUMENT_TEXT_TOTAL_LENGTH",
+        "name": "Total characters of expected-document chunk texts",
+        "domain": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "sum(len(text)) over expected chunks"
+      },
+      {
+        "id": "E_NON_EXPECTED_DOCUMENT_TEXT_TOTAL_LENGTH",
+        "name": "Total characters of non-expected-document chunk texts",
+        "domain": "D3_RETRIEVED_EVIDENCE_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "sum(len(text)) over non-expected chunks"
+      },
+      {
+        "id": "T_RENDERED_TITLE_STRINGS_IN_ORDER",
+        "name": "Distinct rendered document_title values in first-occurrence order",
+        "domain": "D4_CANONICAL_TITLE_REPRESENTATION",
+        "value_type": "LIST_STR",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "distinct document_title per chunk, first-occurrence order"
+      },
+      {
+        "id": "T_DISTINCT_TITLE_STRING_COUNT",
+        "name": "Number of distinct rendered title strings",
+        "domain": "D4_CANONICAL_TITLE_REPRESENTATION",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "len(T_RENDERED_TITLE_STRINGS_IN_ORDER)"
+      },
+      {
+        "id": "T_CHAPTER_PREFIX_VARIANT_EXISTS",
+        "name": "A rendered title carries a chapter prefix (第1章)",
+        "domain": "D4_CANONICAL_TITLE_REPRESENTATION",
+        "value_type": "BOOL",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "any(document_title.startswith('第1章'))"
+      },
+      {
+        "id": "T_EXPECTED_TITLE_TOTAL_OCCURRENCE_COUNT_IN_REQUEST",
+        "name": "Total occurrences of expected titles in raw user message",
+        "domain": "D4_CANONICAL_TITLE_REPRESENTATION",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "sum over expected titles of non-overlapping-with-advance substring occurrence count in v4_7 final_application_model_request.messages[1].content (scan: find at start, next start = i+1)"
+      },
+      {
+        "id": "T_EXPECTED_TITLE_LAST_OCCURRENCE_DISTANCE_TO_QUESTION",
+        "name": "Character distance from last expected-title occurrence to question line",
+        "domain": "D4_CANONICAL_TITLE_REPRESENTATION",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "content.rfind('问题：') - max(last occurrence index over expected titles)"
+      },
+      {
+        "id": "B_CHUNKS_WITH_TITLE_IN_SERIALIZED_HEADER",
+        "name": "Chunks whose serialized header carries the document title",
+        "domain": "D5_TITLE_TO_CHUNK_BINDING_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "count(title_present_in_serialized_header == true) in v4_7 material map"
+      },
+      {
+        "id": "B_MAX_CHUNKS_PER_EXPECTED_TITLE",
+        "name": "Max chunks sharing one expected title (literal substring)",
+        "domain": "D5_TITLE_TO_CHUNK_BINDING_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "for each expected title: count chunks whose serialized header location_in_header contains the title as literal substring; take max"
+      },
+      {
+        "id": "B_TITLE_RENDERED_ACROSS_MULTIPLE_DOCUMENT_IDS",
+        "name": "One rendered title string maps to >=2 distinct document_id",
+        "domain": "D5_TITLE_TO_CHUNK_BINDING_STRUCTURE",
+        "value_type": "BOOL",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "group chunks by exact document_title; YES iff any title maps to >=2 distinct document_id"
+      },
+      {
+        "id": "M_DUPLICATION_RATIO",
+        "name": "Chunk duplication ratio 1 - unique/chunks",
+        "domain": "D6_DOCUMENT_MEMBERSHIP_STRUCTURE",
+        "value_type": "FLOAT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "round(1 - unique_document_count / chunk_count, 4)"
+      },
+      {
+        "id": "M_ADJACENT_SAME_DOCUMENT_PAIRS",
+        "name": "Adjacent chunk pairs sharing one document_id",
+        "domain": "D6_DOCUMENT_MEMBERSHIP_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "count of adjacent chunk pairs (i, i+1) with equal document_id"
+      },
+      {
+        "id": "RS_MESSAGE_COUNT",
+        "name": "Model-visible message count",
+        "domain": "D7_MODEL_VISIBLE_REQUEST_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "len(v4_7 final_application_model_request.messages)"
+      },
+      {
+        "id": "RS_MESSAGE_ROLE_SEQUENCE",
+        "name": "Model-visible role sequence (C0)",
+        "domain": "D7_MODEL_VISIBLE_REQUEST_STRUCTURE",
+        "value_type": "LIST_STR",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "per_case_per_condition_input_identity[case].per_condition_semantic_objects.C0 has no role list; use model_visible_request_digests[case].C0.message_roles"
+      },
+      {
+        "id": "RS_C0_INSTRUCTION_LINE_COUNT",
+        "name": "Instruction lines in C0 request",
+        "domain": "D7_MODEL_VISIBLE_REQUEST_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "len(per_condition_semantic_objects.C0.instruction_lines)"
+      },
+      {
+        "id": "RS_B1_NAMING_INSTRUCTION_INSTANTIATED_TEXT",
+        "name": "B1 naming instruction text as instantiated (C2)",
+        "domain": "D7_MODEL_VISIBLE_REQUEST_STRUCTURE",
+        "value_type": "STR",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "per_condition_semantic_objects.C2.instruction_lines[0] (or NOT_AVAILABLE if absent)"
+      },
+      {
+        "id": "RS_USER_CONTENT_CHAR_LENGTH",
+        "name": "Raw user-message character length",
+        "domain": "D7_MODEL_VISIBLE_REQUEST_STRUCTURE",
+        "value_type": "INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "len(v4_7 final_application_model_request.messages[1].content)"
+      },
+      {
+        "id": "P_C0_TITLE_EMITTED",
+        "name": "C0: canonical title emitted",
+        "domain": "D8_RAW_FAILURE_PHENOTYPE",
+        "value_type": "BOOL",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "product_observables[case].C0.O1_CANONICAL_TITLE_EMITTED == 'YES'"
+      },
+      {
+        "id": "P_C0_GENERIC_MATERIAL_IDENTITY_USED",
+        "name": "C0: generic material identity used",
+        "domain": "D8_RAW_FAILURE_PHENOTYPE",
+        "value_type": "BOOL",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "product_observables[case].C0.O2_GENERIC_MATERIAL_IDENTITY_USED == 'YES'"
+      },
+      {
+        "id": "P_C0_MATERIAL_NUMBERS_EMITTED",
+        "name": "C0: material numbers emitted (unique ascending)",
+        "domain": "D8_RAW_FAILURE_PHENOTYPE",
+        "value_type": "LIST_INT",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "sorted(set(int(match) for match in re.findall(r'材料(\\d+)', per_case.conditions.C0.raw_answer)))"
+      },
+      {
+        "id": "P_C0_DOCUMENT_TERM_PRESENT",
+        "name": "C0: document noun 文档 present in answer",
+        "domain": "D8_RAW_FAILURE_PHENOTYPE",
+        "value_type": "BOOL",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "'文档' in per_case.conditions.C0.raw_answer"
+      },
+      {
+        "id": "P_C0_OUTPUT_MATERIAL_COVERAGE_OF_EXPECTED_DOCUMENTS",
+        "name": "C0: coverage of expected documents by emitted material numbers",
+        "domain": "D8_RAW_FAILURE_PHENOTYPE",
+        "value_type": "STR",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "map emitted material numbers to document_title via material map; classify expected-document coverage as COMPLETE (all expected), PARTIAL (some expected), NONE (no expected)"
+      },
+      {
+        "id": "P_ALL_CONDITIONS_GENERIC_ONLY",
+        "name": "All tested conditions generic-material-only (O2=YES and O1=NO)",
+        "domain": "D8_RAW_FAILURE_PHENOTYPE",
+        "value_type": "BOOL",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "V4.8 C0-C3 observables and (for residual cases) V4.8.1 G0/G1 observables all have O2 == 'YES' and O1 == 'NO'"
+      },
+      {
+        "id": "P_ANY_DOCUMENT_LEVEL_REFERENT",
+        "name": "Any condition answer contains a document-level referent (该文档/这份文档)",
+        "domain": "D8_RAW_FAILURE_PHENOTYPE",
+        "value_type": "BOOL",
+        "evidence_level": "E1",
+        "reliability": "DIRECT",
+        "extraction_rule": "any of ['该文档','这份文档'] in any raw_answer of the case's tested conditions"
+      },
+      {
+        "id": "IS_A_SENSITIVE",
+        "name": "Factor A sensitivity (delta A given B0)",
+        "domain": "D9_INTERVENTION_SENSITIVITY_PROFILE",
+        "value_type": "INT",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "V4.8 factorial_contrasts[case].delta_A_given_B0 (values frozen; never rerun)"
+      },
+      {
+        "id": "IS_B_SENSITIVE",
+        "name": "Factor B sensitivity (delta B given A0)",
+        "domain": "D9_INTERVENTION_SENSITIVITY_PROFILE",
+        "value_type": "INT",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "V4.8 factorial_contrasts[case].delta_B_given_A0 (values frozen; never rerun)"
+      },
+      {
+        "id": "IS_AB_JOINT",
+        "name": "Joint A+B outcome Y(C3)",
+        "domain": "D9_INTERVENTION_SENSITIVITY_PROFILE",
+        "value_type": "INT",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "V4.8 per_case[case].Y.C3 (values frozen; never rerun)"
+      },
+      {
+        "id": "IS_G_SENSITIVE",
+        "name": "Factor G sensitivity (V4.8.1 DELTA_G)",
+        "domain": "D9_INTERVENTION_SENSITIVITY_PROFILE",
+        "value_type": "STR",
+        "evidence_level": "E2",
+        "reliability": "DIRECT",
+        "extraction_rule": "V4.8.1 per_case[case].DELTA_G for residual cases; md-004 = NOT_AVAILABLE (reference pair not required, never run)"
+      }
+    ],
+    "feature_canonicalization_rules": {
+      "string": "exact frozen text; no normalization beyond the predeclared value itself",
+      "list": "kept in frozen order unless the feature is defined as an unordered set (none in this schema); elementwise exact comparison",
+      "float": "rounded to 4 decimals by the frozen extraction_rule before comparison",
+      "bool": "True/False compared directly",
+      "missing": "NOT_AVAILABLE is never equal to any value, including another NOT_AVAILABLE, for pattern classification; a feature with any NOT_AVAILABLE case value is pattern NOT_AVAILABLE"
+    },
+    "similarity_rules": {
+      "comparable_features": "features where md-009 and md-015 are both not NOT_AVAILABLE",
+      "residual_matching_features": "comparable features where canonical(md009_value) == canonical(md015_value)",
+      "score": "count(RESIDUAL_MATCHING_FEATURES) / count(COMPARABLE_FEATURES), rounded to 4 decimals",
+      "minimum_denominator": 5,
+      "if_insufficient": "NOT_ESTABLISHED",
+      "classification": {
+        "HIGH": ">= 0.80",
+        "MEDIUM": ">= 0.50 and < 0.80",
+        "LOW": "< 0.50"
+      },
+      "interpretation_boundary": "mechanical feature similarity only; does not imply same causal mechanism"
+    },
+    "responsive_difference_rules": {
+      "shared_residual_features": "features where md-009 and md-015 have equal available canonical values",
+      "denominator": "shared residual features where md-004 value is available (not NOT_AVAILABLE)",
+      "differential_shared_features": "denominator features where canonical(md004_value) != canonical(shared residual value)",
+      "score": "count(DIFFERENTIAL_SHARED_FEATURES) / count(SHARED_RESIDUAL_FEATURES_WITH_MD004_AVAILABLE), rounded to 4 decimals",
+      "minimum_denominator": 5,
+      "if_insufficient": "NOT_ESTABLISHED",
+      "classification": {
+        "HIGH": ">= 0.50",
+        "MEDIUM": ">= 0.25 and < 0.50",
+        "LOW": "< 0.25"
+      },
+      "interpretation_boundary": "descriptive differential strength only; does not automatically support any mechanism"
+    },
+    "shared_residual_rule": "SHARED_RESIDUAL_HYPOTHESIS = YES only if a candidate supports both md-009 and md-015 and is based on NONRESPONDER_SHARED differential evidence; NO if md-009 and md-015 require materially different candidate evidence; NOT_ESTABLISHED otherwise",
+    "candidate_generation_rule": "a candidate hypothesis must originate from one or more mechanically observed differential features in the frozen feature inventory; intuition-only candidates are invalid",
+    "candidate_family_namespaces": [
+      "TITLE_READOUT_OR_BINDING",
+      "DOCUMENT_LEVEL_ENUMERATION_COMPLEXITY",
+      "SOURCE_IDENTITY_SYNTHESIS",
+      "QUERY_TASK_INTERPRETATION",
+      "OUTPUT_SCHEMA_OR_RESPONSE_SELECTION",
+      "TITLE_CONTEXT_DISTANCE_OR_POSITION",
+      "MULTI_DOCUMENT_DEDUPLICATION",
+      "CROSS_CHUNK_IDENTITY_COMPOSITION",
+      "OTHER_GENERATION_FAMILY_RESIDUAL"
+    ],
+    "candidate_support_rules": {
+      "levels": [
+        "STRONGLY_SUPPORTED",
+        "SUPPORTED",
+        "PLAUSIBLE_ONLY",
+        "NOT_SUPPORTED",
+        "NOT_ESTABLISHED"
+      ],
+      "STRONGLY_SUPPORTED": ">= 2 independent differential domains; each domain contains at least one traceable mechanically reliable feature; features consistently differentiate md-004 from BOTH md-009 and md-015; candidate is compatible with prior A/B/G results; no direct frozen evidence contradiction",
+      "SUPPORTED": "one strong differential domain with multiple internally consistent mechanical features, OR >= 2 weaker independent differential domains; and no direct contradiction from prior intervention results",
+      "PLAUSIBLE_ONLY": "conceptually coherent but frozen evidence does not materially discriminate it",
+      "NOT_SUPPORTED": "frozen evidence directly contradicts candidate or prior intervention already provides relevant negative evidence",
+      "NOT_ESTABLISHED": "insufficient admissible evidence to classify",
+      "forbidden": "PLAUSIBLE_ONLY must not be promoted to NEXT_RESIDUAL_HYPOTHESIS"
+    },
+    "candidate_ranking_rules": {
+      "eligible": "only STRONGLY_SUPPORTED and SUPPORTED candidates enter the ranked shortlist",
+      "order": [
+        "1. support level (STRONGLY_SUPPORTED > SUPPORTED)",
+        "2. case coverage: candidate supported by both residual cases > candidate supported by one residual case",
+        "3. number of independent supporting domains (descending)",
+        "4. number of DIRECT-reliability supporting features (descending)",
+        "5. if still tied: TOP_CANDIDATE_HYPOTHESIS = NOT_UNIQUELY_ESTABLISHED (no manual tie-breaking)"
+      ],
+      "tie_rule": "ties must not be broken manually"
+    },
+    "previously_tested_hypotheses": [
+      "MATERIAL_LABEL_BIAS",
+      "MINIMAL_CANONICAL_TITLE_NAMING_INSTRUCTION",
+      "A_PLUS_B_COMBINATION_RESCUE",
+      "EXPLICIT_DOCUMENT_MEMBERSHIP_METADATA"
+    ],
+    "previously_tested_hypothesis_rule": "these must be tagged PREVIOUSLY_TESTED_OR_CONSTRAINED; any overlapping candidate must state what new factor is actually different, otherwise the candidate is invalid",
+    "next_hypothesis_rule": "NEXT_RESIDUAL_HYPOTHESIS is emitted only when TOP_CANDIDATE_SUPPORT is SUPPORTED or STRONGLY_SUPPORTED AND TOP_CANDIDATE_HYPOTHESIS is uniquely established; otherwise NOT_ESTABLISHED with NEXT_DIAGNOSTIC_GOAL = DISCRIMINATE_TOP_CANDIDATES",
+    "effective_differential_pattern_enum": [
+      "NONRESPONDER_SHARED",
+      "ALL_SAME",
+      "MD009_ONLY",
+      "MD015_ONLY",
+      "MIXED",
+      "NOT_AVAILABLE"
+    ],
+    "effective_differential_pattern_rules": {
+      "NONRESPONDER_SHARED": "canonical(md009) == canonical(md015) AND canonical(md004) != canonical(md009) AND all three available",
+      "ALL_SAME": "canonical(md004) == canonical(md009) == canonical(md015) AND all three available",
+      "MD009_ONLY": "canonical(md009) != canonical(md004) AND canonical(md009) != canonical(md015) AND canonical(md004) == canonical(md015)",
+      "MD015_ONLY": "canonical(md015) != canonical(md004) AND canonical(md015) != canonical(md009) AND canonical(md004) == canonical(md009)",
+      "MIXED": "all three values pairwise different",
+      "NOT_AVAILABLE": "at least one case value is NOT_AVAILABLE"
+    },
+    "historical_alias_mapping": {
+      "RESPONSIVE_ONLY": "NONRESPONDER_SHARED"
+    },
+    "single_label_emission_rule": "EXACTLY_ONE_CANONICAL_PATTERN_PER_FEATURE"
+  },
+  "digests": {
+    "canonical_json_contract": "json.dumps(ensure_ascii=False, sort_keys=True, separators=(',',':')) encoded utf-8 -> sha256; identical to the frozen project helper scripts/analyze_v4_8_generation_mechanism.py::canonical_json_digest, which is reused (no private algorithm introduced).",
+    "EFFECTIVE_DESIGN_DIGEST_RUN_1": "2417890d212c3356509b5515925ae006bae14dd2b3680b23b2e0ca1327fe4957",
+    "EFFECTIVE_DESIGN_DIGEST_RUN_2": "2417890d212c3356509b5515925ae006bae14dd2b3680b23b2e0ca1327fe4957",
+    "V4_8_2_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "2417890d212c3356509b5515925ae006bae14dd2b3680b23b2e0ca1327fe4957"
+  },
+  "semantic_diff_firewall": {
+    "ORIGINAL_RELEVANT_DESIGN_SOURCE": "eval/v4_8_2_preflight_snapshot.json frozen fields (7-value differential_pattern_enum + 7 differential_pattern_rules + all other design fields)",
+    "authorized_diffs": [
+      "1. remove canonical enum entry: RESPONSIVE_ONLY",
+      "2. remove canonical pattern rule: RESPONSIVE_ONLY",
+      "3. add historical alias metadata: RESPONSIVE_ONLY -> NONRESPONDER_SHARED",
+      "4. explicitly freeze: exactly one canonical pattern per feature",
+      "5. governance metadata required to record amendment / superseded gate / effective authorization"
+    ],
+    "observed_payload_structural_diffs": [
+      "effective_differential_pattern_enum",
+      "effective_differential_pattern_rules",
+      "historical_alias_mapping",
+      "single_label_emission_rule"
+    ],
+    "verbatim_non_pattern_field_check": "PASS",
+    "retained_pattern_rules_verbatim_check": "PASS",
+    "effective_enum_count": 6,
+    "AMENDMENT_SEMANTIC_DIFF": "PASS"
+  },
+  "transient_derivation_record": {
+    "TRANSIENT_DERIVATION_BEFORE_AMENDMENT": "YES",
+    "GOVERNED_FEATURE_INVENTORY_FINALIZED_BEFORE_AMENDMENT": "NO",
+    "GOVERNED_CANDIDATE_RANKING_BEFORE_AMENDMENT": "NO",
+    "GOVERNED_SCIENTIFIC_OUTPUT_BEFORE_AMENDMENT": "NO",
+    "ORIGINAL_ANALYSIS_DESIGN_UNCHANGED_GATE": "SUPERSEDED_FOR_AMENDED_EXECUTION",
+    "note": "The original gate ANALYSIS_DESIGN_CHANGED_AFTER_DERIVATION_STARTED = NO no longer holds literally in all semantics: transient (non-governed) derivation occurred before this amendment. History is NOT rewritten and the transient derivation is NOT denied; the gate is superseded for amended execution."
+  },
+  "replacement_governance_gates": {
+    "ORIGINAL_SNAPSHOT_BYTES_CHANGED": "NO",
+    "AMENDMENT_APPLIED_AFTER_TRANSIENT_DERIVATION": "YES",
+    "AMENDMENT_APPLIED_BEFORE_GOVERNED_FEATURE_FINALIZATION": "YES",
+    "AMENDMENT_APPLIED_BEFORE_GOVERNED_CANDIDATE_RANKING": "YES",
+    "EFFECTIVE_ANALYSIS_DESIGN_FROZEN_BEFORE_GOVERNED_DERIVATION": "YES",
+    "GOVERNED_DERIVATION_MUST_RECOMPUTE_FROM_FROZEN_EVIDENCE": "YES",
+    "TRANSIENT_PRE_AMENDMENT_RESULTS_MUST_NOT_BE_REUSED_AS_GOVERNED_VALUES": "YES",
+    "note": "All future V4.8.2 harness / test / machine artifact / report MUST use these amended governance gates instead of the superseded unchanged-design gate."
+  },
+  "recomputation_requirement": {
+    "must_recompute_from_frozen_admissible_evidence": [
+      "feature observations",
+      "pattern labels",
+      "scores",
+      "candidate support",
+      "candidate ranking",
+      "shared residual decision",
+      "next hypothesis decision"
+    ],
+    "must_not_reuse": [
+      "previous chat values",
+      "TEMP probe values",
+      "transient console values",
+      "pre-amendment feature labels"
+    ],
+    "note": "RECOMPUTE FROM SOURCE: even if a value is numerically identical, it must be mechanically re-derived from frozen admissible evidence."
+  },
+  "authorized_path_expansion": {
+    "ORIGINAL_AUTHORIZED_PATHS": [
+      "eval/v4_8_2_preflight_snapshot.json",
+      "eval/v4_8_2_residual_differential_attribution.json",
+      "docs/V4_8_2_RESIDUAL_DIFFERENTIAL_ATTRIBUTION.md",
+      "scripts/analyze_v4_8_2_residual_differential.py",
+      "tests/test_v4_8_2_residual_differential.py"
+    ],
+    "ORIGINAL_AUTHORIZED_PATH_COUNT": 5,
+    "EFFECTIVE_AUTHORIZED_PATHS": [
+      "eval/v4_8_2_preflight_snapshot.json",
+      "eval/v4_8_2_analysis_design_amendment_001.json",
+      "eval/v4_8_2_residual_differential_attribution.json",
+      "docs/V4_8_2_RESIDUAL_DIFFERENTIAL_ATTRIBUTION.md",
+      "scripts/analyze_v4_8_2_residual_differential.py",
+      "tests/test_v4_8_2_residual_differential.py"
+    ],
+    "EFFECTIVE_AUTHORIZED_PATH_COUNT": 6,
+    "note": "The original snapshot retains its historical 5-path authorization verbatim. The 6th path (eval/v4_8_2_analysis_design_amendment_001.json) is added by explicit user authorization in this amendment only; it is NOT claimed to have been present in the original snapshot."
+  },
+  "no_new_evidence_contract": {
+    "NEW_DIAGNOSTIC_MODEL_CALLS": 0,
+    "NEW_COUNTERFACTUAL_RUNS": 0,
+    "NEW_PRODUCTION_RETRIEVAL_RUNS": 0,
+    "forbidden_this_round": [
+      "Ollama",
+      "qwen",
+      "Retriever",
+      "production retrieval",
+      "new model call",
+      "V4.8 rerun",
+      "V4.8.1 rerun",
+      "direct-title probe",
+      "any counterfactual"
+    ]
+  },
+  "product_parent_state_unchanged": {
+    "current_release": "v4.0.0-alpha.2",
+    "current_baseline": "V4_6_2_HASH_PORTABILITY_BASELINE",
+    "product_metrics_source": "V4_6_1_EMBEDDING_IDENTITY_BASELINE",
+    "canonical_production_hash_observed": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "runtime_db_identity_observed": "10698752:c6bc9b3eb63ae4e6",
+    "product_quality_dod": "NOT_YET_PASS",
+    "v4_final": "NO"
+  },
+  "pre_write_validation": {
+    "SNAPSHOT_HASH_MATCH": "YES",
+    "AMENDMENT_TARGET_PREVIOUSLY_ABSENT": "YES",
+    "DEFECT_MECHANICALLY_RECONFIRMED": "YES",
+    "OPTION_C_MECHANICALLY_WELL_DEFINED": "YES",
+    "SEMANTIC_DIFF_WITHIN_AUTHORIZATION": "YES",
+    "EFFECTIVE_DESIGN_DIGEST_DETERMINISTIC": "YES",
+    "NO_PRODUCT_OR_PARENT_MUTATION_REQUIRED": "YES"
+  },
+  "write_boundary": {
+    "AUTHORIZED_NEW_PATH_COUNT": 1,
+    "files_created_this_round": [
+      "eval/v4_8_2_analysis_design_amendment_001.json"
+    ],
+    "files_modified_this_round": []
+  },
+  "timestamp": "2026-09-14T00:21:35"
+}

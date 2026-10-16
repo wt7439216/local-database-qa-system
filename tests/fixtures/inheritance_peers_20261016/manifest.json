@@ -1,0 +1,55 @@
+{
+  "schema": "v4-inheritance-peers-fixture-v1",
+  "captured_on": "2026-10-16",
+  "role": "EXACT_HISTORICAL_INHERITANCE_PEER_INPUTS_NOT_CURRENT_PRODUCT",
+  "archive": "inheritance_peers.zip",
+  "members": {
+    "v3_frozen/core/engine_v2.py": {
+      "bytes": 40347,
+      "raw_sha256": "4c26df774c802c6d78bf93991cad1e4fcfb8f814c2dd40d2e58b233650363881"
+    },
+    "v3_frozen/core/library_store.py": {
+      "bytes": 27183,
+      "raw_sha256": "f9f69698136864ccd1b536df3928aa6be2931c354fcc10ceb6273681d2f2aacf"
+    },
+    "v3_frozen/core/hybrid_retriever.py": {
+      "bytes": 15119,
+      "raw_sha256": "2921c21ad2ce0093af94351fe1c59a1d4ee290b3594ed63cb848147b308943bf"
+    },
+    "v3_frozen/core/ollama_http.py": {
+      "bytes": 7982,
+      "raw_sha256": "fd1bb6f8e53ddefb4f8110419e2981e7181a4ec72878a061b91ea407159f28c9"
+    },
+    "publish_before_sync/core/engine_v2.py": {
+      "bytes": 40912,
+      "raw_sha256": "7ec177aeb1d64cfeabf67d538f310e7f94d46aaf407ebc5e3c089bf3aa5d4d8e"
+    },
+    "publish_before_sync/core/library_store.py": {
+      "bytes": 31211,
+      "raw_sha256": "00af9311cc13457b553ed76c47512c35718d3a0c61711695cf738541d5092960"
+    },
+    "publish_before_sync/core/hybrid_retriever.py": {
+      "bytes": 16044,
+      "raw_sha256": "24df497326f9566d17b7e220a7fdb5f96e7cd62ed968a7247774492042d1d402"
+    },
+    "publish_before_sync/core/ollama_http.py": {
+      "bytes": 7982,
+      "raw_sha256": "fd1bb6f8e53ddefb4f8110419e2981e7181a4ec72878a061b91ea407159f28c9"
+    }
+  },
+  "sources": {
+    "v3_frozen": {
+      "role": "FROZEN_V3_INHERITANCE_PEER",
+      "original_git_head": null,
+      "git_state_note": "Frozen local peer has no Git repository"
+    },
+    "publish_before_sync": {
+      "role": "PUBLISH_PEER_BEFORE_PUB02_SYNC",
+      "original_git_head": "1efc74f1c5aa4021766ed443f68ef8c5046116e4",
+      "git_state_note": "clean pre-sync main worktree"
+    }
+  },
+  "archive_raw_sha256": "0a0a2cec7dccca24bc311aecc0f4343ded65f5f17a754b9da0655b6ff29518b0",
+  "member_count": 8,
+  "semantic_digest": "3e8c9118db3133530d5a80fab9e63ce14c5f7eb60529a028524a9b5cf1aaf38e"
+}

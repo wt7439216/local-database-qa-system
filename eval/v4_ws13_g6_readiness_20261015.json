@@ -1,0 +1,167 @@
+{
+  "artifact_role": "WS13_G6_POST_FRESH_ATTRIBUTION_DECISION",
+  "G6": {
+    "CURRENT_UNRESOLVED_ISSUE_ESTABLISHED": "NO",
+    "LATEST_STATE_COMPATIBLE": "YES",
+    "FRESH_ATTRIBUTION_TARGET_SET_DEFINABLE": "YES",
+    "SEPARATE_EXECUTION_TARGET_SET_DEFINABLE": "NOT_ESTABLISHED",
+    "SINGLE_PRIMARY_SUBSYSTEM": "NO",
+    "MATERIAL_SOURCE_CONFLICT": "NO",
+    "PRODUCT_MEASUREMENT_RECONCILIATION_REQUIRED": "NO",
+    "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_FRESH_ATTRIBUTION": "NO",
+    "UNRESOLVED_UPSTREAM_DEPENDENCY_FOR_SEPARATE_EXECUTION": "YES",
+    "PARENT_GOVERNANCE_BLOCKER": "NO",
+    "NEXT_PERMISSIBLE_ACTION": "FRESH_ATTRIBUTION",
+    "READINESS_CLASS": "R3"
+  },
+  "CLASSIFICATION_ORDER_STEP": "C5_R3_FRESH_ATTRIBUTION_GATE_CHECK",
+  "PROJECTED_A003": {
+    "PROJECTION_BRANCH": "PRESERVE_INHERITED_HISTORICAL_OR_STALE_RECORD",
+    "PROJECTED_RECORD": {
+      "case_id": "cit-001",
+      "inventory_origin": [
+        "MASTER_PROSE_RESIDUAL_REFERENCE",
+        "V46_POST_ROUTING_FAILURE_SET"
+      ],
+      "product_status": "NOT_ESTABLISHED",
+      "product_root_cause_families": [
+        "GENERATION"
+      ],
+      "product_multi_cause": "NO",
+      "product_confidence": "HISTORICAL_ONLY",
+      "latest_product_state_compatible": "NOT_ESTABLISHED",
+      "measurement_status": "NOT_ESTABLISHED",
+      "measurement_confidence": "NOT_ESTABLISHED",
+      "citation_status": "NOT_ESTABLISHED",
+      "citation_confidence": "HISTORICAL_ONLY",
+      "blocked_or_disproven_paths": [],
+      "blocked_or_disproven_path_evidence": [],
+      "attribution_freshness": "NOT_ESTABLISHED",
+      "relevant_later_change": "NO",
+      "relevant_later_change_evidence": [
+        {
+          "change_or_diagnosis": "NO_CASE_SPECIFIC_LATER_CHANGE_ARTIFACT_COVERS_THIS_CASE",
+          "governing_artifact_path": "eval/v4_6_post_routing_attribution.json",
+          "field_or_section": "latest governed per-case attribution present; not covered by any later case-scoped remediation or diagnosis artifact"
+        },
+        {
+          "change_or_diagnosis": "V4_6_1_STAGE_DECLARES_PRODUCTION_BEHAVIOUR_UNCHANGED",
+          "governing_artifact_path": "eval/v4_6_1_embedding_identity_baseline.json",
+          "field_or_section": "production_provenance.production_behavior_changed_in_stage = false"
+        },
+        {
+          "change_or_diagnosis": "V4_6_2_HASH_PORTABILITY_IS_MEASUREMENT_IDENTITY_ONLY_NOT_PRODUCT_BEHAVIOUR",
+          "governing_artifact_path": "eval/v4_6_2_hash_portability_baseline.json",
+          "field_or_section": "baseline_identity.note + production_provenance.production_behavior_changed_in_stage = false + measurement_provenance.metrics_recomputed_in_stage = false"
+        },
+        {
+          "change_or_diagnosis": "PRODUCTION_HASH_DIFFERENCE_ALONE_IS_NOT_SUFFICIENT_TO_MARK_ATTRIBUTION_STALE",
+          "governing_artifact_path": "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+          "field_or_section": "effective_analysis_design_additions.relevant_change_rule.forbidden_sole_evidence"
+        }
+      ],
+      "supporting_evidence": [
+        "EV_GOVERNING_PER_CASE_ATTRIBUTION_V46",
+        "EV_PRODUCT_FAMILY_FROM_GOVERNED_LABEL"
+      ],
+      "limiting_evidence": [
+        "LIM_NO_LATEST_PRODUCT_STATE_COMPATIBLE_EVIDENCE",
+        "LIM_RELEVANT_LATER_CHANGE_NOT_ESTABLISHED",
+        "LIM_HISTORICAL_ONLY_ATTRIBUTION",
+        "LIM_NO_MEASUREMENT_AXIS_EVIDENCE",
+        "LIM_CITATION_COVERAGE_GAP_ALONE_INSUFFICIENT",
+        "LIM_NO_CASE_LEVEL_CITATION_MECHANICAL_EVIDENCE",
+        "LIM_HISTORICAL_ONLY_CITATION_ATTRIBUTION",
+        "LIM_ATTRIBUTION_COMPATIBILITY_WITH_LATEST_STATE_NOT_ESTABLISHED"
+      ],
+      "latest_sources": [
+        {
+          "axis": "product",
+          "path": "eval/v4_6_post_routing_attribution.json",
+          "field_or_section": "canonical_failure_set.rows[case_id=cit-001].primary_root_cause + secondary_causes"
+        },
+        {
+          "axis": "measurement",
+          "path": "eval/v4_6_post_routing_attribution.json",
+          "field_or_section": "rows[case_id=cit-001] / cases[case_id=cit-001]: primary_root_cause + secondary_causes (measurement-family label scan)"
+        },
+        {
+          "axis": "citation",
+          "path": "eval/v4_6_post_routing_attribution.json",
+          "field_or_section": "rows[case_id=cit-001] / cases[case_id=cit-001]: primary_root_cause + secondary_causes (citation-family label scan)"
+        },
+        {
+          "axis": "citation",
+          "path": "eval/v4_post_v4_8_2_priority_review_preflight.json",
+          "field_or_section": "quality_gate_state.canonical_metrics.citation_coverage + frozen_targets"
+        },
+        {
+          "axis": "relevant_later_change",
+          "path": "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+          "field_or_section": "effective_analysis_design_additions.relevant_change_rule (RELEVANT_CHANGE_STALENESS_RULE)"
+        },
+        {
+          "axis": "attribution_freshness",
+          "path": "eval/v4_6_post_routing_attribution.json",
+          "field_or_section": "governing per-case attribution (no current-state refresh available)"
+        }
+      ],
+      "source_levels": [
+        "S1",
+        "S1",
+        "S1",
+        "S1",
+        "S1",
+        "S1"
+      ],
+      "notes": [
+        "Freshness is NOT_ESTABLISHED while RELEVANT_LATER_CHANGE = NO: no relevant later change is established (so the attribution is not stale), yet its compatibility with the latest product state is not mechanically established (so it is not current either)."
+      ],
+      "traceable": true
+    },
+    "BUCKETS": {
+      "CURRENT_CONFIRMED_CASES": [],
+      "RESOLVED_CASES": [],
+      "CURRENT_NEGATIVE_CASES": [],
+      "HISTORICAL_OR_STALE_CASES": [
+        "cit-001"
+      ],
+      "NOT_ESTABLISHED_CASES": []
+    },
+    "AUDIT_TOKENS": [
+      "PROJECTED_NOT_ESTABLISHED_FAIL_CLOSED",
+      "PRESERVED_INHERITED_HISTORICAL_OR_STALE"
+    ],
+    "RULE_SOURCE": "eval/v4_ws13_citation_fresh_attribution_design_amendment_001.json#/amendment_semantic_payload/fix_5_g5_to_a003_a005_case_state_projection"
+  },
+  "CURRENT_ATTRIBUTION_STATUS": "NOT_CURRENTLY_ESTABLISHED",
+  "HISTORICAL_EVIDENCE_MATERIAL": "YES",
+  "BLOCKED_ACTIONS": [
+    "SEPARATE_EXECUTION"
+  ],
+  "DEPENDENCY_GRAPH_REFRESH_REQUIRED": "NO",
+  "GRAPH_ISSUES": [],
+  "SOURCE_TRACE": [
+    "eval/ws13_frozen_parent_state_20261014.json#/frozen_parent_r3/records/case_state_records",
+    "eval/ws13_frozen_parent_state_20261014.json#/frozen_parent_r3/domain",
+    "eval/ws13_frozen_parent_state_20261014.json#/frozen_parent_r3/buckets",
+    "eval/ws13_frozen_parent_state_20261014.json#/frozen_parent_r3/graph",
+    "eval/v4_post_v4_8_2_priority_review_design_amendment_005.json#/readiness_resolution_and_action_scoped_dependency"
+  ],
+  "SCIENTIFIC_EVIDENCE": true,
+  "SEPARATE_EXECUTION_AUTHORIZED": "NO",
+  "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+  "g5_source": "eval/v4_ws13_g5_attribution_20261015.json",
+  "g5_semantic_digest": "075c5b3a29f3d8529f57803d69b70d162f478c0cf043adfa1bb1a59beb9a4dff",
+  "parent_input_source": "eval/ws13_frozen_parent_state_20261014.json",
+  "accepted_rule_identity": {
+    "relative_path": "eval/v4_ws13_canonical_telemetry_permission_rule_002.json",
+    "raw_sha256": "5c014483c111837ac461d8301153f93676f2213ae50c49c4436d58a8f3e340d3",
+    "semantic_digest": "b016fe9499901108c2e0b0519a5e4ba00593b48572c601dcb056bf48176f8b8b"
+  },
+  "classifier_sha256": "4673e8b8d628d9d9c7941ba81b9767f09326d02f8d128d77eea1ba28cece1957",
+  "no_new_model_embedding_or_retrieval_calls": true,
+  "product_source_change": false,
+  "full_144_remeasurement": false,
+  "semantic_digest": "6b446eca9bbf9a8c60a693d8361cabbd09ae61cf72166a3d7eb87f1533638524"
+}

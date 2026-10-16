@@ -687,7 +687,7 @@ def build_messages(
     used = 0
     for index, chunk in enumerate(contexts, 1):
         text = re.sub(r"\s+", " ", chunk.text).strip()
-        header = f"[材料{index}｜{chunk.location}]\n"
+        header = f"[{index}] {chunk.location}\n"
         cost = len(header) + len(text) + 2
         if sent and used + cost > budget:
             break

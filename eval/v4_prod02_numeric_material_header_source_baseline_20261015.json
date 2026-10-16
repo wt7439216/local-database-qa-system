@@ -1,0 +1,45 @@
+{
+  "baseline_identity": {
+    "baseline_id": "V4_PROD02_NUMERIC_MATERIAL_HEADER_BASELINE",
+    "baseline_role": "REGISTERED_PRODUCT_SOURCE_UNMEASURED"
+  },
+  "stage_identity": {
+    "parent_baseline": "V4_PROD01_CACHE_CONSISTENCY_BASELINE"
+  },
+  "description": "Align evidence material headers with the existing numeric citation contract, supported by a separate frozen-input 12-call investigation and three real pipeline controls.",
+  "artifact_hashes": {
+    "production_source_sha256": "bef1a9414eaa168702724b982e48338fbaa858661ac1cb1863af842ef7937b6d"
+  },
+  "production_provenance": {
+    "production_source_hash": "bef1a9414eaa168702724b982e48338fbaa858661ac1cb1863af842ef7937b6d",
+    "production_trees_hashed": [
+      "core",
+      "desktop",
+      "web"
+    ]
+  },
+  "changed_sources": {
+    "core/engine_v2.py": {
+      "raw_sha256": "91c1fff5ae54eb7f3e56c7bb97e18469a9d5db6563df5284a6e903bec6b54615",
+      "canonical_lf_sha256": "c38475d61890f27764821a15fff21a352282500819c1efeca59d5d22837794dc"
+    }
+  },
+  "validation_evidence": [
+    {
+      "path": "tests/test_prod02_generation_probe.py",
+      "raw_sha256": "a2116ca9400ec7456887dde75760269003c12c54748af14b2dd056f306dfefe8"
+    },
+    {
+      "path": "tests/test_prod02_prompt_contract.py",
+      "raw_sha256": "29bf75168ecdb97d4d638c68466d0dd3cb6f6011d9f4266e9de2f35b9e0af1fe"
+    },
+    {
+      "path": "tests/test_prod02_pipeline_validation.py",
+      "raw_sha256": "9084eebe01192334ca1d4fa1323263de922bbfedd15be8bf7ebc1f2d9e0e176b"
+    }
+  ],
+  "metrics": null,
+  "product_gate_status": "NOT_MEASURED",
+  "measurement_note": "No Full144 run belongs to this source stage. Historical scores are not candidate scores.",
+  "timestamp": "2026-10-15T15:23:09+0800"
+}

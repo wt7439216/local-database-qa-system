@@ -1,0 +1,469 @@
+{
+  "artifact_type": "ANALYSIS_DESIGN_AMENDMENT",
+  "amendment_id": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_003",
+  "review_id": "POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW",
+  "checkpoint": "R1C_WORKSTREAM_BUCKET_PROJECTION_DESIGN_AMENDMENT",
+  "mode": "GOVERNANCE / DESIGN-AMENDMENT ONLY",
+  "amendment_status": "ACTIVE_FOR_FUTURE_GOVERNED_R3_UNDER_AMENDMENTS_001_002_003",
+  "AMENDMENT_IS_PROSPECTIVE": "YES",
+  "RETROACTIVE_REWRITE": "NO",
+  "is_product_baseline": false,
+  "is_product_remediation": false,
+  "is_scientific_experiment": false,
+  "new_evidence_added": false,
+  "MODEL_CALLS": 0,
+  "PRODUCTION_RETRIEVAL_RUNS": 0,
+  "COUNTERFACTUAL_RUNS": 0,
+  "FULL_144_RUNS": 0,
+  "AMENDMENT_REASON": "MULTI_AXIS_WORKSTREAM_PROJECTION_REQUIRES_DISJOINT_BUCKET_SEMANTICS_AND_CURRENT_NEGATIVE_BUCKET",
+  "PARENT_PREFLIGHT_PATH": "eval/v4_post_v4_8_2_priority_review_preflight.json",
+  "PARENT_PREFLIGHT_SHA256": "c24ebc94b504ccb9e3ff492616ebe1f29461ec1c5d7c8e632fd5c2c2031f4bf2",
+  "PARENT_AMENDMENT_ID": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_002",
+  "PARENT_AMENDMENT_PATH": "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json",
+  "PARENT_AMENDMENT_SHA256": "48a6c8eca47ca969d536929f927fea7f684803c79a4b6945c51686b496a1325b",
+  "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "d19df3abaefcf4e90f4ae85e193dc3837d861cb87021a223b1c4acb6d65dd72e",
+  "defect_record": {
+    "defect_class": "WORKSTREAM_BUCKET_SCHEMA_LACKS_MULTI_AXIS_PROJECTION_AND_CURRENT_NEGATIVE_BUCKET",
+    "defect_impact_scope": "WORKSTREAM_CASE_BUCKET_ASSIGNMENT_AND_MUTUAL_EXCLUSIVITY_ONLY",
+    "frozen_field_location": "eval/v4_post_v4_8_2_priority_review_preflight.json#/workstream_matrix_schema/required_fields",
+    "prior_amendment_gap": "Amendment 002 froze the per-workstream primary decision axis but did not freeze a mutually exclusive projection from the accepted multi-axis case state into the four frozen workstream case buckets, so the same case could be pulled into more than one bucket of one workstream",
+    "unresolved_bucket_cases": [
+      {
+        "class": "A",
+        "state": "PRIMARY_STATUS = NOT_ESTABLISHED with PRIMARY_CONFIDENCE = HISTORICAL_ONLY and a historical workstream family present",
+        "defect": "under the frozen bucket names this case matches both STALE_OR_HISTORICAL_CASES and NOT_ESTABLISHED_CASES; no rule forbids the double membership",
+        "resolution_in_this_amendment": "HISTORICAL_OR_STALE_CASES with reason code HISTORICAL_ONLY_FAMILY; it must not also be placed in NOT_ESTABLISHED_CASES when it qualifies for the historical bucket"
+      },
+      {
+        "class": "B",
+        "state": "MEASUREMENT_STATUS = NO_CURRENT_MEASUREMENT_DEFECT_OBSERVED or CITATION_STATUS = NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+        "defect": "an explicit current negative observation has no bucket under the four frozen bucket names and would be forced into CURRENT / STALE / RESOLVED / NOT_ESTABLISHED, each of which states something different",
+        "resolution_in_this_amendment": "new bucket CURRENT_NEGATIVE_CASES with reason code CURRENT_NEGATIVE_EVIDENCE; it must not be counted as NOT_ESTABLISHED, RESOLVED_OR_CLOSED or CURRENT_CONFIRMED"
+      }
+    ],
+    "why_bucket_name_is_insufficient": "HISTORICAL_OR_STALE_CASES must never be read as ATTRIBUTION_FRESHNESS = HISTORICAL_STALE: historical-only evidence and mechanically stale attribution are different facts that share one bucket",
+    "reinterpretation_of_this_reason": "PROHIBITED"
+  },
+  "amendment_scope": {
+    "supersedes_prospectively": [
+      "workstream_matrix_schema case-bucket vocabulary and case-bucket semantics: the effective set becomes the five buckets frozen in workstream_bucket_projection",
+      "STALE_OR_HISTORICAL_CASES is prospectively renamed HISTORICAL_OR_STALE_CASES",
+      "Amendment 002 case_bucket_derivation_rules where a bucket condition conflicts with this amendment (see superseded_amendment_002_bucket_rules)",
+      "the implicit assumption that the four old bucket names alone partition the global case inventory"
+    ],
+    "superseded_amendment_002_bucket_rules": [
+      "Amendment 002 STALE_OR_HISTORICAL_CASES bucket name and its condition (historical-only NOT_ESTABLISHED + HISTORICAL_ONLY + family relevance was not covered; it is now covered under HISTORICAL_OR_STALE_CASES)",
+      "Amendment 002 NOT_ESTABLISHED_CASES condition that placed explicit no-current-defect observations (NO_CURRENT_MEASUREMENT_DEFECT_OBSERVED / NO_CURRENT_CITATION_DEFECT_ESTABLISHED) into NOT_ESTABLISHED_CASES; those observations now project to CURRENT_NEGATIVE_CASES",
+      "Amendment 002 CURRENT_CONFIRMED_CASES and RESOLVED_CASES conditions are retained verbatim",
+      "Amendment 002 primary-axis mapping itself (PRIMARY_DECISION_AXIS / PRIMARY_STATUS_FIELD / PRIMARY_ROOT_CAUSE_FILTER / family_relevance_definition) is retained verbatim"
+    ],
+    "does_not_change": [
+      "case inventory (R2 accepted multi-axis case state, membership unchanged)",
+      "Amendment 001 multi-axis case state schema and values",
+      "Amendment 002 workstream-to-axis mapping",
+      "readiness R4-R0 definitions (readiness_rules)",
+      "dependency edge types (dependency_rules.allowed_edge_types)",
+      "quality-gate link types (quality_gate_link_rules.allowed_link_types)",
+      "P1-P7 lexicographic priority order (priority_decision_rules)",
+      "recommendation support rules (recommendation_support_rules)",
+      "candidate workstreams",
+      "authorization boundary"
+    ],
+    "readiness_semantics_unchanged": "YES",
+    "original_snapshot_immutable": "YES",
+    "in_place_edit_of_parent_snapshot_or_amendment_001_or_002": "PROHIBITED",
+    "existing_r2_harness_and_tests": "UNCHANGED / NOT AUTHORIZED TO MODIFY IN THIS CHECKPOINT",
+    "r3_must_use_effective_design": "YES"
+  },
+  "r2_accepted_case_state_reference": {
+    "CASE_INVENTORY_COUNT": 42,
+    "MULTI_AXIS_CASE_STATE_DIGEST": "17edfe2ce93f30e3370f80d2d32ce7e18ac637bfdcd223be1947f23987ba61b2",
+    "R2_HARNESS_PATH": "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+    "R2_HARNESS_SHA256": "d0732a380fea5553fec6740837bf948514265fed35b1059b36aa5c39ee63c4e4",
+    "R2_TEST_PATH": "tests/test_v4_post_v4_8_2_priority_review.py",
+    "R2_TEST_SHA256": "88c9cd27045ec0a33ecdda849a81202bc6fde67ff822fcd8839d359327a9b732",
+    "status": "ACCEPTED_REFERENCE_ONLY_NOT_REDERIVED_IN_THIS_CHECKPOINT",
+    "r2_state_prerequisite_for_r3": "R3 must project workstream case buckets from the accepted multi-axis case state under the projection frozen by this amendment; this amendment adds no new case-state field and changes no case-state value"
+  },
+  "workstream_bucket_projection": {
+    "schema_version": "v4-post-v4-8-2-priority-review-workstream-bucket-projection-v1",
+    "PROSPECTIVE_ONLY": "YES",
+    "PRIMARY_AXIS_SOURCE": "Amendment 002 workstream_axis_mapping (PRIMARY_DECISION_AXIS / PRIMARY_STATUS_FIELD / PRIMARY_ROOT_CAUSE_FILTER); retained verbatim",
+    "CASE_STATE_SOURCE": "Amendment 001 amended multi-axis case state (PRODUCT_STATUS, PRODUCT_ROOT_CAUSE_FAMILIES, PRODUCT_MULTI_CAUSE, PRODUCT_CONFIDENCE, MEASUREMENT_STATUS, MEASUREMENT_CONFIDENCE, CITATION_STATUS, CITATION_CONFIDENCE, BLOCKED_OR_DISPROVEN_PATHS, ATTRIBUTION_FRESHNESS, RELEVANT_LATER_CHANGE, RELEVANT_LATER_CHANGE_EVIDENCE, LATEST_PRODUCT_STATE_COMPATIBLE, LATEST_SOURCES); unchanged by this amendment",
+    "NEW_CASE_STATE_FIELDS_ADDED_BY_THIS_AMENDMENT": "NONE",
+    "BUCKET_VOCABULARY": [
+      "CURRENT_CONFIRMED_CASES",
+      "HISTORICAL_OR_STALE_CASES",
+      "RESOLVED_CASES",
+      "CURRENT_NEGATIVE_CASES",
+      "NOT_ESTABLISHED_CASES"
+    ],
+    "workstream_matrix_schema_case_bucket_fields_EFFECTIVE": [
+      "CURRENT_CONFIRMED_CASES",
+      "HISTORICAL_OR_STALE_CASES",
+      "RESOLVED_CASES",
+      "CURRENT_NEGATIVE_CASES",
+      "NOT_ESTABLISHED_CASES"
+    ],
+    "workstream_matrix_schema_case_bucket_fields_SUPERSEDED": [
+      "CURRENT_CONFIRMED_CASES (field retained; rule clarified by this amendment)",
+      "STALE_OR_HISTORICAL_CASES (prospectively renamed HISTORICAL_OR_STALE_CASES)",
+      "RESOLVED_CASES (field retained; rule clarified by this amendment)",
+      "NOT_ESTABLISHED_CASES (field retained; explicit current-negative observations removed from this bucket)"
+    ],
+    "MUTUALLY_EXCLUSIVE_WITHIN_WORKSTREAM": "YES",
+    "BUCKET_PROJECTION": "DETERMINISTIC",
+    "BUCKET_DOUBLE_COUNT_ALLOWED": "NO",
+    "DOMAIN_ELIGIBILITY_BEFORE_PROJECTION": {
+      "rule_id": "WORKSTREAM_REVIEW_DOMAIN_ELIGIBILITY",
+      "order": "domain eligibility is applied first; only cases eligible for the workstream are projected into its five buckets",
+      "PRODUCT_workstreams": {
+        "applies_to": [
+          "WS-09",
+          "WS-10",
+          "WS-11"
+        ],
+        "eligible_when": "the workstream PRIMARY_ROOT_CAUSE_FILTER family is present in the case PRODUCT_ROOT_CAUSE_FAMILIES (Amendment 002 family_relevance_definition retained)",
+        "historical_family_alone_effect": "establishes historical relevance for this workstream only; it can never establish a current defect",
+        "not_eligible_effect": "a case not carrying the workstream family is outside that workstream's review domain and is counted in none of its five buckets"
+      },
+      "MEASUREMENT_workstream": {
+        "applies_to": [
+          "WS-12"
+        ],
+        "eligible_when": "the case carries a MEASUREMENT_STATUS record inside the accepted multi-axis case state (Amendment 001 record_required_fields); no Product root-cause filter applies",
+        "note": "a case whose measurement record is NOT_ESTABLISHED stays inside the domain and projects to NOT_ESTABLISHED_CASES; it is not dropped"
+      },
+      "CITATION_workstream": {
+        "applies_to": [
+          "WS-13"
+        ],
+        "eligible_when": "the case carries a CITATION_STATUS record inside the accepted multi-axis case state; no Product root-cause filter applies",
+        "note": "same as MEASUREMENT: NOT_ESTABLISHED stays in-domain and projects to NOT_ESTABLISHED_CASES"
+      },
+      "eligibility_is_not_projection": "the eligibility filter never assigns a bucket by itself; the axis projection rules below do",
+      "no_requirement_to_place_all_42_global_cases_in_every_workstream": "YES"
+    },
+    "BUCKET_PRECEDENCE": {
+      "rule_id": "WORKSTREAM_BUCKET_PRECEDENCE",
+      "order": [
+        "1 CURRENT_CONFIRMED_CASES",
+        "2 RESOLVED_CASES",
+        "3 CURRENT_NEGATIVE_CASES",
+        "4 HISTORICAL_OR_STALE_CASES",
+        "5 NOT_ESTABLISHED_CASES"
+      ],
+      "purpose": "prevent accidental double membership when multiple projection signals coexist for one eligible case",
+      "PRIMARY_AXIS_STATE_REMAINS_AUTHORITATIVE": "YES",
+      "PRECEDENCE_MAY_OVERRIDE_CONTRADICTORY_HIGHER_AUTHORITY_PRIMARY_STATUS": "NO",
+      "mechanical_interpretation": "evaluate the bucket conditions in order 1 to 5 and assign the case to the first bucket whose condition holds; the primary-axis status field is single-valued, so buckets 1, 2, 3 and 5 are already status-disjoint and precedence mainly resolves freshness-driven overlap",
+      "residual_rule": "an eligible case matching none of buckets 1 to 4 is projected to bucket 5 (NOT_ESTABLISHED_CASES) with an explicit reason code; it must never be dropped and never be counted twice"
+    },
+    "PRODUCT_AXIS_PROJECTION": {
+      "applies_to": [
+        "WS-09",
+        "WS-10",
+        "WS-11"
+      ],
+      "PRIMARY_STATUS_FIELD": "PRODUCT_STATUS",
+      "PRIMARY_ROOT_CAUSE_FILTER_SOURCE": "Amendment 002 (WS-09 = HISTORY, WS-10 = RETRIEVAL, WS-11 = GENERATION)",
+      "CURRENT_CONFIRMED_CASES": {
+        "condition": "PRODUCT_STATUS = CURRENT_CONFIRMED_PRODUCT_DEFECT AND PRIMARY_ROOT_CAUSE_FILTER present in PRODUCT_ROOT_CAUSE_FAMILIES AND ATTRIBUTION_FRESHNESS = CURRENT",
+        "all_conditions_conjunctive": "YES",
+        "reason_code": "CURRENT_PRIMARY_STATUS",
+        "forbidden_sources": [
+          "historical root-cause family presence without PRODUCT_STATUS = CURRENT_CONFIRMED_PRODUCT_DEFECT",
+          "any non-primary axis state",
+          "an aggregate quality-gate gap promoted to a case-level confirmed defect"
+        ],
+        "note": "a current confirmed Product case carrying more than one Product family may enter more than one Product workstream through its own PRODUCT_ROOT_CAUSE_FAMILIES; that is not a double count inside a single workstream"
+      },
+      "RESOLVED_CASES": {
+        "condition": "PRODUCT_STATUS = RESOLVED_OR_CLOSED AND the case is traceably associated with this Product workstream family",
+        "family_association": "PRIMARY_ROOT_CAUSE_FILTER present in PRODUCT_ROOT_CAUSE_FAMILIES, or the case is traceably associated through its governing later remediation record for this family",
+        "reason_code": "RESOLVED_BY_LATER_GOVERNED_STAGE"
+      },
+      "HISTORICAL_OR_STALE_CASES": {
+        "condition_any_of": [
+          "PRODUCT_STATUS = STALE_ATTRIBUTION_REQUIRES_REFRESH",
+          "PRODUCT_STATUS = NOT_ESTABLISHED AND PRODUCT_CONFIDENCE = HISTORICAL_ONLY AND PRIMARY_ROOT_CAUSE_FILTER present in PRODUCT_ROOT_CAUSE_FAMILIES",
+          "ATTRIBUTION_FRESHNESS in {PARTIALLY_CURRENT, HISTORICAL_STALE} with family relevance present (mechanically stale attribution)"
+        ],
+        "meaning": "historically relevant for this workstream but not current-confirmed",
+        "meaning_forbidden": "the bucket name must never be read as ATTRIBUTION_FRESHNESS = HISTORICAL_STALE",
+        "reason_codes": [
+          "HISTORICAL_ONLY_FAMILY",
+          "MECHANICALLY_STALE"
+        ]
+      },
+      "CURRENT_NEGATIVE_CASES": {
+        "condition": "NEVER for Product workstreams under the current enum vocabulary",
+        "expected_cardinality": "EMPTY",
+        "reason": "the Product axis enum has no explicit NO_CURRENT_PRODUCT_DEFECT_OBSERVED state; such a state must not be synthesized",
+        "forbidden": "deriving a current negative Product state from PRODUCT_CONFIDENCE = HISTORICAL_ONLY, from an absent family, or from an absent product defect"
+      },
+      "NOT_ESTABLISHED_CASES": {
+        "condition": "the case is inside this Product workstream's review domain but its current Product state for this workstream is not established AND it does not satisfy HISTORICAL_OR_STALE_CASES",
+        "explicit_exclusion": "HISTORICAL_ONLY family evidence must not be placed here when it already qualifies for HISTORICAL_OR_STALE_CASES",
+        "reason_code": "NO_ADMISSIBLE_CURRENT_OR_HISTORICAL_EVIDENCE"
+      }
+    },
+    "MEASUREMENT_AXIS_PROJECTION": {
+      "applies_to": [
+        "WS-12"
+      ],
+      "PRIMARY_STATUS_FIELD": "MEASUREMENT_STATUS",
+      "PRIMARY_ROOT_CAUSE_FILTER": "NOT_APPLICABLE",
+      "CURRENT_CONFIRMED_CASES": {
+        "condition": "MEASUREMENT_STATUS = CURRENT_CONFIRMED_MEASUREMENT_DEFECT AND ATTRIBUTION_FRESHNESS = CURRENT",
+        "reason_code": "CURRENT_PRIMARY_STATUS"
+      },
+      "RESOLVED_CASES": {
+        "condition": "MEASUREMENT_STATUS = RESOLVED_OR_CLOSED",
+        "reason_code": "RESOLVED_BY_LATER_GOVERNED_STAGE"
+      },
+      "CURRENT_NEGATIVE_CASES": {
+        "condition": "MEASUREMENT_STATUS = NO_CURRENT_MEASUREMENT_DEFECT_OBSERVED",
+        "semantics": "explicit current negative evidence: a governed observation that no current measurement defect exists for this case",
+        "must_not_be_counted_as": [
+          "NOT_ESTABLISHED",
+          "RESOLVED_OR_CLOSED",
+          "CURRENT_CONFIRMED"
+        ],
+        "reason_code": "CURRENT_NEGATIVE_EVIDENCE"
+      },
+      "HISTORICAL_OR_STALE_CASES": {
+        "condition_any_of": [
+          "MEASUREMENT_STATUS = STALE_ATTRIBUTION_REQUIRES_REFRESH",
+          "ATTRIBUTION_FRESHNESS in {PARTIALLY_CURRENT, HISTORICAL_STALE}",
+          "mechanically traceable measurement evidence exists only historically (MEASUREMENT_STATUS = NOT_ESTABLISHED AND MEASUREMENT_CONFIDENCE = HISTORICAL_ONLY with a traceable historical measurement-family attribution)"
+        ],
+        "historical_only_determination_must_be_evidence_backed": "YES",
+        "reason_codes": [
+          "HISTORICAL_ONLY_FAMILY",
+          "MECHANICALLY_STALE"
+        ]
+      },
+      "NOT_ESTABLISHED_CASES": {
+        "condition": "MEASUREMENT_STATUS = NOT_ESTABLISHED and the case is not moved to HISTORICAL_OR_STALE_CASES by evidence-backed historical-only measurement evidence",
+        "reason_code": "NO_ADMISSIBLE_CURRENT_OR_HISTORICAL_EVIDENCE"
+      }
+    },
+    "CITATION_AXIS_PROJECTION": {
+      "applies_to": [
+        "WS-13"
+      ],
+      "PRIMARY_STATUS_FIELD": "CITATION_STATUS",
+      "PRIMARY_ROOT_CAUSE_FILTER": "NOT_APPLICABLE",
+      "CURRENT_CONFIRMED_CASES": {
+        "condition": "CITATION_STATUS = CURRENT_CONFIRMED_CITATION_DEFECT AND ATTRIBUTION_FRESHNESS = CURRENT",
+        "reason_code": "CURRENT_PRIMARY_STATUS",
+        "forbidden_sources": [
+          "the aggregate citation coverage gap (citation_coverage = 0.4657) used directly as a case-level confirmed citation defect",
+          "Product or Measurement state used to populate current-confirmed Citation cases"
+        ]
+      },
+      "RESOLVED_CASES": {
+        "condition": "CITATION_STATUS = RESOLVED_OR_CLOSED",
+        "reason_code": "RESOLVED_BY_LATER_GOVERNED_STAGE"
+      },
+      "CURRENT_NEGATIVE_CASES": {
+        "condition": "CITATION_STATUS = NO_CURRENT_CITATION_DEFECT_ESTABLISHED",
+        "forbidden_inference": "this state must not be inferred merely because invalid_citation_count = 0 (or citation_scope_violation = 0) unless case-level governed evidence supports it",
+        "must_not_be_counted_as": [
+          "NOT_ESTABLISHED",
+          "RESOLVED_OR_CLOSED",
+          "CURRENT_CONFIRMED"
+        ],
+        "reason_code": "CURRENT_NEGATIVE_EVIDENCE"
+      },
+      "HISTORICAL_OR_STALE_CASES": {
+        "condition_any_of": [
+          "CITATION_STATUS = STALE_ATTRIBUTION_REQUIRES_REFRESH",
+          "ATTRIBUTION_FRESHNESS in {PARTIALLY_CURRENT, HISTORICAL_STALE}",
+          "citation-specific case evidence exists only historically with a traceable historical citation-family attribution (CITATION_STATUS = NOT_ESTABLISHED AND CITATION_CONFIDENCE = HISTORICAL_ONLY)"
+        ],
+        "historical_only_determination_must_be_evidence_backed": "YES",
+        "reason_codes": [
+          "HISTORICAL_ONLY_FAMILY",
+          "MECHANICALLY_STALE"
+        ]
+      },
+      "NOT_ESTABLISHED_CASES": {
+        "condition": "CITATION_STATUS = NOT_ESTABLISHED and citation-specific historical evidence does not place the case in HISTORICAL_OR_STALE_CASES",
+        "reason_code": "NO_ADMISSIBLE_CURRENT_OR_HISTORICAL_EVIDENCE"
+      },
+      "aggregate_metric_rule": "citation_coverage = 0.4657 is a quality-gate signal only; it does not alter any case bucket directly"
+    },
+    "BUCKET_EVIDENCE_METADATA": {
+      "rule_id": "WORKSTREAM_BUCKET_EVIDENCE_METADATA",
+      "required_per_projected_case_entry": [
+        "CASE_ID",
+        "WORKSTREAM_ID",
+        "BUCKET",
+        "REASON_CODE(S)",
+        "PRIMARY_AXIS",
+        "CURRENT_PRIMARY_STATUS",
+        "CURRENT_FRESHNESS",
+        "LATEST_SOURCES (governing source path plus field_or_section)"
+      ],
+      "allowed_reason_codes": [
+        "CURRENT_PRIMARY_STATUS",
+        "CURRENT_FRESHNESS",
+        "HISTORICAL_ONLY_FAMILY",
+        "MECHANICALLY_STALE",
+        "CURRENT_NEGATIVE_EVIDENCE",
+        "RESOLVED_BY_LATER_GOVERNED_STAGE",
+        "NO_ADMISSIBLE_CURRENT_OR_HISTORICAL_EVIDENCE",
+        "CURRENT_PRIMARY_STATUS_INSUFFICIENT_FRESHNESS"
+      ],
+      "at_least_one_reason_code_required_per_entry": "YES",
+      "reason_codes_must_be_preserved_into_r3": "YES",
+      "reason_codes_must_not_be_collapsed_into_bucket_name": "YES",
+      "traceability": "every projected entry must carry its governing source reference under the frozen hierarchy S1 > S2 > S3 > S4; an entry without a traceable source is not admissible"
+    },
+    "HISTORICAL_ONLY_VS_MECHANICALLY_STALE": {
+      "shared_bucket": "HISTORICAL_OR_STALE_CASES",
+      "HISTORICAL_ONLY_EVIDENCE": "the case's primary axis is NOT_ESTABLISHED and only a historical family / label attribution exists; reason code HISTORICAL_ONLY_FAMILY; the evidence is not stale, it was simply never refreshed",
+      "MECHANICALLY_STALE_ATTRIBUTION": "the primary axis is STALE_ATTRIBUTION_REQUIRES_REFRESH, or ATTRIBUTION_FRESHNESS in {PARTIALLY_CURRENT, HISTORICAL_STALE} with RELEVANT_LATER_CHANGE = YES and traceable relevance evidence; reason code MECHANICALLY_STALE",
+      "HISTORICAL_ONLY_EQUALS_MECHANICALLY_STALE": "NO",
+      "R3_MUST_BE_ABLE_TO_DISTINGUISH": "YES",
+      "distinguishability_source": "the reason codes and the primary-axis status / confidence fields carried in the projected entry metadata",
+      "freshness_independence": "bucket membership never rewrites ATTRIBUTION_FRESHNESS and never asserts ATTRIBUTION_FRESHNESS = HISTORICAL_STALE for a historical-only case"
+    },
+    "CROSS_WORKSTREAM_COUNTING": {
+      "CASE_MAY_APPEAR_IN_MULTIPLE_WORKSTREAMS": "YES",
+      "condition": "only when independently governed axes / family sets support that appearance",
+      "governed_example": "md-004 may appear as a WS-11 CURRENT_CONFIRMED_CASE through the Product GENERATION family and independently as a WS-12 CURRENT_CONFIRMED_CASE through the Measurement axis; Product Generation and Measurement are separate governed axes",
+      "duplicate_counting_within_one_workstream": "NOT_ALLOWED",
+      "note": "cross-workstream appearance is not duplicate counting; two buckets inside one workstream is a hard error"
+    },
+    "R3_CONSISTENCY_GATES": {
+      "WORKSTREAM_BUCKETS_MUTUALLY_EXCLUSIVE": "YES",
+      "WORKSTREAM_BUCKET_DOUBLE_COUNT": 0,
+      "SUM_RULE": "for every workstream: CURRENT_CONFIRMED_CASES + HISTORICAL_OR_STALE_CASES + RESOLVED_CASES + CURRENT_NEGATIVE_CASES + NOT_ESTABLISHED_CASES = that workstream's mechanically eligible review-domain case count (counted after domain eligibility filtering)",
+      "GLOBAL_42_CASES_REQUIRED_IN_EVERY_WORKSTREAM": "NO",
+      "eligibility_filtering_precedes_partition": "YES",
+      "unassigned_eligible_case_handling": "R3 must FAIL rather than silently drop an eligible case matching no bucket",
+      "BUCKETS_DERIVABLE_SOLELY_FROM_PRIMARY_AXIS": "YES",
+      "CROSS_AXIS_POPULATION_OF_BUCKETS": "FORBIDDEN",
+      "readiness_rules_unchanged": "YES",
+      "dependency_edge_types_unchanged": "YES",
+      "quality_gate_link_types_unchanged": "YES",
+      "priority_rules_unchanged": "YES",
+      "recommendation_support_rules_unchanged": "YES"
+    },
+    "NON_AUTHORITATIVE_PRECEDENCE_NOTE": "the projection precedence in this amendment is a de-duplication device only; it never overrides a contradictory primary-axis status and it never creates authorization, readiness or priority content"
+  },
+  "effective_analysis_design_definition": {
+    "EFFECTIVE_ANALYSIS_DESIGN": "R1 original frozen design + Amendment 001 + Amendment 002 + Amendment 003",
+    "payload_construction": "payload = {key: parent_preflight[key] for key in parent_preflight.analysis_design_digest_spec.extracted_keys}; payload['case_classification_schema'] = amendment_001.amended_case_state_schema; payload['effective_analysis_design_additions'] = amendment_001.effective_analysis_design_additions; payload['workstream_axis_mapping'] = amendment_002.workstream_axis_mapping; payload['workstream_bucket_projection'] = amendment_003.workstream_bucket_projection; digest = sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8'))",
+    "canonicalization": "UTF-8; json.dumps(ensure_ascii=False, sort_keys=True, separators=(',', ':'))",
+    "excluded_content": [
+      "timestamps",
+      "machine paths",
+      "file SHA metadata",
+      "manifest digests"
+    ],
+    "superseded_payload_keys": [],
+    "added_payload_keys": [
+      "workstream_bucket_projection"
+    ],
+    "retained_parent_payload_keys_reinterpreted": [
+      "workstream_matrix_schema (retained verbatim; its case-bucket field semantics are clarified and extended only through workstream_bucket_projection)"
+    ],
+    "parent_payload_keys_from_amendment_001": [
+      "case_classification_schema (superseded by amended_case_state_schema)",
+      "effective_analysis_design_additions"
+    ],
+    "parent_payload_keys_from_amendment_002": [
+      "workstream_axis_mapping"
+    ],
+    "recomputation_inputs": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json (frozen parent)",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json (this artifact)"
+    ],
+    "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "d19df3abaefcf4e90f4ae85e193dc3837d861cb87021a223b1c4acb6d65dd72e",
+    "recomputation_must_reproduce_embedded_digest": "YES"
+  },
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "360e77f5b3d955606c794041016346a480d0b74fea2c6ae69074838876225524",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DETERMINISTIC": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DIFFERS_FROM_PARENT": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_RECOMPUTATION_1": "360e77f5b3d955606c794041016346a480d0b74fea2c6ae69074838876225524",
+  "integrity": {
+    "PRE_CHANGE_WORKSPACE_MANIFEST_DIGEST": "5c1d1ef2eade0815adde9b869843f69ef8c3c5d28531403f05be3506815af380",
+    "PRE_CHANGE_WORKSPACE_MANIFEST_ENTRY_COUNT": 19655,
+    "PRE_CHANGE_WORKSPACE_MANIFEST_RULE": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "PRE_CHANGE_PRODUCTION_HASH": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "EXPECTED_POST_CHANGE_DELTA": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json (added)"
+    ],
+    "ORIGINAL_PREFLIGHT_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_001_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_002_EXPECTED_UNCHANGED": "YES",
+    "R2_HARNESS_EXPECTED_UNCHANGED": "YES",
+    "R2_TEST_EXPECTED_UNCHANGED": "YES",
+    "MASTER_EXPECTED_UNCHANGED": "YES",
+    "PARENT_ARTIFACTS_EXPECTED_UNCHANGED": "YES",
+    "PRODUCT_BASELINE_GOLDEN_EVALUATOR_RUNTIME_DB_EXPECTED_UNCHANGED": "YES",
+    "POST_MANIFEST_MINUS_A003_MUST_EQUAL_PRE_MANIFEST": "YES",
+    "POST_WRITE_VERIFICATION_LOCATION": "R1C final console (this checkpoint)",
+    "no_scratch_files_written": "YES",
+    "cache_writes": 0,
+    "computation_mode": "IN_MEMORY_ONLY"
+  },
+  "authorization_boundary": {
+    "ACTIVE_V4_WRITE_PATHS_THIS_CHECKPOINT": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json"
+    ],
+    "OTHER_ACTIVE_V4_WRITES_AUTHORIZED": "NO",
+    "V3_WORKSPACE": "FROZEN / READ-ONLY / UNTOUCHED",
+    "PUBLISH_WORKSPACE": "READ-ONLY / NO SYNC / NO WRITE / NO GIT MUTATION",
+    "GIT_INIT_PERFORMED": "NO",
+    "R2_REDERIVATION_PERFORMED_HERE": "NO",
+    "R3_PERFORMED_HERE": "NO",
+    "WORKSTREAM_BUCKET_COUNTS_BUILT_HERE": "NO",
+    "WORKSTREAM_READINESS_ASSIGNED_HERE": "NO",
+    "DEPENDENCY_GRAPH_BUILT_HERE": "NO",
+    "PRIORITY_TIER_ASSIGNED_HERE": "NO",
+    "RECOMMENDED_NEXT_WORKSTREAM_EVALUATED_HERE": "NO",
+    "HARNESS_MODIFICATION_AUTHORIZED": "NO",
+    "TEST_MODIFICATION_AUTHORIZED": "NO",
+    "MACHINE_RESULT_CREATED": "NO",
+    "HUMAN_REPORT_CREATED": "NO",
+    "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+    "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+    "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO"
+  },
+  "r1c_execution_declarations": {
+    "MODEL_CALLS": 0,
+    "PRODUCTION_RETRIEVAL_RUNS": 0,
+    "COUNTERFACTUAL_RUNS": 0,
+    "FULL_144_RUNS": 0,
+    "PYTEST_RUNS": 0,
+    "RUFF_RUNS": 0,
+    "PY_COMPILE_OR_COMPILEALL_RUNS": 0,
+    "BYTECODE_OR_PYCACHE_WRITES": 0,
+    "CACHE_WRITES": 0,
+    "TEMPORARY_FILES_CREATED": 0,
+    "SCRATCH_FILES_WRITTEN": 0,
+    "READ_ONLY_HARNESS_EXECUTIONS": 2,
+    "READ_ONLY_HARNESS_WRITES": 0
+  },
+  "next_authorized_checkpoint": "R3_WORKSTREAM_MATRIX_AND_DEPENDENCY_GRAPH_UNDER_EFFECTIVE_DESIGN",
+  "READY_FOR_R3": "YES",
+  "READY_FOR_R3_BASIS": "the governance blocking condition (multi-axis case state to workstream bucket projection rule) is prospectively frozen by this amendment; readiness remains subject to governance acceptance of Amendment 003",
+  "R3_EXECUTION_PERFORMED_IN_R1C": "NO",
+  "WS_READINESS": "NOT_EVALUATED_IN_R1C",
+  "DEPENDENCY_GRAPH": "NOT_EVALUATED_IN_R1C",
+  "PRIORITY_TIER": "NOT_EVALUATED_IN_R1C",
+  "RECOMMENDED_NEXT_WORKSTREAM": "NOT_EVALUATED_IN_R1C",
+  "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+  "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+  "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO",
+  "STOP": "YES",
+  "WAIT_FOR_GOVERNANCE_REVIEWER": "YES",
+  "timestamp": "2026-09-15T00:48:13"
+}

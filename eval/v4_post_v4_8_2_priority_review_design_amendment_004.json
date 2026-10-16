@@ -1,0 +1,423 @@
+{
+  "artifact_type": "ANALYSIS_DESIGN_AMENDMENT",
+  "amendment_id": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_004",
+  "review_id": "POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW",
+  "checkpoint": "R1D_WORKSTREAM_DOMAIN_ELIGIBILITY_DESIGN_AMENDMENT",
+  "mode": "GOVERNANCE / DESIGN-AMENDMENT ONLY",
+  "amendment_status": "ACTIVE_FOR_FUTURE_GOVERNED_R3_UNDER_AMENDMENTS_001_002_003_004",
+  "AMENDMENT_IS_PROSPECTIVE": "YES",
+  "RETROACTIVE_REWRITE": "NO",
+  "is_product_baseline": false,
+  "is_product_remediation": false,
+  "is_scientific_experiment": false,
+  "new_evidence_added": false,
+  "MODEL_CALLS": 0,
+  "PRODUCTION_RETRIEVAL_RUNS": 0,
+  "COUNTERFACTUAL_RUNS": 0,
+  "FULL_144_RUNS": 0,
+  "AMENDMENT_REASON": "WORKSTREAM_DOMAIN_ELIGIBILITY_MUST_BE_EVIDENCE_BASED_AND_DISTINCT_FROM_SCHEMA_AXIS_PRESENCE",
+  "PARENT_PREFLIGHT_PATH": "eval/v4_post_v4_8_2_priority_review_preflight.json",
+  "PARENT_PREFLIGHT_SHA256": "c24ebc94b504ccb9e3ff492616ebe1f29461ec1c5d7c8e632fd5c2c2031f4bf2",
+  "PARENT_AMENDMENT_ID": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_003",
+  "PARENT_AMENDMENT_PATH": "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json",
+  "PARENT_AMENDMENT_SHA256": "2e8e20d411edd10bd071c0534553d2bec825a9ed3bfd684ad95d73b24607a88b",
+  "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "360e77f5b3d955606c794041016346a480d0b74fea2c6ae69074838876225524",
+  "defect_record": {
+    "defect_class": "WORKSTREAM_DOMAIN_ELIGIBILITY_NOT_UNIQUELY_FROZEN",
+    "defect_impact_scope": "WORKSTREAM_REVIEW_DOMAIN_MEMBERSHIP_AND_BUCKET_DENOMINATOR_ONLY",
+    "superseded_field_location": "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json#/workstream_bucket_projection/DOMAIN_ELIGIBILITY_BEFORE_PROJECTION",
+    "accepted_parent_state": "Amendment 003 core (five buckets, bucket precedence, per-axis bucket conditions, historical-only vs mechanically stale distinction, current-negative bucket, cross-workstream counting) is ACCEPTED and retained unchanged",
+    "ambiguity": [
+      "Amendment 003 froze the WS-12 domain as 'the case carries a MEASUREMENT_STATUS record inside the accepted multi-axis case state'",
+      "Amendment 003 froze the WS-13 domain as 'the case carries a CITATION_STATUS record inside the accepted multi-axis case state'",
+      "under the uniform Amendment 001 record schema every case record carries both fields, so those statements would make all 42 cases domain-eligible for WS-12 and WS-13",
+      "schema axis-field presence was therefore not distinguishable from governed case-specific workstream evidence, and OUT_OF_WORKSTREAM_DOMAIN was left undefined for those workstreams"
+    ],
+    "resolution_in_this_amendment": "domain eligibility is frozen as an evidence-based predicate for all five workstreams; OUT_OF_WORKSTREAM_DOMAIN is frozen as a domain state that is not one of the five A003 buckets and does not participate in the workstream bucket denominator",
+    "reinterpretation_of_this_reason": "PROHIBITED"
+  },
+  "amendment_scope": {
+    "adds_prospectively": [
+      "workstream domain eligibility predicate (governed case-specific evidence based) for all five workstreams",
+      "OUT_OF_WORKSTREAM_DOMAIN semantics",
+      "bucket denominator semantics (domain eligible count plus out-of-domain count equals the frozen inventory count)",
+      "domain evidence trace requirements and domain reason codes",
+      "R3 domain partition and bucket partition consistency gates"
+    ],
+    "supersedes_prospectively": [
+      "Amendment 003 workstream_bucket_projection.DOMAIN_ELIGIBILITY_BEFORE_PROJECTION is prospectively superseded by this amendment's workstream_domain_eligibility (declared as a value-level override at that key path in the effective design payload)"
+    ],
+    "does_not_change": [
+      "multi-axis case state (Amendment 001) and all axis values",
+      "primary-axis mapping (Amendment 002)",
+      "the five A003 buckets",
+      "A003 bucket precedence",
+      "A003 per-axis bucket conditions and reason codes",
+      "A003 historical-only versus mechanically stale distinction",
+      "A003 cross-workstream counting rule",
+      "readiness R4-R0 definitions (readiness_rules)",
+      "dependency edge types (dependency_rules.allowed_edge_types)",
+      "quality-gate link types (quality_gate_link_rules.allowed_link_types)",
+      "P1-P7 lexicographic priority order (priority_decision_rules)",
+      "recommendation support rules (recommendation_support_rules)",
+      "candidate workstreams",
+      "authorization boundary"
+    ],
+    "original_snapshot_immutable": "YES",
+    "in_place_edit_of_parent_snapshot_or_amendment_001_002_003": "PROHIBITED",
+    "existing_r2_harness_and_tests": "UNCHANGED / NOT AUTHORIZED TO MODIFY IN THIS CHECKPOINT",
+    "r3_must_use_effective_design": "YES"
+  },
+  "r2_accepted_case_state_reference": {
+    "CASE_INVENTORY_COUNT": 42,
+    "MULTI_AXIS_CASE_STATE_DIGEST": "17edfe2ce93f30e3370f80d2d32ce7e18ac637bfdcd223be1947f23987ba61b2",
+    "R2_HARNESS_PATH": "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+    "R2_HARNESS_SHA256": "d0732a380fea5553fec6740837bf948514265fed35b1059b36aa5c39ee63c4e4",
+    "R2_TEST_PATH": "tests/test_v4_post_v4_8_2_priority_review.py",
+    "R2_TEST_SHA256": "88c9cd27045ec0a33ecdda849a81202bc6fde67ff822fcd8839d359327a9b732",
+    "status": "ACCEPTED_REFERENCE_ONLY_NOT_REDERIVED_IN_THIS_CHECKPOINT",
+    "frozen_input_rule": "the 42-case multi-axis case state is a frozen input; this amendment derives no new case state and changes no axis value"
+  },
+  "workstream_domain_eligibility": {
+    "schema_version": "v4-post-v4-8-2-priority-review-workstream-domain-eligibility-v1",
+    "PROSPECTIVE_ONLY": "YES",
+    "SUPERSEDES_KEY_PATH": "workstream_bucket_projection.DOMAIN_ELIGIBILITY_BEFORE_PROJECTION (Amendment 003)",
+    "FUNDAMENTAL_DOMAIN_RULE": {
+      "rule_id": "AXIS_FIELD_EXISTS_IS_NOT_DOMAIN_ELIGIBILITY",
+      "frozen_rule": "AXIS_FIELD_EXISTS != WORKSTREAM_DOMAIN_ELIGIBLE",
+      "all_42_cases_share_uniform_schema": "YES",
+      "uniform_schema_effect_on_domain": "NONE",
+      "order": "WORKSTREAM_DOMAIN_ELIGIBLE in {YES, NO} must be mechanically determined per case and per workstream BEFORE any bucket projection",
+      "only_domain_eligible_cases_enter_buckets": "WORKSTREAM_DOMAIN_ELIGIBLE = YES only",
+      "uniform_record_field_is_not_domain_evidence": "a PRODUCT_STATUS / MEASUREMENT_STATUS / CITATION_STATUS field existing in the case record is never by itself domain evidence",
+      "evidence_requirement": "domain membership requires governed case-specific evidence; a schema default or an enum default value is not evidence",
+      "traceability_gate": "every domain membership must carry a traceable governing source (path plus field_or_section) under the frozen hierarchy S1 > S2 > S3 > S4; a membership without a traceable source is not admissible"
+    },
+    "OUT_OF_WORKSTREAM_DOMAIN": {
+      "value": "WORKSTREAM_BUCKET = OUT_OF_WORKSTREAM_DOMAIN",
+      "is_one_of_the_five_a003_buckets": "NO",
+      "participates_in_workstream_bucket_denominator": "NO",
+      "may_be_counted_in_NOT_ESTABLISHED_CASES": "NO",
+      "may_be_counted_in_any_other_a003_bucket": "NO",
+      "case_visibility": "the case remains in the 42-case inventory; only its membership in this particular workstream row is OUT_OF_WORKSTREAM_DOMAIN",
+      "reason_code": "NO_CASE_SPECIFIC_WORKSTREAM_EVIDENCE",
+      "semantics": "out-of-domain is a domain state, not a defect state and not a bucket; it asserts only that this workstream has no governed case-specific evidence for the case",
+      "effect_on_other_workstreams": "none; the same case may be domain eligible in a different workstream on independent governed evidence",
+      "effect_on_case_state": "none; no axis status, confidence, freshness or blocked-path field may be inferred from out-of-domain"
+    },
+    "PRODUCT_WORKSTREAM_DOMAIN": {
+      "applies_to": [
+        "WS-09",
+        "WS-10",
+        "WS-11"
+      ],
+      "family_filter_source": "Amendment 002 PRIMARY_ROOT_CAUSE_FILTER (WS-09 = HISTORY, WS-10 = RETRIEVAL, WS-11 = GENERATION)",
+      "DOMAIN_ELIGIBLE_when": "governed case-specific evidence associates the case with the workstream's corresponding Product root-cause family",
+      "admissible_domain_evidence": [
+        "CURRENT product family evidence (current-state governed diagnosis carrying the family)",
+        "HISTORICAL_ONLY product family evidence (historical governed per-case attribution carrying the family)",
+        "RESOLVED historical linkage (a governed later remediation record that traceably associates the case with the family)",
+        "explicit governed diagnostic scope (the case is explicitly inside a governed diagnostic target scope for that family)"
+      ],
+      "historical_family_may_establish": "DOMAIN_MEMBERSHIP",
+      "historical_family_may_not_establish": "CURRENT_DEFECT",
+      "rule": "PRODUCT_ROOT_CAUSE_FAMILY_PRESENT may establish domain eligibility; PRODUCT_STATUS and ATTRIBUTION_FRESHNESS determine the A003 bucket",
+      "family_entry_traceability": "a PRODUCT_ROOT_CAUSE_FAMILIES entry is admissible as domain evidence only when the entry itself carries a traceable governed evidence reference (Amendment 001 PRODUCT_ROOT_CAUSE_FAMILIES_rule); a family entry without a traceable source is not admissible",
+      "not_admissible_domain_evidence": [
+        "the mere existence of the PRODUCT_ROOT_CAUSE_FAMILIES field",
+        "an empty PRODUCT_ROOT_CAUSE_FAMILIES list",
+        "a family inferred from the case-id prefix",
+        "an aggregate quality-gate metric",
+        "another workstream's primary axis state"
+      ],
+      "reason_codes": [
+        "CURRENT_PRODUCT_FAMILY",
+        "HISTORICAL_PRODUCT_FAMILY",
+        "RESOLVED_PRODUCT_FAMILY",
+        "EXPLICIT_DIAGNOSTIC_SCOPE"
+      ],
+      "domain_membership_is_not_a_bucket": "YES"
+    },
+    "MEASUREMENT_WORKSTREAM_DOMAIN": {
+      "applies_to": [
+        "WS-12"
+      ],
+      "DOMAIN_ELIGIBLE_when": "governed case-specific Measurement evidence exists for the case",
+      "admissible_domain_evidence": [
+        "current measurement defect evidence",
+        "current negative measurement evidence",
+        "resolved measurement evidence",
+        "stale measurement attribution",
+        "historical-only measurement-specific evidence",
+        "explicit governed measurement diagnostic target or scope"
+      ],
+      "NOT_admissible_domain_evidence": [
+        "MEASUREMENT_STATUS field merely exists",
+        "MEASUREMENT_STATUS = NOT_ESTABLISHED by itself",
+        "a uniform schema default for the measurement axis",
+        "an aggregate metric of any kind"
+      ],
+      "rule": "schema field presence != measurement-domain relevance",
+      "reason_codes": [
+        "CURRENT_MEASUREMENT_EVIDENCE",
+        "HISTORICAL_MEASUREMENT_EVIDENCE",
+        "EXPLICIT_DIAGNOSTIC_SCOPE"
+      ],
+      "in_domain_but_unestablished": "a domain-eligible case whose MEASUREMENT_STATUS is NOT_ESTABLISHED without historical-only measurement evidence remains in domain and projects to NOT_ESTABLISHED_CASES (A003 bucket 5); an out-of-domain case never does"
+    },
+    "CITATION_WORKSTREAM_DOMAIN": {
+      "applies_to": [
+        "WS-13"
+      ],
+      "DOMAIN_ELIGIBLE_when": "governed case-specific Citation evidence exists for the case",
+      "admissible_domain_evidence": [
+        "current citation defect evidence",
+        "current negative citation evidence",
+        "resolved citation evidence",
+        "stale citation attribution",
+        "historical-only citation-specific evidence",
+        "explicit governed citation diagnostic target or scope"
+      ],
+      "NOT_admissible_domain_evidence": [
+        "CITATION_STATUS field merely exists",
+        "CITATION_STATUS = NOT_ESTABLISHED by itself",
+        "the aggregate citation_coverage gap",
+        "citation safety invariants (invalid_citation_count = 0, citation_scope_violation = 0, F2 citation safety PASS)"
+      ],
+      "reason_codes": [
+        "CURRENT_CITATION_EVIDENCE",
+        "HISTORICAL_CITATION_EVIDENCE",
+        "EXPLICIT_DIAGNOSTIC_SCOPE"
+      ],
+      "aggregate_metric_rule": "citation_coverage = 0.4657 may create or support a QUALITY_GATE_LINK, but it must never create case domain membership and must never place all 42 cases into the WS-13 domain"
+    },
+    "NOT_ESTABLISHED_BUCKET_MEANING": {
+      "bucket": "NOT_ESTABLISHED_CASES",
+      "admissible_content": "only WORKSTREAM_DOMAIN_ELIGIBLE = YES cases whose primary-axis state cannot be classified into CURRENT_CONFIRMED / RESOLVED / CURRENT_NEGATIVE / HISTORICAL_OR_STALE",
+      "forbidden_content": "OUT_OF_WORKSTREAM_DOMAIN cases",
+      "frozen_statement": "NOT_ESTABLISHED means: workstream relevance is established, but the current state inside that workstream is not established. It does NOT mean: the case has no evidence relating it to this workstream.",
+      "OUT_OF_DOMAIN_CASES_IN_NOT_ESTABLISHED_BUCKET": 0
+    },
+    "DOMAIN_DENOMINATOR_RULE": {
+      "per_workstream_required_records": [
+        "DOMAIN_ELIGIBLE_CASE_IDS",
+        "DOMAIN_ELIGIBLE_CASE_COUNT",
+        "OUT_OF_WORKSTREAM_DOMAIN_CASE_IDS",
+        "OUT_OF_WORKSTREAM_DOMAIN_CASE_COUNT"
+      ],
+      "inventory_partition": "DOMAIN_ELIGIBLE_CASE_COUNT + OUT_OF_WORKSTREAM_DOMAIN_CASE_COUNT = 42 (the frozen case inventory count)",
+      "bucket_partition": "CURRENT_CONFIRMED_CASES + HISTORICAL_OR_STALE_CASES + RESOLVED_CASES + CURRENT_NEGATIVE_CASES + NOT_ESTABLISHED_CASES = DOMAIN_ELIGIBLE_CASE_COUNT",
+      "exactly_one_bucket_per_domain_eligible_case": "YES",
+      "bucket_denominator_is_the_workstream_domain": "YES",
+      "global_42_not_the_bucket_denominator": "YES",
+      "counts_computed_in_this_checkpoint": "NOT_EVALUATED_IN_R1D"
+    },
+    "NO_FORCED_GLOBAL_DENOMINATOR": {
+      "WS_09_DOMAIN_COUNT_REQUIRED_TO_EQUAL_42": "NO",
+      "WS_10_DOMAIN_COUNT_REQUIRED_TO_EQUAL_42": "NO",
+      "WS_11_DOMAIN_COUNT_REQUIRED_TO_EQUAL_42": "NO",
+      "WS_12_DOMAIN_COUNT_REQUIRED_TO_EQUAL_42": "NO",
+      "WS_13_DOMAIN_COUNT_REQUIRED_TO_EQUAL_42": "NO",
+      "DOMAINS_MAY_OVERLAP": "YES",
+      "CASE_MAY_BELONG_TO_MULTIPLE_WORKSTREAM_DOMAINS": "YES",
+      "condition": "each membership must carry its own independent governed case-specific evidence",
+      "note": "cross-workstream domain overlap is not duplicate counting; it follows from the accepted cross-axis independence"
+    },
+    "DOMAIN_EVIDENCE_TRACE": {
+      "rule_id": "WORKSTREAM_DOMAIN_EVIDENCE_TRACE",
+      "required_per_domain_membership_record_in_r3": [
+        "CASE_ID",
+        "WORKSTREAM_ID",
+        "DOMAIN_ELIGIBLE",
+        "DOMAIN_EVIDENCE_SOURCE",
+        "DOMAIN_EVIDENCE_FIELD_OR_SECTION",
+        "DOMAIN_EVIDENCE_LEVEL",
+        "DOMAIN_REASON_CODE"
+      ],
+      "DOMAIN_ELIGIBLE_VALUE_DOMAIN": [
+        "YES",
+        "NO"
+      ],
+      "DOMAIN_EVIDENCE_LEVEL_VALUE_DOMAIN": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "allowed_domain_reason_codes": [
+        "CURRENT_PRODUCT_FAMILY",
+        "HISTORICAL_PRODUCT_FAMILY",
+        "RESOLVED_PRODUCT_FAMILY",
+        "CURRENT_MEASUREMENT_EVIDENCE",
+        "HISTORICAL_MEASUREMENT_EVIDENCE",
+        "CURRENT_CITATION_EVIDENCE",
+        "HISTORICAL_CITATION_EVIDENCE",
+        "EXPLICIT_DIAGNOSTIC_SCOPE",
+        "NO_CASE_SPECIFIC_WORKSTREAM_EVIDENCE"
+      ],
+      "NO_CASE_SPECIFIC_WORKSTREAM_EVIDENCE_role": "the required reason code for DOMAIN_ELIGIBLE = NO (OUT_OF_WORKSTREAM_DOMAIN)",
+      "at_least_one_reason_code_required": "YES",
+      "reason_codes_must_be_preserved_into_r3": "YES",
+      "reason_codes_must_not_be_collapsed_into_a_boolean": "YES",
+      "level_assignment_rule": "DOMAIN_EVIDENCE_LEVEL is assigned from the governing source path under the frozen hierarchy S1 > S2 > S3 > S4"
+    },
+    "FROZEN_CASE_STATE_INPUT": {
+      "MULTI_AXIS_CASE_STATE_DIGEST": "17edfe2ce93f30e3370f80d2d32ce7e18ac637bfdcd223be1947f23987ba61b2",
+      "CASE_INVENTORY_COUNT": 42,
+      "CASE_STATE_REDERIVATION_PERFORMED_HERE": "NO",
+      "case_state_fields_modified_here": [],
+      "note": "this amendment freezes domain eligibility only; it derives no new case state and changes no axis value"
+    },
+    "R3_CONSISTENCY_GATES": {
+      "AXIS_FIELD_PRESENCE_USED_AS_DOMAIN_EVIDENCE": "NO",
+      "AGGREGATE_METRIC_USED_AS_CASE_DOMAIN_EVIDENCE": "NO",
+      "OUT_OF_DOMAIN_CASES_IN_NOT_ESTABLISHED_BUCKET": 0,
+      "DOMAIN_PARTITION_COMPLETE_REQUIRED": "YES",
+      "DOMAIN_BUCKET_PARTITION_COMPLETE_REQUIRED": "YES",
+      "DOMAIN_BUCKET_DOUBLE_COUNT": 0,
+      "WORKSTREAM_BUCKETS_MUTUALLY_EXCLUSIVE": "YES",
+      "DOMAIN_ELIGIBLE_CASE_WITHOUT_BUCKET": "R3 must FAIL rather than silently drop the case",
+      "DOMAIN_MEMBERSHIP_WITHOUT_TRACE": "R3 must FAIL rather than admit the membership",
+      "readiness_rules_unchanged": "YES",
+      "dependency_edge_types_unchanged": "YES",
+      "quality_gate_link_types_unchanged": "YES",
+      "priority_rules_unchanged": "YES",
+      "recommendation_support_rules_unchanged": "YES",
+      "authorization_boundary_unchanged": "YES"
+    },
+    "UNCHANGED_UNDER_THIS_AMENDMENT": [
+      "multi-axis case state (Amendment 001)",
+      "primary-axis mapping (Amendment 002)",
+      "the five A003 buckets",
+      "A003 bucket precedence",
+      "A003 per-axis bucket conditions",
+      "A003 historical-only versus mechanically stale distinction",
+      "readiness R4-R0 definitions",
+      "dependency edge types",
+      "P1-P7 priority rules",
+      "recommendation support rules",
+      "authorization boundary"
+    ],
+    "NOT_AUTHORIZATION_NOTE": "domain eligibility is a review-scope rule only; it never creates readiness, priority, authorization or remediation content"
+  },
+  "effective_analysis_design_definition": {
+    "EFFECTIVE_ANALYSIS_DESIGN": "R1 original frozen design + Amendment 001 + Amendment 002 + Amendment 003 + Amendment 004",
+    "payload_construction": "payload = {key: parent_preflight[key] for key in parent_preflight.analysis_design_digest_spec.extracted_keys}; payload['case_classification_schema'] = amendment_001.amended_case_state_schema; payload['effective_analysis_design_additions'] = amendment_001.effective_analysis_design_additions; payload['workstream_axis_mapping'] = amendment_002.workstream_axis_mapping; payload['workstream_bucket_projection'] = amendment_003.workstream_bucket_projection; payload['workstream_bucket_projection']['DOMAIN_ELIGIBILITY_BEFORE_PROJECTION'] = amendment_004.workstream_domain_eligibility; digest = sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8'))",
+    "canonicalization": "UTF-8; json.dumps(ensure_ascii=False, sort_keys=True, separators=(',', ':'))",
+    "excluded_content": [
+      "timestamps",
+      "machine paths",
+      "file SHA metadata",
+      "manifest digests"
+    ],
+    "superseded_payload_keys": [],
+    "added_payload_keys": [],
+    "overridden_payload_key_paths": [
+      "workstream_bucket_projection.DOMAIN_ELIGIBILITY_BEFORE_PROJECTION (value replaced by amendment_004.workstream_domain_eligibility; this is a value-level override in the effective design payload, not a modification of the Amendment 003 artifact)"
+    ],
+    "retained_parent_payload_keys_reinterpreted": [
+      "workstream_matrix_schema (retained verbatim; its case-bucket field semantics are clarified and extended only through workstream_bucket_projection)"
+    ],
+    "parent_payload_keys_from_amendment_001": [
+      "case_classification_schema (superseded by amended_case_state_schema)",
+      "effective_analysis_design_additions"
+    ],
+    "parent_payload_keys_from_amendment_002": [
+      "workstream_axis_mapping"
+    ],
+    "parent_payload_keys_from_amendment_003": [
+      "workstream_bucket_projection (retained; only its DOMAIN_ELIGIBILITY_BEFORE_PROJECTION member is overridden)"
+    ],
+    "recomputation_inputs": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json (frozen parent)",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_003.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_004.json (this artifact)"
+    ],
+    "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "360e77f5b3d955606c794041016346a480d0b74fea2c6ae69074838876225524",
+    "recomputation_must_reproduce_embedded_digest": "YES"
+  },
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "500690d66fae4c4f88e3cd5203a98b4764179c9e6eb71ebdcba6a2931ed8492f",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DETERMINISTIC": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DIFFERS_FROM_PARENT": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_RECOMPUTATION_1": "500690d66fae4c4f88e3cd5203a98b4764179c9e6eb71ebdcba6a2931ed8492f",
+  "integrity": {
+    "PRE_CHANGE_WORKSPACE_MANIFEST_DIGEST": "fb9681ce16b4e78659f99837850ff353875607219d60c046448e986aaba239e3",
+    "PRE_CHANGE_WORKSPACE_MANIFEST_ENTRY_COUNT": 19656,
+    "PRE_CHANGE_WORKSPACE_MANIFEST_RULE": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "PRE_CHANGE_PRODUCTION_HASH": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "EXPECTED_POST_CHANGE_DELTA": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_004.json (added)"
+    ],
+    "ORIGINAL_PREFLIGHT_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_001_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_002_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_003_EXPECTED_UNCHANGED": "YES",
+    "R2_HARNESS_EXPECTED_UNCHANGED": "YES",
+    "R2_TEST_EXPECTED_UNCHANGED": "YES",
+    "MASTER_EXPECTED_UNCHANGED": "YES",
+    "PARENT_ARTIFACTS_EXPECTED_UNCHANGED": "YES",
+    "PRODUCT_BASELINE_GOLDEN_EVALUATOR_RUNTIME_DB_EXPECTED_UNCHANGED": "YES",
+    "POST_MANIFEST_MINUS_A004_MUST_EQUAL_PRE_MANIFEST": "YES",
+    "POST_WRITE_VERIFICATION_LOCATION": "R1D final console (this checkpoint)",
+    "no_scratch_files_written": "YES",
+    "cache_writes": 0,
+    "computation_mode": "IN_MEMORY_ONLY"
+  },
+  "authorization_boundary": {
+    "ACTIVE_V4_WRITE_PATHS_THIS_CHECKPOINT": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_004.json"
+    ],
+    "OTHER_ACTIVE_V4_WRITES_AUTHORIZED": "NO",
+    "V3_WORKSPACE": "FROZEN / READ-ONLY / UNTOUCHED",
+    "PUBLISH_WORKSPACE": "READ-ONLY / NO SYNC / NO WRITE / NO GIT MUTATION",
+    "GIT_INIT_PERFORMED": "NO",
+    "R2_REDERIVATION_PERFORMED_HERE": "NO",
+    "R3_PERFORMED_HERE": "NO",
+    "WORKSTREAM_DOMAIN_COUNTS_BUILT_HERE": "NO",
+    "WORKSTREAM_BUCKET_COUNTS_BUILT_HERE": "NO",
+    "WORKSTREAM_READINESS_ASSIGNED_HERE": "NO",
+    "DEPENDENCY_GRAPH_BUILT_HERE": "NO",
+    "PRIORITY_TIER_ASSIGNED_HERE": "NO",
+    "RECOMMENDED_NEXT_WORKSTREAM_EVALUATED_HERE": "NO",
+    "HARNESS_MODIFICATION_AUTHORIZED": "NO",
+    "TEST_MODIFICATION_AUTHORIZED": "NO",
+    "MACHINE_RESULT_CREATED": "NO",
+    "HUMAN_REPORT_CREATED": "NO",
+    "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+    "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+    "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO"
+  },
+  "r1d_execution_declarations": {
+    "MODEL_CALLS": 0,
+    "PRODUCTION_RETRIEVAL_RUNS": 0,
+    "COUNTERFACTUAL_RUNS": 0,
+    "FULL_144_RUNS": 0,
+    "PYTEST_RUNS": 0,
+    "RUFF_RUNS": 0,
+    "PY_COMPILE_OR_COMPILEALL_RUNS": 0,
+    "BYTECODE_OR_PYCACHE_WRITES": 0,
+    "CACHE_WRITES": 0,
+    "TEMPORARY_FILES_CREATED": 0,
+    "SCRATCH_FILES_WRITTEN": 0,
+    "READ_ONLY_HARNESS_EXECUTIONS": 2,
+    "READ_ONLY_HARNESS_WRITES": 0
+  },
+  "next_authorized_checkpoint": "R3_WORKSTREAM_MATRIX_AND_DEPENDENCY_GRAPH_UNDER_EFFECTIVE_DESIGN",
+  "READY_FOR_R3": "YES",
+  "READY_FOR_R3_BASIS": "the governance blocking condition (workstream domain eligibility was not uniquely frozen and schema axis-field presence was indistinguishable from case-specific workstream evidence) is prospectively closed by this amendment; readiness remains subject to governance acceptance of Amendment 004",
+  "R3_EXECUTION_PERFORMED_IN_R1D": "NO",
+  "WORKSTREAM_DOMAIN_COUNTS": "NOT_EVALUATED_IN_R1D",
+  "WORKSTREAM_BUCKET_COUNTS": "NOT_EVALUATED_IN_R1D",
+  "WS_READINESS": "NOT_EVALUATED_IN_R1D",
+  "DEPENDENCY_GRAPH": "NOT_EVALUATED_IN_R1D",
+  "PRIORITY_TIER": "NOT_EVALUATED_IN_R1D",
+  "RECOMMENDED_NEXT_WORKSTREAM": "NOT_EVALUATED_IN_R1D",
+  "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+  "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+  "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO",
+  "STOP": "YES",
+  "WAIT_FOR_GOVERNANCE_REVIEWER": "YES",
+  "timestamp": "2026-09-15T00:52:15"
+}

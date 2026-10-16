@@ -1,0 +1,337 @@
+{
+  "artifact_type": "ANALYSIS_DESIGN_AMENDMENT",
+  "amendment_id": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_002",
+  "review_id": "POST_V4_8_2_NEXT_WORKSTREAM_PRIORITY_REVIEW",
+  "checkpoint": "R1B_WORKSTREAM_TO_AXIS_MAPPING_DESIGN_AMENDMENT",
+  "mode": "GOVERNANCE / DESIGN-AMENDMENT ONLY",
+  "amendment_status": "ACTIVE_FOR_FUTURE_GOVERNED_R3_UNDER_AMENDMENTS_001_002",
+  "AMENDMENT_IS_PROSPECTIVE": "YES",
+  "RETROACTIVE_REWRITE": "NO",
+  "is_product_baseline": false,
+  "is_product_remediation": false,
+  "is_scientific_experiment": false,
+  "new_evidence_added": false,
+  "MODEL_CALLS": 0,
+  "PRODUCTION_RETRIEVAL_RUNS": 0,
+  "COUNTERFACTUAL_RUNS": 0,
+  "FULL_144_RUNS": 0,
+  "AMENDMENT_REASON": "WORKSTREAM_MATRIX_REQUIRES_EXPLICIT_PRIMARY_AXIS_MAPPING_AFTER_MULTI_AXIS_CASE_STATE_AMENDMENT",
+  "PARENT_PREFLIGHT_PATH": "eval/v4_post_v4_8_2_priority_review_preflight.json",
+  "PARENT_PREFLIGHT_SHA256": "c24ebc94b504ccb9e3ff492616ebe1f29461ec1c5d7c8e632fd5c2c2031f4bf2",
+  "PARENT_AMENDMENT_ID": "POST_V4_8_2_PRIORITY_REVIEW_DESIGN_AMENDMENT_001",
+  "PARENT_AMENDMENT_PATH": "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+  "PARENT_AMENDMENT_SHA256": "11c7caa096637d13c62abefc1fce65b1e13978ab5a6850ed365368ffebe1ee8f",
+  "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "e48e83e7ab68c004b0332085ad035ccf812cf320c5fb82a8b46acf53125f0e7b",
+  "defect_record": {
+    "defect_class": "WORKSTREAM_MATRIX_LACKS_EXPLICIT_PRIMARY_AXIS_MAPPING_AFTER_MULTI_AXIS_CASE_STATE_AMENDMENT",
+    "defect_impact_scope": "WORKSTREAM_CASE_ELIGIBILITY_AND_AXIS_TO_WORKSTREAM_AGGREGATION_ONLY",
+    "frozen_field_location": "eval/v4_post_v4_8_2_priority_review_preflight.json#/workstream_matrix_schema",
+    "ambiguous_fields_requiring_axis_scoping": [
+      "CURRENT_CONFIRMED_CASES",
+      "STALE_OR_HISTORICAL_CASES",
+      "RESOLVED_CASES",
+      "NOT_ESTABLISHED_CASES"
+    ],
+    "why_unmapped_fields_are_insufficient": "after Amendment 001 a case independently carries Product, Measurement, Citation, blocked-path and freshness states; without a frozen primary decision axis per workstream, one case's states from different axes could be aggregated into the same workstream row and its case buckets could be inflated or cross-counted",
+    "reinterpretation_of_this_reason": "PROHIBITED"
+  },
+  "amendment_scope": {
+    "amends_prospectively": [
+      "workstream_matrix_schema case-bucket field semantics (axis scoping)",
+      "workstream case eligibility",
+      "axis-to-workstream aggregation semantics"
+    ],
+    "does_not_change": [
+      "case inventory",
+      "multi-axis case state (Amendment 001)",
+      "readiness R4-R0 definitions (readiness_rules)",
+      "dependency edge types (dependency_rules.allowed_edge_types)",
+      "quality-gate link types (quality_gate_link_rules.allowed_link_types)",
+      "P1-P7 lexicographic priority order (priority_decision_rules)",
+      "recommendation support rules (recommendation_support_rules)",
+      "candidate workstreams",
+      "authorization boundary"
+    ],
+    "original_snapshot_immutable": "YES",
+    "in_place_edit_of_parent_snapshot_or_amendment_001": "PROHIBITED",
+    "existing_r2_harness_and_tests": "UNCHANGED / NOT AUTHORIZED TO MODIFY IN THIS CHECKPOINT",
+    "r3_must_use_effective_design": "YES"
+  },
+  "r2_accepted_case_state_reference": {
+    "CASE_INVENTORY_COUNT": 42,
+    "MULTI_AXIS_CASE_STATE_DIGEST": "17edfe2ce93f30e3370f80d2d32ce7e18ac637bfdcd223be1947f23987ba61b2",
+    "R2_HARNESS_PATH": "scripts/analyze_v4_post_v4_8_2_priority_review.py",
+    "R2_HARNESS_SHA256": "d0732a380fea5553fec6740837bf948514265fed35b1059b36aa5c39ee63c4e4",
+    "R2_TEST_PATH": "tests/test_v4_post_v4_8_2_priority_review.py",
+    "R2_TEST_SHA256": "88c9cd27045ec0a33ecdda849a81202bc6fde67ff822fcd8839d359327a9b732",
+    "status": "ACCEPTED_REFERENCE_ONLY_NOT_REDERIVED_IN_THIS_CHECKPOINT",
+    "r2_state_prerequisite_for_r3": "R3 must derive workstream case buckets from the accepted multi-axis case state under the mapping frozen by this amendment; this amendment adds no new case-state field and changes no case-state value"
+  },
+  "workstream_axis_mapping": {
+    "mapping_schema_version": "v4-post-v4-8-2-priority-review-workstream-axis-mapping-v1",
+    "PROSPECTIVE_ONLY": "YES",
+    "PRIMARY_AXIS_MAPPING_FROZEN": "YES",
+    "CASE_STATE_SOURCE": "Amendment 001 amended multi-axis case state, per-case fields: PRODUCT_STATUS, PRODUCT_ROOT_CAUSE_FAMILIES, PRODUCT_MULTI_CAUSE, MEASUREMENT_STATUS, CITATION_STATUS, BLOCKED_OR_DISPROVEN_PATHS, ATTRIBUTION_FRESHNESS, RELEVANT_LATER_CHANGE",
+    "AXIS_VOCABULARY": [
+      "PRODUCT",
+      "MEASUREMENT",
+      "CITATION"
+    ],
+    "NON_AXIS_STATE_FIELDS": [
+      "BLOCKED_OR_DISPROVEN_PATHS",
+      "ATTRIBUTION_FRESHNESS",
+      "RELEVANT_LATER_CHANGE"
+    ],
+    "workstreams": [
+      {
+        "workstream_id": "WS-09",
+        "candidate_phase": "V4.9_HISTORY",
+        "PRIMARY_DECISION_AXIS": "PRODUCT",
+        "PRIMARY_STATUS_FIELD": "PRODUCT_STATUS",
+        "PRIMARY_STATUS_CURRENT_VALUE": "CURRENT_CONFIRMED_PRODUCT_DEFECT",
+        "PRIMARY_ROOT_CAUSE_FILTER": "HISTORY",
+        "PRIMARY_CASE_ELIGIBILITY_RULE": "a case enters CURRENT_CONFIRMED_CASES only if PRODUCT_STATUS = CURRENT_CONFIRMED_PRODUCT_DEFECT AND 'HISTORY' is present in PRODUCT_ROOT_CAUSE_FAMILIES AND ATTRIBUTION_FRESHNESS = CURRENT; a historical HISTORY root-cause family entry alone is insufficient",
+        "SECONDARY_CONTEXT_AXES": [
+          "MEASUREMENT",
+          "CITATION"
+        ],
+        "FRESHNESS_REQUIREMENT": "ATTRIBUTION_FRESHNESS = CURRENT required for CURRENT_CONFIRMED_CASES; freshness cannot create a defect",
+        "BLOCKED_PATH_INTERPRETATION": "BLOCKED_OR_DISPROVEN_PATHS is never a primary decision axis; it may act only as PARENT_GOVERNANCE_BLOCKER / LIMITING_EVIDENCE / CONTRADICTING_EVIDENCE for the specific named path",
+        "CROSS_AXIS_AGGREGATION_FORBIDDEN": "YES",
+        "HISTORICAL_FAMILY_ALONE_SUFFICIENT": "NO",
+        "WORKSTREAM_SPECIFIC_LIMITING_RULE": "historical rewrite signals alone (mt-011 rewrite = CDMA的那; mt-006 rewrite -> OFDM) do not establish a current confirmed case or current readiness; refreshed current-state Product evidence carrying the HISTORY family is required"
+      },
+      {
+        "workstream_id": "WS-10",
+        "candidate_phase": "V4.10_RETRIEVAL",
+        "PRIMARY_DECISION_AXIS": "PRODUCT",
+        "PRIMARY_STATUS_FIELD": "PRODUCT_STATUS",
+        "PRIMARY_STATUS_CURRENT_VALUE": "CURRENT_CONFIRMED_PRODUCT_DEFECT",
+        "PRIMARY_ROOT_CAUSE_FILTER": "RETRIEVAL",
+        "PRIMARY_CASE_ELIGIBILITY_RULE": "a case enters CURRENT_CONFIRMED_CASES only if PRODUCT_STATUS = CURRENT_CONFIRMED_PRODUCT_DEFECT AND 'RETRIEVAL' is present in PRODUCT_ROOT_CAUSE_FAMILIES AND ATTRIBUTION_FRESHNESS = CURRENT; a historical RETRIEVAL root-cause family entry alone is insufficient",
+        "SECONDARY_CONTEXT_AXES": [
+          "MEASUREMENT",
+          "CITATION"
+        ],
+        "FRESHNESS_REQUIREMENT": "ATTRIBUTION_FRESHNESS = CURRENT required for CURRENT_CONFIRMED_CASES; freshness cannot create a defect",
+        "BLOCKED_PATH_INTERPRETATION": "BLOCKED_OR_DISPROVEN_PATHS is never a primary decision axis; it may act only as PARENT_GOVERNANCE_BLOCKER / LIMITING_EVIDENCE / CONTRADICTING_EVIDENCE for the specific named path",
+        "CROSS_AXIS_AGGREGATION_FORBIDDEN": "YES",
+        "HISTORICAL_FAMILY_ALONE_SUFFICIENT": "NO",
+        "WORKSTREAM_SPECIFIC_LIMITING_RULE": "historical V4.6 retrieval attribution alone does not establish a current confirmed retrieval case; true retrieval miss must remain distinguished from generation omission, history failure, measurement issue and multi-cause"
+      },
+      {
+        "workstream_id": "WS-11",
+        "candidate_phase": "V4.11_GENERATION_COMPLETENESS",
+        "PRIMARY_DECISION_AXIS": "PRODUCT",
+        "PRIMARY_STATUS_FIELD": "PRODUCT_STATUS",
+        "PRIMARY_STATUS_CURRENT_VALUE": "CURRENT_CONFIRMED_PRODUCT_DEFECT",
+        "PRIMARY_ROOT_CAUSE_FILTER": "GENERATION",
+        "PRIMARY_CASE_ELIGIBILITY_RULE": "a case enters CURRENT_CONFIRMED_CASES only if PRODUCT_STATUS = CURRENT_CONFIRMED_PRODUCT_DEFECT AND 'GENERATION' is present in PRODUCT_ROOT_CAUSE_FAMILIES AND ATTRIBUTION_FRESHNESS = CURRENT; a historical GENERATION root-cause family entry alone is insufficient",
+        "SECONDARY_CONTEXT_AXES": [
+          "MEASUREMENT",
+          "CITATION"
+        ],
+        "FRESHNESS_REQUIREMENT": "ATTRIBUTION_FRESHNESS = CURRENT required for CURRENT_CONFIRMED_CASES; freshness cannot create a defect",
+        "BLOCKED_PATH_INTERPRETATION": "BLOCKED_OR_DISPROVEN_PATHS is never a primary decision axis; it may act only as PARENT_GOVERNANCE_BLOCKER / LIMITING_EVIDENCE / CONTRADICTING_EVIDENCE for the specific named path",
+        "CROSS_AXIS_AGGREGATION_FORBIDDEN": "YES",
+        "HISTORICAL_FAMILY_ALONE_SUFFICIENT": "NO",
+        "WORKSTREAM_SPECIFIC_LIMITING_RULE": "GENERATION root-cause family != specific Generation mechanism isolated; V4.8.2 TOP_CANDIDATE_HYPOTHESIS = null and GENERATION_MECHANISM_ISOLATION = NOT_ESTABLISHED must remain limiting evidence; the family may persist while mechanism support stays unestablished"
+      },
+      {
+        "workstream_id": "WS-12",
+        "candidate_phase": "V4.12_MEASUREMENT",
+        "PRIMARY_DECISION_AXIS": "MEASUREMENT",
+        "PRIMARY_STATUS_FIELD": "MEASUREMENT_STATUS",
+        "PRIMARY_STATUS_CURRENT_VALUE": "CURRENT_CONFIRMED_MEASUREMENT_DEFECT",
+        "PRIMARY_ROOT_CAUSE_FILTER": "NOT_APPLICABLE",
+        "PRIMARY_CASE_ELIGIBILITY_RULE": "a case enters CURRENT_CONFIRMED_CASES only if MEASUREMENT_STATUS = CURRENT_CONFIRMED_MEASUREMENT_DEFECT AND ATTRIBUTION_FRESHNESS = CURRENT; no Product root-cause filter applies",
+        "SECONDARY_CONTEXT_AXES": [
+          "PRODUCT",
+          "CITATION"
+        ],
+        "FRESHNESS_REQUIREMENT": "ATTRIBUTION_FRESHNESS = CURRENT required for CURRENT_CONFIRMED_CASES; freshness cannot create a defect",
+        "BLOCKED_PATH_INTERPRETATION": "BLOCKED_OR_DISPROVEN_PATHS is never a primary decision axis; it may act only as PARENT_GOVERNANCE_BLOCKER / LIMITING_EVIDENCE / CONTRADICTING_EVIDENCE for the specific named path",
+        "CROSS_AXIS_AGGREGATION_FORBIDDEN": "YES",
+        "HISTORICAL_FAMILY_ALONE_SUFFICIENT": "NO",
+        "WORKSTREAM_SPECIFIC_LIMITING_RULE": "Measurement axis only; a Product defect on the same case must not automatically count the case as Measurement confirmed; a Product root-cause family is never proof of a Measurement defect"
+      },
+      {
+        "workstream_id": "WS-13",
+        "candidate_phase": "V4.13_CITATION",
+        "PRIMARY_DECISION_AXIS": "CITATION",
+        "PRIMARY_STATUS_FIELD": "CITATION_STATUS",
+        "PRIMARY_STATUS_CURRENT_VALUE": "CURRENT_CONFIRMED_CITATION_DEFECT",
+        "PRIMARY_ROOT_CAUSE_FILTER": "NOT_APPLICABLE",
+        "PRIMARY_CASE_ELIGIBILITY_RULE": "a case enters CURRENT_CONFIRMED_CASES only if CITATION_STATUS = CURRENT_CONFIRMED_CITATION_DEFECT AND ATTRIBUTION_FRESHNESS = CURRENT; citation-specific mechanical evidence is required",
+        "SECONDARY_CONTEXT_AXES": [
+          "PRODUCT",
+          "MEASUREMENT"
+        ],
+        "FRESHNESS_REQUIREMENT": "ATTRIBUTION_FRESHNESS = CURRENT required for CURRENT_CONFIRMED_CASES; freshness cannot create a defect",
+        "BLOCKED_PATH_INTERPRETATION": "BLOCKED_OR_DISPROVEN_PATHS is never a primary decision axis; it may act only as PARENT_GOVERNANCE_BLOCKER / LIMITING_EVIDENCE / CONTRADICTING_EVIDENCE for the specific named path",
+        "CROSS_AXIS_AGGREGATION_FORBIDDEN": "YES",
+        "HISTORICAL_FAMILY_ALONE_SUFFICIENT": "NO",
+        "WORKSTREAM_SPECIFIC_LIMITING_RULE": "Citation axis only; the aggregate citation_coverage < target gap is a quality-gate signal and may create a QUALITY_GATE_LINK, but it never creates a case-level CURRENT_CONFIRMED case; Product state must not be used to populate current-confirmed Citation cases"
+      }
+    ],
+    "case_bucket_derivation_rules": {
+      "rule_id": "WORKSTREAM_CASE_BUCKET_SINGLE_PRIMARY_AXIS_DERIVATION",
+      "derivation_source": "only the workstream's PRIMARY_STATUS_FIELD of its PRIMARY_DECISION_AXIS; for PRODUCT-axis workstreams additionally gated by the workstream PRIMARY_ROOT_CAUSE_FILTER",
+      "CURRENT_CONFIRMED_CASES": {
+        "condition": "PRIMARY_STATUS_FIELD = workstream PRIMARY_STATUS_CURRENT_VALUE AND (PRIMARY_ROOT_CAUSE_FILTER = NOT_APPLICABLE OR PRIMARY_ROOT_CAUSE_FILTER present in PRODUCT_ROOT_CAUSE_FAMILIES) AND ATTRIBUTION_FRESHNESS = CURRENT",
+        "forbidden_sources": [
+          "historical root-cause family presence without PRODUCT_STATUS = CURRENT_CONFIRMED_PRODUCT_DEFECT",
+          "any non-primary axis state",
+          "aggregate quality-gate gap promoted to a case-level confirmed defect"
+        ]
+      },
+      "STALE_OR_HISTORICAL_CASES": {
+        "condition": "PRIMARY_STATUS_FIELD = STALE_ATTRIBUTION_REQUIRES_REFRESH OR ATTRIBUTION_FRESHNESS in {PARTIALLY_CURRENT, HISTORICAL_STALE}; for PRODUCT-axis workstreams family relevance is additionally required"
+      },
+      "RESOLVED_CASES": {
+        "condition": "PRIMARY_STATUS_FIELD = RESOLVED_OR_CLOSED; for PRODUCT-axis workstreams family relevance is additionally required"
+      },
+      "NOT_ESTABLISHED_CASES": {
+        "condition": "PRIMARY_STATUS_FIELD = NOT_ESTABLISHED, or the primary axis explicitly records a no-current-defect observation (WS-12: NO_CURRENT_MEASUREMENT_DEFECT_OBSERVED; WS-13: NO_CURRENT_CITATION_DEFECT_ESTABLISHED); for PRODUCT-axis workstreams family relevance is additionally required",
+        "note": "an explicitly observed no-current-defect state is a non-actionable state; it may never be counted in CURRENT_CONFIRMED_CASES or STALE_OR_HISTORICAL_CASES"
+      },
+      "family_relevance_definition": "PRIMARY_ROOT_CAUSE_FILTER present in the case's PRODUCT_ROOT_CAUSE_FAMILIES within the accepted multi-axis case state; family relevance never substitutes for the CURRENT_CONFIRMED gate",
+      "count_semantics": "bucket counts are per-axis case counts; a case may legitimately appear under more than one Product workstream only through the family sets its own PRODUCT_ROOT_CAUSE_FAMILIES mechanically carries",
+      "HISTORICAL_FAMILY_COUNT_NOT_A_CURRENT_CONFIRMED_COUNT": "YES"
+    },
+    "cross_axis_evidence_rule": {
+      "rule_id": "CROSS_AXIS_EVIDENCE_NON_PRIMARY_ONLY",
+      "ALLOWED_ROLES_FOR_NON_PRIMARY_AXES": [
+        "SUPPORTING_EVIDENCE",
+        "CONTRADICTING_EVIDENCE",
+        "UPSTREAM_DEPENDENCY",
+        "DOWNSTREAM_DEPENDENCY",
+        "LIMITING_EVIDENCE",
+        "SAFETY_CONSTRAINT"
+      ],
+      "FORBIDDEN_ROLE": "non-primary axes must not directly populate CURRENT_CONFIRMED_CASES (or any case bucket) of another workstream",
+      "governed_example": "md-004 may legitimately be a WS-11 Product/Generation candidate context and a WS-12 Measurement case (independent axes); its Measurement state must never be used to prove WS-11 Product readiness and its Product state must never be used to prove a WS-12 Measurement defect"
+    },
+    "blocked_path_semantics": {
+      "BLOCKED_PATH_IS_PRIMARY_AXIS": "NO",
+      "allowed_roles": [
+        "PARENT_GOVERNANCE_BLOCKER",
+        "LIMITING_EVIDENCE",
+        "CONTRADICTING_EVIDENCE"
+      ],
+      "scope_rule": "a blocked / disproven path acts only on the specific causal / remediation path it names",
+      "non_interference_example": "DOCUMENT_IDENTITY blocked must not remove an otherwise valid GENERATION Product state; it blocks only the DOCUMENT_IDENTITY remediation / mechanism path",
+      "bucket_effect": "BLOCKED_OR_DISPROVEN_PATHS may never remove a case from CURRENT_CONFIRMED_CASES of a workstream whose primary axis independently establishes it"
+    },
+    "freshness_semantics": {
+      "FRESHNESS_CAN_CREATE_DEFECT": "NO",
+      "CURRENT": "may support current eligibility only if the primary axis independently establishes the defect",
+      "HISTORICAL_STALE": "prevents current-confirmed aggregation unless refreshed",
+      "NOT_ESTABLISHED": "may not be upgraded to CURRENT merely because no relevant later change was identified (RELEVANT_LATER_CHANGE = NO does not imply ATTRIBUTION_FRESHNESS = CURRENT)",
+      "gate_rule": "CURRENT_CONFIRMED_CASES eligibility requires ATTRIBUTION_FRESHNESS = CURRENT"
+    },
+    "multi_cause_semantics": {
+      "PRODUCT_MULTI_CAUSE_FIELD": "PRODUCT_MULTI_CAUSE",
+      "scope": "Product axis only",
+      "visibility_rule": "with PRODUCT_MULTI_CAUSE = YES a case may be visible to more than one Product workstream only if PRODUCT_ROOT_CAUSE_FAMILIES mechanically contains the corresponding families",
+      "forbidden": "Measurement / Citation states must never generate Product multi-cause membership"
+    },
+    "matrix_schema_field_additions": {
+      "note": "prospectively adds the following to the effective workstream-matrix row semantics; original field names remain and their meaning is clarified by this amendment",
+      "fields": {
+        "PRIMARY_DECISION_AXIS": "value domain {PRODUCT, MEASUREMENT, CITATION}; the single axis from which this workstream's case buckets are derived; never BLOCKED_OR_DISPROVEN_PATHS",
+        "PRIMARY_STATUS_FIELD": "the case-state status field of the primary axis: PRODUCT -> PRODUCT_STATUS; MEASUREMENT -> MEASUREMENT_STATUS; CITATION -> CITATION_STATUS",
+        "PRIMARY_ROOT_CAUSE_FILTER": "for PRODUCT-axis workstreams the single Product root-cause family gating eligibility; NOT_APPLICABLE for MEASUREMENT / CITATION-axis workstreams",
+        "PRIMARY_CASE_ELIGIBILITY_RULE": "mechanical rule: PRIMARY_STATUS_FIELD = CURRENT_CONFIRMED_* AND (filter satisfied) AND ATTRIBUTION_FRESHNESS = CURRENT",
+        "SECONDARY_CONTEXT_AXES": "non-primary axes retained only under the six allowed evidence roles; they may never populate case buckets",
+        "FRESHNESS_REQUIREMENT": "ATTRIBUTION_FRESHNESS = CURRENT required for CURRENT_CONFIRMED_CASES; freshness cannot create a defect",
+        "BLOCKED_PATH_INTERPRETATION": "BLOCKED_OR_DISPROVEN_PATHS is never a primary decision axis; specific-path governance blocker / limiting / contradicting role only",
+        "CROSS_AXIS_AGGREGATION_FORBIDDEN": "YES",
+        "HISTORICAL_FAMILY_ALONE_SUFFICIENT": "NO"
+      }
+    },
+    "r3_consistency_requirements": {
+      "product_workstreams_rule": "WS-09 / WS-10 / WS-11 must not use Measurement or Citation status to populate current-confirmed Product cases",
+      "measurement_workstream_rule": "WS-12 must not use Product status to populate current-confirmed Measurement cases",
+      "citation_workstream_rule": "WS-13 must not use the aggregate citation coverage gap or Product state to populate current-confirmed Citation cases",
+      "family_count_rule": "PRODUCT_ROOT_CAUSE_FAMILY_COUNTS from R2 are not equivalent to CURRENT_CONFIRMED_CASE_COUNTS because many families are historical-only",
+      "projection_rule": "any R3 workstream row must be fully derivable from the accepted multi-axis case state plus this mapping; no other case source is admissible"
+    }
+  },
+  "effective_analysis_design_definition": {
+    "EFFECTIVE_ANALYSIS_DESIGN": "R1 original frozen design + Amendment 001 + Amendment 002",
+    "payload_construction": "payload = {key: parent_preflight[key] for key in parent_preflight.analysis_design_digest_spec.extracted_keys}; payload['case_classification_schema'] = amendment_001.amended_case_state_schema; payload['effective_analysis_design_additions'] = amendment_001.effective_analysis_design_additions; payload['workstream_axis_mapping'] = amendment_002.workstream_axis_mapping; digest = sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8'))",
+    "canonicalization": "UTF-8; json.dumps(ensure_ascii=False, sort_keys=True, separators=(',', ':'))",
+    "excluded_content": [
+      "timestamps",
+      "machine paths",
+      "file SHA metadata",
+      "manifest digests"
+    ],
+    "superseded_payload_keys": [],
+    "added_payload_keys": [
+      "workstream_axis_mapping"
+    ],
+    "parent_payload_keys_from_amendment_001": [
+      "case_classification_schema (superseded by amended_case_state_schema)",
+      "effective_analysis_design_additions"
+    ],
+    "recomputation_inputs": [
+      "eval/v4_post_v4_8_2_priority_review_preflight.json (frozen parent)",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_001.json",
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json (this artifact)"
+    ],
+    "PARENT_EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "e48e83e7ab68c004b0332085ad035ccf812cf320c5fb82a8b46acf53125f0e7b",
+    "recomputation_must_reproduce_embedded_digest": "YES"
+  },
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST": "d19df3abaefcf4e90f4ae85e193dc3837d861cb87021a223b1c4acb6d65dd72e",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DETERMINISTIC": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_DIFFERS_FROM_PARENT": "YES",
+  "EFFECTIVE_ANALYSIS_DESIGN_DIGEST_RECOMPUTATION_1": "d19df3abaefcf4e90f4ae85e193dc3837d861cb87021a223b1c4acb6d65dd72e",
+  "integrity": {
+    "PRE_CHANGE_WORKSPACE_MANIFEST_DIGEST": "74dc8e4f518bdaecc8b2c59a83736e80f6ebe42c60eefe45a7a99bb483fcc562",
+    "PRE_CHANGE_WORKSPACE_MANIFEST_ENTRY_COUNT": 19654,
+    "PRE_CHANGE_WORKSPACE_MANIFEST_RULE": "all regular files; exclude path segments {.git, __pycache__, .pytest_cache, .mypy_cache, .ruff_cache}; exclude suffixes {.pyc, .pyo}; per-file hash = sha256-path-content-v2-canonical-lf (CRLF/CR normalized to LF for text suffixes, raw bytes otherwise); digest = sha256 over sorted '<relpath>\\0<filehash>' entries joined by LF, UTF-8",
+    "PRE_CHANGE_PRODUCTION_HASH": "108fb167ee75a4b8657ad062185b51aef814e0586b9b0be60b7a4cc51141798c",
+    "EXPECTED_POST_CHANGE_DELTA": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json (added)"
+    ],
+    "ORIGINAL_PREFLIGHT_EXPECTED_UNCHANGED": "YES",
+    "AMENDMENT_001_EXPECTED_UNCHANGED": "YES",
+    "R2_HARNESS_EXPECTED_UNCHANGED": "YES",
+    "R2_TEST_EXPECTED_UNCHANGED": "YES",
+    "MASTER_EXPECTED_UNCHANGED": "YES",
+    "PARENT_ARTIFACTS_EXPECTED_UNCHANGED": "YES",
+    "PRODUCT_BASELINE_GOLDEN_EVALUATOR_RUNTIME_DB_EXPECTED_UNCHANGED": "YES",
+    "POST_WRITE_VERIFICATION_LOCATION": "R1B final console (this checkpoint)",
+    "no_scratch_files_written": "YES",
+    "cache_writes": 0,
+    "computation_mode": "IN_MEMORY_ONLY"
+  },
+  "authorization_boundary": {
+    "ACTIVE_V4_WRITE_PATHS_THIS_CHECKPOINT": [
+      "eval/v4_post_v4_8_2_priority_review_design_amendment_002.json"
+    ],
+    "OTHER_ACTIVE_V4_WRITES_AUTHORIZED": "NO",
+    "V3_WORKSPACE": "FROZEN / READ-ONLY / UNTOUCHED",
+    "PUBLISH_WORKSPACE": "READ-ONLY / NO SYNC / NO WRITE / NO GIT MUTATION",
+    "GIT_INIT_PERFORMED": "NO",
+    "R2_REDERIVATION_PERFORMED_HERE": "NO",
+    "R3_PERFORMED_HERE": "NO",
+    "HARNESS_MODIFICATION_AUTHORIZED": "NO",
+    "TEST_MODIFICATION_AUTHORIZED": "NO",
+    "MACHINE_RESULT_CREATED": "NO",
+    "HUMAN_REPORT_CREATED": "NO",
+    "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+    "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+    "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO"
+  },
+  "next_authorized_checkpoint": "R3_WORKSTREAM_MATRIX_AND_DEPENDENCY_GRAPH_UNDER_EFFECTIVE_DESIGN",
+  "READY_FOR_R3": "YES",
+  "NEXT_WORKSTREAM_EXECUTION_AUTHORIZED": "NO",
+  "PRODUCT_REMEDIATION_AUTHORIZED": "NO",
+  "NEXT_STAGE_AUTOMATICALLY_AUTHORIZED": "NO",
+  "STOP": "YES",
+  "WAIT_FOR_GOVERNANCE_REVIEWER": "YES",
+  "timestamp": "2026-09-15T00:41:46"
+}

@@ -86,6 +86,7 @@ def setUpModule() -> None:  # noqa: N802 (unittest API)
             public_analysis_tree() if load_public_manifest(ROOT_DIR) is not None
             else pre_product_tree(include_inputs=True)
         )
+        historical_root = historical_root.resolve()
         if not _PRIVATE_RUNTIME_DB_AVAILABLE:
             # Public source distributions intentionally contain no private
             # library. Pure observer mechanics use a real temporary empty DB

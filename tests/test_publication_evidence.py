@@ -28,7 +28,7 @@ class PublicEvidenceTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
-        self.base = Path(self.temporary.name)
+        self.base = Path(self.temporary.name).resolve()
         self.source = self.base / "private"
         self.target = self.base / "public"
         self.source.mkdir()
@@ -125,6 +125,43 @@ class PublicEvidenceTests(unittest.TestCase):
             stream.write(b"drift")
         with self.assertRaises(evidence.PublicEvidenceIdentityError):
             evidence.HistoricalArchive(self.target, "fixtures/source.zip", evidence.sha256(self.archived))
+
+    def test_short_root_and_long_child_canonical_pair_reaches_private_unavailable(self):
+        self.export()
+        short_root = self.base / "PUBLIC~1"
+        real_resolve = Path.resolve
+
+        def expand_short_name(path, *args, **kwargs):
+            return self.target.resolve() if path == short_root else real_resolve(path, *args, **kwargs)
+
+        actual = mock.Mock(side_effect=lambda path: evidence.sha256(path.read_bytes()))
+        with mock.patch.object(Path, "resolve", expand_short_name):
+            # Reproduce the former mixed-spelling comparison before testing the
+            # adapter: the existing child resolves outside the lexical alias.
+            with self.assertRaises(ValueError):
+                (self.target / "eval/private.json").resolve().relative_to(short_root)
+            exact = evidence.exact_historical_hasher(short_root, actual)
+            with self.assertRaises(evidence.PrivateHistoricalInputUnavailable):
+                exact(self.target / "eval/private.json")
+        actual.assert_not_called()
+
+    def test_exact_hash_adapter_keeps_actual_hash_for_unchanged_and_external_files(self):
+        self.export()
+        actual = mock.Mock(side_effect=lambda path: evidence.sha256(path.read_bytes()))
+        exact = evidence.exact_historical_hasher(self.target, actual)
+        self.assertEqual(exact(self.target / "eval/facts.json"), evidence.sha256(self.clean))
+        outside = self.base / "external-protocol.md"
+        outside.write_bytes(b"external exact protocol\r\n")
+        self.assertEqual(exact(outside), evidence.sha256(outside.read_bytes()))
+        self.assertEqual(actual.call_count, 2)
+
+    def test_exact_hash_adapter_public_drift_is_error_not_an_original_sha_or_skip(self):
+        self.export()
+        exact = evidence.exact_historical_hasher(self.target, lambda path: evidence.sha256(path.read_bytes()))
+        with (self.target / "eval/private.json").open("ab") as stream:
+            stream.write(b"drift")
+        with self.assertRaisesRegex(evidence.PublicEvidenceIdentityError, "byte drift"):
+            exact(self.target / "eval/private.json")
 
     def test_manifest_digest_tampering_fails_closed(self):
         manifest = self.export()

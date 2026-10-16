@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from contextlib import redirect_stdout
+import ctypes
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -32,7 +34,9 @@ class TemporaryPublication(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
-        self.root = Path(self.temporary.name)
+        # Windows TEMP can use a DOS 8.3 alias. Inventory paths are canonical;
+        # comparisons and injected-link predicates must use that same spelling.
+        self.root = Path(self.temporary.name).resolve()
         self.source = self.root / "source"
         self.destination = self.root / "upload"
         write(self.source, "core/main.py", "new behavior\n")
@@ -124,6 +128,56 @@ class TestPublicationInventory(TemporaryPublication):
         manifest = sync.build_manifest(alias, self.destination / ".git" / "..")
         self.assertEqual(manifest["source_root"], str(self.source.resolve()))
         self.assertEqual(scanner.build_report(alias), scanner.build_report(self.source))
+
+    def test_explicit_targets_expand_an_independent_short_name_alias(self):
+        # Simulate only the OS path-name expansion, keeping real filesystem
+        # reads and link checks. This regression runs even without 8.3 support.
+        alias = self.root / "SOURCE~1"
+        path_type = type(self.root)
+        original_resolve = path_type.resolve
+
+        def expand_name(path, *args, **kwargs):
+            requested = Path(path).absolute()
+            try:
+                relative = requested.relative_to(alias)
+            except ValueError:
+                return original_resolve(path, *args, **kwargs)
+            return original_resolve(self.source / relative, *args, **kwargs)
+
+        with patch.object(path_type, "resolve", new=expand_name):
+            short_report = scanner.build_report(alias, [alias / "core/main.py"])
+            long_report = scanner.build_report(self.source, [self.source / "core/main.py"])
+        self.assertEqual(short_report, long_report)
+        self.assertEqual(set(short_report["candidates"]), {"core/main.py"})
+
+    @unittest.skipUnless(os.name == "nt", "Windows 8.3 path API")
+    def test_real_windows_short_name_and_long_name_share_inventory_and_scan(self):
+        from ctypes import wintypes
+
+        get_short_path = ctypes.WinDLL("kernel32", use_last_error=True).GetShortPathNameW
+        get_short_path.argtypes = [wintypes.LPCWSTR, wintypes.LPWSTR, wintypes.DWORD]
+        get_short_path.restype = wintypes.DWORD
+        required = get_short_path(str(self.source), None, 0)
+        if not required:
+            self.skipTest("8.3 name unavailable; independent name-expansion regression still runs")
+        buffer = ctypes.create_unicode_buffer(required)
+        length = get_short_path(str(self.source), buffer, required)
+        if not length or length >= required:
+            self.skipTest("8.3 name unavailable; independent name-expansion regression still runs")
+        short_root = Path(buffer.value)
+        if short_root == self.source:
+            self.skipTest("volume has no alternate 8.3 name; independent expansion regression still runs")
+        self.assertEqual(sync.canonical_workspace(short_root), self.source)
+        self.assertEqual(sync.build_manifest(short_root, self.destination),
+                         sync.build_manifest(self.source, self.destination))
+        self.assertEqual(
+            scanner.build_report(short_root, [short_root / "core/main.py"]),
+            scanner.build_report(self.source, [self.source / "core/main.py"]),
+        )
+        self.assertEqual(
+            {path.relative_to(self.source).as_posix() for path in scanner.collect_targets(short_root)},
+            set(sync.collect_dev_files(short_root)),
+        )
 
     def test_root_and_ancestor_links_are_rejected_before_resolving(self):
         original_link = sync._link

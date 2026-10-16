@@ -57,11 +57,38 @@ class WindowsCandidateLauncherTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         identity = json.loads(result.stdout)
         self.assertEqual(identity["version"], "4.0.0-alpha.3")
-        self.assertEqual(Path(identity["executable"]), self.exe)
+        # Windows may expand RUNNER~1 into its long name. Compare the actual
+        # file identity so two spellings of one file agree.
+        self.assertTrue(Path(identity["executable"]).samefile(self.exe))
         self.assertEqual(identity["build_record_raw_sha256"], sha(self.record))
         self.assertEqual(identity["mode"], "VALIDATE_ONLY")
         self.assertEqual(identity["quality_status"], "FAIL")
         self.assertFalse((self.bundle / "_internal").exists())
+
+    def test_short_bundle_alias_resolves_to_the_same_activated_file(self):
+        import ctypes
+
+        get_short_path = ctypes.windll.kernel32.GetShortPathNameW
+        get_short_path.argtypes = (ctypes.c_wchar_p, ctypes.c_wchar_p, ctypes.c_uint32)
+        get_short_path.restype = ctypes.c_uint32
+        size = get_short_path(str(self.bundle), None, 0)
+        if not size:
+            self.skipTest("filesystem has no Windows 8.3 short-path alias")
+        buffer = ctypes.create_unicode_buffer(size)
+        self.assertTrue(get_short_path(str(self.bundle), buffer, size))
+        short_bundle = Path(buffer.value)
+        if short_bundle == self.bundle:
+            self.skipTest("filesystem returned the long path without an 8.3 alias")
+        self.assertTrue(short_bundle.samefile(self.bundle))
+        self.pointer["bundle_path"] = os.path.relpath(short_bundle, self.project)
+        self.save_pointer()
+        result = self.validate()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        actual_executable = Path(json.loads(result.stdout)["executable"])
+        self.assertTrue(actual_executable.samefile(self.exe))
+        unrelated = self.root / "unactivated-copy.exe"
+        shutil.copy2(self.exe, unrelated)
+        self.assertFalse(actual_executable.samefile(unrelated))
 
     def test_executable_drift_is_rejected(self):
         self.exe.write_bytes(b"different executable")

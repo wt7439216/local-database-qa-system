@@ -127,7 +127,7 @@ for _path in (ROOT, ROOT / "scripts"):
 import analyze_v4_post_v4_8_2_priority_review as H  # noqa: E402
 from engineering_revision import current_source_bytes, historical_source_bytes  # noqa: E402
 from product_revision import pre_product_tree, public_analysis_tree  # noqa: E402
-from publication_evidence import exact_file_bytes, load_public_manifest  # noqa: E402
+from publication_evidence import exact_historical_hasher, load_public_manifest  # noqa: E402
 
 _HISTORICAL_REPLAY_STACK = None
 
@@ -147,26 +147,16 @@ def setUpModule() -> None:  # noqa: N802 (unittest API)
             public_analysis_tree() if public_manifest is not None
             else pre_product_tree(include_inputs=True)
         )
+        historical_root = historical_root.resolve()
         stack.enter_context(mock.patch.object(H, "ROOT", historical_root))
         stack.enter_context(mock.patch(__name__ + ".ROOT", historical_root))
         if public_manifest is not None:
-            analysis_manifest = load_public_manifest(historical_root)
-            actual_raw_sha256 = H.raw_sha256_file
-
-            def exact_historical_raw_sha256(path):
-                # This test module's frozen raw assertions require original
-                # inputs. Keep the real hasher intact; report only a removed
-                # input as unavailable when a particular test actually reads it.
-                try:
-                    relative = path.resolve().relative_to(historical_root).as_posix()
-                except ValueError:
-                    return actual_raw_sha256(path)
-                entry = analysis_manifest["files"].get(relative)
-                if entry is not None:
-                    exact_file_bytes(historical_root, relative, entry["original_sha256"])
-                return actual_raw_sha256(path)
-
-            stack.enter_context(mock.patch.object(H, "raw_sha256_file", exact_historical_raw_sha256))
+            # This module's frozen raw assertions require exact original input.
+            # The adapter resolves the root and child consistently, including
+            # Windows short/long names, and never substitutes an original SHA.
+            stack.enter_context(mock.patch.object(
+                H, "raw_sha256_file", exact_historical_hasher(historical_root, H.raw_sha256_file),
+            ))
     except BaseException:
         stack.close()
         raise

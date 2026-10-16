@@ -17,7 +17,7 @@ import os
 from pathlib import Path, PurePosixPath, PureWindowsPath
 import re
 import stat
-from typing import Iterable, Mapping
+from typing import Callable, Iterable, Mapping
 import unittest
 import zipfile
 
@@ -121,6 +121,31 @@ def public_file_bytes(root: Path, relative: str, expected_original_sha: str) -> 
     data = (root / relative).read_bytes()
     _public_entry(root, relative, data, expected_original_sha)
     return data
+
+
+def exact_historical_hasher(root: Path, actual_hasher: Callable[[Path], str]) -> Callable[[Path], str]:
+    """Adapt exact historical assertions to a public tree without faking hashes.
+
+    Resolve both sides of the relative-path comparison. On Windows, temporary
+    roots may use an 8.3 spelling while ``Path.resolve`` expands their children
+    to long names; mixing those spellings would silently miss a manifest entry.
+    Registered derivatives therefore reach the exact reader and explicitly
+    report missing private bytes. Other files retain the actual byte hasher.
+    """
+    canonical_root = root.resolve()
+    manifest = load_public_manifest(canonical_root)
+
+    def exact_hash(path: Path) -> str:
+        try:
+            relative = path.resolve().relative_to(canonical_root).as_posix()
+        except ValueError:
+            return actual_hasher(path)
+        entry = None if manifest is None else manifest["files"].get(relative)
+        if entry is not None:
+            exact_file_bytes(canonical_root, relative, entry["original_sha256"])
+        return actual_hasher(path)
+
+    return exact_hash
 
 
 class HistoricalArchive:

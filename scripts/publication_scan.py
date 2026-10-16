@@ -287,6 +287,10 @@ def build_report(
                 finding(relative, container_hash, content_hash, label, line, column, excerpt)
 
     for path in sorted(targets):
+        # Explicit targets may use a Windows 8.3 spelling while the root was
+        # expanded to its long name. Check links before expanding that spelling,
+        # then compare canonical paths so aliases retain the same inventory.
+        path = publication.canonical_workspace(path)
         relative = path.relative_to(root).as_posix()
         path = publication._checked(root, relative)
         data = path.read_bytes()

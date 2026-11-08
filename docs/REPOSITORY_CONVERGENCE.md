@@ -8,7 +8,7 @@
 
 | 资产 | 迁移前 | 迁移后 |
 |---|---|---|
-| git 历史（36 commits / 4 tags / `main` = `origin/main` = `69f62c5`） | 上传版 `.git` | 本仓库 `.git`，并新增 1 个 P5 提交（共 37） |
+| git 历史（36 commits / 4 tags / `main` = `origin/main` = `69f62c5`） | 上传版 `.git` | 本仓库 `.git`，并新增 2 个 P5 提交（共 38） |
 | 可移植历史备份 | 无 | `Archive/20261109_p5_convergence/git_history.bundle`（`git bundle --all`，12.5 MB） |
 | 上传版完整副本（含 `.git`，1185 文件） | 工作区兄弟目录 | `Archive/20261109_p5_convergence/upload_snapshot/` |
 | 原上传版文件快照（无 `.git`） | 同上 | `Archive/20261109_p5_convergence/upload_retired/` + `RETIRED.md` |

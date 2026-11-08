@@ -20,14 +20,12 @@ docs/V3_IMPROVEMENT_PLAN.md §11 for the phase contract.
 from __future__ import annotations
 
 from collections.abc import Callable
-from contextlib import closing, contextmanager
+from contextlib import closing
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
 import json
 import sqlite3
 import threading
-import uuid
 
 from core import config
 from core.importer import DEFAULT_GENERAL_COLLECTION, DocumentImporter
@@ -35,233 +33,54 @@ from core.library_store import MANAGED_SCHEMA_VERSION, SCHEMA_VERSION
 from core.query_scope import QueryScope, ScopeResolution, resolve_scope
 from core.vector_store import compute_content_hash
 
-
-DEFAULT_GENERAL_LIBRARY = config.LIBRARY_DIR / "documents.sqlite3"
-DEFAULT_KB_ID = "kb-default"
-DEFAULT_KB_NAME = "Default Knowledge Base"
-
-# Persisted lifecycle statuses (document_sources.status).  DISABLED is not a
-# status: soft-disable is the orthogonal ``enabled`` column so a delete
-# failure and a manual disable never overwrite each other.
-DOCUMENT_STATUSES = (
-    "IMPORTING",
-    "READY",
-    "UPDATING",
-    "FAILED",
-    "FAILED_INDEX",
-    "DELETING",
-    "DELETE_FAILED",
+# P2: shared vocabulary, versioned migration chain and persistence layer.
+from core.library_model import (
+    DEFAULT_GENERAL_LIBRARY,
+    DEFAULT_KB_ID,
+    DEFAULT_KB_NAME,
+    DOCUMENT_STATUSES,
+    RETRIEVABLE_STATUSES,
+    DocumentNotFoundError,
+    KnowledgeBaseNotFoundError,
+    LibraryServiceError,
+    LibraryStateError,
+    new_document_id,
+    new_kb_id as _new_kb_id,
+    new_tag_id as _new_tag_id,
+    utc_now,
 )
-# Statuses that may serve retrieval candidates (before scope filtering).
-RETRIEVABLE_STATUSES = ("READY",)
+from core.library_model import TAG_MAX_PER_DOCUMENT as _TAG_MAX_PER_DOCUMENT
+from core.library_model import TAG_NAME_MAX as _TAG_NAME_MAX
+from core.migrations.registry import (
+    MIGRATIONS,
+    ensure_managed_schema,
+    managed_schema_is_current,
+    migration_plan,
+)
+from core.persistence import document_state, repositories
+from core.persistence.unit_of_work import (
+    EVENT_DOCUMENT_DELETED,
+    EVENT_DOCUMENT_UPSERTED,
+    EVENT_TAGS_CHANGED,
+    IndexOutbox,
+    UnitOfWork,
+)
 
-_TAG_NAME_MAX = 64
-_TAG_MAX_PER_DOCUMENT = 32
-
-
-class LibraryServiceError(RuntimeError):
-    """Base class for managed-library failures."""
-
-
-class KnowledgeBaseNotFoundError(LibraryServiceError):
-    pass
-
-
-class DocumentNotFoundError(LibraryServiceError):
-    pass
-
-
-class LibraryStateError(LibraryServiceError):
-    """Operation not allowed in the document's current lifecycle state."""
-
-
-def utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
-
-
-def new_document_id() -> str:
-    """Fresh persisted stable identity — created once, never re-derived."""
-    return "doc-" + uuid.uuid4().hex
+__all__ = [
+    "LibraryService", "DEFAULT_GENERAL_LIBRARY", "DEFAULT_KB_ID", "DEFAULT_KB_NAME",
+    "DOCUMENT_STATUSES", "RETRIEVABLE_STATUSES", "LibraryServiceError",
+    "KnowledgeBaseNotFoundError", "DocumentNotFoundError", "LibraryStateError",
+    "utc_now", "new_document_id", "ensure_managed_schema", "managed_schema_is_current",
+    "MIGRATIONS", "migration_plan", "KnowledgeBaseRecord", "DocumentSourceRecord",
+    "IndexOutbox", "UnitOfWork", "MANAGED_SCHEMA_VERSION", "SCHEMA_VERSION",
+]
 
 
-def _new_kb_id() -> str:
-    return "kb-" + uuid.uuid4().hex
-
-
-def _new_tag_id() -> str:
-    return "tag-" + uuid.uuid4().hex
-
-
-# --- Schema v5 (additive on v4; see Schema Impact Note) ----------------------
-
-
-def ensure_managed_schema(connection: sqlite3.Connection) -> int:
-    """Ensure the library carries the v5 registry.  Idempotent.
-
-    Returns the schema version now in effect.  A fresh (metadata-less) file
-    is created as a v4 core library first, then upgraded in one transaction.
-    Raises on unsupported versions — never silently rewrites schema_version.
-    """
-    from scripts.build_library import create_schema
-
-    table = connection.execute(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name='metadata'"
-    ).fetchone()
-    if table is None:
-        create_schema(connection)
-        connection.executemany(
-            "INSERT OR REPLACE INTO metadata VALUES (?, ?)",
-            {
-                "schema_version": str(SCHEMA_VERSION),
-                "library_name": "通用文档知识库",
-                "built_at": utc_now(),
-                "source_sha256": "",
-                "embedding_model": "",
-                "embedding_dimension": "0",
-                "build_options": "{}",
-                "summaries": "mechanical",
-            }.items(),
-        )
-        connection.commit()
-
-    version_row = connection.execute("SELECT value FROM metadata WHERE key='schema_version'").fetchone()
-    version = int(version_row[0]) if version_row and version_row[0] else 0
-    if version not in (SCHEMA_VERSION, MANAGED_SCHEMA_VERSION):
-        raise LibraryServiceError(
-            f"知识库 schema 版本不受支持：{version}（需要 {SCHEMA_VERSION} 或 {MANAGED_SCHEMA_VERSION}）。"
-        )
-    integrity = connection.execute("PRAGMA integrity_check").fetchone()[0]
-    if integrity != "ok":
-        raise LibraryServiceError(f"迁移前完整性检查失败：{integrity}")
-    # Phase F.1: additive summary provenance columns.  Runs for BOTH v4 and
-    # already-v5 libraries (idempotent); legacy rows fall back to defaults.
-    # Committed separately so the metadata write closes its implicit
-    # transaction before the migration's explicit BEGIN below.
-    from core.summary import ensure_summary_provenance_schema
-
-    if ensure_summary_provenance_schema(connection):
-        connection.commit()
-    if version == MANAGED_SCHEMA_VERSION:
-        return version
-
-    counts_before = _row_counts(connection)
-
-    connection.execute("BEGIN")
-    try:
-        connection.execute(
-            """
-            CREATE TABLE IF NOT EXISTS knowledge_bases (
-                knowledge_base_id TEXT PRIMARY KEY,
-                name TEXT NOT NULL,
-                description TEXT NOT NULL DEFAULT '',
-                created_at TEXT NOT NULL,
-                updated_at TEXT NOT NULL,
-                status TEXT NOT NULL DEFAULT 'active'
-            )
-            """
-        )
-        connection.execute(
-            """
-            CREATE TABLE IF NOT EXISTS document_sources (
-                document_id TEXT PRIMARY KEY REFERENCES documents(id),
-                knowledge_base_id TEXT NOT NULL REFERENCES knowledge_bases(knowledge_base_id),
-                source_path TEXT NOT NULL DEFAULT '',
-                source_type TEXT NOT NULL DEFAULT '',
-                document_type TEXT NOT NULL DEFAULT '',
-                source_hash TEXT NOT NULL DEFAULT '',
-                status TEXT NOT NULL DEFAULT 'READY',
-                enabled INTEGER NOT NULL DEFAULT 1,
-                created_at TEXT NOT NULL,
-                updated_at TEXT NOT NULL,
-                last_error TEXT NOT NULL DEFAULT ''
-            )
-            """
-        )
-        connection.execute(
-            """
-            CREATE TABLE IF NOT EXISTS tags (
-                tag_id TEXT PRIMARY KEY,
-                name TEXT NOT NULL UNIQUE
-            )
-            """
-        )
-        connection.execute(
-            """
-            CREATE TABLE IF NOT EXISTS document_tags (
-                document_id TEXT NOT NULL REFERENCES documents(id),
-                tag_id TEXT NOT NULL REFERENCES tags(tag_id),
-                PRIMARY KEY (document_id, tag_id)
-            )
-            """
-        )
-        connection.execute(
-            "CREATE INDEX IF NOT EXISTS idx_document_sources_kb ON document_sources(knowledge_base_id)"
-        )
-        connection.execute(
-            "CREATE INDEX IF NOT EXISTS idx_document_tags_tag ON document_tags(tag_id)"
-        )
-        now = utc_now()
-        connection.execute(
-            "INSERT OR IGNORE INTO knowledge_bases VALUES (?, ?, ?, ?, ?, 'active')",
-            (DEFAULT_KB_ID, DEFAULT_KB_NAME, "迁移默认知识库（Phase D v3.3）", now, now),
-        )
-        source_types = {
-            str(row["key"])[len("import_source_type_"):]: str(row["value"] or "")
-            for row in connection.execute(
-                "SELECT key, value FROM metadata WHERE key LIKE 'import_source_type_%'"
-            ).fetchall()
-        }
-        for row in connection.execute("SELECT id, source_name, sha256 FROM documents").fetchall():
-            document_id = str(row["id"])
-            source_type = source_types.get(document_id, "")
-            # Phase C never persisted the full source path; register the file
-            # name best-effort.  A later relink can repair the real path.
-            connection.execute(
-                """
-                INSERT OR IGNORE INTO document_sources
-                    (document_id, knowledge_base_id, source_path, source_type,
-                     document_type, source_hash, status, enabled, created_at, updated_at, last_error)
-                VALUES (?, ?, ?, ?, ?, ?, 'READY', 1, ?, ?, '')
-                """,
-                (
-                    document_id,
-                    DEFAULT_KB_ID,
-                    str(row["source_name"] or ""),
-                    source_type,
-                    source_type,
-                    str(row["sha256"] or ""),
-                    now,
-                    now,
-                ),
-            )
-        connection.execute(
-            "INSERT OR REPLACE INTO metadata VALUES ('schema_version', ?)",
-            (str(MANAGED_SCHEMA_VERSION),),
-        )
-        counts_after = _row_counts(connection)
-        if counts_before != counts_after:
-            raise LibraryServiceError(f"迁移行数校验失败：{counts_before} -> {counts_after}")
-        integrity = connection.execute("PRAGMA integrity_check").fetchone()[0]
-        if integrity != "ok":
-            raise LibraryServiceError(f"迁移后完整性检查失败：{integrity}")
-        connection.commit()
-    except Exception:
-        try:
-            connection.rollback()
-        except sqlite3.Error:
-            pass
-        raise
-    return MANAGED_SCHEMA_VERSION
-
-
-def _row_counts(connection: sqlite3.Connection) -> dict[str, int]:
-    counts: dict[str, int] = {}
-    for table in ("documents", "chunks", "embeddings"):
-        try:
-            counts[table] = int(connection.execute(f"SELECT count(*) FROM {table}").fetchone()[0])
-        except sqlite3.Error:
-            counts[table] = -1
-    return counts
+# --- Schema v5 ---------------------------------------------------------------
+# P2: 迁移链已移到 core/migrations/registry.py（显式 v4 -> v5 版本链 +
+# summary provenance）。上面的 import 保持 ensure_managed_schema /
+# managed_schema_is_current / migration_plan 的历史导出面不变。
+# ---------------------------------------------------------------------------
 
 
 # --- Domain records -----------------------------------------------------------
@@ -328,19 +147,21 @@ class LibraryService:
         self.on_mutated = on_mutated
         self._mutation_lock = threading.RLock()
         self.library_path.parent.mkdir(parents=True, exist_ok=True)
-        with closing(self._connect()) as connection:
-            self.schema_version = ensure_managed_schema(connection)
+        if managed_schema_is_current(self.library_path):
+            # 已是完整 v5：只读校验即可，绝不为了「确保」而改写库字节。
+            self.schema_version = MANAGED_SCHEMA_VERSION
+        else:
+            with closing(self._connect()) as connection:
+                self.schema_version = ensure_managed_schema(connection)
 
     # -- connections -------------------------------------------------------------
 
     def _connect(self) -> sqlite3.Connection:
-        connection = sqlite3.connect(self.library_path, timeout=30)
-        connection.row_factory = sqlite3.Row
-        # FK discipline (Phase D.1 P1 audit): enforced on every service
-        # connection.  The importer keeps its own FK-off connection because
-        # its delete-replace write pattern predates the registry.
-        connection.execute("PRAGMA foreign_keys = ON")
-        return connection
+        # P1: shared connection factory (FK ON, matching the legacy service
+        # connection exactly).
+        from core import db
+
+        return db.connect(self.library_path, timeout=30)
 
     def _notify_mutated(self) -> None:
         """Notify the runtime that persisted content changed (Phase D.1)."""
@@ -373,21 +194,10 @@ class LibraryService:
                 return relative
         return Path(str(source)).name
 
-    @contextmanager
-    def _transaction(self):
-        connection = self._connect()
-        try:
-            connection.execute("BEGIN")
-            yield connection
-            connection.commit()
-        except Exception:
-            try:
-                connection.rollback()
-            except sqlite3.Error:
-                pass
-            raise
-        finally:
-            connection.close()
+    def _transaction(self) -> UnitOfWork:
+        # P2: single UnitOfWork entry point.  Inside the transaction callers
+        # may also register an outbox event on the *same* connection.
+        return UnitOfWork(self.library_path)
 
     # -- telemetry ----------------------------------------------------------------
 
@@ -614,9 +424,15 @@ class LibraryService:
                         """,
                         (result.source_hash, result.source_type, result.source_type, utc_now(), document_id),
                     )
+                    # P2: 同一事务内登记索引同步事件，消除「SQLite 已提交但
+                    # Qdrant 未同步」的崩溃窗口。
+                    IndexOutbox.enqueue(
+                        connection, EVENT_DOCUMENT_UPSERTED, document_id,
+                        {"op": op, "knowledge_base_id": knowledge_base_id},
+                    )
                 if tags:
                     self.set_document_tags(document_id, tags)
-                self._sync_document_payload(document_id)
+                self._dispatch_index_event(document_id)
                 self._log_op(op, document_id=document_id, result="READY", chunk_count=result.chunk_count, source=canonical_path)
             elif result.status in {"FAILED", "FAILED_INDEX"}:
                 with self._transaction() as connection:
@@ -674,7 +490,7 @@ class LibraryService:
                 raise LibraryStateError(
                     f"路径已属于另一个文档（{owner_row['document_id']}），拒绝 relink 以避免隐式合并。"
                 )
-            if row["status"] in {"DELETING", "DELETE_FAILED"}:
+            if not document_state.can_relink(row["status"]):
                 raise LibraryStateError(f"文档处于 {row['status']} 状态，不能 relink。")
 
             if row["source_path"] == canonical_path and row["source_hash"] == new_hash:
@@ -720,7 +536,9 @@ class LibraryService:
                         """,
                         (result.source_hash, result.source_type, result.source_type, utc_now(), document_id),
                     )
-                self._sync_document_payload(document_id)
+                    IndexOutbox.enqueue(connection, EVENT_DOCUMENT_UPSERTED, document_id,
+                                        {"op": "RELINK"})
+                self._dispatch_index_event(document_id)
             else:
                 with self._transaction() as connection:
                     connection.execute(
@@ -743,7 +561,7 @@ class LibraryService:
                 row = self._source_row(connection, document_id)
             if row is None:
                 raise DocumentNotFoundError(f"文档不存在：{document_id}")
-            if row["status"] in {"DELETING", "DELETE_FAILED"}:
+            if not document_state.can_set_enabled(row["status"]):
                 raise LibraryStateError(f"文档处于 {row['status']} 状态，不能修改启用状态。")
             with self._transaction() as connection:
                 connection.execute(
@@ -801,6 +619,9 @@ class LibraryService:
                     "DELETE FROM metadata WHERE key IN ('import_source_type_' || ?, 'import_extras_' || ?)",
                     (document_id, document_id),
                 )
+                # P2: 内容清空与「待删索引」事件同事务提交；若后续 Qdrant
+                # 删除/verify/finalize 前崩溃，replay_outbox 可幂等补删。
+                IndexOutbox.enqueue(connection, EVENT_DOCUMENT_DELETED, document_id)
             self._log_op("DELETE", document_id=document_id, stage="sqlite_cleared")
 
             # 2. dense index cleanup (only meaningful for the qdrant backend).
@@ -826,6 +647,10 @@ class LibraryService:
             with self._transaction() as connection:
                 connection.execute("DELETE FROM document_sources WHERE document_id = ?", (document_id,))
                 connection.execute("DELETE FROM documents WHERE id = ?", (document_id,))
+                for event in IndexOutbox.pending(connection, limit=1000):
+                    if (event["event"] == EVENT_DOCUMENT_DELETED
+                            and event["document_id"] == document_id):
+                        IndexOutbox.mark_done(connection, event["id"])
             self._log_op("DELETE", document_id=document_id, stage="finalized", result="DELETED")
             self._notify_mutated()
             return {"status": "DELETED", "document_id": document_id}
@@ -875,7 +700,7 @@ class LibraryService:
             row = self._source_row(connection, document_id)
         if row is None:
             raise DocumentNotFoundError(f"文档不存在：{document_id}")
-        if row["status"] != "DELETE_FAILED":
+        if not document_state.can_retry_delete(row["status"]):
             raise LibraryStateError(f"文档状态为 {row['status']}，无需重试删除。")
         return self.delete_document(document_id)
 
@@ -888,7 +713,7 @@ class LibraryService:
                 row = self._source_row(connection, document_id)
             if row is None:
                 raise DocumentNotFoundError(f"文档不存在：{document_id}")
-            if row["status"] != "FAILED_INDEX":
+            if not document_state.can_retry_index(row["status"]):
                 raise LibraryStateError(f"文档状态为 {row['status']}，仅 FAILED_INDEX 需要重试索引。")
             from core.sqlite_vector_store import build_index_manifest
 
@@ -960,21 +785,18 @@ class LibraryService:
                 connection.execute(
                     "UPDATE document_sources SET updated_at = ? WHERE document_id = ?", (utc_now(), document_id)
                 )
-            self._sync_document_payload(document_id)
+                IndexOutbox.enqueue(connection, EVENT_TAGS_CHANGED, document_id,
+                                    {"tags": normalized})
+            self._dispatch_index_event(document_id)
             self._log_op("TAG", document_id=document_id, tags=normalized)
             self._notify_mutated()
             return normalized
 
+    # P2: read-only SQL now lives in core/persistence/repositories.py;
+    # this service only owns the connection lifecycle.
     def list_tags(self) -> list[dict]:
         with closing(self._connect()) as connection:
-            rows = connection.execute(
-                """
-                SELECT t.tag_id, t.name, count(dt.document_id) AS document_count
-                FROM tags t LEFT JOIN document_tags dt ON dt.tag_id = t.tag_id
-                GROUP BY t.tag_id ORDER BY t.name
-                """
-            ).fetchall()
-        return [dict(row) for row in rows]
+            return repositories.list_tags(connection)
 
     # -- scope ------------------------------------------------------------------
 
@@ -987,40 +809,58 @@ class LibraryService:
     def duplicate_candidates(self, document_id: str) -> list[dict]:
         """Same-content documents (same source_hash, different identity)."""
         with closing(self._connect()) as connection:
-            row = connection.execute(
-                "SELECT source_hash FROM document_sources WHERE document_id = ?", (document_id,)
-            ).fetchone()
-            if row is None or not row["source_hash"]:
-                return []
-            rows = connection.execute(
-                """
-                SELECT ds.document_id, ds.source_path, coalesce(d.title, '') AS title
-                FROM document_sources ds LEFT JOIN documents d ON d.id = ds.document_id
-                WHERE ds.source_hash = ? AND ds.document_id != ? AND ds.status = 'READY'
-                """,
-                (row["source_hash"], document_id),
-            ).fetchall()
-        return [dict(item) for item in rows]
+            return repositories.duplicate_candidates(connection, document_id)
 
     def statistics(self) -> dict:
         with closing(self._connect()) as connection:
-            documents = int(connection.execute("SELECT count(*) FROM document_sources").fetchone()[0])
-            ready = int(
-                connection.execute(
-                    "SELECT count(*) FROM document_sources WHERE status = 'READY' AND enabled = 1"
-                ).fetchone()[0]
-            )
-            chunks = int(connection.execute("SELECT count(*) FROM chunks").fetchone()[0])
-            knowledge_bases = int(connection.execute("SELECT count(*) FROM knowledge_bases").fetchone()[0])
-            tag_rows = connection.execute("SELECT name FROM tags ORDER BY name").fetchall()
-        return {
-            "knowledge_bases": knowledge_bases,
-            "documents": documents,
-            "retrievable_documents": ready,
-            "chunks": chunks,
-            "tags": len(tag_rows),
-            "tag_names": [str(row[0]) for row in tag_rows],
-        }
+            return repositories.statistics(connection)
+
+    # -- P2: transactional outbox -------------------------------------------------
+
+    def _dispatch_index_event(self, document_id: str) -> None:
+        """Consume pending index events immediately; keep PENDING on failure.
+
+        Replaces the old unguarded ``_sync_document_payload`` call: a Qdrant
+        outage no longer surfaces as "import threw although SQLite committed".
+        The durable event stays in the outbox for replay_outbox().
+        """
+        try:
+            self._sync_document_payload(document_id)
+        except Exception as exc:
+            self._log_op("OUTBOX", document_id=document_id, result="DEFERRED", error=str(exc)[:300])
+            return
+        with self._transaction() as connection:
+            for event in IndexOutbox.pending(connection, limit=1000):
+                if (event["document_id"] == document_id
+                        and event["event"] in (EVENT_DOCUMENT_UPSERTED, EVENT_TAGS_CHANGED)):
+                    IndexOutbox.mark_done(connection, event["id"])
+
+    def replay_outbox(self, limit: int = 200) -> dict:
+        """Idempotently consume pending index events (crash recovery)."""
+        outcome = {"processed": 0, "done": 0, "failed": 0}
+        with closing(self._connect()) as connection:
+            events = IndexOutbox.pending(connection, limit=limit)
+        for event in events:
+            outcome["processed"] += 1
+            try:
+                if event["event"] == EVENT_DOCUMENT_DELETED:
+                    if config.VECTOR_BACKEND == "qdrant":
+                        self._qdrant().delete_documents([event["document_id"]])
+                else:
+                    self._sync_document_payload(event["document_id"])
+            except Exception as exc:
+                with self._transaction() as connection:
+                    IndexOutbox.mark_failed(connection, event["id"], str(exc))
+                outcome["failed"] += 1
+                continue
+            with self._transaction() as connection:
+                IndexOutbox.mark_done(connection, event["id"])
+            outcome["done"] += 1
+        return outcome
+
+    def outbox_stats(self) -> dict:
+        with closing(self._connect()) as connection:
+            return IndexOutbox.stats(connection)
 
     # -- internal helpers ---------------------------------------------------------
 

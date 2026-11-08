@@ -1,0 +1,23 @@
+Copyright (c) 2026 Local Database Q&A System contributors.
+All rights reserved.
+
+LICENSE STATUS: PROPRIETARY / NO OPEN-SOURCE GRANT
+
+This repository is published for review and local evaluation. No permission
+is granted, expressly or by implication, to use, copy, modify, merge,
+publish, distribute, sublicense, or sell copies of the software, or to permit
+third parties to do so, except as required by applicable law or as separately
+ authorised in writing by the copyright holder.
+
+The software is provided "AS IS", without warranty of any kind.
+
+---------------------------------------------------------------------------
+许可状态：专有 / 未授予开源许可
+
+本仓库公开用于审阅与本地评估。除适用法律另有规定或版权持有人另行书面
+授权外，未授予使用、复制、修改、合并、发布、分发、再许可或销售本软件
+副本的权利。软件按「现状」提供，不作任何明示或默示担保。
+
+若项目所有人决定开源：删除本文件，换成所选择的许可证全文（例如 MIT /
+Apache-2.0 / GPL-3.0），并同步修改 README.md 的「Repository / License」
+章节与 pyproject.toml 中的许可元数据。

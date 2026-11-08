@@ -18,11 +18,12 @@ to Phase A.
 
 from __future__ import annotations
 
+import logging
 import time
 from dataclasses import replace
 from typing import Any
 
-from core import config
+from core import config, tokenizer
 from core.library_store import (
     DENSE_CANDIDATE_FLOOR,
     FTS_HEADING_BONUS,
@@ -33,6 +34,8 @@ from core.library_store import (
     query_search_terms,
 )
 from core.reranker import RerankCandidate, RerankerError
+
+LOGGER = logging.getLogger(__name__)
 
 
 def build_rerank_passage(chunk) -> str:
@@ -57,12 +60,13 @@ class HybridRetriever:
     pluggable VectorStore, applies the frozen scope gate and, when enabled,
     re-ranks the candidate pool with a cross-encoder."""
 
-    RRF_K = 60
-    LEXICAL_WEIGHT = 1.0
-    DENSE_WEIGHT = 1.25
-    SECTION_LIMIT = 2
-    TWO_CHAR_MIN_CHUNKS = 5
-    TWO_CHAR_MIN_DENSE = 0.30
+    # P2: 默认值来自唯一真源，仍保留为可 patch 的类属性（兼容旧调用方）。
+    RRF_K = config.RETRIEVAL.rrf_k
+    LEXICAL_WEIGHT = config.RETRIEVAL.lexical_weight
+    DENSE_WEIGHT = config.RETRIEVAL.dense_weight
+    SECTION_LIMIT = config.RETRIEVAL.section_limit
+    TWO_CHAR_MIN_CHUNKS = config.RETRIEVAL.two_char_min_chunks
+    TWO_CHAR_MIN_DENSE = config.RETRIEVAL.two_char_min_dense
 
     def __init__(self, store, vector_store, reranker=None, rerank_candidate_k=None):
         self.store = store
@@ -108,7 +112,13 @@ class HybridRetriever:
             return SearchResult([], True, "low", "none", None, 0)
 
         t0 = time.perf_counter()
-        lexical_ids = self.store._fts_search(query, candidate_limit, allowed_document_ids)
+        try:
+            lexical_ids = self.store._fts_search(query, candidate_limit, allowed_document_ids)
+        except tokenizer.FTSQueryError as exc:
+            # P0: 词法检索失败必须显式记录，不能再伪装成「零命中 → 离题拒答」。
+            LOGGER.warning("lexical retrieval failed: %s", exc)
+            timings["lexical_error"] = str(exc)
+            lexical_ids = []
         lexical_ms = (time.perf_counter() - t0) * 1000
 
         t0 = time.perf_counter()

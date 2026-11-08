@@ -33,6 +33,8 @@ from dataclasses import dataclass
 import re
 from typing import Any
 
+from core import config
+
 # Bump whenever the deterministic contract changes; recorded in telemetry and
 # offline eval so stale results can be detected.
 CITATION_VERIFIER_VERSION = "f2-v4"
@@ -614,7 +616,18 @@ class DeterministicCitationVerifier:
             # UNCERTAIN (possible synonymy), not UNSUPPORTED.  This is the
             # deterministic CJK contract: we can flag presence, but absence
             # alone is not proof of a contradiction.
-            present = [term for term in cjk_terms if term in combined]
+            if config.CITATION_L15_ENABLED:
+                # P4 optional L1.5: compare canonical CJK forms on both sides
+                # so full-width digits / Chinese numerals / unit names no
+                # longer create deterministic UNCERTAIN noise.  Default path
+                # above is byte-for-byte the frozen f2-v4 behaviour.
+                from core.domain.citation_normalization import normalize_cjk_term
+
+                compact_terms = [normalize_cjk_term(term) for term in cjk_terms]
+                normalised_evidence = normalize_cjk_term(combined)
+                present = [term for term in compact_terms if term and term in normalised_evidence]
+            else:
+                present = [term for term in cjk_terms if term in combined]
             if present and (latin_terms or claim_numbers):
                 reason_codes.append(REASON_SUPPORTED_KEY_TERMS)
             if not present and not latin_terms and not claim_numbers:

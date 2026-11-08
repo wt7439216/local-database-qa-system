@@ -5,10 +5,12 @@ from __future__ import annotations
 import json
 import urllib.error
 import urllib.request
+from collections.abc import Callable
 from typing import Any, Iterator
 from urllib.parse import urlsplit
 
 from core import config
+from core.http_client import stream_ndjson
 
 
 class OllamaError(RuntimeError):
@@ -134,6 +136,7 @@ class OllamaClient:
         messages: list[dict[str, str]],
         model: str | None = None,
         timeout: float = 600.0,
+        cancelled: Callable[[], bool] | None = None,
     ) -> Iterator[str]:
         payload = {
             "model": model or config.ANSWER_MODEL,
@@ -149,27 +152,26 @@ class OllamaClient:
                 "num_ctx": config.ANSWER_CONTEXT_WINDOW,
             },
         }
-        request = urllib.request.Request(
-            f"{self.base_url}/api/chat",
-            data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
-            headers={"Accept": "application/x-ndjson", "Content-Type": "application/json; charset=utf-8"},
-            method="POST",
-        )
+        # P3: cancellable streaming (httpx when available, urllib fallback).
         try:
-            with open_request(request, timeout=timeout) as response:
-                for raw_line in response:
-                    if not raw_line.strip():
-                        continue
-                    data = json.loads(raw_line.decode("utf-8"))
-                    if data.get("error"):
-                        raise OllamaError(f"Ollama 错误：{data['error']}")
-                    message = data.get("message")
-                    content = message.get("content") if isinstance(message, dict) else None
-                    if content:
-                        yield str(content)
+            for line in stream_ndjson(
+                f"{self.base_url}/api/chat", payload,
+                timeout=timeout, cancelled=cancelled,
+            ):
+                if not line.strip():
+                    continue
+                data = json.loads(line)
+                if data.get("error"):
+                    raise OllamaError(f"Ollama 错误：{data['error']}")
+                message = data.get("message")
+                content = message.get("content") if isinstance(message, dict) else None
+                if content:
+                    yield str(content)
+        except (InterruptedError, OllamaError):
+            raise
         except urllib.error.HTTPError as exc:
             raise OllamaError(f"Ollama 请求失败（HTTP {exc.code}）") from exc
-        except (urllib.error.URLError, TimeoutError, OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        except Exception as exc:
             raise OllamaError(f"Ollama 流式请求失败：{exc}") from exc
 
     def _request(

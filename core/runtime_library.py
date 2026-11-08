@@ -10,7 +10,7 @@ Resolution rules are static and explainable — never a dynamic router:
    library, upgraded in place if it is still v4 (the v5 registry is purely
    additive; content is untouched).
 2. No managed library but the legacy textbook library exists
-   (``config.LIBRARY_DB``) -> the legacy file is upgraded in place to the
+   (``config.LEGACY_LIBRARY_DB``) -> the legacy file is upgraded in place to the
    v5 registry and adopted as the runtime library.  All v4 content
    (documents/chunks/embeddings/chapters) survives; the file is not copied,
    so there is never a second truth source.
@@ -42,15 +42,16 @@ from pathlib import Path
 
 from core import config
 from core.importer import DEFAULT_GENERAL_LIBRARY
-from core.library_service import ensure_managed_schema
+from core.library_service import ensure_managed_schema, managed_schema_is_current
 
 MIGRATION_MARKER = "legacy_migration_completed"
 
 
 def _upgrade_in_place(path: Path) -> None:
     """Adopt a v4 library as the managed runtime library (in-place, additive)."""
-    connection = sqlite3.connect(path, timeout=30)
-    connection.row_factory = sqlite3.Row
+    from core import db
+
+    connection = db.connect(path, timeout=30, foreign_keys=False)
     try:
         ensure_managed_schema(connection)
         connection.commit()
@@ -59,9 +60,9 @@ def _upgrade_in_place(path: Path) -> None:
 
 
 def _open_ro(path: Path) -> sqlite3.Connection:
-    connection = sqlite3.connect(path.resolve().as_uri() + "?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
+    from core import db
+
+    return db.connect(path, readonly=True)
 
 
 def _legacy_absorbed(managed: Path, legacy: Path) -> bool:
@@ -104,7 +105,14 @@ def _legacy_absorbed(managed: Path, legacy: Path) -> bool:
 def resolve_runtime_library() -> Path:
     """Return the single QA/manager SQLite identity for this machine."""
     managed = Path(DEFAULT_GENERAL_LIBRARY)
-    legacy = Path(config.LIBRARY_DB)
+    # ``config.LIBRARY_DB`` 默认是 managed 路径；若被显式 patch / 配置成别的
+    # 文件，按历史契约视作 legacy 库路径（嵌入方与测试依赖此行为）。
+    configured = Path(config.LIBRARY_DB)
+    legacy = (
+        configured
+        if configured.resolve() != Path(config.SETTINGS.library_db).resolve()
+        else Path(config.LEGACY_LIBRARY_DB)
+    )
     if managed.is_file() and legacy.is_file() and managed.resolve() != legacy.resolve():
         if not _legacy_absorbed(managed, legacy):
             raise RuntimeError(
@@ -116,10 +124,13 @@ def resolve_runtime_library() -> Path:
                 "。本程序不会自动合并、覆盖或删除任何内容。"
             )
     if managed.is_file():
-        _upgrade_in_place(managed)
+        # P0: 已是完整 v5 时完全不打开可写连接，启动不再改写库字节。
+        if not managed_schema_is_current(managed):
+            _upgrade_in_place(managed)
         return managed
     if legacy.is_file():
-        _upgrade_in_place(legacy)
+        if not managed_schema_is_current(legacy):
+            _upgrade_in_place(legacy)
         return legacy
     managed.parent.mkdir(parents=True, exist_ok=True)
     _upgrade_in_place(managed)

@@ -128,6 +128,6 @@ class PptxParser:
 
 
 def _sha256_file(source: Path) -> str:
-    import hashlib
+    from core.hashing import sha256_file
 
-    return hashlib.sha256(source.read_bytes()).hexdigest()
+    return sha256_file(source)

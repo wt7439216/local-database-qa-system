@@ -1,3 +1,6 @@
+import { $, escapeHtml, toast, setStatus, authHeaders } from "./shared.js";
+import { renderMarkdown } from "./markdown.js";
+
 const state = {
   baseUrl: sessionStorage.getItem("qaBaseUrl") || window.location.origin,
   pairingCode: sessionStorage.getItem("qaPairingCode") || "",
@@ -12,7 +15,6 @@ const state = {
 
 const MAX_HISTORY_TURNS = 3;
 
-const $ = (selector) => document.querySelector(selector);
 const statusEl = $("#serviceStatus");
 const form = $("#questionForm");
 const input = $("#questionInput");
@@ -64,30 +66,6 @@ function scheduleStreamRender(text) {
       if (currentAnswerEl) renderAnswerInto(currentAnswerEl, pendingStreamText, true);
     });
   }
-}
-
-function setStatus(text, kind = "") {
-  statusEl.className = `status-pill ${kind}`.trim();
-  statusEl.innerHTML = `<span class="status-dot"></span>${escapeHtml(text)}`;
-}
-
-function escapeHtml(value) {
-  const div = document.createElement("div");
-  div.textContent = String(value ?? "");
-  return div.innerHTML;
-}
-
-function toast(message) {
-  const el = $("#toast");
-  el.textContent = message;
-  el.classList.add("show");
-  clearTimeout(toast.timer);
-  toast.timer = setTimeout(() => el.classList.remove("show"), 1800);
-}
-
-function authHeaders() {
-  if (state.token) return { Authorization: `Bearer ${state.token}` };
-  return {};
 }
 
 function openSettings() {
@@ -289,6 +267,10 @@ async function ask(question) {
     if (finalResult.citation_verified === false) {
       toast("部分引用未通过原文核对，请谨慎采信");
     }
+    // P0: 服务端显式降级/异常提示（如向量检索不可用），不再静默降级。
+    if (Array.isArray(finalResult.warnings) && finalResult.warnings.length) {
+      toast(finalResult.warnings.join("；"));
+    }
     setStatus(finalResult.out_of_scope ? "未找到可靠依据" : "回答完成", "ready");
     return finalResult;
   } catch (error) {
@@ -471,35 +453,6 @@ for (const id of ["#scopeKb", "#scopeDocs", "#scopeTags"]) {
   $(id).addEventListener("change", updateScopeCurrentLabel);
 }
 
-function registerModelTools() {
-  const context = document.modelContext;
-  if (!context?.registerTool) return;
-  const lifecycle = new AbortController();
-  try {
-    Promise.resolve(context.registerTool({
-      name: "ask_textbook",
-      title: "向本地教材提问",
-      description: "在当前本地教材库中检索问题，生成带页码和原文证据的回答，并更新页面。",
-      inputSchema: {
-        type: "object",
-        properties: { question: { type: "string", minLength: 1, maxLength: 2000 } },
-        required: ["question"],
-        additionalProperties: false,
-      },
-      annotations: { readOnlyHint: false, untrustedContentHint: false },
-      async execute(value) {
-        const question = String(value?.question || "").trim();
-        if (!question) throw new Error("question 不能为空");
-        input.value = question;
-        input.dispatchEvent(new Event("input"));
-        return await ask(question);
-      },
-    }, { signal: lifecycle.signal })).catch(() => {});
-  } catch (_error) {
-    // WebMCP is optional; the normal interface remains complete.
-  }
-}
-
-registerModelTools();
+// P5: removed the experimental document.modelContext (WebMCP) integration.
 loadScopeOptions();
 checkHealth();

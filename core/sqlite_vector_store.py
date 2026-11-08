@@ -13,10 +13,13 @@ from __future__ import annotations
 from array import array
 from contextlib import closing
 import hashlib
+import logging
 from pathlib import Path
 import sqlite3
 import sys
 import threading
+
+from core import config
 
 try:
     from math import sumprod as _sumprod  # Python 3.12+ C inner product
@@ -44,6 +47,8 @@ from core.vector_store import (
     validate_query_vector,
 )
 
+LOGGER = logging.getLogger(__name__)
+
 
 class SQLiteVectorStore:
     """Dense index stored in the SQLite ``embeddings`` table (O(N) scan)."""
@@ -59,6 +64,7 @@ class SQLiteVectorStore:
         self._vectors: array | None = None
         self.dimension = 0
         self.model = ""
+        self._ann = None
         self._load()
 
     @property
@@ -100,10 +106,16 @@ class SQLiteVectorStore:
         dimension = self.dimension
         # Same tuple sort as the pre-refactor path: score desc, then position
         # desc, so rank order (and therefore RRF ranks) is unchanged.
-        ranked = sorted(
-            ((score, position) for position, score in enumerate(scores(normalized, rows, dimension)) if position in allowed),
-            reverse=True,
-        )[: max(1, int(limit))]
+        capped = max(1, int(limit))
+        if self._ann is not None:
+            # P4: optional IVF path; keeps the identical (score, position)
+            # ordering so RRF ranks are preserved for the top-k set.
+            ranked = self._ann.search(normalized, capped, allowed)
+        else:
+            ranked = sorted(
+                ((score, position) for position, score in enumerate(scores(normalized, rows, dimension)) if position in allowed),
+                reverse=True,
+            )[:capped]
         return [
             VectorHit(
                 chunk_id=self._chunk_ids[position],
@@ -292,12 +304,32 @@ class SQLiteVectorStore:
             self._document_ids = document_ids
             self.dimension = 0
             self._vectors = None
+            self._ann = None
             return
         self._chunk_ids = chunk_ids
         self._document_ids = document_ids
         self.dimension = dimension
         self.model = model
         self._vectors = vectors
+        self._maybe_build_ann()
+
+    def _maybe_build_ann(self) -> None:
+        """P4: build the optional in-memory IVF index after every reload."""
+        self._ann = None
+        if not config.VECTOR_ANN_ENABLED or not self.has_vectors or self._vectors is None:
+            return
+        try:
+            from core.ann_index import IVFIndex
+
+            self._ann = IVFIndex.build(
+                self._vectors,
+                self.dimension,
+                n_clusters=config.VECTOR_ANN_CLUSTERS,
+                nprobe=config.VECTOR_ANN_NPROBE,
+            )
+        except Exception as exc:  # ANN is an optimisation; never break retrieval
+            LOGGER.warning("ANN index build failed, using exact scan: %s", exc)
+            self._ann = None
 
 
 def scores(normalized: list[float], rows: memoryview, dimension: int) -> list[float]:

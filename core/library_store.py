@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from contextlib import closing
 from dataclasses import asdict, dataclass
-import hashlib
 import json
 from pathlib import Path
 import re
@@ -12,8 +11,7 @@ import sqlite3
 import threading
 from typing import TYPE_CHECKING, Any
 
-from core import config
-from core.text_rules import extract_terms
+from core import config, tokenizer
 # normalize_vector lives with the vector backend contract now; re-exported so
 # scripts/build_library.py keeps its import surface.
 from core.vector_store import create_vector_store, normalize_vector as normalize_vector
@@ -32,10 +30,11 @@ MANAGED_SCHEMA_VERSION = 5
 ACCEPTED_SCHEMA_VERSIONS = (SCHEMA_VERSION, MANAGED_SCHEMA_VERSION)
 DEFAULT_LIBRARY_NAME = "教材知识库"
 # bm25 列权重：正文列 1.0，章节/小节标题列 4.0（标题命中是更强的主题信号）。
-FTS_BODY_WEIGHT = 1.0
-FTS_HEADING_WEIGHT = 4.0
+# P2: 检索常量统一从 config.RETRIEVAL 派生，保留模块名作为兼容导出面。
+FTS_BODY_WEIGHT = config.RETRIEVAL.fts_body_weight
+FTS_HEADING_WEIGHT = config.RETRIEVAL.fts_heading_weight
 # 标题精确包含查询词时的融合加分，量级与 RRF 单路第 1 名贡献（约 0.02）相当。
-FTS_HEADING_BONUS = 0.006
+FTS_HEADING_BONUS = config.RETRIEVAL.fts_heading_bonus
 # 密度余弦门限：决定纯词法证据的可信度分级。绝对分值随嵌入模型分布变化，
 # 因此按库记录的 embedding_model 查表，未知模型回落默认值。
 #
@@ -44,16 +43,16 @@ FTS_HEADING_BONUS = 0.006
 # 标定依据：严格高于冻结 golden 中每一条纯离题查询的观测上限（0.4623），
 # 且低于每一条已证实 in-scope 目标 case 的观测值，从而在放行真实问题的同时
 # 保持纯离题拒答能力不变。
-DEFAULT_DENSE_GATES = {"strong": 0.48, "accept": 0.55, "dense_only": 0.50}
+DEFAULT_DENSE_GATES = dict(config.RETRIEVAL.dense_gates)
 MODEL_DENSE_GATES: dict[str, dict[str, float]] = {
     # 生产模型（V4 目标）：bge-m3 / 1024 维。
-    "bge-m3": {"strong": 0.48, "accept": 0.55, "dense_only": 0.50},
+    "bge-m3": dict(config.RETRIEVAL.dense_gates),
     # 兼容/回滚模型：nomic-embed-text / 768 维。仅在显式将
     # QA_EMBEDDING_MODEL 设为 nomic-embed-text 时才生效，不是生产默认。
-    "nomic-embed-text": {"strong": 0.48, "accept": 0.55, "dense_only": 0.50},
+    "nomic-embed-text": dict(config.RETRIEVAL.dense_gates),
 }
 # 低于该余弦的向量候选不携带可用信号，只会稀释融合排序。
-DENSE_CANDIDATE_FLOOR = 0.15
+DENSE_CANDIDATE_FLOOR = config.RETRIEVAL.dense_candidate_floor
 _CJK_RE = re.compile(r"[\u4e00-\u9fff]+")
 _LATIN_RE = re.compile(r"[A-Za-z0-9]+(?:[._+/-][A-Za-z0-9]+)*")
 
@@ -644,7 +643,7 @@ class LibraryStore:
             return []
         if allowed_document_ids is not None and not allowed_document_ids:
             return []
-        expression = " OR ".join(f'"{term.replace(chr(34), chr(34) * 2)}"' for term in terms[:24])
+        expression = tokenizer.build_fts_expression(terms, max_terms=config.FTS_MAX_QUERY_TERMS)
         # Phase D scope pushdown: the document restriction happens in SQL via
         # a chunk_id subquery, never as a post-filter over the full library.
         scope_sql = ""
@@ -665,36 +664,21 @@ class LibraryStore:
                     f" ORDER BY bm25(chunk_fts, {FTS_BODY_WEIGHT}, {FTS_HEADING_WEIGHT}) LIMIT ?",
                     tuple(parameters),
                 ).fetchall()
-        except sqlite3.OperationalError:
-            return []
+        except sqlite3.OperationalError as exc:
+            # P0: 语法错/表达式过长不再被伪装成「零命中 → 拒答」。
+            raise tokenizer.FTSQueryError(query, expression, exc) from exc
         return [str(row["chunk_id"]) for row in rows]
 
 
 def fts_tokenize(text: str) -> str:
-    tokens: set[str] = set()
-    for match in _CJK_RE.finditer(text):
-        value = match.group(0)
-        for size in (2, 3):
-            if len(value) < size:
-                continue
-            tokens.update(value[index : index + size] for index in range(len(value) - size + 1))
-    tokens.update(match.group(0).lower() for match in _LATIN_RE.finditer(text))
-    return " ".join(sorted(tokens))
+    """Index-side tokens.  Kept as a stable import surface for build tools."""
+    return tokenizer.fts_index_text(text)
 
 
 def query_search_terms(query: str) -> list[str]:
-    terms: set[str] = set()
-    for extracted in extract_terms(query, max_terms=40):
-        for match in _CJK_RE.finditer(extracted):
-            value = match.group(0)
-            terms.add(value)
-            # 短语也可能被停用词残留污染（如“是切换”），任何长度的词都补出
-            # 2/3 字滑窗，保证核心二字词总能进入 FTS 查询。
-            for size in (2, 3):
-                if len(value) > size:
-                    terms.update(value[index : index + size] for index in range(len(value) - size + 1))
-        terms.update(match.group(0).lower() for match in _LATIN_RE.finditer(extracted))
-    return sorted(terms, key=lambda value: (-len(value), value))
+    """Query-side tokens, using the exact same rules as :func:`fts_tokenize`."""
+    return tokenizer.query_terms(query)
+
 
 
 def normalize_for_similarity(text: str) -> str:
@@ -716,11 +700,10 @@ def near_duplicate(left: str, right: str, threshold: float = 0.72) -> bool:
 
 
 def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as file:
-        for block in iter(lambda: file.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
+    """Compatibility re-export; canonical implementation lives in core.hashing."""
+    from core.hashing import sha256_file as hash_file
+
+    return hash_file(path)
 
 
 def json_dumps(value: Any) -> str:

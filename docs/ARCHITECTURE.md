@@ -86,7 +86,7 @@ stored_dimension == 该模型注册的期望维度（bge-m3 → 1024 / nomic-emb
 - SQLite `embeddings` 表既是旧内置稠密后端的数据源，也是 Qdrant 重建的向量来源；SQLite **始终是 Source of Truth**。
 - 受管知识库 `data/library/documents.sqlite3`（managed schema 5）是运行时真相源；legacy 教材库（schema 4）迁移合并后保留不删除。
 - `core/runtime_library.py` 静态决定整机唯一库身份：managed 存在则优先并就地升级；否则就地接管 legacy；两者同时含数据且缺迁移证据时**显式报错**，绝不静默换库。
-- Windows 运行包由 `windows_desktop.spec` 打包 `data/library/textbooks.sqlite3` 作为随包知识库快照（因此它是当前 **必需的 build input**，不是 V3 遗留检查）。
+- Windows 运行包由 `windows_desktop.spec` 打包 **managed 库** `data/library/documents.sqlite3` 的字节快照（当前必需 build input）。`textbooks.sqlite3` 是 legacy 库，`windows_bundle.py` 明确拒绝它进入候选；`core/config.py` 中 `LIBRARY_DB` 已统一指向 managed 库，`LEGACY_LIBRARY_DB` 单独标记 legacy 路径。
 - 建库原子替换：临时库通过完整性校验后才替换，失败不破坏旧库；增量重建复用未变片段向量。
 
 ## 9. Qdrant Backend
@@ -124,21 +124,97 @@ stored_dimension == 该模型注册的期望维度（bge-m3 → 1024 / nomic-emb
 - 分层评测与回归脚本：`scripts/eval_phase_e_router.py`（Phase E Router Golden 108 例）、`scripts/eval_phase_f_citation.py`（F.2 citation 37 例）、`scripts/eval_recall.py`、`scripts/eval_scope.py`、`scripts/eval_general_ingestion.py`。
 - answer cache 与 `production_source_hash` / evaluator / Golden 绑定；生产代码变更会自动使答案缓存失效。
 
-## 14. Baseline / Production Hash Governance
+## 14. 源码身份与历史治理（2026-11-07 起已解锁）
 
-- `production_source_hash()`：对生产树 `core / desktop / web` 的**相对路径 + 内容哈希**取摘要，不依赖绝对工作区路径。`scripts/` 不在生产树内，修改脚本不改变该哈希。
-- **Canonical hash contract（V4.6.2）**：`sha256-path-content-v2-canonical-lf`。text 后缀仅规范化行尾（CRLF / bare CR → LF），使 Windows CRLF 工作树与 Git LF / CI checkout 得到**一致身份**；binary / 未知后缀保持 raw bytes。该 canonical 身份是跨平台验收合同（历史 raw CRLF hashes 仅作 provenance 保留）。
-- Baseline lineage 不可变：历史 stage baseline 一旦形成即 immutable；production remediation 只能**追加**新的 child baseline，绝不改写旧 stage baseline。current pointer 只存在于 `eval/v4_baseline_lineage.json → current_baseline_id`。
-- **Live production drift guard**（`tests/test_live_production_hash_guard.py`）：
+- `production_source_hash()`（`scripts/eval_v4_baseline.py`）仍对 `core / desktop / web` 求「相对路径 + 内容哈希」摘要，用作答案缓存失效锚点与打包清单。**任何源码改动都会改变它，但不再有守卫要求它等于某个冻结值**。`scripts/` 不在生产树内。
+- 历史治理注册表、baseline lineage、WS-13 冻结身份、live production drift guard 及其逐字节绑定测试，已归档到 `Archive/20261107_refactor_unbind/`（附 `ARCHIVE_MANIFEST.json` 与 `RESTORE.ps1`，可完整回滚）。
+- **P5 更新**：`engineering_revision.py` / `product_revision.py` / `publication_*.py` 等冻结治理与双副本同步脚本已归档到 `Archive/20261109_p5_convergence/`，不再是运行时的一部分；`publication_*` 所依赖的「`.github` 归上传版所有」规则随单仓库收敛一并废止。
+- `scripts/build.py` 是新打包入口，不传 `-ExpectedProductionHash` / `-QualityEvidence`；`scripts/windows_bundle.py` 的 quality evidence 分支仅作历史兼容，库身份仍严格校验。
+- 重构后若需重新打包 EXE，必须重新生成 `build_manifest.json`、`BUILD_RECORD.json` 与候选指针（用 `scripts/activate_candidate.py`）。`runtime/` 下的现有 EXE 仍绑定其自身历史记录，与当前源码解绑，启动链不做 live 源码校验。
+- 当前验收以 **`make check`（`scripts/verify_all.py`）** 为准，见 `README.md` 的「测试与评测」。
 
-```text
-lineage current_baseline_id → current baseline artifact → recorded production_source_hash
-        == recomputed live production_source_hash（canonical algorithm，无手工常量）
-```
+## 15. HTTP 分层与契约（P1）
 
-- 任何未登记的 production 修改会立即导致守卫失败。current baseline 记录值与 source-of-truth 数值见总控文档，不在此手写。
+`desktop/web_server.py` 现在只是**组合根 + 兼容门面**（约 240 行），实现按职责拆分：
 
-## 15. Deferred Components
+| 模块 | 职责 |
+|---|---|
+| `desktop/jobs.py` | `AnswerJob`、`sanitize_history`、scope/缓存键工具 |
+| `desktop/auth.py` | 配对码/令牌鉴权、`HostPolicy`（DNS rebinding 防护） |
+| `desktop/answer_cache.py` | LRU 答案缓存与库指纹 |
+| `desktop/transport.py` | JSON / 静态文件 / NDJSON 传输辅助（`TransportMixin`） |
+| `desktop/routes_v3.py` | v3 知识库路由表（**纯函数**，可直接单测） |
+| `desktop/handler.py` | v2/v3 请求路由（`make_handler(owner)` 兼容入口） |
+| `desktop/worker.py` | 单 worker 答案队列循环 |
+
+`desktop/api_contract.py` 是 v2/v3 HTTP 契约的单一真源（OpenAPI 3.1 + JSON Schema 2020-12），导出为 `docs/openapi.json`；`scripts/capture_contract.py` 对真实服务逐路由发请求并校验响应 schema，`tests/test_api_contract.py` 把校验固化进测试套件。契约结果不含动态字段，可用于重构前后逐项比对。
+
+`core/hashing.py` 与 `core/db.py` 分别统一了哈希与 SQLite 连接工厂；旧调用点通过兼容别名/等价参数保持行为不变。
+
+## 16. 领域层与事务边界（P2）
+
+代码按 `core/domain/`（纯业务逻辑）→ `core/application/`（用例编排）→ `core/persistence/` 与 `core/migrations/`（基础设施）分层；`core/engine_v2.py`、`core/library_service.py` 是**兼容门面**，保留全部历史导出名与可 patch 属性。
+
+| 层 | 模块 | 内容 |
+|---|---|---|
+| domain | `prompts.py` / `responses.py` / `telemetry.py` / `citation_postprocess.py` / `routing_policy.py` | 版本化 prompt、结果 DTO 与模板文案、遥测记录构造、引用后处理、路由参数策略 |
+| application | `ask_question.py` | `finalize_answer()`：引用归一 → 补全 → 重编号 → 确定性核验 → telemetry → warnings；`pre_renumber` 编号契约保持不变 |
+| migrations | `registry.py` | 显式版本链 `MIGRATIONS`（4 → 5）、`migration_plan()`、`ensure_managed_schema` / `managed_schema_is_current` 兼容实现 |
+| persistence | `unit_of_work.py` / `repositories.py` | `UnitOfWork`（显式 BEGIN，DDL 与写入同事务）、`IndexOutbox`、只读 SQL 仓库函数 |
+
+- 检索/生成参数统一在 `core/retrieval_config.py::RetrievalSettings`（`config.RETRIEVAL`），默认值与旧常量逐一相同，可用 `QA_RETRIEVAL_*` 覆盖做离线标定。
+- **事务性 outbox**：`index_outbox` 表惰性创建（稳态启动零写盘）。import / relink / tags 的 READY 事务、delete 的清内容事务在**同一事务内**登记 `DOCUMENT_UPSERTED` / `TAGS_CHANGED` / `DOCUMENT_DELETED`；`_dispatch_index_event()` 立即幂等消费，Qdrant 故障只留 PENDING 而不让已提交的导入「抛异常」；`LibraryService.replay_outbox()` 或 `scripts/replay_index_outbox.py --apply` 在重启后重放。这消除了「SQLite 已提交但索引未同步」的崩溃窗口。
+- 回归证据：`tests/test_p2_regressions.py` 覆盖迁移前向/字节回滚演练、索引故障崩溃注入、UoW 回滚、配置注入、门面兼容与 hypothesis 属性不变式。
+
+## 17. 接口与前端现代化（P3）
+
+**默认运行时仍是标准库、零第三方依赖**（离线 / PyInstaller 底线）；P3 在此基础上完成：
+
+| 领域 | 改动 |
+|---|---|
+| 并发 | `desktop/worker.py` 从单 worker + 全局 `_engine_lock` 改为 `QA_ANSWER_WORKERS`（默认 4）个独立 worker；缓存一致性改用 **epoch**（mutation 递增 epoch 并立即清缓存，worker 写缓存前校验 epoch），不再让一个慢回答阻塞全部请求 |
+| 取消与超时 | `AnswerJob.is_cancelled()` 同时检查取消事件与 `QA_JOB_TIMEOUT_SECONDS` 截止时间；回调一路透传到 `core/http_client.py` 的流式读取，httpx 可用时由 watchdog 关闭响应中断底层请求，urllib 回退路径逐行协作检查 |
+| 传输 | 保留 NDJSON 契约端点，新增标准 SSE `GET /api/v2/jobs/{id}/stream`（`text/event-stream`、`event:`/`data:` 帧）与轻量状态端点 `GET /api/v2/jobs/{id}`；OpenAPI 扩到 17 paths / 20 schemas |
+| 前端 | `web/app.js` / `library.js` / `markdown.js` 改为 **ESM 模块**，共享工具集中到 `web/shared.js`（消除两页重复的 `$`/`toast`/`setStatus`/`escapeHtml`/`authHeaders`/`api` 定义与全局冲突）；HTML 用 `type="module"`，`web/package.json` 声明模块类型；`_static` 对 `.js` 强制 `text/javascript` |
+| 可选现代栈 | `desktop/modern_app.py` 提供 FastAPI/uvicorn 实现（延迟导入，不装也不影响默认运行），`python -m desktop --modern` 启用；复用同一 `WebQAServer` 协作者，`scripts/capture_contract.py --backend modern` 用**同一套 23 个契约 case** 验证双栈一致 |
+| 依赖边界 | fastapi / uvicorn / httpx 只用于可选栈、开发/CI 与可取消流式，不写入运行时 requirements；默认 EXE 仍零依赖 |
+
+并发压测、超时/取消、ESM 结构、双栈契约均固化在 `tests/test_p3_regressions.py`。
+
+## 18. 质量攻坚（P4）
+
+P4 的原则：**所有新能力默认关闭、零第三方依赖、可离线验证**，因此默认运行时行为与 P3 完全一致。开关集中在 `core/config.py::Settings`：
+
+| 开关（环境变量） | 默认 | 能力 |
+|---|---|---|
+| `QA_FTS_DICTIONARY` | 0 | 领域词典完整词项，写入/查询对称 |
+| `QA_VECTOR_ANN` | 0 | SQLite 后端的内存 IVF 近似向量索引 |
+| `QA_VECTOR_ANN_CLUSTERS` / `QA_VECTOR_ANN_NPROBE` | 64 / 32 | ANN 簇数与探针数 |
+| `QA_STRUCTURED_ANSWERS` | 0 | 引导解码的 `claims[].citation_ids` → 引用标记文本 |
+| `QA_CITATION_L15` | 0 | CJK 关键项 NFKC / 中文数字 / 单位归一 |
+
+**中文分词升级**：`core/dictionary.py` 从 `chunks.text` 按「文档频率 + 左右邻字多样性 + 虚词字过滤 + 长词包含剪枝」挖掘领域词；`scripts/build_domain_dictionary.py` 生成 `data/library/domain_dictionary.txt`；开启 `QA_FTS_DICTIONARY=1` 后 `core/tokenizer.py::fts_terms` 在两侧同时加入完整词，需跑一次 `scripts/rebuild_fts_index.py --apply`。默认关闭时词项输出与 P0 逐字相同（有测试锁定）。
+
+**ANN 索引**：`core/ann_index.py` 是纯标准库 IVF（球面 k-means + 倒排表，`math.sumprod`），`SQLiteVectorStore._load()` 后按需构建，`search()` 保持 `(score, position)` 降序以不扰动 RRF 名次；SQLite 仍是唯一真相源。`scripts/benchmark_ann.py` 给出随机/有簇两种合成语料的 recall@10 与加速曲线。**评估结论：暂不默认启用** —— 32 探针（覆盖约 50%）约 1.9× 加速、有簇数据 recall@10≈0.92、无结构数据≈0.88；全探针时与暴力扫描精确等价。需在真实 bge-m3 embedding 上标定后才可考虑切换。
+
+**离线标定**：`scripts/calibrate_retrieval.py` 把主库复制到临时目录（**绝不写生产库**），用 Golden-185 的 144 个 in-scope / 41 个 OOS 问题，对 baseline 与 dictionary 两种索引 × 6 档查询词上限做网格搜索，输出 `P4_CALIBRATION.json`。实测 in-scope 词法召回 0.9792；最佳区分度出现在词典模式 + cap=8，但默认仍保持 baseline + cap=16（行为不变），该结果作为「未来启用词典时的推荐配置」记录。
+
+**生成与引用契约**：`scripts/capture_prompt_contract.py` 冻结 `PROMPT_VERSION` / system / task hints / 固定样例 messages，基线为 `eval/prompt_contract_baseline.json`，并加入 `check_all.py` 作为第 10 项门禁。`core/domain/structured_answer.py` 解析结构化 claims（非法负载一律回退原文），`core/domain/citation_normalization.py` 提供 L1.5 确定性 CJK 归一（不改 `CITATION_VERIFIER_VERSION`，Phase F.2 黄金门禁不受影响）。
+
+**架构债收敛**：`core/persistence/document_state.py` 集中 `DOCUMENT_STATUSES` / 转移表 / `can_relink` / `can_retry_delete` 等门禁策略，`LibraryService` 的 4 处内联状态判断改为委托，`library_model.py` re-export 保持导出面。
+
+**验收限制**：本机未启动 Ollama，`data/eval_cache` 为空，因此 Full-144 的「事实全对 / 召回 / 引用覆盖」三项**无法实测**。P4 交付的是离线可验证的检索层（0.9792 in-scope 词法召回）、引用核验层（Phase F.2 门禁）与 prompt 层契约，以及各开关的 A/B 证据；生成层 A/B 需启动 Ollama 后执行 `eval_v4_baseline.py` 并用 `QA_CITATION_COMPLETION=0/1`、`QA_STRUCTURED_ANSWERS=0/1` 对比。
+
+## 19. 工程收敛（P5）
+
+- **依赖与工具配置单一真源**：`pyproject.toml`（PEP 621）声明元数据、`requires-python = ">=3.10,<3.14"`、5 个可选依赖组（`dev` / `modern` / `ingest` / `build` / `sidecar`）与 ruff / coverage / pytest 配置；`ruff.toml` 已删除（target-version 从 `py311` 对齐到 `py312`）。`requirements*.txt` 保留为构建脚本使用的冻结镜像，运行时仍零第三方依赖。
+- **单一验收入口**：`Makefile` 的 `make check`（Windows 无 make 时 `scripts/check.ps1`）→ `scripts/verify_all.py`：执行 `check_all.py` 的 10 项门禁、双栈 HTTP 契约逐项一致性、已激活候选 `-ValidateOnly`、git 工作区干净；`--full` 另加覆盖率与 `scripts/startup_smoke.py`（真实启停服务 + 主库字节不变）。CI 直接调用同一入口。
+- **简化打包与指针**：`scripts/build.py` 取代参数繁多的 PowerShell 编排，自动推导 `dist/` + `build/` 输出（不再依赖已消失的兄弟目录 `KB-V4_Candidates`），不传任何冻结哈希 / 质量证据参数；`scripts/activate_candidate.py` 从 `BUILD_RECORD.json` / `build_manifest.json` / EXE 推导指针身份字段，取代手工维护。`windows_bundle.py` 与 PyInstaller spec 的身份校验保持原样。
+- **删除遗留**：4 个 `publication_*`（双副本单向同步 + `.github` 上传版所有权）、3 个冻结源码修订治理脚本、1 个产品阶段登记、5 个一次性评测/迁移脚本与 1 个发布修订注册表，共 14 个文件归档到 `Archive/20261109_p5_convergence/`（附逐文件 SHA256 与 `RESTORE.ps1`）。`refactor_tool.py --action probe` 改为验证当前单仓库验证链，不再 import 已归档模块。前端实验性 `document.modelContext`（WebMCP）分支移除。
+- **单一仓库**：原「上传版」完整副本（含唯一 `.git`、36 次提交、4 个 tag、`PUBLICATION_EVIDENCE.json`、V3/V4 阶段文档与冻结证据）归档到 `Archive/20261109_p5_convergence/upload_snapshot/`；`.git` 历史迁入本目录，本目录成为唯一开发与发布仓库。发布改为 `git tag` + GitHub Actions + Release asset。
+- **LICENSE**：新增明确许可状态文件（专有 / 未授予开源许可，遵循 README 原有「保留全部版权」意图）；未擅自替项目所有人选择开源协议。
+
+## 20. Deferred Components
 
 以下为已实现但**默认不启用**，或仍属 out-of-scope 的组件：
 

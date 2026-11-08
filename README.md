@@ -8,7 +8,9 @@
 
 ## 当前状态
 
-当前状态入口为 [docs/V4_CURRENT_STATE.md](docs/V4_CURRENT_STATE.md)。本地活跃开发以 **V4 本地版**为准；上传版在实际发布时同步。
+> **重构解锁（2026-11-07）**：历史治理注册表、冻结评测证据与逐字节绑定测试已归档到 `Archive/20261107_refactor_unbind/`（附清单与 `RESTORE.ps1`，可完整回滚）。`core/`、`desktop/`、`web/` 现在可以自由重构。下方表格中的产品基线、生产哈希、1707 项测试以及部分 docs 链接均为**历史记录**，不再是当前验收约束；当前验收以[测试与评测](#测试与评测)中的核心功能测试、静态检查、确定性评测和 Web 冒烟为准。
+
+**P5 起本仓库是唯一的开发仓库与唯一的 git 仓库**：原「上传版」发布镜像（含旧 `.git`、`PUBLICATION_EVIDENCE.json`、V3/V4 阶段文档与冻结证据）已完整归档到 `Archive/20261109_p5_convergence/`；发布改为 `git tag` + GitHub Actions + Release asset，不再有第二份源码副本。
 
 | 项 | 值 |
 |---|---|
@@ -25,12 +27,11 @@
 V4 仍在积极开发中。本快照可用于试用与评测复现，但**尚未达到 V4 最终产品质量目标**，不应被视为最终稳定版本。
 
 > 本次公开源码来自 V4 本地版冻结候选，生产哈希为 `bef1a9414eaa168702724b982e48338fbaa858661ac1cb1863af842ef7937b6d`。
-> 公开副本的路径处理与历史证据重放边界见 [发布记录](docs/V4_PUBLICATION_20261016.md) 和 [发布说明](docs/V4_RELEASE_SNAPSHOT.md)；实际 commit、tag 与发布状态以 [GitHub Releases](https://github.com/wt7439216/local-database-qa-system/releases) 为准。
+> V3/V4 阶段文档、发布记录与冻结评测证据已归档到 `Archive/20261109_p5_convergence/`，另有历史批次 `Archive/20261107_refactor_unbind/`。实际 commit、tag 与发布状态以 [GitHub Releases](https://github.com/wt7439216/local-database-qa-system/releases) 为准。
 
-- 当前开发状态与证据：[docs/V4_CURRENT_STATE.md](docs/V4_CURRENT_STATE.md)
-- 需求与治理路线：[docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md](docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md)（正文保留 2026-09-16 历史检查点）
-- 发布说明：[docs/V4_RELEASE_SNAPSHOT.md](docs/V4_RELEASE_SNAPSHOT.md) · [CHANGELOG.md](CHANGELOG.md)
-- 文档导航：[docs/INDEX.md](docs/INDEX.md)
+- 当前架构、分层与各阶段改造：[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- 变更记录：[CHANGELOG.md](CHANGELOG.md) · 文档导航：[docs/INDEX.md](docs/INDEX.md)
+- 历史发布证据索引：[Archive/20261109_p5_convergence/README.md](Archive/20261109_p5_convergence/README.md)（仓库外路径，按实际工作区位置查找）
 
 ## V4 Development Snapshot
 
@@ -149,7 +150,7 @@ python -m desktop
 - **Baseline lineage**：不可变历史 stage baseline + 单一 current pointer。
 - **Live production drift detection**：live production hash 必须等于 current baseline 记录值。
 - **Workspace relocation portability**：数据库 / baseline / ImportPathPolicy 可移植，不再依赖旧绝对路径。
-- **publication_scan workspace-path portability**：泄漏扫描规则由脚本位置动态推导，无硬编码路径。
+- **P5**：双副本合并为单一 git 仓库；`publication_*`、冻结源码修订治理与一次性诊断脚本已归档到 `Archive/20261109_p5_convergence/`（附回滚脚本）。
 
 ## 已知限制 / 未完成项
 
@@ -166,9 +167,20 @@ python -m desktop
 
 ## 测试与评测
 
-以下工程检查不需要私有教材和 Ollama。现有 GitHub workflow 使用 Python 3.13 / Node 22，安装 PyMuPDF、python-docx 与 python-pptx；不安装不支持 Python 3.13 的 RapidOCR 1.4。因此该 CI 不等于完整 OCR 或 Windows EXE 验收。
+以下工程检查不需要私有教材和 Ollama。**P5 单一验收入口**：`make check`（Windows 无 make 时用 `powershell -File scripts/check.ps1`），本地与 CI 完全一致（CI 覆盖 Python 3.12 / 3.13 矩阵）。它执行 `scripts/verify_all.py`：`check_all.py` 的 10 项门禁 + 双栈 HTTP 契约一致性 + 已激活候选校验 + git 工作区检查；`--full` 另加覆盖率与真实服务启动冒烟。CI 不安装无 3.13 wheel 的 RapidOCR，因此不等于完整 OCR 或 Windows EXE 验收。
 
 ```powershell
+make check                                   # 或 powershell -File scripts/check.ps1
+python -X utf8 scripts/check_all.py          # 仅 10 项 CI 门禁
+python -X utf8 scripts/export_openapi.py     # 生成 docs/openapi.json
+python -X utf8 scripts/capture_contract.py   # 逐路由 HTTP 契约校验（标准库默认栈）
+python -X utf8 scripts/capture_contract.py --backend modern  # 可选 FastAPI 栈，同一套契约
+python -X utf8 scripts/replay_index_outbox.py  # 索引 outbox 状态（默认 dry-run，--apply 重放）
+python -X utf8 scripts/capture_prompt_contract.py       # P4 prompt 契约校验
+python -X utf8 scripts/build_domain_dictionary.py       # P4 挖掘中文领域词典
+python -X utf8 scripts/calibrate_retrieval.py --out P4_CALIBRATION.json   # P4 离线检索 A/B（只读主库副本）
+python -X utf8 scripts/benchmark_ann.py --out P4_ANN_BENCH.json           # P4 ANN 召回/延迟基准
+# 或逐项执行：
 python -B -m unittest discover -v
 python -B -m compileall -q core desktop scripts tests
 python -X utf8 scripts/eval_phase_e_router.py
@@ -183,31 +195,33 @@ python -m ruff check core desktop scripts tests
 
 ```powershell
 python -X utf8 scripts/eval_recall.py
-python -X utf8 scripts/regression_test.py
 python -X utf8 scripts/eval_general_ingestion.py
 python -X utf8 scripts/eval_scope.py
 ```
 
-V4 governance 关键回归：`python -m unittest tests.test_live_production_hash_guard -v`（live production hash 漂移侦测，必须 PASS）。
+历史治理回归（`test_live_production_hash_guard`、live production drift guard、1707 项测试）已随绑定测试归档，**不再是验收项**。归档清单见 `Archive/20261107_refactor_unbind/ARCHIVE_MANIFEST.json`，需要时可用同目录 `RESTORE.ps1` 完整回滚。
 
-开发环境最近一次完整结果为 2026-10-16 的 1707 项、0 failures、0 errors、26 skipped。这是本地历史记录；公开 fresh checkout 的测试数量、跳过原因和远端结果分别按实际执行记录，不能直接沿用该数字。私有数据、可选服务及未公开参考协议不随仓库提供；匿名化成员所需的精确原字节不可公开重放时会明确报告，不计作执行通过，见 [公开证据策略](docs/V4_PUBLICATION_20261016.md)。
+当前保留 **47 个 `test_*.py` 测试文件**（P0–P4 各阶段回归测试均在其中），`python -B -m unittest discover -v` 应全部通过。可重复的完整验证（含模拟改动的「重构探针」）见 `Archive/20261107_refactor_unbind/refactor_tool.py` 及同目录验证报告。
 
 ## 文档导航
 
 | 文档 | 说明 |
 |---|---|
-| [docs/V4_CURRENT_STATE.md](docs/V4_CURRENT_STATE.md) | 当前本地开发位置、工程结果、WS-13、产品指标、EXE 与发布身份 |
-| [docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md](docs/V4_MASTER_REQUIREMENTS_AND_ROADMAP.md) | V4 需求 / 路线 / Gate；历史检查点正文与当前状态入口分开 |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 当前真实架构（不含 roadmap） |
-| [docs/INDEX.md](docs/INDEX.md) | docs 总导航（当前文档 / 发布文档 / 诊断参考 / 历史证据 / 机器证据） |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 当前真实架构、HTTP 分层与「历史治理已解锁」说明 |
+| [docs/openapi.json](docs/openapi.json) | v2/v3 HTTP 契约（OpenAPI 3.1 + JSON Schema），由 `scripts/export_openapi.py` 生成 |
+| [docs/INDEX.md](docs/INDEX.md) | docs 精简导航 |
 | [本地使用说明.md](本地使用说明.md) | 本地运行、配置与排错 |
-| [docs/V4_RELEASE_SNAPSHOT.md](docs/V4_RELEASE_SNAPSHOT.md) | 本次 Development Snapshot 发布说明 |
+| [pyproject.toml](pyproject.toml) | 项目元数据、依赖分组与 ruff/coverage/pytest 配置的单一真源 |
+| [Makefile](Makefile) | `make check` / `make build` / `make smoke` 等统一入口 |
+| [LICENSE](LICENSE) | 许可状态（专有 / 未授予开源许可） |
 | [CHANGELOG.md](CHANGELOG.md) | 版本变更记录 |
+| `Archive/20261107_refactor_unbind/` | 历史阶段文档、评测证据、治理注册表与绑定测试的清单、回滚脚本与验证报告 |
+| `Archive/20261109_p5_convergence/` | P5 退役脚本、原发布镜像完整副本与单仓库迁移记录 |
 
 ## Release / Changelog
 
 - 本次源码快照：**`v4.0.0-alpha.3`**（Development Snapshot / GitHub Pre-release，**NOT V4 Final**）。实际发布与 CI 状态见 [Releases](https://github.com/wt7439216/local-database-qa-system/releases) 和 [Actions](https://github.com/wt7439216/local-database-qa-system/actions)。
-- 变更记录见 [CHANGELOG.md](CHANGELOG.md)；发布说明见 [docs/V4_RELEASE_SNAPSHOT.md](docs/V4_RELEASE_SNAPSHOT.md)。
+- 变更记录见 [CHANGELOG.md](CHANGELOG.md)；历史发布说明见 `Archive/20261109_p5_convergence/`。
 
 ## 项目结构
 
@@ -224,6 +238,8 @@ data/pdf|raw|library/    教材、提取文本、知识库（本地数据，不�
 
 ## Repository / License
 
-仓库当前已公开，但尚未附带开源许可证。
+**单一仓库**：本目录是唯一的 git 仓库（历史从原「上传版」完整迁入，`main` 分支 + 4 个 tag 保留）。发布走 `git tag` + GitHub Actions + Release asset；`Archive/` 中的旧副本只是可回滚的历史快照。
 
-如希望明确允许他人复制、修改或分发代码，请根据你的授权意图选择并添加 LICENSE。在未附带许可证的情况下，代码仍默认保留全部版权。
+**许可状态见 [LICENSE](LICENSE)**：仓库虽已公开，但未授予开源许可，代码保留全部版权。若项目所有人决定开源，替换 `LICENSE` 全文并同步本段与 `pyproject.toml` 的许可元数据即可。
+
+**构建**：`python -X utf8 scripts/build.py --plan` 查看计划，`make build` 打包（输出到 gitignored 的 `dist/` 与 `build/`），`python -X utf8 scripts/activate_candidate.py --bundle-root <dir> --apply` 生成候选指针。旧的 `-ExpectedProductionHash` / `-QualityEvidence` / `-Preflight` / `-SkipIndex` 参数已不再需要。

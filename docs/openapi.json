@@ -1,0 +1,1570 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Local Database QA — HTTP API",
+    "version": "2 (v2 answers) / 3 (v3 library)",
+    "description": "Fully local, authenticated API. All v3 responses redact server paths."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8765"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerToken": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "error",
+          "status"
+        ]
+      },
+      "Bootstrap": {
+        "type": "object",
+        "properties": {
+          "pairing_code": {
+            "type": "string",
+            "pattern": "^[0-9]{6}$"
+          },
+          "lan_urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "pairing_code",
+          "lan_urls"
+        ]
+      },
+      "PairRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "code"
+        ]
+      },
+      "PairResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expires_in": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "token",
+          "expires_in"
+        ]
+      },
+      "Health": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "type": "string"
+          },
+          "api_version": {
+            "type": "integer"
+          },
+          "queue_depth": {
+            "type": "integer"
+          },
+          "lan_urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "documents": {
+            "type": "integer"
+          },
+          "chunks": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "service",
+          "api_version",
+          "queue_depth",
+          "lan_urls"
+        ]
+      },
+      "CreateJobRequest": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "scope": {
+            "type": [
+              "object",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "question"
+        ]
+      },
+      "JobCreated": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "job_id",
+          "status"
+        ]
+      },
+      "JobCancelled": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string"
+          },
+          "status": {
+            "const": "cancelling"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "job_id",
+          "status"
+        ]
+      },
+      "StatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "status"
+        ]
+      },
+      "NDJSONEvent": {
+        "type": "object",
+        "properties": {
+          "event": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "event"
+        ]
+      },
+      "JobStatus": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "done": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "number"
+          },
+          "event_count": {
+            "type": "integer"
+          },
+          "cancelled": {
+            "type": "boolean"
+          },
+          "timed_out": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "job_id",
+          "status",
+          "done"
+        ]
+      },
+      "LibraryOverview": {
+        "type": "object",
+        "properties": {
+          "statistics": {
+            "type": "object"
+          },
+          "knowledge_bases": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "statistics",
+          "knowledge_bases",
+          "documents"
+        ]
+      },
+      "KnowledgeBaseList": {
+        "type": "object",
+        "properties": {
+          "knowledge_bases": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "knowledge_bases"
+        ]
+      },
+      "KnowledgeBase": {
+        "type": "object",
+        "properties": {
+          "knowledge_base_id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "TagList": {
+        "type": "object",
+        "properties": {
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "tags"
+        ]
+      },
+      "DocumentList": {
+        "type": "object",
+        "properties": {
+          "documents": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "documents"
+        ]
+      },
+      "ImportRequest": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "const": "import"
+          },
+          "path": {
+            "type": "string"
+          },
+          "knowledge_base_id": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "force": {
+            "type": "boolean"
+          },
+          "dry_run": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "action",
+          "path"
+        ]
+      },
+      "ImportResult": {
+        "type": "object",
+        "properties": {
+          "document_id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "DocumentAction": {
+        "type": "object",
+        "properties": {
+          "document_id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "TagUpdate": {
+        "type": "object",
+        "properties": {
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "tags"
+        ]
+      }
+    }
+  },
+  "paths": {
+    "/api/v2/bootstrap": {
+      "get": {
+        "operationId": "getBootstrap",
+        "summary": "Pairing code (loopback only)",
+        "responses": {
+          "403": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Bootstrap"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/pair": {
+      "post": {
+        "operationId": "postPair",
+        "summary": "Exchange pairing code for token",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PairResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PairRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Engine and library health",
+        "responses": {
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v2/jobs": {
+      "post": {
+        "operationId": "postJob",
+        "summary": "Submit a question",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobCreated"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateJobRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v2/jobs/{job_id}/events": {
+      "get": {
+        "operationId": "getJobEvents",
+        "summary": "NDJSON event stream",
+        "responses": {
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NDJSONEvent"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v2/jobs/{job_id}/stream": {
+      "get": {
+        "operationId": "getJobSSE",
+        "summary": "Standard Server-Sent Events stream",
+        "responses": {
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NDJSONEvent"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v2/jobs/{job_id}": {
+      "get": {
+        "operationId": "getJobStatus",
+        "summary": "Lightweight job status probe",
+        "responses": {
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStatus"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "deleteJob",
+        "summary": "Cancel a job",
+        "responses": {
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobCancelled"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v2/shutdown": {
+      "post": {
+        "operationId": "postShutdown",
+        "summary": "Request graceful shutdown (loopback only)",
+        "responses": {
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v3/library": {
+      "get": {
+        "operationId": "getLibrary",
+        "summary": "Library overview",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibraryOverview"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v3/library/knowledge-bases": {
+      "get": {
+        "operationId": "listKnowledgeBases",
+        "summary": "List knowledge bases",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeBaseList"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createKnowledgeBase",
+        "summary": "Create knowledge base",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeBase"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeBase"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v3/library/knowledge-bases/{id}": {
+      "get": {
+        "operationId": "getKnowledgeBase",
+        "summary": "Knowledge base detail",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "updateKnowledgeBase",
+        "summary": "Update knowledge base",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeBase"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "deleteKnowledgeBase",
+        "summary": "Delete knowledge base",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v3/library/tags": {
+      "get": {
+        "operationId": "listTags",
+        "summary": "List tags",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagList"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v3/library/documents": {
+      "get": {
+        "operationId": "listDocuments",
+        "summary": "List documents (optional ?kb=)",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentList"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "kb",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "importDocument",
+        "summary": "Import a document",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v3/library/documents/{id}": {
+      "get": {
+        "operationId": "getDocument",
+        "summary": "Document detail",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "deleteDocument",
+        "summary": "Delete document",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/api/v3/library/documents/{id}/{action}": {
+      "post": {
+        "operationId": "documentAction",
+        "summary": "enable/disable/retry-index/retry-delete/relink/tags",
+        "responses": {
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentAction"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
+      }
+    },
+    "/": {
+      "get": {
+        "operationId": "getIndex",
+        "summary": "Static web workbench",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/{file}": {
+      "get": {
+        "operationId": "getStatic",
+        "summary": "Static asset",
+        "responses": {
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "file",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

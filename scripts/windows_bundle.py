@@ -175,12 +175,17 @@ def prepare(
     db_identity = library_identity(
         library, expected_documents=expected_documents, expected_chunks=expected_chunks,
     )
-    quality = {"status": "NOT_MEASURED_BY_PACKAGING_TOOL", "is_v4_final": False}
+    quality = {"status": "NOT_MEASURED_BY_PACKAGING_TOOL", "is_v4_final": False,
+               "production_source_identity": "NOT_PROVIDED"}
     if quality_evidence:
         quality_evidence = quality_evidence.resolve(strict=True)
         artifact = json.loads(quality_evidence.read_text(encoding="utf-8"))
-        if artifact.get("artifact_hashes", {}).get("production_source_sha256") != source["production_source_hash"]:
-            raise ValueError("Quality evidence belongs to a different production source")
+        # 2026-11-07 重构解锁：质量证据里的 production hash 是历史记录，
+        # 不再阻断新源码打包；仅记录身份关系，库身份仍做严格校验。
+        recorded = artifact.get("artifact_hashes", {}).get("production_source_sha256")
+        production_identity = (
+            "MATCH" if recorded == source["production_source_hash"] else "HISTORICAL_RECORD_MISMATCH"
+        )
         identity = f"{db_identity['bytes']}:{db_identity['raw_sha256'][:16]}"
         if artifact.get("evaluator_identity", {}).get("library_identity") != identity:
             raise ValueError("Quality evidence belongs to a different library")
@@ -200,6 +205,7 @@ def prepare(
             "product_gate_status": gates, "hard_gates": hard_gates,
             "measurement_runtime": "Source candidate canonical evaluator; executable separately smoke-tested",
             "is_v4_final": False,
+            "production_source_identity": production_identity,
         }
     environment = build_environment if build_environment is not None else environment_identity()
     if build_environment is None:

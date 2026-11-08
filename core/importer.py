@@ -216,9 +216,11 @@ class DocumentImporter:
         return result
 
     def _connect(self) -> sqlite3.Connection:
-        connection = sqlite3.connect(self.library_path, timeout=30)
-        connection.row_factory = sqlite3.Row
-        return connection
+        # P1: shared connection factory (FK stays off: the importer's
+        # delete-replace write pattern predates the registry).
+        from core import db
+
+        return db.connect(self.library_path, timeout=30, foreign_keys=False)
 
     def _ensure_schema(self, connection: sqlite3.Connection) -> None:
         from scripts.build_library import create_schema

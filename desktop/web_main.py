@@ -18,14 +18,18 @@ from desktop.web_server import DEFAULT_PORT, WebQAServer
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="本地教材问答 v2")
-    parser.add_argument("--host", default=os.getenv("QA_DESKTOP_HOST", "127.0.0.1"))
-    parser.add_argument("--port", type=int, default=int(os.getenv("QA_DESKTOP_PORT", str(DEFAULT_PORT))))
+    parser.add_argument("--host", default=config.SETTINGS.default_host)
+    parser.add_argument("--port", type=int, default=DEFAULT_PORT)
     parser.add_argument("--no-browser", action="store_true")
+    parser.add_argument("--modern", action="store_true",
+                        help="使用可选 FastAPI/uvicorn 栈（需安装 fastapi/uvicorn/httpx）")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
+    # P0: 防止把教材片段/问题发到非本机地址（QA_ALLOW_REMOTE_SERVICES=1 显式放行）。
+    config.validate_service_urls()
     # Phase D.1 runtime integration: engine and manager share ONE library
     # identity (see core/runtime_library.py for the static selection rules).
     library_path = resolve_runtime_library()
@@ -39,17 +43,27 @@ def main() -> int:
             library_path, path_policy=ImportPathPolicy(config.LIBRARY_IMPORT_ROOTS)
         )
     except Exception as exc:
-        print(f"知识库管理不可用：{exc}")
-        library_service = None
-    server = WebQAServer(
-        engine, host=args.host, port=args.port,
-        pairing_code=os.getenv("QA_PAIRING_CODE") or None,
-        library_service=library_service,
-    )
-    if library_service is not None:
-        # Phase D.1: every committed library mutation re-syncs the QA runtime
-        # (snapshots, dense index, fingerprint, answer cache) in place.
-        library_service.on_mutated = server._on_library_mutated
+        # P0: 不再静默降级成「v3 API 全部 404」，启动阶段就明确失败。
+        raise RuntimeError(f"知识库管理初始化失败：{exc}") from exc
+    if args.modern:
+        from desktop.modern_app import ModernServer
+
+        server = ModernServer(
+            engine, host=args.host, port=args.port,
+            pairing_code=config.SETTINGS.pairing_code or None,
+            library_service=library_service,
+        )
+        mutation_hook = server.owner._on_library_mutated
+    else:
+        server = WebQAServer(
+            engine, host=args.host, port=args.port,
+            pairing_code=config.SETTINGS.pairing_code or None,
+            library_service=library_service,
+        )
+        mutation_hook = server._on_library_mutated
+    # Phase D.1: every committed library mutation re-syncs the QA runtime
+    # (snapshots, dense index, fingerprint, answer cache) in place.
+    library_service.on_mutated = mutation_hook
     server.start()
     print(f"本机地址：{server.local_url}")
     print(f"配对码：{server.pairing_code}")

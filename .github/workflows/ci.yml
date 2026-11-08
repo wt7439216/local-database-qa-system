@@ -14,34 +14,23 @@ env:
 jobs:
   test:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        # 3.13 只跑源码门禁；Windows EXE 构建仍固定 3.12（RapidOCR 1.4 无 3.13 wheel）。
+        python-version: ["3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      # rapidocr-onnxruntime has no Python 3.13 wheel, so install only the
-      # parser dependencies the test suite actually exercises (same version
-      # ranges as requirements-ingest.txt).
-      - name: Install ingestion dependencies
-        run: |
-          python -m pip install "PyMuPDF>=1.24,<2" "python-docx>=1.1,<2" "python-pptx>=1.0,<2"
-      - name: Lint Python sources
-        run: |
-          python -m pip install ruff
-          python -m ruff check core desktop scripts tests
-      - name: Run unit tests
-        run: python -B -m unittest discover -v
-      - name: Compile Python sources
-        run: python -B -m compileall -q core desktop scripts tests
-      - name: Check browser JavaScript
-        run: |
-          node --check web/app.js
-          node --check web/library.js
-          node --check web/markdown.js
-      - name: Run Phase E router evaluation
-        run: python -X utf8 scripts/eval_phase_e_router.py
-      - name: Run Phase F.2 citation evaluation
-        run: python -X utf8 scripts/eval_phase_f_citation.py
+      # 依赖单一真源是 pyproject.toml；RapidOCR 单独排除（无 3.13 wheel）。
+      - name: Install dependencies
+        run: python -m pip install "setuptools>=68" -e ".[dev,modern]" "PyMuPDF>=1.24,<2" "python-docx>=1.1,<2" "python-pptx>=1.0,<2"
+      # P5 单一验收入口 = `make check`：check_all 的 10 项 + 双栈契约 + EXE 校验 + git 状态。
+      - name: Run full check suite
+        run: python -X utf8 scripts/verify_all.py

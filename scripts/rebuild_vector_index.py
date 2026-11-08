@@ -8,7 +8,7 @@ rebuild script is the repair path.
 
 Usage:
     python -X utf8 scripts/rebuild_vector_index.py \
-        [--library data/library/textbooks.sqlite3] [--collection NAME] \
+        [--library data/library/documents.sqlite3] [--collection NAME] \
         [--url http://127.0.0.1:6333] [--batch-size 128] [--recreate]
 """
 

@@ -118,12 +118,21 @@ class WindowsBundleTests(unittest.TestCase):
         self.assertEqual(manifest["quality_evidence"]["status"], "FAIL")
         self.assertEqual((self.seed / "quality_report.json").read_bytes(), evidence.read_bytes())
 
-    def test_quality_from_an_old_production_state_cannot_be_attached(self):
+    def test_quality_from_an_old_production_state_is_recorded_not_blocked(self):
+        """重构解锁：历史质量证据的 production hash 只记录，不再阻断打包。"""
         evidence = self.root / "old_quality.json"
-        evidence.write_text(json.dumps({"artifact_hashes": {"production_source_sha256": "0" * 64}}), encoding="utf-8")
-        with self.assertRaisesRegex(ValueError, "different production source"):
-            self.prepare(quality_evidence=evidence)
-        self.assertFalse(self.seed.exists())
+        artifact = {
+            "artifact_hashes": {"production_source_sha256": "0" * 64},
+            "evaluator_identity": {"library_identity": f"{self.library.stat().st_size}:{bundle.raw_sha256(self.library)[:16]}"},
+            "metrics": {"eligible_cases": 144, "fact_cases": 144},
+            "product_gate_status": {"citation_coverage": "FAIL"},
+            "hard_gates": {"invalid_citation_status": "PASS", "scope_violation_status": "PASS"},
+        }
+        evidence.write_text(json.dumps(artifact), encoding="utf-8")
+        manifest = self.prepare(quality_evidence=evidence)
+        self.assertEqual(manifest["quality_evidence"]["production_source_identity"],
+                         "HISTORICAL_RECORD_MISMATCH")
+        self.assertTrue(self.seed.exists())
 
     def test_final_version_label_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "alpha"):

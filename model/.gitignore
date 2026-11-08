@@ -1,0 +1,3 @@
+# Private local Ollama manifests, metadata and weight blobs.
+*
+!.gitignore

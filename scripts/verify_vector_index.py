@@ -7,7 +7,7 @@ mismatches, then exits 0 (PASS) or 1 (FAIL).
 
 Usage:
     python -X utf8 scripts/verify_vector_index.py \
-        [--library data/library/textbooks.sqlite3] [--collection NAME] \
+        [--library data/library/documents.sqlite3] [--collection NAME] \
         [--url http://127.0.0.1:6333]
 """
 

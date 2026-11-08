@@ -1,51 +1,10 @@
-// Library Manager (Phase D / v3.3) — minimal, safety-first management page.
-// Reuses the same pairing token as the QA page (sessionStorage).
+// Library Manager — P3: shared helpers are now proper ESM imports.
+import { $, api, authHeaders, escapeHtml, setStatus, toast } from "./shared.js";
 
 const state = {
   baseUrl: sessionStorage.getItem("qaBaseUrl") || window.location.origin,
   token: sessionStorage.getItem("qaToken") || "",
 };
-
-const $ = (selector) => document.querySelector(selector);
-const statusEl = $("#serviceStatus");
-
-function setStatus(text, kind = "") {
-  statusEl.className = `status-pill ${kind}`.trim();
-  statusEl.innerHTML = `<span class="status-dot"></span>${text}`;
-}
-
-function toast(message) {
-  const el = $("#toast");
-  el.textContent = message;
-  el.classList.add("show");
-  clearTimeout(toast.timer);
-  toast.timer = setTimeout(() => el.classList.remove("show"), 2600);
-}
-
-function authHeaders(extra = {}) {
-  const headers = { ...extra };
-  if (state.token) headers.Authorization = `Bearer ${state.token}`;
-  return headers;
-}
-
-async function api(path, options = {}) {
-  const response = await fetch(`${state.baseUrl}${path}`, {
-    headers: authHeaders(options.body ? { "Content-Type": "application/json" } : {}),
-    ...options,
-  });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    const message = data.error || `请求失败（${response.status}）`;
-    throw new Error(message);
-  }
-  return data;
-}
-
-function escapeHtml(value) {
-  const div = document.createElement("div");
-  div.textContent = String(value ?? "");
-  return div.innerHTML;
-}
 
 function fmtTime(value) {
   if (!value) return "—";

@@ -76,3 +76,5 @@ function renderMarkdown(escaped) {
   closeList();
   return out.join("");
 }
+
+export { renderMarkdown };

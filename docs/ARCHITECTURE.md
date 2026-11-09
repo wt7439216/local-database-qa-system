@@ -203,7 +203,7 @@ P4 的原则：**所有新能力默认关闭、零第三方依赖、可离线验
 
 **架构债收敛**：`core/persistence/document_state.py` 集中 `DOCUMENT_STATUSES` / 转移表 / `can_relink` / `can_retry_delete` 等门禁策略，`LibraryService` 的 4 处内联状态判断改为委托，`library_model.py` re-export 保持导出面。
 
-**验收限制**：本机未启动 Ollama，`data/eval_cache` 为空，因此 Full-144 的「事实全对 / 召回 / 引用覆盖」三项**无法实测**。P4 交付的是离线可验证的检索层（0.9792 in-scope 词法召回）、引用核验层（Phase F.2 门禁）与 prompt 层契约，以及各开关的 A/B 证据；生成层 A/B 需启动 Ollama 后执行 `eval_v4_baseline.py` 并用 `QA_CITATION_COMPLETION=0/1`、`QA_STRUCTURED_ANSWERS=0/1` 对比。
+**验收状态（2026-11-09 勘误）**：此前「本机未启动 Ollama」的判断**是错误的**——实测服务一直运行（v0.40.15，`bge-m3:latest` + `qwen2.5:7b`，`127.0.0.1:11434`），只是没有去跑评测。`data/eval_cache` 为空只说明 `--report-only` 无从读数，不代表无法生成。Full-144 canonical 评测与 `QA_CITATION_COMPLETION` / `QA_STRUCTURED_ANSWERS` / `QA_CITATION_L15` 三组 A/B 已于 2026-11-09 补跑，实测指标与结论见 `Archive/20261109_p5_convergence/Full-144_补充评测与勘误报告.md`。P4 交付的离线证据链（0.9792 in-scope 词法召回、Phase F.2 门禁、prompt 契约）仍然有效，但不再用它替代生成层指标。
 
 ## 19. 工程收敛（P5）
 

@@ -2,7 +2,7 @@
 
 这里是用户指定的 V4.1 活跃开发目录，**也是 P5 之后唯一的 git 仓库**。原「上传版」发布镜像（旧 `.git`、`PUBLICATION_EVIDENCE.json`、V3/V4 阶段文档与冻结证据）已完整归档到 `Archive/20261109_p5_convergence/`；发布走 `git tag` + GitHub Actions + Release asset，不再同步第二份源码副本。
 
-程序及 EXE 版本仍为 `4.0.0-alpha.3`（`pyproject.toml` 中 `version = "4.0.0a3"`）。本机 Ollama 一直可用（v0.40.15 / `bge-m3:latest` / `qwen2.5:7b` / `localhost:11434`），Full-144 与三组开关 A/B 已于 2026-11-09 补测，实测指标见 `Archive/20261109_p5_convergence/Full-144_补充评测与勘误报告.md`。**不要因目录叫 v4.1 就把历史版本、验收结论或 EXE manifest 改成 4.1**。
+程序及 EXE 版本仍为 `4.0.0-alpha.3`（`pyproject.toml` 中 `version = "4.0.0a3"`）。本机 Ollama 一直可用（v0.40.15 / `bge-m3:latest` / `qwen2.5:7b` / `localhost:11434`），Full-144 与三组开关 A/B 已于 2026-11-09 补测，实测指标见 `Archive/20261109_p5_convergence/Full-144_补充评测与勘误报告.md`。Windows 候选已于 2026-11-09 重新打包并激活（`runtime/LocalDatabaseQA`，`production_source_hash=d8e7a29e…`，与当前源码一致；旧包保留为 `runtime/LocalDatabaseQA_legacy_20261016`），代码已推送 GitHub 并发布 pre-release。**不要因目录叫 v4.1 就把历史版本、验收结论或 EXE manifest 改成 4.1**。
 
 - `V4.1迁移说明.md` 与 `docs/ARCHITECTURE.md` 是环境与当前架构的说明；`docs/INDEX.md` 是文档导航。历史阶段文档在 `Archive/` 下，均非当前验收约束。
 - 日常双击 `启动V4.1.bat`；源码使用 `启动V4.1源码.bat`。PowerShell 入口支持 `-ValidateOnly`、`-NoBrowser`、`-Port`、`-ListenAddress`。源码环境为本目录 `.venv`（Python 3.12.13）；**依赖单一真源是 `pyproject.toml`**（`pip install -e ".[dev,modern]"`），`requirements*.txt` 是构建脚本使用的冻结镜像。

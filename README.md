@@ -243,3 +243,5 @@ data/pdf|raw|library/    教材、提取文本、知识库（本地数据，不�
 **许可状态见 [LICENSE](LICENSE)**：仓库虽已公开，但未授予开源许可，代码保留全部版权。若项目所有人决定开源，替换 `LICENSE` 全文并同步本段与 `pyproject.toml` 的许可元数据即可。
 
 **构建**：`python -X utf8 scripts/build.py --plan` 查看计划，`make build` 打包（输出到 gitignored 的 `dist/` 与 `build/`），`python -X utf8 scripts/activate_candidate.py --bundle-root <dir> --apply` 生成候选指针。旧的 `-ExpectedProductionHash` / `-QualityEvidence` / `-Preflight` / `-SkipIndex` 参数已不再需要。
+
+2026-11-09 已完成一次完整打包并激活新候选：`runtime/LocalDatabaseQA` 的 `production_source_hash` 为 `d8e7a29e…`，与当前源码一致；构建产物另存于 `dist/`，旧包保留为 `runtime/LocalDatabaseQA_legacy_20261016`。源码、EXE 与 [GitHub pre-release](https://github.com/wt7439216/local-database-qa-system/releases/tag/refactor-p0-p5-20261109) 资产三者对应同一次提交。该候选 Full-144 三项主指标未达标，**不是 V4 Final**。

@@ -41,3 +41,15 @@
 ## 验证
 
 `Archive/20261109_p5_convergence/CONVERGENCE_REPORT.json` 记录迁移前后的 HEAD、commit 数、tag 列表、bundle SHA256 与最终 `git status --porcelain = ""`。
+
+## 首次发布（2026-11-09）
+
+| 项 | 结果 |
+|---|---|
+| 代码推送 | `git push origin main`：`69f62c5..2deede7`，远端与本地一致（`ahead=0`） |
+| 里程碑 tag | `refactor-p0-p5-20261109`（描述性标签，不虚构版本号） |
+| GitHub Release | 同 tag 的 **pre-release**，附 `LocalDatabaseQA-4.0.0-alpha.3-20261109.zip`（142,982,305 字节 / 264 文件，SHA256 `9cb3d170…`） |
+| Windows 候选 | `scripts/build.py` 完整构建（Python 3.12.13 / PyInstaller 6.21.0），`production_source_hash=d8e7a29e…` 与当前源码一致 |
+| 激活 | 旧包重命名保留为 `runtime/LocalDatabaseQA_legacy_20261016`；新包复制到 `runtime/LocalDatabaseQA`，`activate_candidate.py --apply` 重生成指针；三条启动链 `-ValidateOnly` 全通过，真实 EXE bootstrap/static 200 |
+
+发布说明与完整验证见 `Archive/20261109_p5_convergence/RELEASE_NOTES.md` 与 `P6_发布与推送报告.md`。该候选 Full-144 三项主指标未达标，故明确标记为 pre-release / NOT V4 Final。
